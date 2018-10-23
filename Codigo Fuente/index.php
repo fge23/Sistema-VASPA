@@ -1,2 +1,1 @@
-<?php //PRUEBA GITHUB
- header("Location: uargflow/index.php"); ?>
+<?php header("Location: uargflow/index.php"); ?>
