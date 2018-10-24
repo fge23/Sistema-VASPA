@@ -15,15 +15,15 @@ class Constantes {
     
     const NOMBRE_SISTEMA = "Sistema VASPA";
     
-    const WEBROOT = "/var/www/html/uargflow/";
-    const APPDIR = "uargflow";
+    const WEBROOT = "/var/www/html/vaspa/";
+    const APPDIR = "vaspa";
         
     const SERVER = "http://localhost";
-    const APPURL = "http://localhost/uargflow";
-    const HOMEURL = "http://localhost/uargflow/app/index.php";
-    const HOMEAUTH = "http://localhost/uargflow/app/usuarios.php";
+    const APPURL = "http://localhost/vaspa";
+    const HOMEURL = "http://localhost/vaspa/uargflow/index.php";
+    const HOMEAUTH = "http://localhost/vaspa/uargflow/app/usuarios.php";
     
-    const BD_SCHEMA = "bdUsuarios";
+    const BD_SCHEMA = "bdProgramas";
     const BD_USERS = "bdUsuarios";
     
 }
