@@ -1,6 +1,6 @@
 <?php
-include_once '../../SVaspa/modeloSistema/BDConexionSistema.Class.php';
-include_once '../../SVaspa/modeloSistema/Asignatura.Class.php';
+include_once '../modeloSistema/BDConexionSistema.Class.php';
+include_once '../modeloSistema/Asignatura.Class.php';
 
 
 /**

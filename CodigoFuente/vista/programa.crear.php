@@ -37,7 +37,10 @@ $Asignatura = new Asignatura($id);
                     <hr>
                     <form id="regiration_form" novalidate action="programa.crear.procesar.php"  method="post">
                         <fieldset>
-                            <h2>Paso 1 - Datos B&aacute;sicos de la Asignatura</h2>
+                            <h2>Paso 1 - Datos B&aacute;sicos de la Asignatura</h2> 
+                            <a href="#"><input type="button"  class="btn btn-outline-primary" value="Cargar Datos de &Uacute;ltimo Programa" /></a>
+<!--                            TODO: Implementar método que cargue datos del último prograa-->
+                            <hr>
                             <div class="form-group">
                                 <div class="form-row">
                                     <div class="col-md-3 col-lg-4">
@@ -135,7 +138,7 @@ $Asignatura = new Asignatura($id);
                         </fieldset>
 
                         <fieldset>
-                            <h2>Paso 4 - Metodolog&iacute;as, Regularizaci&oacute;n y Aprobaci&oacute;n</h2>
+                            <h2>Paso 4 - Metodolog&iacute;a, Regularizaci&oacute;n y Aprobaci&oacute;n Presencial</h2>
                             <div class="form-group">
                                 <label for="textAreaMetodologiaPresencial">Metodologia Presencial</label>
                                 <textarea name="metodologiaPresencial" class="form-control" id="textAreaMetodologiaPresencial" required=""></textarea>
@@ -151,6 +154,15 @@ $Asignatura = new Asignatura($id);
                                 <textarea name="aprobacionPresencial" class="form-control" id="textAreaAprobacionPresencial" required=""></textarea>
                             </div>
 
+
+                            <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
+                            <input type="button" name="next" class="next btn btn-info" value="Siguiente" />
+
+                        </fieldset>
+
+                        <fieldset>
+                            <h2>Paso 5 - Metodolog&iacute;a, Regularizaci&oacute;n y Aprobaci&oacute;n SATEP</h2>
+
                             <div class="form-group">
                                 <label for="textAreaMetodologiaSATEP">Metodologia SATEP</label>
                                 <textarea name="metodologiaSATEP" class="form-control" id="textAreaMetodologiaSATEP" required=""></textarea>
@@ -165,8 +177,11 @@ $Asignatura = new Asignatura($id);
                                 <label for="textAreaAprobacionSATEP">Aprobacion SATEP</label>
                                 <textarea name="aprobacionSATEP" class="form-control" id="textAreaAprobacionSATEP" required=""></textarea>
                             </div>
-
-
+                            <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
+                            <input type="button" name="next" class="next btn btn-info" value="Siguiente" />
+                        </fieldset>
+                        <fieldset>
+                            <h2>Paso 6 - Metodolog&iacute;a y Aprobaci&oacute;n Libre</h2>
                             <div class="form-group">
                                 <label for="textAreaMetodologiaLibre">Metodologia Libre</label>
                                 <textarea name="metodologiaLibre" class="form-control" id="textAreaMetodologiaLibre" required=""></textarea>
@@ -178,6 +193,7 @@ $Asignatura = new Asignatura($id);
                             </div>
 
                             <input type="hidden" name="codAsignatura" value="<?= $Asignatura->getId(); ?>">
+
 
 
                             <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />

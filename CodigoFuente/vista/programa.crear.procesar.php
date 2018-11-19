@@ -40,6 +40,11 @@ $consulta = $ManejadorPrograma->alta($DatosFormulario);
                     <?php } ?>
                     <hr />
                     <h5 class="card-text">Opciones</h5>
+                    <a href="cargarBibliografia.php">
+                        <button type="button" class="btn btn-primary">
+                            <span class="oi oi-document"></span> Cargar Bibliograf&iacute;a
+                        </button>
+                    </a>
                     <a href="asignaturasDeProfesor.php">
                         <button type="button" class="btn btn-primary">
                             <span class="oi oi-account-logout"></span> Salir

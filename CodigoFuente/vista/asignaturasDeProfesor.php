@@ -1,6 +1,6 @@
 <?php
 include_once '../controlSistema/ManejadorAsignatura.php';
-include_once '../lib/Constantes.Class.php';
+include_once '../lib/ControlAcceso.Class.php';
 
 
 $ManejadorAsignatura = new ManejadorAsignatura();
@@ -21,7 +21,7 @@ $Asignaturas = $ManejadorAsignatura->getColeccion();
     </head>
     <body>
 
-        <?php //include_once '../gui/navbar.php';   ?>
+        <?php include_once '../gui/navbar.php';   ?>
 
         <div class="container">
             <div class="card">

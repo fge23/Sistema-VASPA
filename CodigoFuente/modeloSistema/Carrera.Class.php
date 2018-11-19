@@ -1,5 +1,5 @@
 <?php
-include_once './BDConexionSistema.Class.php';
+include_once 'BDConexionSistema.Class.php';
 /**
  * Description of Carrera
  *

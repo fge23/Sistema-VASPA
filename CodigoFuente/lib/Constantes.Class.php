@@ -13,15 +13,15 @@ setlocale(LC_TIME, 'es_AR.utf8');
 class Constantes {
 
     
-    const NOMBRE_SISTEMA = "UARGFlow BS";
+    const NOMBRE_SISTEMA = "VASPA";
     
     const WEBROOT = "/var/www/html/uargflow/";
-    const APPDIR = "uargflow";
+    const APPDIR = "vaspa";
         
     const SERVER = "http://localhost";
-    const APPURL = "http://localhost/SVaspa";
-    const HOMEURL = "http://localhost/SVaspa/app/index.php";
-    const HOMEAUTH = "http://localhost/SVaspa/app/usuarios.php";
+    const APPURL = "http://localhost/vaspa";
+    const HOMEURL = "http://localhost/vaspa/CodigoFuente/app/index.php";
+    const HOMEAUTH = "http://localhost/vaspa/CodigoFuente/app/usuarios.php";
     
     const BD_SCHEMA = "bdMesas_Programas";
     const BD_USERS = "bdUsuarios";
