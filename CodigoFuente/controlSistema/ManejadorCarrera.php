@@ -3,7 +3,6 @@
 include_once '../modeloSistema/BDConexionSistema.Class.php';
 include_once '../modeloSistema/Carrera.Class.php';
 
-
 /**
  * Description of ManejadorCarrera
  *
@@ -34,11 +33,7 @@ class ManejadorCarrera {
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
 
         for ($x = 0; $x < $this->datos->num_rows; $x++) {
-            $Carrera = new Carrera();
-            $fila = $this->datos->fetch_object();
-            $Carrera->setId($fila->id);
-            $Carrera->setNombre($fila->nombre);
-            $this->addElemento($Carrera);
+            $this->addElemento($this->datos->fetch_object("Carrera"));
         }
     }
 
@@ -67,8 +62,8 @@ class ManejadorCarrera {
             return false;
         }
     }
-    
-    function modificacion($datos, $id){
+
+    function modificacion($datos, $id) {
         $Carrera = new Carrera();
         $Carrera->setId($datos['id']);
         $Carrera->setNombre($datos['nombre']);
@@ -84,3 +79,6 @@ class ManejadorCarrera {
     }
 
 }
+$ManejadorCarrera = new ManejadorCarrera();
+$Carreras = $ManejadorCarrera->getColeccion();
+var_dump($Carreras);

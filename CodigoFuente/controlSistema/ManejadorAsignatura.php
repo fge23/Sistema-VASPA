@@ -32,16 +32,8 @@ class ManejadorAsignatura {
         $this->query = "SELECT * FROM ASIGNATURA";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
 
-        for ($x = 0; $x < $this->datos->num_rows; $x++) {
-            $Asignatura = new Asignatura();
-            $fila = $this->datos->fetch_object();
-            $Asignatura->setId($fila->id);
-            $Asignatura->setNombre($fila->nombre);
-            $Asignatura->setDepartamento($fila->departamento);
-            $Asignatura->setContenidosMinimos($fila->contenidosMinimos);
-            $Asignatura->setIdProfesor($fila->idProfesor);
-           
-            $this->addElemento($Asignatura);
+         for ($x = 0; $x < $this->datos->num_rows; $x++) {
+            $this->addElemento($this->datos->fetch_object("Asignatura"));
         }
     }
 
