@@ -50,11 +50,9 @@ class ManejadorCarrera {
     }
 
     function alta($datos) {
-        $Carrera = new Carrera();
-        $Carrera->setId($datos['id']);
-        $Carrera->setNombre($datos['nombre']);
+        $Carrera = new Carrera($datos['id']);
         $this->query = "INSERT INTO CARRERA "
-                . "VALUES ({$Carrera->setId()},'{$Carrera->getNombre()}')";
+                . "VALUES ('{$Carrera->getId()}','{$Carrera->getNombre()}')";
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
         if ($consulta) {
             return true;
@@ -79,6 +77,4 @@ class ManejadorCarrera {
     }
 
 }
-$ManejadorCarrera = new ManejadorCarrera();
-$Carreras = $ManejadorCarrera->getColeccion();
-var_dump($Carreras);
+

@@ -1,5 +1,5 @@
 <?php
-include_once '../lib/Constantes.Class.php';
+include_once '../lib/ControlAcceso.Class.php';
 ?>
 
 <html>
@@ -12,7 +12,7 @@ include_once '../lib/Constantes.Class.php';
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Crear Carrera</title>
     </head>
     <body>
-        <?php // include_once '../gui/navbar.php'; ?>
+        <?php  include_once '../gui/navbar.php'; ?>
         <div class="container">
             <form action="carrera.crear.procesar.php" method="post"> 
                 <div class="card">
@@ -28,7 +28,7 @@ include_once '../lib/Constantes.Class.php';
                         <h4>Propiedades</h4>
                         <div class="form-group">
                             <label for="inputCodigo">C&oacute;digo de Carrera</label>
-                            <input type="number" name="codCarrera" class="form-control" id="inputCodigo" placeholder="Ingrese el C&oacute;digo de la Carrera" required="">
+                            <input type="number" name="id" class="form-control" id="inputCodigo" placeholder="Ingrese el C&oacute;digo de la Carrera" required="">
                         </div>
                         
                            <div class="form-group">

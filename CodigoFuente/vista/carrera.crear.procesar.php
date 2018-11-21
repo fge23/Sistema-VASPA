@@ -1,5 +1,5 @@
 <?php
-include_once '../lib/Constantes.Class.php';
+include_once '../lib/ControlAcceso.Class.php';
 
 include_once '../controlSistema/ManejadorCarrera.php';
 
@@ -19,7 +19,7 @@ $consulta = $ManejadorCarrera->alta($DatosFormulario);
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Crear Carrera</title>
     </head>
     <body>
-        <?php //include_once '../gui/navbar.php'; ?>
+        <?php include_once '../gui/navbar.php'; ?>
 
         <div class="container">
             <p></p>
