@@ -1,5 +1,11 @@
 <?php
-include_once './BDConexionSistema.Class.php';
+include_once 'BDConexionSistema.Class.php';
+include_once 'Asignatura.Class.php';
+include_once 'Libro.Class.php';
+include_once 'Revista.Class.php';
+include_once 'Recurso.Class.php';
+include_once 'OtroMaterial.Class.php';
+
 /**
  * Description of Programa
  *
@@ -247,8 +253,140 @@ class Programa {
     function setUbicacion($ubicacion) {
         $this->ubicacion = $ubicacion;
     }
+    
+    /*
+     * 
+     * @return Asignatura
+     */
+    function getAsignatura(){
+        $this->query = "SELECT asignatura.id FROM ASIGNATURA JOIN PROGRAMA WHERE asignatura.id = programa.idAsignatura AND programa.id = {$this->id};";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        $Asignatura = new Asignatura();
+        
+        if ($this->datos->num_rows > 0){
+            $result = $this->datos->fetch_assoc();
+            $Asignatura = new Asignatura($result['id']);
+        }
+                
+        unset($this->query);
+        unset($this->datos);
+        
+        return $Asignatura;
+    }
+    
+    /**
+     * 
+     * @return Libro[]
+     */
+    function getLibrosObligatorios(){
+        $this->query = "SELECT libro.id FROM libro JOIN programa WHERE programa.id = idPrograma AND tipoLibro LIKE 'O' AND idPrograma = {$this->id}";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        
+        $Libros = NULL;
+        
+        if ($this->datos->num_rows > 0){
+            for ($x = 0; $x < $this->datos->num_rows; $x++) {
+                $resultado = $this->datos->fetch_assoc();
+                $Libros[] = new Libro($resultado['id']);
+            }
+        }
 
-   
+        unset($this->query);
+        unset($this->datos);
+        
+        return $Libros;
+    }
+    
+    /**
+     * 
+     * @return Libro[]
+     */
+    function getLibrosComplementarios(){
+        $this->query = "SELECT libro.id FROM libro JOIN programa WHERE programa.id = idPrograma AND tipoLibro LIKE 'C' AND idPrograma = {$this->id}";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        
+        $Libros = NULL;
+        
+        if ($this->datos->num_rows > 0){
+            for ($x = 0; $x < $this->datos->num_rows; $x++) {
+                $resultado = $this->datos->fetch_assoc();
+                $Libros[] = new Libro($resultado['id']);
+            }
+        }
 
+        unset($this->query);
+        unset($this->datos);
+        
+        return $Libros;
+    }
+    
+    /**
+     * 
+     * @return Revista[]
+     */
+    function getRevistas(){
+        $this->query = "SELECT revista.id FROM revista JOIN programa WHERE programa.id = idPrograma AND idPrograma = {$this->id}";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        
+        $Revistas = NULL;
+        
+        if ($this->datos->num_rows > 0){
+            for ($x = 0; $x < $this->datos->num_rows; $x++) {
+                $resultado = $this->datos->fetch_assoc();
+                $Revistas[] = new Revista($resultado['id']);
+            }
+        }
 
+        unset($this->query);
+        unset($this->datos);
+        
+        return $Revistas;
+    }
+    
+    /**
+     * 
+     * @return Recurso[]
+     */
+    function getRecursos(){
+        $this->query = "SELECT recurso.id FROM recurso JOIN programa WHERE programa.id = idPrograma AND idPrograma = {$this->id}";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        
+        $Recursos = NULL;
+        
+        if ($this->datos->num_rows > 0){
+            for ($x = 0; $x < $this->datos->num_rows; $x++) {
+                $resultado = $this->datos->fetch_assoc();
+                $Recursos[] = new Recurso($resultado['id']);
+            }
+        }
+
+        unset($this->query);
+        unset($this->datos);
+        
+        return $Recursos;
+    }
+    
+    /**
+     * 
+     * @return OtroMaterial[]
+     */
+    function getOtroMateriales(){
+        $this->query = "SELECT otro_material.id FROM otro_material JOIN programa WHERE programa.id = idPrograma AND idPrograma = {$this->id}";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        
+        $OtroMateriales = NULL;
+        
+        if ($this->datos->num_rows > 0){
+            for ($x = 0; $x < $this->datos->num_rows; $x++) {
+                $resultado = $this->datos->fetch_assoc();
+                $OtroMateriales[] = new OtroMaterial($resultado['id']);
+            }
+        }
+
+        unset($this->query);
+        unset($this->datos);
+        
+        return $OtroMateriales;
+    }
+    
 }

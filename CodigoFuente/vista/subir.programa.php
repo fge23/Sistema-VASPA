@@ -88,7 +88,7 @@ function valida(){
                         <button type="submit" class="btn btn-outline-primary" id="boton" name="boton" disabled="">
                             <span class="oi oi-cloud-upload"></span> Subir Programa</button>
                         <input type="hidden" name="anio" id="anio" value="<?= $_GET['anio']; ?>">
-                        <a href="listar.anios.php">
+                        <a href="listar.anios.subirprograma.php">
                             <button type="button" class="btn btn-outline-danger">
                                 <span class="oi oi-x"></span> Cancelar
                             </button>
@@ -106,12 +106,12 @@ function valida(){
                 if ($( this ).val() != '') {
                   if(ext == "pdf"){
                     //alert("La extensión es: " + ext);
-                    if($(this)[0].files[0].size > 1073741824){
+                    if($(this)[0].files[0].size > 2097152){
                         alert("El documento excede el tamaño máximo");
                       console.log("El documento excede el tamaño máximo");
-                      $('#modal-title').text('¡Precaución!');
-                      $('#modal-msg').html("Se solicita un archivo no mayor a 1MB. Por favor verifica.");
-                      $("#modal-gral").modal();           
+                      //$('#modal-title').text('¡Precaución!');
+                      //$('#modal-msg').html("Se solicita un archivo no mayor a 1MB. Por favor verifica.");
+                      //$("#modal-gral").modal();           
                       $(this).val('');
                     }else{
                       $("#modal-gral").hide();
