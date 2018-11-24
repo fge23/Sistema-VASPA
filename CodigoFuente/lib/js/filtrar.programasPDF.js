@@ -1,18 +1,15 @@
 $(buscar_datos());
-/**
- * Este codigo filtra los años de un programa pdf
- * @param {type} consulta
- * @returns {undefined}
- */
+
 function buscar_datos(consulta){
-	var cod = $('#codCarrera').val()
-        //alert(cod)
-        $.ajax({
-		url: '../lib/consultaAjax/buscar.anios.pdf.php' ,
+        var cod = $('#codCarrera').val()
+        var anio = $('#anio').val()
+	$.ajax({
+		url: '../lib/consultaAjax/buscar.programasPDF.php' ,
 		type: 'POST' ,
 		dataType: 'html',
 		data: {'consulta': consulta,
-                    'cod': cod}
+                'cod': cod,
+                'anio': anio}
 	})
 	.done(function(respuesta){
 		$("#datos").html(respuesta);

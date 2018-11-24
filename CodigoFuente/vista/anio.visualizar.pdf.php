@@ -30,10 +30,10 @@
                <div class="card-body" id="datos">
                 </div>
             </div>
+            <input type="hidden" name="codCarrera" id="codCarrera" value="<?= $_GET['cod']; ?>">
         </div>
         <?php //include_once '../gui/footer.php'; ?>
         <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
-        <!--<script type="text/javascript" src="../lib/js/filtrar.anio.js"></script> -->
         <script type="text/javascript" src="../lib/js/buscar.anios.pdf.js"></script>
         
     </body>

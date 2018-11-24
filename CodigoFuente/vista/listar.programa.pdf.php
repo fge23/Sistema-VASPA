@@ -1,10 +1,5 @@
 <?php
 //include_once '../lib/Constantes.Class.php';
-$anio = $_GET['anio'];
-include_once '../modeloSistema/BDConexionSistema.Class.php';
-$consulta = "SELECT * FROM programa_pdf WHERE anio = {$anio}";
-$datos = BDConexionSistema::getInstancia()->query($consulta);
-
 ?>
 
 <html>
@@ -25,36 +20,21 @@ $datos = BDConexionSistema::getInstancia()->query($consulta);
             <div class="card">
                 <div class="card-header">
 
-                    <h3>Seleccione el programa a visualizar</h3>
+                    <h3>Seleccione el programa de asignatura a visualizar</h3>
+                    <label>Ingrese el nombre de la Asignatura:</label>
+                    <input type="text" name="caja_busqueda" id="caja_busqueda" 
+                    class="form-control" placeholder="Ingrese nombre de la Asignatura">
                 </div>
-                <div class="card-body">
-                    
-                    <table class="table table-hover table-sm">
-                        <tr class="table-info">
-                            <th>Nombre</th>
-                            <th>Tama&ntilde;o (en MB)</th>
-                            <th>Opciones</th>
-                        </tr>
-                        <?php while ($programa = $datos->fetch_assoc()){ 
-                           $nombre = utf8_encode($programa['nombre']);
-                           $ruta = utf8_encode($programa['ruta']);
-                           $tamanio = $programa['tamanio']; ?>
-                        <td><?php echo $nombre; ?></td>
-                        <td><?php echo round(($tamanio/1024)/1024, 2); ?></td>        
-                        <td><a title="Visualizar Programa" href="../<?= $ruta; ?>">
-                                        <button type="button" class="btn btn-outline-success">
-                                            <span class="oi oi-document"></span>
-                                        </button></a>
-                        </td> 
-                        </tr>
-                        <?php } ?>
-                    </table>
+                <div class="card-body" id="datos"> 
                 </div>
             </div>
+            <input type="hidden" name="codCarrera" id="codCarrera" value="<?= $_GET['cod']; ?>">
+            <input type="hidden" name="anio" id="anio" value="<?= $_GET['anio']; ?>">
         </div>
-        <ul>
-            <?php //echo $listar;?>
-        </ul>
+        
         <?php //include_once '../gui/footer.php'; ?>
+        
+        <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
+        <script type="text/javascript" src="../lib/js/filtrar.programasPDF.js"></script>
     </body>
 </html>

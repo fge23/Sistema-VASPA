@@ -40,7 +40,7 @@ header('Content-Type: text/html; charset=ISO-8859-1');
                             <?php foreach ($Carreras as $Carrera) { ?>
                             
                             <td><?= $Carrera->getId(); ?></td>
-                            <td><a href="anio.visualizar.pdf.php" style='text-decoration:none;color:black;'><?= $Carrera->getNombre(); ?></a></td>
+                            <td><a href="anio.visualizar.pdf.php?cod=<?= $Carrera->getId(); ?>" style='text-decoration:none;color:black;'><?= $Carrera->getNombre(); ?></a></td>
                             
                         </tr>
                            
@@ -49,6 +49,6 @@ header('Content-Type: text/html; charset=ISO-8859-1');
                 </div>
             </div>
         </div>
-        <?php include_once '../gui/footer.php'; ?>
+        <?php //include_once '../gui/footer.php'; ?>
     </body>
 </html>

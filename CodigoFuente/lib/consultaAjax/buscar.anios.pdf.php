@@ -3,8 +3,8 @@
  * En este archivo se lleva a cabo el filtrado para el archivo anio.visualizar.pdf.php
  */
 include_once '../../modeloSistema/BDConexionSistema.Class.php';
-//$consulta = "SELECT anio FROM ANIO ORDER BY anio DESC LIMIT 25";
-$consulta = "SELECT DISTINCT ANIO.anio FROM ANIO INNER JOIN PROGRAMA_PDF ON ANIO.anio = PROGRAMA_PDF.anio ORDER BY anio DESC LIMIT 25";
+$consulta = "SELECT anio FROM ANIO ORDER BY anio DESC LIMIT 25";
+//$consulta = "SELECT DISTINCT ANIO.anio FROM ANIO INNER JOIN PROGRAMA_PDF ON ANIO.anio = PROGRAMA_PDF.anio ORDER BY anio DESC LIMIT 25";
 $datos = BDConexionSistema::getInstancia()->query($consulta);
 
 
@@ -23,14 +23,14 @@ if ($datos->num_rows > 0){
                         </tr>";
     
     while($fila = $datos->fetch_assoc()){
-        $salida.="<tr><td><a href='listar.programa.pdf.php?anio=".$fila['anio']." 'style='text-decoration:none;color:black;'>".$fila['anio']."</a></td></tr>";
+        $salida.="<tr><td><a href='listar.programa.pdf.php?anio=".$fila['anio']."&cod=".$_POST['cod']."' style='text-decoration:none;color:black;'>".$fila['anio']."</a></td></tr>";
     }
     
     $salida.="</table>";
     
 }
 else {
-    $salida.="No se encontraron coincidencias :(";
+    $salida.="No se encontraron coincidencias";
 }
 
 echo $salida;
