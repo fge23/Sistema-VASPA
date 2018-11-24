@@ -1,5 +1,5 @@
 <?php
-//include_once '../lib/Constantes.Class.php';
+include_once '../lib/ControlAcceso.Class.php';
 
 ?>
 
@@ -30,7 +30,7 @@ function valida(){
     </head>
     <body>
 
-        <?php //include_once '../gui/navbar.php';   ?>
+        <?php include_once '../gui/navbar.php';   ?>
 
         <div class="container">
             <form enctype="multipart/form-data" action="subir.programa.procesar.php" method="post" id="form">
@@ -98,7 +98,7 @@ function valida(){
             </form>
         </div>
         
-        <?php //include_once '../gui/footer.php'; ?>
+        <?php include_once '../gui/footer.php'; ?>
         
         <script>
             $('input[type="file"]').on('change', function(){

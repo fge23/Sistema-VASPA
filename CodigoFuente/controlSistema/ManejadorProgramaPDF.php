@@ -1,6 +1,5 @@
 <?php
 
-include_once '../modeloSistema/BDConexionSistema.Class.php';
 include_once '../modeloSistema/ProgramaPDF.Class.php';
 
 /**

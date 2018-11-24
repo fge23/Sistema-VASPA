@@ -1,5 +1,5 @@
 <?php
-//include_once '../lib/Constantes.Class.php';
+include_once '../lib/ControlAcceso.Class.php';
 ?>
 
 <html>
@@ -14,7 +14,7 @@
     </head>
     <body>
 
-        <?php //include_once '../gui/navbar.php';   ?>
+        <?php include_once '../gui/navbar.php';   ?>
 
         <div class="container">
             <div class="card">
@@ -32,7 +32,7 @@
             <input type="hidden" name="anio" id="anio" value="<?= $_GET['anio']; ?>">
         </div>
         
-        <?php //include_once '../gui/footer.php'; ?>
+        <?php include_once '../gui/footer.php'; ?>
         
         <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
         <script type="text/javascript" src="../lib/js/filtrar.programasPDF.js"></script>
