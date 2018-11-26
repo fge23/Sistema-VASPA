@@ -117,9 +117,7 @@ $pdf->Addpage();
 
 $Programa = new Programa($idPrograma);
 $Asignatura = $Programa->getAsignatura();
-$ProfesoresPractica = $Asignatura->getProfesoresPractica();
-$profesorResponsable = new Profesor($Asignatura->getIdProfesor());
-$departamento = new Departamento($profesorResponsable->getIdDepartamento());
+
 
 // Concatenamos el html
 $html = '';
@@ -217,23 +215,39 @@ $html .= '</tr>
 		<td valign="top" ><p align="center">Departamento/División</p></td>
 		<td valign="top" ><p align="center">Apellido y Nombres</p></td>
 		<td valign="top" ><p align="center">Departamento/División</p></td>
-	</tr>
+	</tr>';
 
-	<tr>
-		<td valign="top" > '.utf8_encode($profesorResponsable->getApellido()).', '.utf8_encode($profesorResponsable->getNombre()).'</td>
-		<td valign="top" > '.utf8_encode($departamento->getNombre()).' </td>
-		<td valign="top" > </td>
-		<td valign="top" > </td>
-	</tr>
+$ProfesoresPractica = $Asignatura->getProfesoresPractica();
+$ProfesoresTeoria = $Asignatura->getProfesoresTeoria();
+$profesorResponsable = new Profesor($Asignatura->getIdProfesor());
+$departamento = new Departamento($profesorResponsable->getIdDepartamento());
 
-	<tr>
-		<td valign="top" > </td>
-		<td valign="top" > </td>
-		<td valign="top" > </td>
-		<td valign="top" > </td>
-	</tr>
+if ($ProfesoresPractica != NULL && $ProfesoresTeoria == NULL){
+    $ProfesorPractica = $ProfesoresPractica[0];
+    $dpto = new Departamento($ProfesorPractica->getIdDepartamento());
+    $html .= '<tr>
+		<td valign="top" >'.utf8_encode($profesorResponsable->getApellido()).', '.utf8_encode($profesorResponsable->getNombre()).'</td>
+		<td valign="top" >'.utf8_encode($departamento->getNombre()).' </td>
+		<td valign="top" >'.utf8_encode($ProfesorPractica->getApellido()).', '. utf8_encode($ProfesorPractica->getNombre()).'</td>
+		<td valign="top" >'.utf8_encode($dpto->getNombre()).'</td>
+	</tr>';
+    $tamanio = sizeof($ProfesoresPractica);
+    if ($tamanio > 1){
+        for ($i=1; $i<$tamanio; $i++){
+            $ProfesorPractica = $ProfesoresPractica[$i];
+            $dpto = new Departamento($ProfesorPractica->getIdDepartamento());
+            $html .= '<tr>
+                        <td valign="top" ></td>
+                        <td valign="top" ></td>
+                        <td valign="top" >'.utf8_encode($ProfesorPractica->getApellido()).', '. utf8_encode($ProfesorPractica->getNombre()).'</td>
+                        <td valign="top" >'.utf8_encode($dpto->getNombre()).'</td>
+                </tr>';
+        }
+    }
+}
+	
 
-	</tbody>
+	$html .= '</tbody>
 </table>
 
 <br/>

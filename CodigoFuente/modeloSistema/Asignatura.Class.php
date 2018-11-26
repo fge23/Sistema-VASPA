@@ -123,4 +123,19 @@ class Asignatura {
         return $Profesores;
     }
     
+    function  getProfesoresTeoria(){
+        $this->query = "SELECT profesor_asignatura.idProfesor FROM profesor_asignatura JOIN asignatura WHERE asignatura.id = profesor_asignatura.idAsignatura AND rol LIKE 'teoria' AND asignatura.id = {$this->id}";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        $Profesores = NULL;   
+        for ($x = 0; $x < $this->datos->num_rows; $x++) {
+            $resultado = $this->datos->fetch_assoc();
+            $Profesores[] = new Profesor($resultado['idProfesor']);
+        }
+        
+        unset($this->query);
+        unset($this->datos);
+        
+        return $Profesores;
+    }
+    
 }
