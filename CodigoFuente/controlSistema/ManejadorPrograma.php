@@ -29,18 +29,18 @@ class ManejadorPrograma {
     }
 
     function setColeccion() {
-      /*  $this->query = "SELECT * FROM PROGRAMA";
-        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        /*  $this->query = "SELECT * FROM PROGRAMA";
+          $this->datos = BDConexionSistema::getInstancia()->query($this->query);
 
-        for ($x = 0; $x < $this->datos->num_rows; $x++) {
-            $Programa = new Programa();
-            $fila = $this->datos->fetch_object();
+          for ($x = 0; $x < $this->datos->num_rows; $x++) {
+          $Programa = new Programa();
+          $fila = $this->datos->fetch_object();
 
-            $Programa->setCodCarrera($fila->codCarrera);
-            $Programa->setNombre($fila->nombre);
+          $Programa->setCodCarrera($fila->codCarrera);
+          $Programa->setNombre($fila->nombre);
 
-            $this->addElemento($Programa);
-        */
+          $this->addElemento($Programa);
+         */
     }
 
     function addElemento($elemento_) {
@@ -54,21 +54,27 @@ class ManejadorPrograma {
     function getColeccion() {
         return $this->coleccion;
     }
+
     /*
      * TO DO: cambiar parametros de los SET y probar desde programa.crear
      */
+
     function alta($datos) {
         $Programa = new Programa();
         $Programa->setAnio($datos['anio']);
         $Programa->setAnioCarrera($datos['anioCarrera']);
         $Programa->setHorasTeoria($datos['horasTeoria']);
         $Programa->setHorasPractica($datos['horasPractica']);
-        $Programa->setHorasOtros($datos['horasOtros']);
+        /* TODO: revisar */
+        if ($datos['horasOtros'] != "") {
+            $Programa->setHorasOtros($datos['horasOtros']);
+        } else {
+            $Programa->setHorasOtros("null");
+        }
+
         $Programa->setRegimenCursada($datos['regimenCursada']);
         $Programa->setObservacionesHoras($datos['observacionesHoras']);
         $Programa->setObservacionesCursada($datos['observacionesCursada']);
-       // $Programa->setDocentesTeoria($datos['docentesTeoria']);
-       // $Programa->setDocentesPractica($datos['docentesPractica']);
         $Programa->setFundamentacion($datos['fundamentacion']);
         $Programa->setObjetivosGenerales($datos['objetivosGenerales']);
         $Programa->setOrganizacionContenidos($datos['organizacionContenidos']);

@@ -5,7 +5,7 @@
     <input type="hidden" id="estructura" value="<?php print $estructura ?>" />
     <input type="hidden" id="cargafecha" value="<?php print $cargafecha; ?>" />
     <input type="hidden" id="cargalogal" value="<?php print $cargalocal; ?>" />
-    <input type="hidden" id="noreportalocal" value="<?php print $noreportalocal; ?>" />
+    <input type="hidden" id="noreportalWocal" value="<?php print $noreportalocal; ?>" />
     <table id="tabla" class="table">
         <tbody>
             <tr style="font-size: 12px;">

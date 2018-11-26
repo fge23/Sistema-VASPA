@@ -19,7 +19,7 @@ $Asignatura = new Asignatura($id);
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Crear Programa</title>
     </head>
     <body>
-         <?php  include_once '../gui/navbar.php'; ?>
+        <?php include_once '../gui/navbar.php'; ?>
         <div class="container">
             <div class="card">
                 <div class="card-header">
@@ -41,7 +41,7 @@ $Asignatura = new Asignatura($id);
                         <fieldset>
                             <h2>Paso 1 - Datos B&aacute;sicos de la Asignatura</h2> 
                             <a href="#"><input type="button"  class="btn btn-outline-primary" value="Cargar Datos de &Uacute;ltimo Programa" /></a>
-<!--                            TODO: Implementar método que cargue datos del último prograa-->
+                            <!--                            TODO: Implementar método que cargue datos del último prograa-->
                             <hr>
                             <div class="form-group">
                                 <div class="form-row">
@@ -85,7 +85,7 @@ $Asignatura = new Asignatura($id);
                             <div class="form-group">
                                 <div class="form-row">
                                     <div class="col-md-3 col-lg-4">
-                                        <label for="inputRegimen">Regimen cursada</label>
+                                        <label for="inputRegimen">R&eacute;gimen cursada</label>
                                         <select name="regimenCursada" class="form-control" id="inputRegimen">
                                             <option value="1">Primer Cuatrimestre</option>
                                             <option value="2">Segundo Cuatrimestre</option>
@@ -95,12 +95,12 @@ $Asignatura = new Asignatura($id);
                                     </div>
 
                                     <div class="col-md-3 col-lg-4">
-                                        <label for="inputObservacionesHoras">Obs horas</label>
+                                        <label for="inputObservacionesHoras">Observaciones horas</label>
                                         <input type="text" name="observacionesHoras" class="form-control" id="inputObservacionesHoras">
                                     </div>
 
                                     <div class="col-md-3 col-lg-4">
-                                        <label for="inputObservacionesCursada">Obs cursada</label>
+                                        <label for="inputObservacionesCursada">Observaciones cursada</label>
                                         <input type="text" name="observacionesCursada" class="form-control" id="inputObservacionesCursada">
                                     </div>
                                 </div>
@@ -115,7 +115,7 @@ $Asignatura = new Asignatura($id);
                             <h2>Paso 2 - Informaci&oacute;n de la Asignatura</h2>
 
                             <div class="form-group">
-                                <label for="textAreaFundamentacion">Fundamentacion</label>
+                                <label for="textAreaFundamentacion">Fundamentaci&oacute;n</label>
                                 <textarea name="fundamentacion" class="form-control" id="textAreaFundamentacion" required=""></textarea>
                             </div>
 
@@ -125,13 +125,13 @@ $Asignatura = new Asignatura($id);
                             </div>
 
                             <div class="form-group">
-                                <label for="textAreaOrganizacionContenidos">Organizacion Contenidos</label>
+                                <label for="textAreaOrganizacionContenidos">Organizaci&oacute;n de los Contenidos - Programa Anal&iacute;tico</label>
                                 <textarea name="organizacionContenidos" class="form-control" id="textAreaOrganizacionContenidos" required=""></textarea>
                             </div>
 
 
                             <div class="form-group">
-                                <label for="textAreaCriteriosEvaluacion">Criterios evaluacion</label>
+                                <label for="textAreaCriteriosEvaluacion">Criterios de evaluaci&oacute;n</label>
                                 <textarea name="criteriosEvaluacion" class="form-control" id="textAreaCriteriosEvaluacion" required=""></textarea>
                             </div>
 
@@ -142,17 +142,17 @@ $Asignatura = new Asignatura($id);
                         <fieldset>
                             <h2>Paso 4 - Metodolog&iacute;a, Regularizaci&oacute;n y Aprobaci&oacute;n Presencial</h2>
                             <div class="form-group">
-                                <label for="textAreaMetodologiaPresencial">Metodologia Presencial</label>
+                                <label for="textAreaMetodologiaPresencial">Metodolog&iacute;a Presencial</label>
                                 <textarea name="metodologiaPresencial" class="form-control" id="textAreaMetodologiaPresencial" required=""></textarea>
                             </div>
 
                             <div class="form-group">
-                                <label for="textAreaRegularizacionPresencial">Regularizacion Presencial</label>
+                                <label for="textAreaRegularizacionPresencial">Regularizaci&oacute;n Presencial</label>
                                 <textarea name="regularizacionPresencial" class="form-control" id="textAreaRegularizacionPresencial" required=""></textarea>
                             </div>
 
                             <div class="form-group">
-                                <label for="textAreaAprobacionPresencial">Aprobacion Presencial</label>
+                                <label for="textAreaAprobacionPresencial">Aprobaci&oacute;n Presencial</label>
                                 <textarea name="aprobacionPresencial" class="form-control" id="textAreaAprobacionPresencial" required=""></textarea>
                             </div>
 
@@ -166,17 +166,17 @@ $Asignatura = new Asignatura($id);
                             <h2>Paso 5 - Metodolog&iacute;a, Regularizaci&oacute;n y Aprobaci&oacute;n SATEP</h2>
 
                             <div class="form-group">
-                                <label for="textAreaMetodologiaSATEP">Metodologia SATEP</label>
+                                <label for="textAreaMetodologiaSATEP">Metodolog&iacute;a SATEP</label>
                                 <textarea name="metodologiaSATEP" class="form-control" id="textAreaMetodologiaSATEP" required=""></textarea>
                             </div>
 
                             <div class="form-group">
-                                <label for="textAreaRegularizacionSATEP">Regularizacion SATEP</label>
+                                <label for="textAreaRegularizacionSATEP">Regularizaci&oacute;n SATEP</label>
                                 <textarea name="regularizacionSATEP" class="form-control" id="textAreaRegularizacionSATEP" required=""></textarea>
                             </div>
 
                             <div class="form-group">
-                                <label for="textAreaAprobacionSATEP">Aprobacion SATEP</label>
+                                <label for="textAreaAprobacionSATEP">Aprobaci&oacute;n SATEP</label>
                                 <textarea name="aprobacionSATEP" class="form-control" id="textAreaAprobacionSATEP" required=""></textarea>
                             </div>
                             <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
@@ -185,12 +185,12 @@ $Asignatura = new Asignatura($id);
                         <fieldset>
                             <h2>Paso 6 - Metodolog&iacute;a y Aprobaci&oacute;n Libre</h2>
                             <div class="form-group">
-                                <label for="textAreaMetodologiaLibre">Metodologia Libre</label>
+                                <label for="textAreaMetodologiaLibre">Metodolog&iacute;a Libre</label>
                                 <textarea name="metodologiaLibre" class="form-control" id="textAreaMetodologiaLibre" required=""></textarea>
                             </div>
 
                             <div class="form-group">
-                                <label for="textAreaAprobacionLibre">Aprobacion Libre</label>
+                                <label for="textAreaAprobacionLibre">Aprobaci&oacute;n Libre</label>
                                 <textarea name="aprobacionLibre" class="form-control" id="textAreaAprobacionLibre" required=""></textarea>
                             </div>
 
@@ -200,13 +200,13 @@ $Asignatura = new Asignatura($id);
 
                             <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
                             <input type="submit" name="submit" class="submit btn btn-info" value="Guardar" id="submit_data" />
-                            <input type="submit" name="submit2" class="submit btn btn-success" value="Guardar y Enviar" onclick=this.form.action="prueba.php">
+                            <input type="submit" name="submit2" class="submit btn btn-success" value="Guardar y Enviar" onclick=this.form.action = "prueba.php">
                         </fieldset>
                     </form>
                 </div>
             </div>
         </div>
-              <?php include_once '../gui/footer.php'; ?>
+        <?php include_once '../gui/footer.php'; ?>
     </body>
 </html>
 <script type="text/javascript">

@@ -1,5 +1,5 @@
 <?php
-include_once '../lib/Constantes.Class.php';
+include_once '../lib/ControlAcceso.Class.php';
 
 include_once '../controlSistema/ManejadorPrograma.php';
 
@@ -19,7 +19,7 @@ $consulta = $ManejadorPrograma->alta($DatosFormulario);
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Crear Programa</title>
     </head>
     <body>
-        <?php //include_once '../gui/navbar.php'; ?>
+        <?php include_once '../gui/navbar.php'; ?>
 
         <div class="container">
             <p></p>
