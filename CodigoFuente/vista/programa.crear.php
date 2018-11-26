@@ -1,6 +1,7 @@
 <?php
-include_once '../lib/Constantes.Class.php';
+include_once '../lib/ControlAcceso.Class.php';
 include_once '../modeloSistema/Asignatura.Class.php';
+
 $id = $_GET["id"];
 $Asignatura = new Asignatura($id);
 ?>
@@ -18,6 +19,7 @@ $Asignatura = new Asignatura($id);
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Crear Programa</title>
     </head>
     <body>
+         <?php  include_once '../gui/navbar.php'; ?>
         <div class="container">
             <div class="card">
                 <div class="card-header">
@@ -203,6 +205,8 @@ $Asignatura = new Asignatura($id);
                     </form>
                 </div>
             </div>
+        </div>
+              <?php include_once '../gui/footer.php'; ?>
     </body>
 </html>
 <script type="text/javascript">
