@@ -67,17 +67,14 @@ class MYPDF extends TCPDF {
         // Posicion a 15 mm
         $this->SetY(-15);
         
-        $foot = <<<EOD
-                
-                <table cellspacing="0" cellpadding="1" border="1">
+        $foot = '<table cellspacing="0" cellpadding="1" border="1">
                     <tr>
                         <td colspan="6"><b>VIGENCIA AÑOS </b></td>
-                        <td></td>
+                        <td>'.date("Y").'</td>
                         <td></td>
                         <td></td>
                     </tr>
-                </table>    
-EOD;
+                </table>';
 
        $this->writeHTML($foot, true, false, false, false, '');
        
@@ -264,24 +261,58 @@ if ($ProfesoresPractica != NULL && $ProfesoresTeoria == NULL){
 			<td valign="top" ><p align="center">Cod. Asig.</p></td>
 			<td valign="top" ><p align="center">Cursada/s</p></td>
 			<td valign="top" ><p align="center">Cod. Asig.</p></td>
-		</tr>
+		</tr>';
+        
+$aprobadas = $Asignatura->getAsigCorrelativaPrecedenteAprobada();
+$cursadas = $Asignatura->getAsigCorrelativaPrecedenteCursada();
 
-		<tr>
+if ($aprobadas != NULL && $cursadas != NULL){
+    $cantAprobadas = sizeof($aprobadas);
+    //echo $cantAprobadas;
+    $cantCursadas = sizeof($cursadas);
+    //echo $cantCursadas;
+    
+    if ($cantAprobadas > $cantCursadas){
+        for ($i=0; $i<$cantAprobadas; $i++){
+            $AsigAprob = $aprobadas[$i];
+            if ($cantCursadas > $i){
+                $AsigCur = $cursadas[$i];
+                $html .= '<tr>
+			<td valign="top" >'.utf8_encode($AsigAprob->getNombre()).'</td>
+			<td valign="top" >'.utf8_encode($AsigAprob->getId()).'</td>
+			<td valign="top" >'.utf8_encode($AsigCur->getNombre()).'</td>
+			<td valign="top" >'.$AsigCur->getId().'</td>
+		</tr>';
+            }
+            else{
+                $html .= '<tr>
+			<td valign="top" >'.utf8_encode($AsigAprob->getNombre()).'</td>
+			<td valign="top" >'.utf8_encode($AsigAprob->getId()).'</td>
+			<td valign="top" > </td>
+			<td valign="top" > </td>
+		</tr>';
+            }
+            
+        }
+    }
+}
+else {
+    $html .= '<tr>
 			<td valign="top" > </td>
 			<td valign="top" > </td>
 			<td valign="top" > </td>
 			<td valign="top" > </td>
 		</tr>
-
-		<tr>
+                <tr>
 			<td valign="top" > </td>
 			<td valign="top" > </td>
 			<td valign="top" > </td>
 			<td valign="top" > </td>
-		</tr>
-
-	</tbody>
-</table>
+		</tr>';
+}
+        
+$html .= '</tbody>
+</table>		
 
 <br/>
 <br/>
@@ -297,23 +328,64 @@ if ($ProfesoresPractica != NULL && $ProfesoresTeoria == NULL){
 			<td valign="top" ><p align="center">Cod. Asig.</p></td>
 			<td valign="top" ><p align="center">Cursada/s</p></td>
 			<td valign="top" ><p align="center">Cod. Asig.</p></td>
-		</tr>
+		</tr>';
 
-		<tr>
+$aprobadas = $Asignatura->getAsigCorrelativaSubsiguienteAprobada();
+$cursadas = $Asignatura->getAsigCorrelativaSubsiguienteCursada();
+
+if ($aprobadas != NULL && $cursadas != NULL){
+    $cantAprobadas = sizeof($aprobadas);
+    $cantCursadas = sizeof($cursadas);
+    
+    if ($cantAprobadas > $cantCursadas){
+        for ($i=0; $i<$cantAprobadas; $i++){
+            $AsigAprob = $aprobadas[$i];
+            if ($cantCursadas > $i){
+                $AsigCur = $cursadas[$i];
+                $html .= '<tr>
+			<td valign="top" >'.utf8_encode($AsigAprob->getNombre()).'</td>
+			<td valign="top" >'.utf8_encode($AsigAprob->getId()).'</td>
+			<td valign="top" >'.utf8_encode($AsigCur->getNombre()).'</td>
+			<td valign="top" >'.$AsigCur->getId().'</td>
+		</tr>';
+            }
+            else{
+                $html .= '<tr>
+			<td valign="top" >'.utf8_encode($AsigAprob->getNombre()).'</td>
+			<td valign="top" >'.utf8_encode($AsigAprob->getId()).'</td>
+			<td valign="top" > </td>
+			<td valign="top" > </td>
+		</tr>';
+            }
+            
+        }
+    }
+}
+elseif (is_null($aprobadas) && !is_null($cursadas)) {
+    foreach ($cursadas as $asig){
+        $html .= '<tr>
+			<td valign="top" > </td>
+			<td valign="top" > </td>
+			<td valign="top" >'.utf8_encode($asig->getNombre()).'</td>
+			<td valign="top" >'.utf8_encode($asig->getId()).'</td>
+		</tr>';
+    }
+}
+else {
+    $html .= '<tr>
 			<td valign="top" > </td>
 			<td valign="top" > </td>
 			<td valign="top" > </td>
 			<td valign="top" > </td>
 		</tr>
-
-		<tr>
+                <tr>
 			<td valign="top" > </td>
 			<td valign="top" > </td>
 			<td valign="top" > </td>
 			<td valign="top" > </td>
-		</tr>
-
-	</tbody>
+		</tr>';
+}
+	$html .= '</tbody>
 </table>
 
 

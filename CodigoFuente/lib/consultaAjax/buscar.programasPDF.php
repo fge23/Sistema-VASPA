@@ -1,4 +1,6 @@
 <?php
+//Para ocultar los warning que muestra por pantalla, estos warning hace referencia a los include
+error_reporting(0);
 
 include_once '../../controlSistema/ManejadorProgramaPDF.php';
 include_once '../../modeloSistema/ProgramaPDF.Class.php';

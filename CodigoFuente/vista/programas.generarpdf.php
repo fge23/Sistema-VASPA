@@ -3,7 +3,7 @@ header ('Content-Type: text/html; charset=ISO-8859-1');
 /*
  * Muestra el listado de todos los programas que se pueden generar en PDF
  */
-
+include_once '../lib/ControlAcceso.Class.php';
 //include_once '../modeloSistema/Programa.Class.php';
 //include_once '../modeloSistema/Asignatura.Class.php';
 include_once '../modeloSistema/BDConexionSistema.Class.php';
@@ -27,7 +27,7 @@ $asignaturas = BDConexionSistema::getInstancia()->query($consulta);
     </head>
     <body>
 
-        <?php //include_once '../gui/navbar.php'; ?>
+        <?php include_once '../gui/navbar.php'; ?>
 
         <div class="container">
 
@@ -66,6 +66,7 @@ $asignaturas = BDConexionSistema::getInstancia()->query($consulta);
                 </div>
             </div>
         </div>
+         <?php include_once '../gui/footer.php'; ?>
     </body>
 </html>
 

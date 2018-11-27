@@ -1,7 +1,6 @@
 <?php
+include_once '../lib/ControlAcceso.Class.php';
 include_once '../controlSistema/ManejadorCarrera.php';
-//include_once '../lib/ControlAcceso.Class.php';
-
 
 $ManejadorCarrera = new ManejadorCarrera();
 $Carreras = $ManejadorCarrera->getColeccion();
@@ -20,7 +19,7 @@ header('Content-Type: text/html; charset=ISO-8859-1');
     </head>
     <body>
 
-        <?php //include_once '../gui/navbar.php';   ?>
+        <?php include_once '../gui/navbar.php';   ?>
 
         <div class="container">
             <div class="card">
@@ -49,6 +48,6 @@ header('Content-Type: text/html; charset=ISO-8859-1');
                 </div>
             </div>
         </div>
-        <?php //include_once '../gui/footer.php'; ?>
+        <?php include_once '../gui/footer.php'; ?>
     </body>
 </html>

@@ -27,6 +27,7 @@ function enviarMail() {
     }
 }
 ?>
+<?php include_once '../lib/ControlAcceso.Class.php'; ?>
 
 <html>
     <head>
@@ -38,7 +39,7 @@ function enviarMail() {
         <title><?php //echo Constantes::NOMBRE_SISTEMA; ?>Enviar notificaci&oacute;n</title>
     </head>
     <body>
-        <?php //include_once 'gui/navbar.php'; ?>
+        <?php include_once '../gui/navbar.php'; ?>
 
         <div class="container">
             <p></p>
@@ -67,6 +68,6 @@ function enviarMail() {
                 </div>
             </div>
         </div>
-        <?php //include_once '../gui/footer.php'; ?>
+        <?php include_once '../gui/footer.php'; ?>
     </body>
 </html>

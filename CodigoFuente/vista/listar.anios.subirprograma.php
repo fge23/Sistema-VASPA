@@ -1,5 +1,5 @@
 <?php
-
+include_once '../lib/ControlAcceso.Class.php';
 //include_once '../lib/Constantes.Class.php';
 include_once '../modeloSistema/BDConexionSistema.Class.php';
 
@@ -50,7 +50,7 @@ if (!is_dir($directorio)){
     </head>
     <body>
 
-        <?php //include_once '../gui/navbar.php';   ?>
+        <?php include_once '../gui/navbar.php';   ?>
 
         <div class="container">
             <div class="card">
@@ -58,13 +58,13 @@ if (!is_dir($directorio)){
                     <h3>Seleccione el a&ntilde;o del programa a subir</h3>
                     <label>Ingrese un a&ntilde;o:</label>
                     <input type="text" name="caja_busqueda" id="caja_busqueda" 
-                    class="form-control" placeholder="Ingrese año a buscar">
+                           class="form-control" placeholder="Ingrese a&ntilde;o a buscar">
                 </div>
                 <div class="card-body" id="datos">
                 </div>
             </div>
         </div>
-        <?php //include_once '../gui/footer.php'; ?>
+        <?php include_once '../gui/footer.php'; ?>
         <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
         <script type="text/javascript" src="../lib/js/filtrar.anio.js"></script>
     </body>

@@ -3,6 +3,7 @@
  * Procesamiento del subir programa escaneado en pdf
  * falta mejorar el codigo usando OO
  */
+include_once '../lib/ControlAcceso.Class.php';
 include_once '../modeloSistema/BDconexionSistema.Class.php';
 
 //Obtenemos los datos del archivo y del Formulario
@@ -99,7 +100,7 @@ if (!file_exists($rutaDestino)) {
         <title><?php //echo Constantes::NOMBRE_SISTEMA; ?> - Subir Programa</title>
     </head>
     <body>
-        <?php //include_once '../gui/navbar.php'; ?>
+        <?php include_once '../gui/navbar.php'; ?>
 
         <div class="container">
             <p></p>
@@ -135,6 +136,6 @@ if (!file_exists($rutaDestino)) {
                 </div>
             </div>
         </div>
-        <?php //include_once '../gui/footer.php'; ?>
+        <?php include_once '../gui/footer.php'; ?>
     </body>
 </html>

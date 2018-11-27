@@ -123,6 +123,10 @@ class Asignatura {
         return $Profesores;
     }
     
+    /**
+     * 
+     * @return Profesor[]
+     */
     function  getProfesoresTeoria(){
         $this->query = "SELECT profesor_asignatura.idProfesor FROM profesor_asignatura JOIN asignatura WHERE asignatura.id = profesor_asignatura.idAsignatura AND rol LIKE 'teoria' AND asignatura.id = {$this->id}";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
@@ -136,6 +140,86 @@ class Asignatura {
         unset($this->datos);
         
         return $Profesores;
+    }
+    
+    /**
+     * 
+     * @return Asignatura[]
+     */
+    function getAsigCorrelativaPrecedenteAprobada(){
+        $this->query = "SELECT idAsignatura_Correlativa_Anterior AS codAsignatura FROM asignatura JOIN correlativad WHERE idAsignatura = asignatura.id AND requisito LIKE 'Aprobada' AND asignatura.id LIKE '{$this->id}'";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        $Asignaturas = NULL;
+        if ($this->datos->num_rows > 0){
+            for ($x = 0; $x < $this->datos->num_rows; $x++) {
+                $resultado = $this->datos->fetch_assoc();
+                $Asignaturas[] = new Asignatura($resultado['codAsignatura']);
+            }
+        }
+        
+        
+        unset($this->query);
+        unset($this->datos);
+        
+        return $Asignaturas;
+    }
+    
+    function getAsigCorrelativaPrecedenteCursada(){
+        $this->query = "SELECT idAsignatura_Correlativa_Anterior AS codAsignatura FROM asignatura JOIN correlativad WHERE idAsignatura = asignatura.id AND requisito LIKE 'Regular' AND asignatura.id LIKE '{$this->id}'";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        $Asignaturas = NULL;
+        if ($this->datos->num_rows > 0){
+            for ($x = 0; $x < $this->datos->num_rows; $x++) {
+                $resultado = $this->datos->fetch_assoc();
+                $Asignaturas[] = new Asignatura($resultado['codAsignatura']);
+            }
+        }
+        
+        
+        unset($this->query);
+        unset($this->datos);
+        
+        return $Asignaturas;
+    }
+    
+    /**
+     * 
+     * @return Asignatura[]
+     */
+    function getAsigCorrelativaSubsiguienteAprobada(){
+        $this->query = "SELECT idAsignatura AS codAsignatura FROM asignatura JOIN correlativad WHERE idAsignatura_Correlativa_Anterior = asignatura.id AND requisito LIKE 'Aprobada' AND asignatura.id LIKE '{$this->id}'";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        $Asignaturas = NULL;
+        if ($this->datos->num_rows > 0){
+            for ($x = 0; $x < $this->datos->num_rows; $x++) {
+                $resultado = $this->datos->fetch_assoc();
+                $Asignaturas[] = new Asignatura($resultado['codAsignatura']);
+            }
+        }
+        
+        
+        unset($this->query);
+        unset($this->datos);
+        
+        return $Asignaturas;
+    }
+    
+    function getAsigCorrelativaSubsiguienteCursada(){
+        $this->query = "SELECT idAsignatura AS codAsignatura FROM asignatura JOIN correlativad WHERE idAsignatura_Correlativa_Anterior = asignatura.id AND requisito LIKE 'Regular' AND asignatura.id LIKE '{$this->id}'";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        $Asignaturas = NULL;
+        if ($this->datos->num_rows > 0){
+            for ($x = 0; $x < $this->datos->num_rows; $x++) {
+                $resultado = $this->datos->fetch_assoc();
+                $Asignaturas[] = new Asignatura($resultado['codAsignatura']);
+            }
+        }
+        
+        
+        unset($this->query);
+        unset($this->datos);
+        
+        return $Asignaturas;
     }
     
 }

@@ -2,7 +2,10 @@
 /* 
  *Aqui se lleva a cabo el filtrado de la asignatura que se desea buscar
  */
-include_once '../../modeloSistema/BDConexionSistema.Class.php';
+//Para ocultar los warning que muestra por pantalla, estos warning hace referencia a los include
+error_reporting(0);
+
+//include_once '../../modeloSistema/BDConexionSistema.Class.php';
 include_once '../../controlSistema/ManejadorAsignatura.php';
 include_once '../../modeloSistema/Profesor.Class.php';
 include_once '../../modeloSistema/Asignatura.Class.php';

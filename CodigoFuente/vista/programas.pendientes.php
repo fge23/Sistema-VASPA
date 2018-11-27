@@ -1,4 +1,5 @@
 <?php
+include_once '../lib/ControlAcceso.Class.php';
 
 /* 
  * Esta pantalla muestra el listado de todos los programas "pendientes" de las asignaturas
@@ -6,7 +7,6 @@
  */
 
 //include_once '../lib/Constantes.Class.php';
-include_once '../modeloSistema/BDConexionSistema.Class.php';
 
 ?>
 
@@ -22,7 +22,7 @@ include_once '../modeloSistema/BDConexionSistema.Class.php';
     </head>
     <body>
 
-        <?php //include_once '../gui/navbar.php';   ?>
+        <?php include_once '../gui/navbar.php';   ?>
 
         <div class="container">
             <div class="card">
@@ -40,7 +40,7 @@ include_once '../modeloSistema/BDConexionSistema.Class.php';
                 </div>
             </div>
         </div>
-        <?php //include_once '../gui/footer.php'; ?>
+        <?php include_once '../gui/footer.php'; ?>
         <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
         <script type="text/javascript" src="../lib/js/filtrar.asignatura.js"></script>
     </body>
