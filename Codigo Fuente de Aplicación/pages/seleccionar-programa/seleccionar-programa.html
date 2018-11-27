@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title class="myTitle"><img width="60" height="60" src="/assets/imgs/VASPA 90x90.png" />Seleccionar Asignatura</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-searchbar placeholder="Buscar" (ionInput)="getItems($event)"></ion-searchbar>
+
+  <h4>Seleccione una Asignatura</h4>
+   <hr>
+
+  <ion-list *ngFor="let asignatura of asignaturas">
+    <div *ngIf="asignatura.idCarrera== idCarrera" class="col-8">
+      <ion-item *ngIf="asignatura.idCarrera== idCarrera"  (click)="downloadAndOpenPdf(asignatura.id)">    
+        <!-- <button ion-button icon-start (click)="downloadAndOpenPdf(asignatura.id)">
+          {{asignatura.nombre}}
+          <ion-icon name="document"></ion-icon>
+        </button> -->
+      
+        <ion-icon name='document' item-end color="primary"></ion-icon>
+        {{asignatura.nombre}}
+     
+        
+      </ion-item>
+    </div>
+  </ion-list>
+
+</ion-content>
