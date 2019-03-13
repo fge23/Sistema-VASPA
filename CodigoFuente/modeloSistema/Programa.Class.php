@@ -46,25 +46,39 @@ class Programa {
     private $datos;
     
     
-    function __construct($id_ = null) {
-         if (isset($id_)) {
-            $this->id = $id_;
+    function __construct($id_ = null, $datos = null) {
+        //Si vienen datos de formulario (Alta) setea valores de Objeto
+        if (isset($datos)) {
+            //SETEAR TODOS LOS DATOS
+            $this->setId($datos['id']);
             
-            $this->query = "SELECT * FROM PROGRAMA WHERE id = {$this->id}";
            
-            $this->datos = BDConexionSistema::getInstancia()->query($this->query);
-           
-            $this->datos = $this->datos->fetch_assoc();
-
-            foreach ($this->datos as $atributo => $valor) {
-                $this->{$atributo} = $valor;
-            }
-            unset($this->query);
-            unset($this->datos);
         } else {
-            return false;
+            //Sino viene un nuevo Objeto, lo recupero (para Modificar)
+            if (isset($id)) {
+                $this->recuperaObjeto($id);
+            } else {
+                return false;
+            }
         }
     }
+
+    function recuperaObjeto($id) {
+        $this->id = $id;
+
+        $this->query = "SELECT * FROM PROGRAMA WHERE id = {$this->id}";
+
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+
+        $this->datos = $this->datos->fetch_assoc();
+
+        foreach ($this->datos as $atributo => $valor) {
+            $this->{$atributo} = $valor;
+        }
+        unset($this->query);
+        unset($this->datos);
+    }
+    
 
     
     function getId() {

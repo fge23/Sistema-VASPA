@@ -28,6 +28,7 @@ class ManejadorCarrera {
         $this->setColeccion();
     }
 
+    //Metodo que crea la coleccion Carreras
     function setColeccion() {
         $this->query = "SELECT * FROM CARRERA";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
@@ -49,8 +50,14 @@ class ManejadorCarrera {
         return $this->coleccion;
     }
 
+    //Funcion para Alta de Carreras
     function alta($datos) {
-        $Carrera = new Carrera($datos['id']);
+       
+        //Creo objeto sin enviar ID y enviando todos los datos del formulario
+        $Carrera = new Carrera(null,$datos);
+        
+        //Seteo el nuevo ID como el ID que viene del formulario, completado con 0 a la izquierda
+        $Carrera->setId($this->completaConCeros($Carrera->getId()));
         $this->query = "INSERT INTO CARRERA "
                 . "VALUES ('{$Carrera->getId()}','{$Carrera->getNombre()}')";
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
@@ -60,14 +67,28 @@ class ManejadorCarrera {
             return false;
         }
     }
-
-    function modificacion($datos, $id) {
+    
+    function baja($id_){
+        $this->query = "DELETE FROM CARRERA WHERE id = '{$id_}'";
+        $consulta = BDConexionSistema::getInstancia()->query($this->query);
+        if ($consulta) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    
+    //Funcion para Modificación de Carreras
+    function modificacion($datos, $id_) {
         $Carrera = new Carrera();
-        $Carrera->setId($datos['id']);
-        $Carrera->setNombre($datos['nombre']);
+        $idCarrera = $datos['idActual'];
+        $idAux = $this->completaConCeros($idCarrera);
+        $Carrera->setId($idAux);
+        $Carrera->setNombre($datos['nombreActual']);
         $this->query = "UPDATE CARRERA "
-                . "SET id = {$Carrera->getId()} , nombre = '{$Carrera->getNombre()}' "
-                . "WHERE id = {$id}";
+                . "SET id = '{$Carrera->getId()}' , nombre = '{$Carrera->getNombre()}' "
+                . "WHERE id = '{$id_}'";
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
         if ($consulta) {
             return true;
@@ -76,5 +97,17 @@ class ManejadorCarrera {
         }
     }
 
-}
+    function completaConCeros($id_) {
+        $idCarrera = (String) $id_;
 
+        if (strlen($idCarrera) == 2) {
+            $idCarrera = "0" . $idCarrera;
+        }
+        if (strlen($idCarrera) == 1) {
+            $idCarrera = "00" . $idCarrera;
+        }
+
+        return $idCarrera;
+    }
+
+}

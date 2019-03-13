@@ -1,10 +1,11 @@
 <?php
-include_once '../controlSistema/ManejadorCarrera.php';
 include_once '../lib/Constantes.Class.php';
+include_once '../controlSistema/ManejadorCarrera.php';
 
 $DatosFormulario = $_POST;
 $ManejadorCarrera = new ManejadorCarrera();
-$consulta = $ManejadorCarrera->alta($DatosFormulario);
+$consulta = $ManejadorCarrera->baja($DatosFormulario['id']);
+
 
 
 ?>
@@ -15,16 +16,15 @@ $consulta = $ManejadorCarrera->alta($DatosFormulario);
         <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
-        <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Crear Carrera</title>
+        <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Eliminar Carrera</title>
     </head>
     <body>
         <?php include_once '../gui/navbar.php'; ?>
-
         <div class="container">
             <p></p>
             <div class="card">
                 <div class="card-header">
-                    <h3>Crear Carrera</h3>
+                    <h3>Eliminar Carrera</h3>
                 </div>
                 <div class="card-body">
                     <?php if ($consulta) { ?>

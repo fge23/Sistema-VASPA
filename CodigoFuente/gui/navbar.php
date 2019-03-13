@@ -1,3 +1,5 @@
+<?php include_once '../lib/ControlAcceso.Class.php'; ?>
+
 <!-- Los estilos de navbar son definidos en la libreria css de Bootstrap -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
@@ -35,21 +37,42 @@
                         Permisos
                     </a>
                 </li>
-                <?php } ?>
-                
+            <?php } ?>
+
+            <!--                CREAR EL PERMISO CORRESPONDIENTE EN CONTASNTES Y BD-->
+            <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_PERMISOS)) { ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="../app/salir.php">
-                        <span class="oi oi-account-logout" /> 
-                        Salir
+                    <a class="nav-link" href="../vista/carreras.php">
+                        <span class="oi oi-spreadsheet" />
+                        Carreras
                     </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+                </li>                
+            <?php } ?>
 
 
-    <div class="alert alert-info alert-dismissible fade show" role="alert">
-        Ud. est&aacute; conectad@ como <strong><?= $_SESSION['usuario']->nombre; ?></strong>.
+            <!--                CREAR EL PERMISO CORRESPONDIENTE EN CONTASNTES Y BD-->
+            <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_PERMISOS)) { ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="../vista/profesores.php">
+                        <span class="oi oi-people" />
+                        Profesores
+                    </a>
+                </li>                
+            <?php } ?>
+
+            <li class="nav-item">
+                <a class="nav-link" href="../app/salir.php">
+                    <span class="oi oi-account-logout" /> 
+                    Salir
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+    Ud. est&aacute; conectad@ como <strong><?= $_SESSION['usuario']->nombre; ?></strong>.
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>

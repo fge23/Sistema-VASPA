@@ -58,7 +58,7 @@ $Carreras = $ManejadorCarrera->getColeccion();
                                             <span class="oi oi-pencil"></span>
                                         </button>
                                     </a>
-                                    <a title="Eliminar" href="#">
+                                    <a title="Eliminar" href="carrera.eliminar.php?id=<?= $Carrera->getId(); ?>">
                                         <button type="button" class="btn btn-outline-danger">
                                             <span class="oi oi-trash"></span>
                                         </button>

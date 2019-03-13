@@ -1,6 +1,8 @@
 <?php
-include_once '../lib/Constantes.Class.php';
+include_once '../lib/Constantes.Class.php';;
 include_once '../controlSistema/ManejadorCarrera.php';
+
+
 $codCarrera = $_GET["id"];
 
 $Carrera = new Carrera($codCarrera);
@@ -17,7 +19,8 @@ $Carrera = new Carrera($codCarrera);
 
     </head>
     <body>
-        <?php // include_once '../gui/navbar.php'; ?>
+        <?php include_once '../gui/navbar.php';
+        ?>
         <div class="container">
             <form action="carrera.modificar.procesar.php" method="post">
                 <div class="card">
@@ -32,16 +35,16 @@ $Carrera = new Carrera($codCarrera);
                     <div class="card-body">
                         
                           <div class="form-group">
-                            <label for="inputCodigo">Nombre</label>
-                            <input type="number" name="codCarrera" class="form-control" id="inputCodigo" value="<?= $Carrera->getCodCarrera(); ?>" placeholder="Ingrese el nombre del Permiso" required="">
+                              <label for="inputCodigo">C&oacute;digo de Carrera</label>
+                              <input type="number" name="idActual" class="form-control" id="inputCodigo" value="<?= $Carrera->getId(); ?>" placeholder="C&oacute;digo de Carrera" required="">
                         </div>
                         
                         <div class="form-group">
-                            <label for="inputNombre">Nombre</label>
-                            <input type="text" name="nombre" class="form-control" id="inputNombre" value="<?= $Carrera->getNombre(); ?>" placeholder="Ingrese el nombre del Permiso" required="">
+                            <label for="inputNombre">Nombre de Carrera</label>
+                            <input type="text" name="nombreActual" class="form-control" id="inputNombre" value="<?= $Carrera->getNombre(); ?>" placeholder="Nombre de la Carrera" required="">
                         </div>
                          
-                        <input type="hidden" name="codCarreraAnterior" value="<?= $Carrera->getCodCarrera(); ?>">
+                        <input type="hidden" name="idAnterior" value="<?= $Carrera->getId(); ?>">
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-outline-success">
@@ -56,6 +59,6 @@ $Carrera = new Carrera($codCarrera);
                 </div>
             </form>
         </div>
-        <?php include_once '../gui/footer.php'; ?>
+        <?php  include_once '../gui/footer.php'; ?>
     </body>
 </html>

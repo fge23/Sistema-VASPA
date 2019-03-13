@@ -4,7 +4,7 @@ include_once '../controlSistema/ManejadorCarrera.php';
 
 $DatosFormulario = $_POST;
 $ManejadorCarrera = new ManejadorCarrera();
-$consulta = $ManejadorCarrera->modificacion($DatosFormulario,$DatosFormulario['codCarreraAnterior']);
+$consulta = $ManejadorCarrera->modificacion($DatosFormulario,$DatosFormulario['idAnterior']);
 
 
 
@@ -19,7 +19,7 @@ $consulta = $ManejadorCarrera->modificacion($DatosFormulario,$DatosFormulario['c
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Actualizar Carrera</title>
     </head>
     <body>
-        <?php // include_once '../gui/navbar.php'; ?>
+        <?php include_once '../gui/navbar.php'; ?>
         <div class="container">
             <p></p>
             <div class="card">
