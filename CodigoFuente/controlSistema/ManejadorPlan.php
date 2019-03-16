@@ -1,5 +1,6 @@
 <?php
 
+
 include_once '../modeloSistema/BDConexionSistema.Class.php';
 include_once '../modeloSistema/Plan.Class.php';
 
@@ -52,42 +53,13 @@ class ManejadorPlan {
 
     //Funcion para Alta de Planes
     function alta($datos) {
-       
+
         //Creo objeto sin enviar ID y enviando todos los datos del formulario
-        $Plan = new Plan(null,$datos);
+        $Plan = new Plan(null, $datos);
         
         $this->query = "INSERT INTO PLAN "
                 . "VALUES ('{$Plan->getId()}',{$Plan->getAnio_inicio()},'{$Plan->getIdCarrera()}',{$Plan->getAnio_fin()} )";
-        
-        $consulta = BDConexionSistema::getInstancia()->query($this->query);
-        if ($consulta) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    function baja($id_){
-        $this->query = "DELETE FROM CARRERA WHERE id = '{$id_}'";
-        $consulta = BDConexionSistema::getInstancia()->query($this->query);
-        if ($consulta) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    
-    //Funcion para Modificación de Carreras
-    function modificacion($datos, $id_) {
-        $Carrera = new Carrera();
-        $idCarrera = $datos['idActual'];
-        $idAux = $this->completaConCeros($idCarrera);
-        $Carrera->setId($idAux);
-        $Carrera->setNombre($datos['nombreActual']);
-        $this->query = "UPDATE CARRERA "
-                . "SET id = '{$Carrera->getId()}' , nombre = '{$Carrera->getNombre()}' "
-                . "WHERE id = '{$id_}'";
+
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
         if ($consulta) {
             return true;
@@ -96,5 +68,49 @@ class ManejadorPlan {
         }
     }
 
+    function baja($id_) {
+        $this->query = "DELETE FROM PLAN WHERE id = '{$id_}'";
+        $consulta = BDConexionSistema::getInstancia()->query($this->query);
+        if ($consulta) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //Funcion para Modificación de Planes
+    function modificacion($datos, $id_) {
+     
+        $Plan = new Plan(null, $datos);
+        $this->query = "UPDATE PLAN "
+                . "SET id = '{$Plan->getId()}' ,"
+                . " anio_inicio = {$Plan->getAnio_inicio()}, "
+                        . "idCarrera = '{$Plan->getIdCarrera()}' ,"
+                        . "anio_fin = {$Plan->getAnio_fin()}"
+                . "WHERE id = '{$id_}'";
+        $consulta = BDConexionSistema::getInstancia()->query($this->query);
+        if ($consulta) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    /* Metodo innecesario ya que se puede recuperar directamente (tenia la cabeza quemada)
+
+    function buscarCarrera($idPlan) {
+        $this->query = "SELECT plan.idCarrera as idCarrera "
+                . "FROM CARRERA carrera "
+                . "INNER JOIN PLAN plan "
+                . "ON carrera.id = plan.idCarrera "
+                . "WHERE plan.id = '{$idPlan}'";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+       for ($x = 0; $x < $this->datos->num_rows; $x++) {
+          $fila =  $this->datos->fetch_row();
+          return $fila[0];
+        }        
+    }
+      */
+     
 
 }

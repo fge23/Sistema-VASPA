@@ -81,11 +81,10 @@ class ManejadorCarrera {
     
     //Funcion para Modificación de Carreras
     function modificacion($datos, $id_) {
-        $Carrera = new Carrera();
-        $idCarrera = $datos['idActual'];
+        $Carrera = new Carrera(null, $datos);
+        $idCarrera = $datos['id'];
         $idAux = $this->completaConCeros($idCarrera);
         $Carrera->setId($idAux);
-        $Carrera->setNombre($datos['nombreActual']);
         $this->query = "UPDATE CARRERA "
                 . "SET id = '{$Carrera->getId()}' , nombre = '{$Carrera->getNombre()}' "
                 . "WHERE id = '{$id_}'";

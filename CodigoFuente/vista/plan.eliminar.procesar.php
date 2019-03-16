@@ -1,11 +1,11 @@
 <?php
-include_once '../controlSistema/ManejadorPlan.php';
 include_once '../lib/Constantes.Class.php';
-//HACER TODO
+include_once '../controlSistema/ManejadorPlan.php';
+
 $DatosFormulario = $_POST;
 $ManejadorPlan = new ManejadorPlan();
-$idPlan = $_GET['idAnterior'];
-$consulta = $ManejadorPlan->modificacion($DatosFormulario, $idPlan);
+$consulta = $ManejadorPlan->baja($DatosFormulario['id']);
+
 
 
 ?>
@@ -16,16 +16,15 @@ $consulta = $ManejadorPlan->modificacion($DatosFormulario, $idPlan);
         <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
-        <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Crear Plan</title>
+        <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Eliminar Plan</title>
     </head>
     <body>
         <?php include_once '../gui/navbar.php'; ?>
-
         <div class="container">
             <p></p>
             <div class="card">
                 <div class="card-header">
-                    <h3>Crear Plan</h3>
+                    <h3>Eliminar Plan</h3>
                 </div>
                 <div class="card-body">
                     <?php if ($consulta) { ?>

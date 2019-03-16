@@ -1,10 +1,13 @@
 <?php
 include_once '../lib/ControlAcceso.Class.php';
-//HACER TODO
-
+include_once '../modeloSistema/Plan.Class.php';
 include_once '../controlSistema/ManejadorCarrera.php';
+
 $ManejadorCarrera = new ManejadorCarrera();
 $Carreras = $ManejadorCarrera->getColeccion();
+$idPlan = $_GET["id"];
+$Plan = new Plan($idPlan, null);
+
 ?>
 
 <html>
@@ -32,32 +35,43 @@ $Carreras = $ManejadorCarrera->getColeccion();
                     <div class="card-body">
                         <h4>Propiedades</h4>
                         
-                           <div class="form-group">
-                               <label for="inputCodigoPlan">C&oacute;digo del Plan</label>
+                        <div class="form-group">
+                            <label for="inputCodigoPlan">C&oacute;digo del Plan</label>
                             <!--En el año maximo se coloca el año actual + 1-->
-                            <input type="text" name="id" class="form-control" id="inputCodigoPlan" placeholder="Ingrese el c&oacute;digo del Plan" required="">
+                            <input type="text" name="id" class="form-control" id="inputCodigoPlan" placeholder="Ingrese el c&oacute;digo del Plan" value="<?= $Plan->getId();?>" required="">
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="selectCarrera">Carrera</label>
                             <select class="form-control" id="selectCarrera" name="idCarrera" >
                                 <?php foreach ($Carreras as $Carrera) { ?>
-                                    <option value="<?= $Carrera->getId(); ?>"><?= $Carrera->getNombre(); ?></option>
+                                <option
+                                     <?php 
+                                        if($Plan->getIdCarrera() == $Carrera->getId()){
+                                           echo "selected";
+                                       }
+                                    ?>
+                                    
+                                    value="<?= $Carrera->getId(); ?>" ><?= $Carrera->getNombre(); ?>
+                                   
+                                </option> 
                                 <?php } ?> </select>
                         </div>
 
                         <div class="form-group">
                             <label for="inputAnioInicio">A&ntilde;o de Inicio</label>
                             <!--En el año maximo se coloca el año actual + 1-->
-                            <input type="number" name="anio_inicio" class="form-control" min="1980" max="<?= date("Y") + 1; ?>" id="inputAnioInicio" placeholder="Ingrese el inicio del Plan" required="">
+                            <input type="number" name="anio_inicio" class="form-control" min="1980" max="<?= date("Y") + 1; ?>" value="<?= $Plan->getAnio_inicio();?>" id="inputAnioInicio" placeholder="Ingrese el inicio del Plan" required="">
                         </div>
 
                         <div class="form-group">
                             <label for="inputAnioInicio">A&ntilde;o de Fin</label>
                             <!--En el año maximo se coloca el año actual + 25-->
-                            <input type="number" name="anio_fin" class="form-control" min="1980" max="<?= date("Y") + 25; ?>" id="inputAnioInicio" placeholder="Ingrese el inicio del Plan" required="">
+                            <input type="number" name="anio_fin" class="form-control" min="1980" max="<?= date("Y") + 25; ?>" value="<?= $Plan->getAnio_fin();?>"  id="inputAnioInicio" placeholder="Ingrese el inicio del Plan" required="">
                         </div>
                         
+                        <input type="hidden" name="idAnterior" value="<?= $Plan->getId(); ?>">
+
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-outline-success">

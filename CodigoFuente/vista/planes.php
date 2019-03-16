@@ -40,6 +40,7 @@ $Planes = $ManejadorPlan->getColeccion();
                         <tr class="table-info">
                             <th>C&oacute;digo de la Carrera</th>
                             <th>Carrera</th>
+                            <th>C&oacute;digo de Plan</th>
                             <th>A&ntilde;o de Inicio</th>
                             <th>A&ntilde;o de Fin</th>
                             <th>Opciones</th>
@@ -51,6 +52,7 @@ $Planes = $ManejadorPlan->getColeccion();
                                 ?>
                                 <td><?= $Carrera->getId(); ?></td>
                                 <td><?= $Carrera->getNombre(); ?></td>
+                                <td><?= $Plan->getId(); ?></td>
                                 <td><?= $Plan->getAnio_inicio(); ?></td>
                                 <td><?= $Plan->getAnio_fin(); ?></td>
 
@@ -60,12 +62,12 @@ $Planes = $ManejadorPlan->getColeccion();
                                             <span class="oi oi-zoom-in"></span>
                                         </button>
                                     </a>
-                                    <a title="Modificar" href="plan.modificar.php?id=<?= "a"; //$Carrera->getId();     ?>">
+                                    <a title="Modificar" href="plan.modificar.php?id=<?= $Plan->getId(); ?>">
                                         <button type="button" class="btn btn-outline-warning">
                                             <span class="oi oi-pencil"></span>
                                         </button>
                                     </a>
-                                    <a title="Eliminar" href="plan.eliminar.php?id=<?= "a"; //$Carrera->getId();     ?>">
+                                    <a title="Eliminar" href="plan.eliminar.php?id=<?= $Plan->getId(); ?>">
                                         <button type="button" class="btn btn-outline-danger">
                                             <span class="oi oi-trash"></span>
                                         </button>

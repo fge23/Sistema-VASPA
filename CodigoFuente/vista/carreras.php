@@ -5,7 +5,6 @@ include_once '../lib/ControlAcceso.Class.php';
 
 $ManejadorCarrera = new ManejadorCarrera();
 $Carreras = $ManejadorCarrera->getColeccion();
-
 ?>
 
 <html>
@@ -20,7 +19,7 @@ $Carreras = $ManejadorCarrera->getColeccion();
     </head>
     <body>
 
-        <?php include_once '../gui/navbar.php';   ?>
+        <?php include_once '../gui/navbar.php'; ?>
 
         <div class="container">
             <div class="card">
@@ -44,7 +43,7 @@ $Carreras = $ManejadorCarrera->getColeccion();
                         </tr>
                         <tr>
                             <?php foreach ($Carreras as $Carrera) { ?>
-                            <td><?= $Carrera->getId(); ?></td>
+                                <td><?= $Carrera->getId(); ?></td>
                                 <td><?= $Carrera->getNombre(); ?></td>
 
                                 <td>
