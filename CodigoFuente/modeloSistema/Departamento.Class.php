@@ -16,26 +16,37 @@ class Departamento {
      * @var mysqli_result
      */
     private $datos;
-    
-     function __construct($id = null) {
+        
+    function __construct($id = null, $datos = null) {
 
-        if (isset($id)) {
-            $this->id = $id;
-            
-            $this->query = "SELECT * FROM DEPARTAMENTO WHERE id = {$this->id}";
-           
-            $this->datos = BDConexionSistema::getInstancia()->query($this->query);
-           
-            $this->datos = $this->datos->fetch_assoc();
-
-            foreach ($this->datos as $atributo => $valor) {
-                $this->{$atributo} = $valor;
-            }
-            unset($this->query);
-            unset($this->datos);
+        //Si vienen datos de formulario (Alta) setea valores de Objeto
+        if (isset($datos)) {
+            $this->setId($datos['id']);
+            $this->setNombre($datos['nombre']);
         } else {
-            return false;
+            //Sino viene un nuevo Objeto, lo recupero (para Modificar)
+            if (isset($id)) {
+                $this->recuperaObjeto($id);
+            } else {
+                return false;
+            }
         }
+    }
+    
+    function recuperaObjeto($id) {
+        $this->id = $id;
+
+        $this->query = "SELECT * FROM DEPARTAMENTO WHERE id = '{$this->id}'";
+
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+
+        $this->datos = $this->datos->fetch_assoc();
+
+        foreach ($this->datos as $atributo => $valor) {
+            $this->{$atributo} = $valor;
+        }
+        unset($this->query);
+        unset($this->datos);
     }
     
     function getId() {
