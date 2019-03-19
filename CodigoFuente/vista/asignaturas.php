@@ -31,7 +31,7 @@ $Asignaturas = $ManejadorAsignatura->getColeccion();
                 </div>
                 <div class="card-body">
                     <p>
-                        <a href="carrera.crear.php">
+                        <a href="asignatura.crear.php">
                             <button type="button" class="btn btn-success">
                                 <span class="oi oi-plus"></span> Nueva Asignatura
                             </button>

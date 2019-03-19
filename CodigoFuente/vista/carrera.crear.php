@@ -28,7 +28,7 @@ include_once '../lib/ControlAcceso.Class.php';
                         <h4>Propiedades</h4>
                         <div class="form-group">
                             <label for="inputCodigo">C&oacute;digo de Carrera</label>
-                            <input type="number" name="id" class="form-control" id="inputCodigo" placeholder="Ingrese el C&oacute;digo de la Carrera" max="999" required="">
+                            <input type="number" name="id" class="form-control" id="inputCodigo" placeholder="Ingrese el C&oacute;digo de la Carrera" min="001" max="999" required="">
                         </div>
                         
                            <div class="form-group">
