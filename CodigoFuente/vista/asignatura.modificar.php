@@ -7,12 +7,14 @@ include_once '../controlSistema/ManejadorAsignatura.php';
 $ManejadorDepartamento = new ManejadorDepartamento();
 $Departamentos = $ManejadorDepartamento->getColeccion();
 
+
 $ManejadorProfesor = new ManejadorProfesor();
 $Profesores = $ManejadorProfesor->getColeccion();
 
 $codAsignatura = $_GET["id"];
 
 $Asignatura = new Asignatura($codAsignatura);
+
 
 //A medias, todavia faltan cosas por hacer pero ya está arrancado
 ?>
@@ -50,37 +52,56 @@ $Asignatura = new Asignatura($codAsignatura);
                         <h4>Propiedades</h4>
                         <div class="form-group">
                             <label for="inputCodigo">C&oacute;digo de Asignatura</label>
-                            <input type="number" value="<?= $Asignatura->getId();?>" name="id" class="form-control" id="inputCodigo" placeholder="Ingrese el C&oacute;digo de la Asignatura" min="0001" max="9999" required="">
+                            <input type="number" value="<?= $Asignatura->getId(); ?>" name="id" class="form-control" id="inputCodigo" placeholder="Ingrese el C&oacute;digo de la Asignatura" min="0001" max="9999" required="">
                         </div>
 
                         <div class="form-group">
                             <label for="inputNombre">Nombre</label>
-                            <input type="text" value="<?= $Asignatura->getNombre();?>" name="nombre" class="form-control" id="inputNombre" placeholder="Ingrese el nombre de la Asignatura" required="">
+                            <input type="text" value="<?= $Asignatura->getNombre(); ?>" name="nombre" class="form-control" id="inputNombre" placeholder="Ingrese el nombre de la Asignatura" required="">
                         </div>
                         <div class="form-group">
                             <label for="selectDepartamento">Departamento</label>
                             <select class="form-control" id="selectDepartamento" name="departamento" >
                                 <?php foreach ($Departamentos as $Departamento) { ?>
-                                    <option value="<?= $Departamento->getId(); ?>"><?= $Departamento->getNombre(); ?></option>
+                                    <option   
+                                    <?php
+                                    if ($Asignatura->getIdDepartamento() == $Departamento->getId()) {
+                                        echo "selected";
+                                    }
+                                    ?>
+                                        value="<?= $Departamento->getId(); ?>"><?= $Departamento->getNombre(); ?>
+                                    </option>
                                 <?php } ?> </select>
                         </div>
-                     
+
                         <div class="form-group">
                             <label for="selectProfesor">Docente Responsable</label>
                             <br>
                             <select name="idProfesor" data-placeholder="Seleccione un Docente" class="chosen-select" tabindex="2" id="selectProfesor">
                                 <option value=""></option>
-                                 <?php foreach ($Profesores as $Profesor) { ?>
-                                    <option value="<?= $Profesor->getId(); ?>"><?= $Profesor->getApellido() . ", " . $Profesor->getNombre(); ?></option>
+                                <?php foreach ($Profesores as $Profesor) { ?>
+                                    <option 
+                                    <?php
+                                    if ($Asignatura->getIdProfesor() == $Profesor->getId()) {
+                                        echo "selected";
+                                    }
+                                    ?>
+                                        value="<?= $Profesor->getId(); ?>"><?= $Profesor->getApellido() . ", " . $Profesor->getNombre(); ?>
+                                    </option>
                                 <?php } ?>
+
+
+
 
                             </select>
                         </div>
 
-                            <div class="form-group">
+                        <div class="form-group">
                             <label for="txtAreaContenidosMinimos">Contenidos M&iacute;nimos</label>
-                            <textarea class="form-control" rows="5" name="contenidosMinimos" id="txtAreaContenidosMinimos"><?= $Asignatura->getContenidosMinimos();?></textarea>
+                            <textarea class="form-control" rows="5" name="contenidosMinimos" id="txtAreaContenidosMinimos"><?= $Asignatura->getContenidosMinimos(); ?></textarea>
                         </div>
+
+                        <input type="hidden" name="idAnterior" value="<?= $Asignatura->getId(); ?>">
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-outline-success">

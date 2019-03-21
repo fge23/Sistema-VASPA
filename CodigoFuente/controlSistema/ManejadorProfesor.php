@@ -77,7 +77,7 @@ class ManejadorProfesor {
         }
     }
 
-    //Funcion para Modificación de Planes
+    //Funcion para Modificación de Profesores
     function modificacion($datos, $id_) {
      
         $Profesor = new Profesor(null, $datos);

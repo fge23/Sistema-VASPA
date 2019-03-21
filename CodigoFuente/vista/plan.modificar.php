@@ -22,7 +22,7 @@ $Plan = new Plan($idPlan, null);
     <body>
         <?php include_once '../gui/navbar.php'; ?>
         <div class="container">
-            <form action="plan.crear.procesar.php" method="post"> 
+            <form action="plan.modificar.procesar.php" method="post"> 
                 <div class="card">
                     <div class="card-header">
                         <h3>Modificar Plan</h3>

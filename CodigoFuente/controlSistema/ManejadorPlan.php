@@ -80,14 +80,15 @@ class ManejadorPlan {
 
     //Funcion para Modificación de Planes
     function modificacion($datos, $id_) {
-     
+
         $Plan = new Plan(null, $datos);
         $this->query = "UPDATE PLAN "
                 . "SET id = '{$Plan->getId()}' ,"
                 . " anio_inicio = {$Plan->getAnio_inicio()}, "
-                        . "idCarrera = '{$Plan->getIdCarrera()}' ,"
-                        . "anio_fin = {$Plan->getAnio_fin()}"
+                . "idCarrera = '{$Plan->getIdCarrera()}' ,"
+                . "anio_fin = {$Plan->getAnio_fin()} "
                 . "WHERE id = '{$id_}'";
+        
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
         if ($consulta) {
             return true;

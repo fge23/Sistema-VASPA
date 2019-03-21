@@ -59,7 +59,7 @@ $Asignaturas = $ManejadorAsignatura->getColeccion();
                                             <span class="oi oi-pencil"></span>
                                         </button>
                                     </a>
-                                    <a title="Eliminar" href="#">
+                                    <a title="Eliminar" href="../vista/asignatura.eliminar.php?id=<?= $Asignatura->getId(); ?>">
                                         <button type="button" class="btn btn-outline-danger">
                                             <span class="oi oi-trash"></span>
                                         </button>

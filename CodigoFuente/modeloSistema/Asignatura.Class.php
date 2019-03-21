@@ -1,4 +1,5 @@
 <?php
+
 include_once 'BDConexionSistema.Class.php';
 include_once 'Carrera.Class.php';
 include_once 'Profesor.Class.php';
@@ -12,7 +13,7 @@ class Asignatura {
 
     protected $id;
     protected $nombre;
-    protected $departamento;
+    protected $idDepartamento;
     protected $contenidosMinimos;
     protected $idProfesor;
     private $query;
@@ -30,7 +31,7 @@ class Asignatura {
             $this->setId($datos['id']);
             $this->setNombre($datos['nombre']);
             $this->setContenidosMinimos($datos['contenidosMinimos']);
-            $this->setDepartamento($datos['departamento']);
+            $this->setIdDepartamento($datos['departamento']);
             $this->setIdProfesor($datos['idProfesor']);
         } else {
             //Sino viene un nuevo Objeto, lo recupero (para Modificar)
@@ -58,6 +59,14 @@ class Asignatura {
         unset($this->datos);
     }
 
+    function getIdDepartamento() {
+        return $this->idDepartamento;
+    }
+
+    function setIdDepartamento($idDepartamento) {
+        $this->idDepartamento = $idDepartamento;
+    }
+
     function getId() {
         return $this->id;
     }
@@ -73,9 +82,6 @@ class Asignatura {
     function setNombre($nombre) {
         $this->nombre = $nombre;
     }
-    function getDepartamento() {
-        return $this->departamento;
-    }
 
     function getContenidosMinimos() {
         return $this->contenidosMinimos;
@@ -83,10 +89,6 @@ class Asignatura {
 
     function getIdProfesor() {
         return $this->idProfesor;
-    }
-
-    function setDepartamento($departamento) {
-        $this->departamento = $departamento;
     }
 
     function setContenidosMinimos($contenidosMinimos) {
@@ -101,139 +103,139 @@ class Asignatura {
      * 
      * @return Carrera[]
      */
-    function  getCarreras(){
+    function getCarreras() {
         $this->query = "SELECT carrera.id, carrera.nombre FROM asignatura JOIN plan_asignatura JOIN plan JOIN carrera WHERE asignatura.id = plan_asignatura.idAsignatura AND plan_asignatura.idPlan = plan.id AND plan.idCarrera = carrera.id AND asignatura.id = {$this->id}";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
-        
+
         //$Carreras[];
-        
+
         for ($x = 0; $x < $this->datos->num_rows; $x++) {
             $Carreras[] = $this->datos->fetch_object("Carrera");
             //$this->addElemento($this->datos->fetch_object("Carrera"));
         }
-        
+
         unset($this->query);
         unset($this->datos);
-        
+
         return $Carreras;
     }
-    
+
     /**
      * 
      * @return Profesor[]
      */
-    function  getProfesoresPractica(){
+    function getProfesoresPractica() {
         $this->query = "SELECT profesor_asignatura.idProfesor FROM profesor_asignatura JOIN asignatura WHERE asignatura.id = profesor_asignatura.idAsignatura AND rol LIKE 'practica' AND asignatura.id = {$this->id}";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
-        $Profesores = NULL;   
+        $Profesores = NULL;
         for ($x = 0; $x < $this->datos->num_rows; $x++) {
             $resultado = $this->datos->fetch_assoc();
             $Profesores[] = new Profesor($resultado['idProfesor']);
         }
-        
+
         unset($this->query);
         unset($this->datos);
-        
+
         return $Profesores;
     }
-    
+
     /**
      * 
      * @return Profesor[]
      */
-    function  getProfesoresTeoria(){
+    function getProfesoresTeoria() {
         $this->query = "SELECT profesor_asignatura.idProfesor FROM profesor_asignatura JOIN asignatura WHERE asignatura.id = profesor_asignatura.idAsignatura AND rol LIKE 'teoria' AND asignatura.id = {$this->id}";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
-        $Profesores = NULL;   
+        $Profesores = NULL;
         for ($x = 0; $x < $this->datos->num_rows; $x++) {
             $resultado = $this->datos->fetch_assoc();
             $Profesores[] = new Profesor($resultado['idProfesor']);
         }
-        
+
         unset($this->query);
         unset($this->datos);
-        
+
         return $Profesores;
     }
-    
+
     /**
      * 
      * @return Asignatura[]
      */
-    function getAsigCorrelativaPrecedenteAprobada(){
+    function getAsigCorrelativaPrecedenteAprobada() {
         $this->query = "SELECT idAsignatura_Correlativa_Anterior AS codAsignatura FROM asignatura JOIN correlativad WHERE idAsignatura = asignatura.id AND requisito LIKE 'Aprobada' AND asignatura.id LIKE '{$this->id}'";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
         $Asignaturas = NULL;
-        if ($this->datos->num_rows > 0){
+        if ($this->datos->num_rows > 0) {
             for ($x = 0; $x < $this->datos->num_rows; $x++) {
                 $resultado = $this->datos->fetch_assoc();
                 $Asignaturas[] = new Asignatura($resultado['codAsignatura']);
             }
         }
-        
-        
+
+
         unset($this->query);
         unset($this->datos);
-        
+
         return $Asignaturas;
     }
-    
-    function getAsigCorrelativaPrecedenteCursada(){
+
+    function getAsigCorrelativaPrecedenteCursada() {
         $this->query = "SELECT idAsignatura_Correlativa_Anterior AS codAsignatura FROM asignatura JOIN correlativad WHERE idAsignatura = asignatura.id AND requisito LIKE 'Regular' AND asignatura.id LIKE '{$this->id}'";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
         $Asignaturas = NULL;
-        if ($this->datos->num_rows > 0){
+        if ($this->datos->num_rows > 0) {
             for ($x = 0; $x < $this->datos->num_rows; $x++) {
                 $resultado = $this->datos->fetch_assoc();
                 $Asignaturas[] = new Asignatura($resultado['codAsignatura']);
             }
         }
-        
-        
+
+
         unset($this->query);
         unset($this->datos);
-        
+
         return $Asignaturas;
     }
-    
+
     /**
      * 
      * @return Asignatura[]
      */
-    function getAsigCorrelativaSubsiguienteAprobada(){
+    function getAsigCorrelativaSubsiguienteAprobada() {
         $this->query = "SELECT id AS codAsignatura FROM asignatura JOIN correlativad WHERE idAsignatura_Correlativa_Anterior = asignatura.id AND requisito LIKE 'Aprobada' AND asignatura.id LIKE '{$this->id}'";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
         $Asignaturas = NULL;
-        if ($this->datos->num_rows > 0){
+        if ($this->datos->num_rows > 0) {
             for ($x = 0; $x < $this->datos->num_rows; $x++) {
                 $resultado = $this->datos->fetch_assoc();
                 $Asignaturas[] = new Asignatura($resultado['codAsignatura']);
             }
         }
-        
-        
+
+
         unset($this->query);
         unset($this->datos);
-        
+
         return $Asignaturas;
     }
-    
-    function getAsigCorrelativaSubsiguienteCursada(){
+
+    function getAsigCorrelativaSubsiguienteCursada() {
         $this->query = "SELECT id AS codAsignatura FROM asignatura JOIN correlativad WHERE idAsignatura_Correlativa_Anterior = asignatura.id AND requisito LIKE 'Regular' AND asignatura.id LIKE '{$this->id}'";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
         $Asignaturas = NULL;
-        if ($this->datos->num_rows > 0){
+        if ($this->datos->num_rows > 0) {
             for ($x = 0; $x < $this->datos->num_rows; $x++) {
                 $resultado = $this->datos->fetch_assoc();
                 $Asignaturas[] = new Asignatura($resultado['codAsignatura']);
             }
         }
-        
-        
+
+
         unset($this->query);
         unset($this->datos);
-        
+
         return $Asignaturas;
     }
-    
+
 }

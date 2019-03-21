@@ -56,10 +56,9 @@ class ManejadorAsignatura {
         $Asignatura = new Asignatura(null, $datos);
         
         $this->query = "INSERT INTO ASIGNATURA "
-                . "VALUES ('{$Asignatura->getId()}', '{$Asignatura->getNombre()}', {$Asignatura->getDepartamento()} , "
+                . "VALUES ('{$Asignatura->getId()}', '{$Asignatura->getNombre()}', {$Asignatura->getIdDepartamento()} , "
                 . "'{$Asignatura->getContenidosMinimos()}', {$Asignatura->getIdProfesor()} )";
-                
-        var_dump($this->query);       
+                     
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
         
         if ($consulta) {
@@ -68,20 +67,34 @@ class ManejadorAsignatura {
             return false;
         }
     }
-//    
-//    function modificacion($datos, $id){
-//        $Carrera = new Carrera();
-//        $Carrera->setId($datos['id']);
-//        $Carrera->setNombre($datos['nombre']);
-//        $this->query = "UPDATE CARRERA "
-//                . "SET id = {$Carrera->getId()} , nombre = '{$Carrera->getNombre()}' "
-//                . "WHERE id = {$id}";
-//        $consulta = BDConexionSistema::getInstancia()->query($this->query);
-//        if ($consulta) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
+    
+       function baja($id_) {
+        $this->query = "DELETE FROM ASIGNATURA WHERE id = '{$id_}'";
+        $consulta = BDConexionSistema::getInstancia()->query($this->query);
+        if ($consulta) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+     //Funcion para Modificación de Asignaturas
+    function modificacion($datos, $id_) {
+     
+        $Asignatura = new Asignatura(null, $datos);
+        $this->query = "UPDATE ASIGNATURA "
+                . "SET id = '{$Asignatura->getId()}', "
+                        . "nombre = '{$Asignatura->getNombre()}', "
+                        . "idDepartamento = {$Asignatura->getIdDepartamento()} , "
+                        . "contenidosMinimos = '{$Asignatura->getContenidosMinimos()}' , "
+                        . "idProfesor = {$Asignatura->getIdProfesor()} "
+                        . "WHERE id = '{$id_}'";
+        $consulta = BDConexionSistema::getInstancia()->query($this->query);
+        if ($consulta) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }
