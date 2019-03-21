@@ -1,7 +1,7 @@
 <?php
 include_once '../lib/ControlAcceso.Class.php';
 include_once '../controlSistema/ManejadorDepartamento.php';
-$ManejadorDepartamento = new ManejadorDepartamento();
+$ManejadorDepartamento= new ManejadorDepartamento();
 $Departamentos = $ManejadorDepartamento->getColeccion();
 ?>
 

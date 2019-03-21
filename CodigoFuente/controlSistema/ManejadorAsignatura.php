@@ -49,19 +49,25 @@ class ManejadorAsignatura {
         return $this->coleccion;
     }
 
-//    function alta($datos) {
-//        $Carrera = new Carrera();
-//        $Carrera->setId($datos['id']);
-//        $Carrera->setNombre($datos['nombre']);
-//        $this->query = "INSERT INTO CARRERA "
-//                . "VALUES ({$Carrera->setId()},'{$Carrera->getNombre()}')";
-//        $consulta = BDConexionSistema::getInstancia()->query($this->query);
-//        if ($consulta) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
+     //Funcion para Alta de Asignaturas
+    function alta($datos) {
+
+        //Creo objeto sin enviar ID y enviando todos los datos del formulario
+        $Asignatura = new Asignatura(null, $datos);
+        
+        $this->query = "INSERT INTO ASIGNATURA "
+                . "VALUES ('{$Asignatura->getId()}', '{$Asignatura->getNombre()}', {$Asignatura->getDepartamento()} , "
+                . "'{$Asignatura->getContenidosMinimos()}', {$Asignatura->getIdProfesor()} )";
+                
+        var_dump($this->query);       
+        $consulta = BDConexionSistema::getInstancia()->query($this->query);
+        
+        if ($consulta) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 //    
 //    function modificacion($datos, $id){
 //        $Carrera = new Carrera();

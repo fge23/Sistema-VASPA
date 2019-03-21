@@ -30,6 +30,7 @@ class Asignatura {
             $this->setId($datos['id']);
             $this->setNombre($datos['nombre']);
             $this->setContenidosMinimos($datos['contenidosMinimos']);
+            $this->setDepartamento($datos['departamento']);
             $this->setIdProfesor($datos['idProfesor']);
         } else {
             //Sino viene un nuevo Objeto, lo recupero (para Modificar)

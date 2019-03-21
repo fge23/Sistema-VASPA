@@ -77,16 +77,19 @@ class ManejadorProfesor {
         }
     }
 
-    //Funcion para Modificación de Profesores
+    //Funcion para Modificación de Planes
     function modificacion($datos, $id_) {
      
         $Profesor = new Profesor(null, $datos);
         $this->query = "UPDATE PROFESOR "
-                . "SET dni = '{$Profesor->getDni()}', "
+                . "SET id = '{$Profesor->getId()}', "
+                . " dni = '{$Profesor->getDni()}', "
                         . "nombre = '{$Profesor->getNombre()}', "
-                        . "apellido = '{$Profesor->getApellido()}', "
-                        . "email = '{$Profesor->getEmail()}', "
-                        . "idDepartamento = '{$Profesor->getIdDepartamento()}' "
+                        . "apellido = '{$Profesor->getApellido()}' ,"
+                        . "email = '{$Profesor->getEmail()}' ,"
+                        . "categoria = '{$Profesor->getCategoria()}' ,"
+                        . "preferencias = '{$Profesor->getPreferencias()}' ,"
+                        . "idDepartamento = '{$Profesor->getIdDepartamento()}' ,"
                         . "WHERE id = '{$id_}'";
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
         if ($consulta) {

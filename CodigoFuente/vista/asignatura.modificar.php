@@ -2,12 +2,19 @@
 include_once '../lib/ControlAcceso.Class.php';
 include_once '../controlSistema/ManejadorDepartamento.php';
 include_once '../controlSistema/ManejadorProfesor.php';
+include_once '../controlSistema/ManejadorAsignatura.php';
 
 $ManejadorDepartamento = new ManejadorDepartamento();
 $Departamentos = $ManejadorDepartamento->getColeccion();
 
 $ManejadorProfesor = new ManejadorProfesor();
 $Profesores = $ManejadorProfesor->getColeccion();
+
+$codAsignatura = $_GET["id"];
+
+$Asignatura = new Asignatura($codAsignatura);
+
+//A medias, todavia faltan cosas por hacer pero ya está arrancado
 ?>
 
 <html>
@@ -24,15 +31,15 @@ $Profesores = $ManejadorProfesor->getColeccion();
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
         <link href="../lib/chosen_bootstrap/dist/css/component-chosen.css" rel="stylesheet">
-        <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Crear Asignatura</title>
+        <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Actualizar Asignatura</title>
     </head>
     <body>
         <?php include_once '../gui/navbar.php'; ?>
         <div class="container">
-            <form action="asignatura.crear.procesar.php" method="post"> 
+            <form action="asignatura.modificar.procesar.php" method="post"> 
                 <div class="card">
                     <div class="card-header">
-                        <h3>Crear Asignatura</h3>
+                        <h3>Actualizar Asignatura</h3>
                         <p>
                             Complete los campos a continuaci&oacute;n. 
                             Luego, presione el bot&oacute;n <b>Confirmar</b>.<br />
@@ -43,12 +50,12 @@ $Profesores = $ManejadorProfesor->getColeccion();
                         <h4>Propiedades</h4>
                         <div class="form-group">
                             <label for="inputCodigo">C&oacute;digo de Asignatura</label>
-                            <input type="number" name="id" class="form-control" id="inputCodigo" placeholder="Ingrese el C&oacute;digo de la Asignatura" min="0001" max="9999" required="">
+                            <input type="number" value="<?= $Asignatura->getId();?>" name="id" class="form-control" id="inputCodigo" placeholder="Ingrese el C&oacute;digo de la Asignatura" min="0001" max="9999" required="">
                         </div>
 
                         <div class="form-group">
                             <label for="inputNombre">Nombre</label>
-                            <input type="text" name="nombre" class="form-control" id="inputNombre" placeholder="Ingrese el nombre de la Asignatura" required="">
+                            <input type="text" value="<?= $Asignatura->getNombre();?>" name="nombre" class="form-control" id="inputNombre" placeholder="Ingrese el nombre de la Asignatura" required="">
                         </div>
                         <div class="form-group">
                             <label for="selectDepartamento">Departamento</label>
@@ -61,7 +68,7 @@ $Profesores = $ManejadorProfesor->getColeccion();
                         <div class="form-group">
                             <label for="selectProfesor">Docente Responsable</label>
                             <br>
-                            <select name="idProfesor" data-placeholder="Seleccione un Docente" class="chosen-select" tabindex="2" id="selectProfesor" required="true">
+                            <select name="idProfesor" data-placeholder="Seleccione un Docente" class="chosen-select" tabindex="2" id="selectProfesor">
                                 <option value=""></option>
                                  <?php foreach ($Profesores as $Profesor) { ?>
                                     <option value="<?= $Profesor->getId(); ?>"><?= $Profesor->getApellido() . ", " . $Profesor->getNombre(); ?></option>
@@ -72,7 +79,7 @@ $Profesores = $ManejadorProfesor->getColeccion();
 
                             <div class="form-group">
                             <label for="txtAreaContenidosMinimos">Contenidos M&iacute;nimos</label>
-                            <textarea class="form-control" rows="5" name="contenidosMinimos" id="txtAreaContenidosMinimos"></textarea>
+                            <textarea class="form-control" rows="5" name="contenidosMinimos" id="txtAreaContenidosMinimos"><?= $Asignatura->getContenidosMinimos();?></textarea>
                         </div>
                     </div>
                     <div class="card-footer">
