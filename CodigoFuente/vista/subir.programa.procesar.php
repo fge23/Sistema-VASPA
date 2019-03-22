@@ -62,7 +62,7 @@ if (!file_exists($rutaDestino)) {
     //Comprobamos si se subio un archivo
     if (is_uploaded_file($archivo)) {
         //comprobamos que sea un archivo PDF
-        if ($tipo == 'application/pdf') {
+        if ($tipo == "application/pdf") {
             if (move_uploaded_file($archivo, $rutaDestino)) {  //movemos el archivo a su ubicacion   
                 $subido = true;
                 $mensajeExito = 'El programa fue cargado correctamente.';

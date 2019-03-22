@@ -25,7 +25,7 @@ class MYPDF extends TCPDF {
     public function Header() {
     	
         $idPrograma = $_GET['id'];
-        $Programa = new Programa($idPrograma);
+        $Programa = new Programa($idPrograma, null);
     	$Asignatura = $Programa->getAsignatura();
         $Carreras = $Asignatura->getCarreras();
               
@@ -216,12 +216,12 @@ $html .= '</tr>
 
 $ProfesoresPractica = $Asignatura->getProfesoresPractica();
 $ProfesoresTeoria = $Asignatura->getProfesoresTeoria();
-$profesorResponsable = new Profesor($Asignatura->getIdProfesor());
-$departamento = new Departamento($profesorResponsable->getIdDepartamento());
+$profesorResponsable = new Profesor($Asignatura->getIdProfesor(), null);
+$departamento = new Departamento($profesorResponsable->getIdDepartamento(), null);
 
 if ($ProfesoresPractica != NULL && $ProfesoresTeoria == NULL){
     $ProfesorPractica = $ProfesoresPractica[0];
-    $dpto = new Departamento($ProfesorPractica->getIdDepartamento());
+    $dpto = new Departamento($ProfesorPractica->getIdDepartamento(), null);
     $html .= '<tr>
 		<td valign="top" >'.utf8_encode($profesorResponsable->getApellido()).', '.utf8_encode($profesorResponsable->getNombre()).'</td>
 		<td valign="top" >'.utf8_encode($departamento->getNombre()).' </td>
@@ -232,7 +232,7 @@ if ($ProfesoresPractica != NULL && $ProfesoresTeoria == NULL){
     if ($tamanio > 1){
         for ($i=1; $i<$tamanio; $i++){
             $ProfesorPractica = $ProfesoresPractica[$i];
-            $dpto = new Departamento($ProfesorPractica->getIdDepartamento());
+            $dpto = new Departamento($ProfesorPractica->getIdDepartamento(), null);
             $html .= '<tr>
                         <td valign="top" ></td>
                         <td valign="top" ></td>

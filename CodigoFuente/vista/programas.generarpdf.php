@@ -8,6 +8,7 @@ include_once '../lib/ControlAcceso.Class.php';
 //include_once '../modeloSistema/Asignatura.Class.php';
 include_once '../modeloSistema/BDConexionSistema.Class.php';
 
+//Se obtiene las asignaturas las cuales tengan cargado su programa para luego generar el PDF.
 $consulta = 'SELECT nombre, asignatura.id as idAsignatura, programa.id as idPrograma FROM asignatura JOIN programa WHERE asignatura.id = programa.idAsignatura ORDER BY nombre ASC';
 $asignaturas = BDConexionSistema::getInstancia()->query($consulta);
 //$asignaturas=$mysqli->query($consulta);

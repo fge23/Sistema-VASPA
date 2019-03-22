@@ -10,22 +10,22 @@ include_once '../lib/ControlAcceso.Class.php';
         <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>        
-        <title><?php //echo Constantes::NOMBRE_SISTEMA; ?> Subir Programa - Carreras</title>
+        <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Subir Programa</title>
         
         <script language="Javascript">
-// Creamos una función que mira si los dos selects han sido elegidos
-// Esta es lanzada cada vez que se produce el evento "onChange" de los selects, es decir en el momento que puede haber cambiado la situación
-function valida(){
-    var indice = document.getElementById("carrera").selectedIndex;
-    //var indice2 = document.getElementById("plan").selectedIndex;
-    var indice3 = document.getElementById("asignatura").selectedIndex;
-    if( indice !=0 && indice3 !=0) {
-        document.getElementById("boton").disabled=false;
-    }else{
-        document.getElementById("boton").disabled=true;
-    }
-}
-</script>
+            // Creamos una función que mira si los dos selects han sido elegidos
+            // Esta es lanzada cada vez que se produce el evento "onChange" de los selects, es decir en el momento que puede haber cambiado la situación
+            function valida(){
+                var indice = document.getElementById("carrera").selectedIndex;
+                //var indice2 = document.getElementById("plan").selectedIndex;
+                var indice3 = document.getElementById("asignatura").selectedIndex;
+                if( indice !=0 && indice3 !=0) {
+                    document.getElementById("boton").disabled=false;
+                }else{
+                    document.getElementById("boton").disabled=true;
+                }
+            }
+        </script>
 
     </head>
     <body>
@@ -47,7 +47,7 @@ function valida(){
                         <!--                    <form enctype="multipart/form-data" action="subirPrograma.procesar2.php" method="post">-->
                     <div class="row">
                         <div class="col-md-6">
-                            <p>Carrera
+                            <p><label for="carrera">Carrera</label>
                                 <select id="carrera" name="carrera" class="form-control" onChange="valida()" required="">
                                 </select>
                             </p>
@@ -60,7 +60,7 @@ function valida(){
                             </p>
                         </div>-->
                         <div class="col-md-6">
-                            <p>Asignatura
+                            <p><label for="asignatura">Asignatura</label>
                                 <select id="asignatura" name="asignatura" class="form-control" onChange="valida()" required="">
                                     <option value="0">Seleccione una Asignatura</option>
                                 </select>
@@ -73,12 +73,12 @@ function valida(){
                                    <!--placeholder="Ingrese el nombre del Programa" required="">-->
                         <!--</div>-->
                         <div class="form-group">
-                            <label>Descripci&oacute;n</label>
+                            <label for="inputDescripcion">Descripci&oacute;n</label>
                             <input type="text" class="form-control" id="inputDescripcion" name="descripcion"
-                                   placeholder="Ingrese una Descripci&oacute;n (opcional)">
+                                   placeholder="Ingrese una descripci&oacute;n (opcional)">
                         </div>
                         <div class="form-group">
-                            <label>Adjuntar programa</label>
+                            <label for="inputFile">Adjuntar programa</label>
                             <!--<input type="file" name="programa">-->
                             <input type="file" class="form-control-file" id="inputFile" name="programa" accept="application/pdf" required="">
                             <!--<p class="help-block">Ejemplo de texto de ayuda.</p>-->

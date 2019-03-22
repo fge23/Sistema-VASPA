@@ -104,7 +104,7 @@ class Asignatura {
      * @return Carrera[]
      */
     function getCarreras() {
-        $this->query = "SELECT carrera.id, carrera.nombre FROM asignatura JOIN plan_asignatura JOIN plan JOIN carrera WHERE asignatura.id = plan_asignatura.idAsignatura AND plan_asignatura.idPlan = plan.id AND plan.idCarrera = carrera.id AND asignatura.id = {$this->id}";
+        $this->query = "SELECT carrera.id, carrera.nombre FROM asignatura JOIN plan_asignatura JOIN plan JOIN carrera WHERE asignatura.id = plan_asignatura.idAsignatura AND plan_asignatura.idPlan = plan.id AND plan.idCarrera = carrera.id AND asignatura.id = '{$this->id}'";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
 
         //$Carreras[];
@@ -203,13 +203,13 @@ class Asignatura {
      * @return Asignatura[]
      */
     function getAsigCorrelativaSubsiguienteAprobada() {
-        $this->query = "SELECT id AS codAsignatura FROM asignatura JOIN correlativad WHERE idAsignatura_Correlativa_Anterior = asignatura.id AND requisito LIKE 'Aprobada' AND asignatura.id LIKE '{$this->id}'";
+        $this->query = "SELECT idAsignatura AS codAsignatura FROM asignatura JOIN correlativad WHERE idAsignatura_Correlativa_Anterior = asignatura.id AND requisito LIKE 'Aprobada' AND asignatura.id LIKE '{$this->id}'";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
         $Asignaturas = NULL;
         if ($this->datos->num_rows > 0) {
             for ($x = 0; $x < $this->datos->num_rows; $x++) {
                 $resultado = $this->datos->fetch_assoc();
-                $Asignaturas[] = new Asignatura($resultado['codAsignatura']);
+                $Asignaturas[] = new Asignatura($resultado['codAsignatura'], null);
             }
         }
 
@@ -221,13 +221,13 @@ class Asignatura {
     }
 
     function getAsigCorrelativaSubsiguienteCursada() {
-        $this->query = "SELECT id AS codAsignatura FROM asignatura JOIN correlativad WHERE idAsignatura_Correlativa_Anterior = asignatura.id AND requisito LIKE 'Regular' AND asignatura.id LIKE '{$this->id}'";
+        $this->query = "SELECT idAsignatura AS codAsignatura FROM asignatura JOIN correlativad WHERE idAsignatura_Correlativa_Anterior = asignatura.id AND requisito LIKE 'Regular' AND asignatura.id LIKE '{$this->id}'";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
         $Asignaturas = NULL;
         if ($this->datos->num_rows > 0) {
             for ($x = 0; $x < $this->datos->num_rows; $x++) {
                 $resultado = $this->datos->fetch_assoc();
-                $Asignaturas[] = new Asignatura($resultado['codAsignatura']);
+                $Asignaturas[] = new Asignatura($resultado['codAsignatura'], null);
             }
         }
 

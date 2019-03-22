@@ -46,7 +46,7 @@ class Programa {
     private $datos;
     
     
-    function __construct($id_ = null, $datos = null) {
+    function __construct($id = null, $datos = null) {
         //Si vienen datos de formulario (Alta) setea valores de Objeto
         if (isset($datos)) {
             //SETEAR TODOS LOS DATOS
@@ -273,13 +273,15 @@ class Programa {
      * @return Asignatura
      */
     function getAsignatura(){
-        $this->query = "SELECT asignatura.id FROM ASIGNATURA JOIN PROGRAMA WHERE asignatura.id = programa.idAsignatura AND programa.id = {$this->id};";
+        //Consulta para obtener los datos de la asigantura correspondiente al programa
+        $this->query = "SELECT asignatura.id FROM ASIGNATURA JOIN PROGRAMA WHERE asignatura.id = programa.idAsignatura AND programa.id = '{$this->id}';";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
-        $Asignatura = new Asignatura();
-        
+        $Asignatura = new Asignatura(null, null);
+       
         if ($this->datos->num_rows > 0){
+            //echo '<br> hola';
             $result = $this->datos->fetch_assoc();
-            $Asignatura = new Asignatura($result['id']);
+            $Asignatura = new Asignatura($result['id'], null);
         }
                 
         unset($this->query);
