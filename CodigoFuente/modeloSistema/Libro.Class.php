@@ -1,12 +1,15 @@
 <?php
+
 include_once 'BDConexionSistema.Class.php';
 
 /**
  * Description of Libro
  *
  * @author Francisco
+ * @author Fabricio - Modificaciones -
  */
 class Libro {
+
     private $id;
     private $referencia;
     private $apellido;
@@ -22,7 +25,6 @@ class Libro {
     private $otro;
     private $tipoLibro;
     private $idPrograma;
-    
     private $query;
 
     /**
@@ -30,28 +32,52 @@ class Libro {
      * @var mysqli_result
      */
     private $datos;
-    
-    function __construct($id_ = null) {
 
-        if (isset($id_)) {
-            $this->id = $id_;
-            
-            $this->query = "SELECT * FROM LIBRO WHERE id = {$this->id}";
-           
-            $this->datos = BDConexionSistema::getInstancia()->query($this->query);
-           
-            $this->datos = $this->datos->fetch_assoc();
+    function __construct($id = null, $datos = null) {
 
-            foreach ($this->datos as $atributo => $valor) {
-                $this->{$atributo} = $valor;
-            }
-            unset($this->query);
-            unset($this->datos);
+        //Si vienen datos de formulario (Alta) setea valores de Objeto
+        if (isset($datos)) {
+            $this->setId($datos['id']);
+            $this->setReferencia($datos['referencia']);
+            $this->setApellido($datos['apellido']);
+            $this->setNombre($datos['nombre']);
+            $this->setAnioEdicion($datos['anioEdicion']);
+            $this->setTitulo($datos['titulo']);
+            $this->setCapitulo($datos['capitulo']);
+            $this->setLugarEdicion($datos['lugarEdicion']);
+            $this->setEditorial($datos['Editorial']);
+            $this->setUnidad($datos['unidad']);
+            $this->setBiblioteca($datos['biblioteca']);
+            $this->setSiunpa($datos['siunpa']);
+            $this->setOtro($datos['otro']);
+            $this->setTipoLibro($datos['tipoLibro']);
+            $this->setIdPrograma($datos['idPrograma']);
         } else {
-            return false;
+            //Sino viene un nuevo Objeto, lo recupero (para Modificar)
+            if (isset($id)) {
+                $this->recuperaObjeto($id);
+            } else {
+                return false;
+            }
         }
     }
-    
+
+    function recuperaObjeto($id) {
+        $this->id = $id;
+
+        $this->query = "SELECT * FROM LIBRO WHERE id = {$this->id}";
+
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+
+        $this->datos = $this->datos->fetch_assoc();
+
+        foreach ($this->datos as $atributo => $valor) {
+            $this->{$atributo} = $valor;
+        }
+        unset($this->query);
+        unset($this->datos);
+    }
+
     function getId() {
         return $this->id;
     }
@@ -172,6 +198,4 @@ class Libro {
         $this->idPrograma = $idPrograma;
     }
 
-
-    
 }

@@ -1,5 +1,6 @@
 <?php
 include_once '../lib/ControlAcceso.Class.php';
+
 include_once '../controlSistema/ManejadorDepartamento.php';
 include_once '../controlSistema/ManejadorProfesor.php';
 
@@ -22,26 +23,27 @@ $Profesores = $ManejadorProfesor->getColeccion();
 
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Crear Asignatura</title>
     </head>
+
     <body>
 
         <div class="container-fluid">
-            <form action="#" method="post"> 
+            <form action="libros.php" target="" method="post"> 
 
                 <h3>Nuevo Libro</h3>
                 <hr>
                 <h4>Propiedades</h4>
 
-                <div class="form-group col-8" id="a">
-                    <label for="a">Tipo de Bibliograf&iacute;a</label>
-                    <div class="radio">
-                        <label><input type="radio" name="optradio">Obligatoria</label>
+                <div class="form-group col-8">
+                    <h6>Tipo de Bibliograf&iacute;a</h6>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" id="defaultUnchecked" name="defaultExampleRadios">
+                        <label class="custom-control-label" for="defaultUnchecked">Complementaria</label>
                     </div>
-                    <div class="radio">
-                        <label><input type="radio" name="optradio">Complementaria</label>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" id="defaultChecked" name="defaultExampleRadios" checked>
+                        <label class="custom-control-label" for="defaultChecked">Obligatoria</label>
                     </div>
-                </div>
-
-         
+                </div> 
 
                 <div class="form-group col-8">
                     <label for="inputReferencia">Referencia</label>
@@ -88,57 +90,62 @@ $Profesores = $ManejadorProfesor->getColeccion();
                     <input type="text" name="unidad" class="form-control" id="inputUnidad" required="">
                 </div>
 
-
-                <div class="form-group col-8" id="a">
-                    <label for="a">Bibilioteca UA</label>
-                    <div class="radio">
-                        <label><input type="radio" name="optradio">UARG</label>
-                    </div>
-                    <div class="radio">
-                        <label><input type="radio" name="optradio">No</label>
+                <div class="form-inline"> 
+                    <div class="form-group col-8">
+                        <div>
+                            <h6>Biblioteca UA</h6>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="E" name="defaultExampleRadios">
+                                <label class="custom-control-label" for="E">Default unchecked</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="F" name="defaultExampleRadios" checked>
+                                <label class="custom-control-label" for="F">Default checked</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-1"></div>
+                        <div>
+                            <h6>SIUNPA</h6>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="C" name="defaultExampleRadios">
+                                <label class="custom-control-label" for="C">DSi</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="D" name="defaultExampleRadios" checked>
+                                <label class="custom-control-label" for="D">nod</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-1"></div>
+                        <div>
+                            <h6>Otro</h6>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="a" name="defaultExampleRadios">
+                                <label class="custom-control-label" for="a">DSi</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="b" name="defaultExampleRadios">
+                                <label class="custom-control-label" for="b">No</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group col-8" id="a">
-                    <label for="a">SIUNPA</label>
-                    <div class="radio">
-                        <label><input type="radio" name="optradio">Si</label>
-                    </div>
-                    <div class="radio">
-                        <label><input type="radio" name="optradio">No</label>
-                    </div>
-                </div>
-
-                <div class="form-group col-8" id="a">
-                    <label for="a">Otro</label>
-                    <div class="radio">
-                        <label><input type="radio" name="optradio">Si</label>
-                    </div>
-                    <div class="radio">
-                        <label><input type="radio" name="optradio">No</label>
-                    </div>
-                </div>
-
-
-
-
-
-
-                <div class="form-group col-12">
-                    <button type="submit" class="btn btn-outline-success">
-                        <span class="oi oi-check"></span> Confirmar
-                    </button>
-                    <a href="asignaturas.php">
-                        <button type="reset" class="btn btn-outline-danger">
-                            <span class="oi oi-x"></span> Limpiar
-                        </button>
-                    </a>
-                </div>
-            </form>
+       
+          <div class="form-group col-12">
+              <button  type="submit" class="btn btn-outline-success">
+                <span class="oi oi-check"></span> Confirmar
+            </button>
+            <a href="#">
+                <button type="reset" class="btn btn-outline-danger">
+                    <span class="oi oi-x"></span> Limpiar
+                </button>
+            </a>
         </div>
+    </form>
+</div>
 
 
 
 
 
-    </body>
+</body>
 </html>
