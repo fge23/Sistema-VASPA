@@ -10,7 +10,7 @@ function getAsignaturas() {
     $anio = BDConexionSistema::getInstancia()->real_escape_string($_POST['anio']);
     
     //$codCarrera = "016";
-    //$anio = 2015;
+    //$anio = 2012;
     
     //$consulta = "SELECT nombre, id FROM PLAN_ASIGNATURA JOIN ASIGNATURA 
     //WHERE PLAN_ASIGNATURA.codAsignatura = id AND codPlan LIKE '$codPlan'";
@@ -21,12 +21,12 @@ function getAsignaturas() {
             ." AND (anio_fin >= $anio OR anio_fin is NULL)";
     
     $result = BDConexionSistema::getInstancia()->query($consulta);
-    $listas = '<option value="0">Seleccione una Asignatura</option>';
-    //$listas = '';
+    //$listas = '<option value="0">Seleccione una Asignatura</option>';
+    $listas = '';
 
     if ($result->num_rows > 0) {
         while ($fila = $result->fetch_assoc()) {
-            $listas .= '<option value="'.$fila['id'].'">'.utf8_encode($fila['nombre']).'</option>';
+            $listas .= '<option value="'.$fila['id'].'">'.$fila['id'].' - '.utf8_encode($fila['nombre']).'</option>';
         }
     }
     return $listas;

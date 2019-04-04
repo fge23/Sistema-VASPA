@@ -1,4 +1,5 @@
 $(document).ready(function(){
+  $('.selectpicker').selectpicker()
   $.ajax({
     type: 'POST',
     url: '../lib/consultaAjax/cargarCarreras.php',
