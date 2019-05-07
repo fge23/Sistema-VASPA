@@ -40,19 +40,7 @@ header('Content-Type: text/html; charset=ISO-8859-1');
                             Si desea cancelar, presione el bot&oacute;n <b>Cancelar</b>.
                         </p>
                     </div>
-                    <div class="card-body">   
-                        <div class="form-group">
-                            <label for="selectCarrera">Carrera</label>
-                            <br>
-                            <select class="selectpicker show-tick" data-live-search="true" data-width="100%" name="idCarrera" id="selectCarrera" title="Seleccione una carrera" required="">
-                                 <?php foreach ($Carreras as $Carrera) { ?>
-                                <option value="<?= $Carrera->getId(); ?>"><?= $Carrera->getId() . " - " . $Carrera->getNombre(); ?></option>
-                                <?php } ?>
-
-                            </select>
-                        
-                        </div>
-                        
+                    <div class="card-body">
                         <div class="form-group">
                             <label for="selectAnio">A&ntilde;o</label>
                             <br>
@@ -61,14 +49,21 @@ header('Content-Type: text/html; charset=ISO-8859-1');
                                     <option value="<?= $i; ?>"><?= $i; ?></option>
                                 <?php } ?>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="selectCarrera">Carrera</label>
+                            <br>
+                            <select class="selectpicker show-tick" data-live-search="true" data-width="100%" name="idCarrera" id="selectCarrera" title="Seleccione una carrera" required="">
+                            </select>
                         
                         </div>
+                        
                     </div>
                     <div class="card-footer">
                             <button type="submit" class="btn btn-outline-success">
                                 <span class="oi oi-check"></span> Confirmar
                             </button>
-                            <a href="asignaturas.php">
+                            <a href="#">
                                 <button type="button" class="btn btn-outline-danger">
                                     <span class="oi oi-x"></span> Cancelar
                                 </button>
@@ -90,6 +85,27 @@ header('Content-Type: text/html; charset=ISO-8859-1');
 });
 
         </script>
+        
+        <script>
+  $(document).ready(function(){
+  $('#selectAnio').change(function () {
+    var anio = $('#selectAnio').val()
+    alert(anio)
+    $.ajax({
+      type: 'POST',
+      url: '../lib/consultaAjax/visualizar.programa.cargar.carreras.php',
+      data: {'anio': anio}
+    })
+    .done(function(carreras){
+      $(".selectpicker").selectpicker(); 
+      $('#selectCarrera').html(carreras).selectpicker('refresh');
+    })
+    .fail(function(){
+      alert('Hubo un error al cargar las asignaturas')
+    })
+  })
+})
+    </script>
         
     </body>
 </html>

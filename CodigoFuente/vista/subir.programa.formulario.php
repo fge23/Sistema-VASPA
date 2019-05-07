@@ -1,5 +1,8 @@
 <?php
+
 // Aqui comienza la ejecución del CU SUBIR PROGRAMA FIRMADO
+
+//NOTA: El boton cancelar no hace "nada", deberia redirigir a la pagina principal o al panel de Secretaria Academica 
 
 include_once '../lib/ControlAcceso.Class.php';
 include_once '../modeloSistema/BDConexionSistema.Class.php';
@@ -48,7 +51,9 @@ if (!is_dir($directorio)){
         <link rel="stylesheet" href="../lib/bootstrap-4.1.1-dist/css/bootstrap.css" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.8/css/bootstrap-select.min.css" rel="stylesheet"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.8/js/bootstrap-select.min.js"></script>
-        <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />     
+        <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
+        <script src="../lib/bootbox/bootbox.js"></script>
+        <script src="../lib/bootbox/bootbox.locales.js"></script>
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Subir Programa</title>
         
     </head>
@@ -126,95 +131,139 @@ if (!is_dir($directorio)){
         
         <script>
             //Script para validar la extension y el tamaño maximo permitido a subir del programa en PDF
+            $(document).ready(function(){
             $('input[type="file"]').on('change', function(){
                 var ext = $( this ).val().split('.').pop();
                 if ($( this ).val() != '') {
                   if(ext == "pdf"){
                     //alert("La extensión es: " + ext);
                     if($(this)[0].files[0].size > 2097152){
-                        alert("El documento excede el tamaño máximo");
-                      console.log("El documento excede el tamaño máximo");
-                      //$('#modal-title').text('¡Precaución!');
-                      //$('#modal-msg').html("Se solicita un archivo no mayor a 1MB. Por favor verifica.");
-                      //$("#modal-gral").modal();           
+                      //alert("El documento excede el tamaño máximo");
+                      bootbox.setLocale('es');
+                      bootbox.alert("El documento excede el tama&ntilde;o m&aacute;ximo de 2MB");    
                       $(this).val('');
-                    }else{
-                      $("#modal-gral").hide();
                     }
                   }
                   else
                   {
                     $( this ).val('');
-                    alert("Extensión no permitida: " + ext);
+                    //alert("Extensión no permitida: " + ext);
+                    bootbox.setLocale('es');
+                    bootbox.alert("Archivo con extensi&oacute;n no permitida: " + ext);
                   }
                 }
+            });});
+        </script>
+    
+    <script>
+            $(document).ready(function(){
+                      //$('.selectpicker').selectpicker();
+            //alert($("selectAnio").val());
+                      //$('.selectpicker').selectpicker();
+            
+            $('#selectAnio').change(function (e) {
+              var anio = $('#selectAnio').val();
+              $.ajax({
+                type: 'POST',
+                url: '../lib/consultaAjax/visualizar.programa.cargar.carreras.php',
+                data: {'anio': anio}
+              })
+              .done(function(carreras){
+                $(".selectpicker").selectpicker(); 
+                $('#carrera').html(carreras).selectpicker('refresh');
+              })
+              .fail(function(){
+                alert('Hubo un error al cargar las carreras');
+              });
             });
+            
+            //$('#carrera').on('change', function(){
+            $('#carrera').change(function (e) {
+              //$('.selectpicker').selectpicker();
+              //alert($("#selectAnio").val());
+              //alert(e.target.value);
+              var id = e.target.value;
+              //var id = $('#carrera').val()
+              var anio = $('#selectAnio').val();
+              //var anio = document.getElementById("selectAnio").value;
+              //alert(anio)
+              //alert(id)
+              $.ajax({
+                type: 'POST',
+                url: '../lib/consultaAjax/cargarAsignaturas.php',
+                data: {'id': id,
+                 'anio': anio}
+              })
+              .done(function(asignaturas){
+                //$('#asignatura').html(asignaturas);
+                //$('.selectpicker').selectpicker('refresh');
+                $(".selectpicker").selectpicker(); 
+                $('#asignatura').html(asignaturas).selectpicker('refresh');
+              })
+              .fail(function(){
+                alert('Hubo un error al cargar las asignaturas');
+              });
+            });
+
+            //Si se cambia de anio, reseteamos las asignaturas y tener en cuenta mas tarde las carreras
+            $('#selectAnio').change(function () {
+              //Reiniciamos asignaturas
+              var groupFilter = $('#asignatura');
+              groupFilter.selectpicker('val', '');
+              groupFilter.find('option').remove();
+              groupFilter.selectpicker("refresh");
+              $("#asignatura").val('default').selectpicker("refresh");
+              //Reiniciamos carreras pero sin eliminar los elementos de la lista
+              //Probablemente se tendra que actualizar en base al año seleccionado
+              $("#carrera").val('default').selectpicker("refresh");
+            });
+            /*
+            //Cambiamos la leyenda cuando no se encontraron resultados en la busqueda en tiempo real del combobox
+            $('.selectpicker').selectpicker({
+              noneResultsText: 'No se encontraron resultados'
+            });
+            */
+          });
     </script>
     
     <script>
-  $(document).ready(function(){
-            //$('.selectpicker').selectpicker();
-  //alert($("selectAnio").val());
-            //$('.selectpicker').selectpicker();
-  $.ajax({
-    type: 'POST',
-    url: '../lib/consultaAjax/cargarCarreras.php',
-    //data: {'peticion': 'cargar_listas'}
-  })
-  .done(function(carreras){
-    $('#carrera').html(carreras)
-  })
-  .fail(function(){
-    alert('Hubo un error al cargar las carreras')
-  })
+        //Script que deja sin efecto al boton submit para luego desplegar una ventana de confirmacion
+        $("form").submit(function(e){
+         //Detenemos el envio del formulario para desplegar la ventana de dialogo de confirmacion
+         e.preventDefault();   
+         //obtenemos los valores de las listas
+         var anio = $('#selectAnio').val();
+         var carrera = $('#carrera option:selected').text();
+         var asignatura = $('#asignatura option:selected').text();
+         //var nombrePrograma = $('#inputFile').val();
+         //var nombrePrograma = document.getElementById('inputFile')[0].files[0].name;
+         var nombrePrograma = $('#inputFile').prop('files')[0].name; 
 
-  //$('#carrera').on('change', function(){
-  $('#carrera').change(function (e) {
-    //$('.selectpicker').selectpicker();
-    //alert($("#selectAnio").val());
-    //alert(e.target.value);
-    var id = e.target.value;
-    //var id = $('#carrera').val()
-    var anio = $('#selectAnio').val()
-    //var anio = document.getElementById("selectAnio").value;
-    //alert(anio)
-    //alert(id)
-    $.ajax({
-      type: 'POST',
-      url: '../lib/consultaAjax/cargarAsignaturas.php',
-      data: {'id': id,
-       'anio': anio}
-    })
-    .done(function(asignaturas){
-      //$('#asignatura').html(asignaturas);
-      //$('.selectpicker').selectpicker('refresh');
-      $(".selectpicker").selectpicker(); 
-      $('#asignatura').html(asignaturas).selectpicker('refresh');
-    })
-    .fail(function(){
-      alert('Hubo un error al cargar las asignaturas')
-    })
-  })
-  
-  //Si se cambia de anio, reseteamos las asignaturas y tener en cuenta mas tarde las carreras
-  $('#selectAnio').change(function () {
-    //Reiniciamos asignaturas
-    var groupFilter = $('#asignatura');
-    groupFilter.selectpicker('val', '');
-    groupFilter.find('option').remove();
-    groupFilter.selectpicker("refresh");
-    $("#asignatura").val('default').selectpicker("refresh");
-    //Reiniciamos carreras pero sin eliminar los elementos de la lista
-    //Probablemente se tendra que actualizar en base al año seleccionado
-    $("#carrera").val('default').selectpicker("refresh");
-  });
-  /*
-  //Cambiamos la leyenda cuando no se encontraron resultados en la busqueda en tiempo real del combobox
-  $('.selectpicker').selectpicker({
-    noneResultsText: 'No se encontraron resultados'
-  });
-  */
-})
+         bootbox.confirm({
+             title: "&iquest;Est&aacute; seguro de subir el siguiente programa?",
+             message: "<h6>Datos del programa: </h6> <i>A&ntilde;o: </i><b>"+anio+"</b><br><i>Carrera: </i><b>"+carrera+"</b><br><i>Asignatura: </i><b>"+asignatura+"</b><br><i>Archivo: </i><b>"+nombrePrograma+"</b>",
+             buttons: {
+                 confirm: {
+                     label: 'Confirmar',
+                     className: 'btn-success'
+                 },
+                 cancel: {
+                     label: 'Cancelar',
+                     className: 'btn-danger'
+                 }
+             },
+             callback: function (result) {
+                 if (result) {
+                     console.log("User confirmed dialog");
+                     document.getElementById("form").submit();
+                 } else {
+                     console.log("User declined dialog");
+                 }  
+                     console.log('This was logged in the callback: ' + result);
+             }
+         });
+
+     });
     </script>
     
     <!--<script type="text/javascript" src="../lib/js/cargarListasSubirPrograma.js"></script>-->
