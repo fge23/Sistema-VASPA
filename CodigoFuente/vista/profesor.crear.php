@@ -20,7 +20,7 @@ $Departamentos = $ManejadorDepartamento->getColeccion();
             <form action="profesor.crear.procesar.php" method="post"> 
                 <div class="card">
                     <div class="card-header">
-                        <h3>Crear Profesor</h3>
+                        <h3>Alta de Profesor</h3>
                         <p>
                             Complete los campos a continuaci&oacute;n. 
                             Luego, presione el bot&oacute;n <b>Confirmar</b>.<br />
@@ -28,26 +28,26 @@ $Departamentos = $ManejadorDepartamento->getColeccion();
                         </p>
                     </div>
                     <div class="card-body">
-                        <h4>Propiedades</h4>
+                        <h4>Datos personales del profesor</h4>
                         
                         <div class="form-group">
-                           <label for="inputApellidoProfesor">Apellido del Profesor</label>
+                           <label for="inputApellidoProfesor">Apellido</label>
                             <input type="text" name="apellido" class="form-control" id="inputApellidoProfesor" placeholder="Ingrese el Apellido del Profesor" required="">
                         </div>
                         
                         <div class="form-group">
-                           <label for="inputNombreProfesor">Nombre del Profesor</label> 
+                           <label for="inputNombreProfesor">Nombre</label> 
                             <input type="text" name="nombre" class="form-control" id="inputNombreProfesor" placeholder="Ingrese el Nombre del Profesor" required="">
                         </div>
                         
                          <div class="form-group">
-                           <label for="inputDniProfesor">DNI del Profesor</label>
+                           <label for="inputDniProfesor">DNI</label>
                            <input type="number" name="dni" class="form-control" id="inputDniProfesor" placeholder="Ingrese el DNI del Profesor" required="" min="5000000" max="40000000">
                         </div>
                         
                         <div class="form-group">
-                           <label for="inputEmailProfesor">Email del Profesor</label>
-                           <input type="email" name="email" class="form-control" id="inputEmailProfesor" placeholder="Ingrese el Email del Profesor" required="">
+                           <label for="inputEmailProfesor">Email</label>
+                           <input type="email" name="email" class="form-control" id="inputEmailProfesor" placeholder="Ingrese el Email del Profesor" pattern="^[a-z]+@uarg.unpa.edu.ar$" title="nombreusuario@uarg.unpa.edu.ar" required="">
                         </div>
                         
                         <div class="form-group">

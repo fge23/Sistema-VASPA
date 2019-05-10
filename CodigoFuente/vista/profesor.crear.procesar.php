@@ -4,7 +4,21 @@ include_once '../lib/Constantes.Class.php';
 
 $DatosFormulario = $_POST;
 $ManejadorProfesor = new ManejadorProfesor();
-$consulta = $ManejadorProfesor->alta($DatosFormulario);
+
+
+/*
+ * Validamos el email, debe cumplir la siguiente estructura: nombreusuario@uarg.unpa.edu.ar
+ */
+$email = $_POST["email"];
+$mensaje = '';
+// Si cumple con la expresion regular realizamos la modificacion, caso contrario mostramos que ha ocurrido un error debido al email ingresado
+if (preg_match("/^[a-z]+@uarg.unpa.edu.ar$/", $email)){
+    $consulta = $ManejadorProfesor->alta($DatosFormulario);
+}
+else{
+    $consulta = false;
+    $mensaje .= 'El e-mail: <b>'.$email.'</b> no es valido, debe cumplir el siguiente formato: <b>nombreusuario@uarg.unpa.edu.ar</b>';
+}
 
 
 ?>
@@ -24,7 +38,7 @@ $consulta = $ManejadorProfesor->alta($DatosFormulario);
             <p></p>
             <div class="card">
                 <div class="card-header">
-                    <h3>Crear Profesor</h3>
+                    <h3>Alta de Profesor</h3>
                 </div>
                 <div class="card-body">
                     <?php if ($consulta) { ?>
@@ -35,6 +49,7 @@ $consulta = $ManejadorProfesor->alta($DatosFormulario);
                     <?php if (!$consulta) { ?>
                         <div class="alert alert-danger" role="alert">
                             Ha ocurrido un error.
+                            <p><?= $mensaje ?></p>
                         </div>
                     <?php } ?>
                     <hr />

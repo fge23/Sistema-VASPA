@@ -36,26 +36,26 @@ $Profesor = new Profesor($idProfesor, null);
                         </p>
                     </div>
                     <div class="card-body">
-                        <h4>Propiedades</h4>
+                        <h4>Datos personales del profesor</h4>
                         
                         <div class="form-group">
-                           <label for="inputApellidoProfesor">Apellido del Profesor</label>
+                           <label for="inputApellidoProfesor">Apellido</label>
                            <input type="text" name="apellido" class="form-control" id="inputApellidoProfesor" placeholder="Ingrese el Apellido del Profesor" value="<?= $Profesor->getApellido();?>" required="">
                         </div>
                         
                         <div class="form-group">
-                           <label for="inputNombreProfesor">Nombre del Profesor</label> 
+                           <label for="inputNombreProfesor">Nombre</label> 
                            <input type="text" name="nombre" class="form-control" id="inputNombreProfesor" placeholder="Ingrese el Nombre del Profesor" value="<?= $Profesor->getNombre();?>" required="">
                         </div>
                         
                          <div class="form-group">
-                           <label for="inputDniProfesor">DNI del Profesor</label>
+                           <label for="inputDniProfesor">DNI</label>
                            <input type="number" name="dni" class="form-control" id="inputDniProfesor" placeholder="Ingrese el DNI del Profesor" value="<?= $Profesor->getDni();?>" required="" min="5000000" max="40000000">
                         </div>
                         
                         <div class="form-group">
-                           <label for="inputEmailProfesor">Email del Profesor</label>
-                           <input type="email" name="email" class="form-control" id="inputEmailProfesor" placeholder="Ingrese el Email del Profesor" value="<?= $Profesor->getEmail();?>" required="">
+                           <label for="inputEmailProfesor">Email</label>
+                           <input type="email" name="email" class="form-control" id="inputEmailProfesor" placeholder="Ingrese el Email del Profesor" value="<?= $Profesor->getEmail();?>" pattern="^[a-z]+@uarg.unpa.edu.ar$" title="nombreusuario@uarg.unpa.edu.ar" required="">
                         </div>
                         
                         <div class="form-group">
