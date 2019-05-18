@@ -79,32 +79,32 @@ header('Content-Type: text/html; charset=ISO-8859-1');
             noneResultsText: 'No se encontraron resultados'});
         </script>
         
-        <script type="text/javascript"> //$('select').selectpicker();
+<!--        <script type="text/javascript"> //$('select').selectpicker();
             $('#selectCarrera').change(function (e) {
-    alert(e.target.value);
-});
+                 alert(e.target.value);
+            });
 
-        </script>
+        </script>-->
         
         <script>
-  $(document).ready(function(){
-  $('#selectAnio').change(function () {
-    var anio = $('#selectAnio').val()
-    alert(anio)
-    $.ajax({
-      type: 'POST',
-      url: '../lib/consultaAjax/visualizar.programa.cargar.carreras.php',
-      data: {'anio': anio}
-    })
-    .done(function(carreras){
-      $(".selectpicker").selectpicker(); 
-      $('#selectCarrera').html(carreras).selectpicker('refresh');
-    })
-    .fail(function(){
-      alert('Hubo un error al cargar las asignaturas')
-    })
-  })
-})
+            $(document).ready(function(){
+                  $('#selectAnio').change(function () {
+                    var anio = $('#selectAnio').val();
+                    //alert(anio);
+                    $.ajax({
+                      type: 'POST',
+                      url: '../lib/consultaAjax/visualizar.programa.cargar.carreras.php',
+                      data: {'anio': anio}
+                    })
+                    .done(function(carreras){
+                      $(".selectpicker").selectpicker(); 
+                      $('#selectCarrera').html(carreras).selectpicker('refresh');
+                    })
+                    .fail(function(){
+                      alert('Hubo un error al cargar las asignaturas')
+                    });
+                  });
+              });
     </script>
         
     </body>

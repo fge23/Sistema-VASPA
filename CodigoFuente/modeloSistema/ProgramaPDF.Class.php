@@ -27,7 +27,7 @@ class ProgramaPDF {
             $this->nombre = $nombre;
             $this->anio = $anio;
             
-            $this->query = "SELECT * FROM programa_pdf WHERE nombre = {$nombre} AND anio = {$anio}";
+            $this->query = "SELECT * FROM programa_pdf WHERE nombre = '{$nombre}' AND anio = '{$anio}'";
            
             $this->datos = BDConexionSistema::getInstancia()->query($this->query);
            
