@@ -3,7 +3,7 @@
 session_start();
 include_once 'Constantes.Class.php';
 include_once '../modelo/BDColeccionGenerica.Class.php';
- header('Content-Type: text/html; charset=ISO-8859-1'); 
+header('Content-Type: text/html; charset=UTF-8');    
 /**
  * Clase de constantes para el uso del sistema de Roles y Permisos.
  * Deben coincidir con los permisos de la base de datos.
