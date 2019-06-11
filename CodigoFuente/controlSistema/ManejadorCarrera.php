@@ -16,7 +16,7 @@ class ManejadorCarrera {
      *
      * @var mysqli_result
      */
-    private $datos;
+    private $datos, $resultado;
 
     /**
      *
@@ -52,23 +52,29 @@ class ManejadorCarrera {
 
     //Funcion para Alta de Carreras
     function alta($datos) {
-       
+
         //Creo objeto sin enviar ID y enviando todos los datos del formulario
-        $Carrera = new Carrera(null,$datos);
-        
-        //Seteo el nuevo ID como el ID que viene del formulario, completado con 0 a la izquierda
-        $Carrera->setId($this->completaConCeros($Carrera->getId()));
-        $this->query = "INSERT INTO CARRERA "
-                . "VALUES ('{$Carrera->getId()}','{$Carrera->getNombre()}')";
-        $consulta = BDConexionSistema::getInstancia()->query($this->query);
-        if ($consulta) {
-            return true;
-        } else {
-            return false;
+        $Carrera = new Carrera(null, $datos);
+
+       if ($this->chequear($Carrera->getId())) {
+            //Seteo el nuevo ID como el ID que viene del formulario, completado con 0 a la izquierda
+            $Carrera->setId($this->completaConCeros($Carrera->getId()));
+            $this->query = "INSERT INTO CARRERA "
+                    . "VALUES ('{$Carrera->getId()}','{$Carrera->getNombre()}')";
+            $consulta = BDConexionSistema::getInstancia()->query($this->query);
+            if ($consulta) {
+                return true;
+            } else {
+                return false;
+            }
         }
+        else{
+            throw new Exception("El código  ".$Carrera->getId(). " ya corresponde a una carrera en la Base de Datos");
+        }
+        
     }
-    
-    function baja($id_){
+
+    function baja($id_) {
         $this->query = "DELETE FROM CARRERA WHERE id = '{$id_}'";
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
         if ($consulta) {
@@ -77,8 +83,7 @@ class ManejadorCarrera {
             return false;
         }
     }
-    
-    
+
     //Funcion para Modificación de Carreras
     function modificacion($datos, $id_) {
         $Carrera = new Carrera(null, $datos);
@@ -107,6 +112,17 @@ class ManejadorCarrera {
         }
 
         return $idCarrera;
+    }
+
+    function chequear($idCarrera) {
+        $this->resultado = BDConexionSistema::getInstancia()->query("SELECT 1 FROM CARRERA WHERE id = {$idCarrera} LIMIT 1");
+        if ($this->resultado->num_rows == 1) {
+            //El registro existe en la BD. No se puede insertar
+            return false;
+        } else {
+            //El registro no existe en la BD. Se puede insertar
+            return true;
+        }
     }
 
 }
