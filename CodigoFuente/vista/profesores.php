@@ -6,6 +6,8 @@ include_once '../modeloSistema/Profesor.Class.php';
 $ManejadorProfesor = new ManejadorProfesor();
 $Profesores = $ManejadorProfesor->getColeccion();
 
+//var_dump($Profesores);
+
 ?>
 
 <html>
@@ -13,8 +15,15 @@ $Profesores = $ManejadorProfesor->getColeccion();
         <meta charset="UTF-8">
         <link rel="stylesheet" href="../lib/bootstrap-4.1.1-dist/css/bootstrap.css" />
         <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
+        
+        <link rel="stylesheet" href="../lib/datatable/bootstrap.css" />
+        <link rel="stylesheet" href="../lib/datatable/dataTables.bootstrap4.min.css" />
+        
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
-        <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>        
+        <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../lib/datatable/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="../lib/datatable/dataTables.bootstrap4.min.js"></script>
+        
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Profesores</title>
 
     </head>
@@ -36,13 +45,25 @@ $Profesores = $ManejadorProfesor->getColeccion();
                             </button>
                         </a>
                     </p>
-                    <table class="table table-hover table-sm">
-                        <tr class="table-info">
-                            <th>Apellido/s</th>
-                            <th>Nombre/s</th>
-                            <th>Email</th>
-                            <th>Opciones</th>
-                        </tr>
+                    <hr>
+                    <table class="table table-hover table-sm" id="tablaprofesores">
+                        <thead>
+                            <tr class="table-info">
+                                <th>Apellido/s</th>
+                                <th>Nombre/s</th>
+                                <th>Email</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+<!--                        <tfoot>
+                            <tr class="table-info">
+                                <th>Apellido/s</th>
+                                <th>Nombre/s</th>
+                                <th>Email</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </tfoot>-->
+                        <tbody>
                         <tr>
                             <?php
                             foreach ($Profesores as $Profesor) {
@@ -70,11 +91,23 @@ $Profesores = $ManejadorProfesor->getColeccion();
                                     </a>  
                                 </td>
                             </tr>
-<?php } ?>
+                            <?php } ?>
+                            </tbody>
                     </table>
                 </div>
             </div>
         </div>
-<?php include_once '../gui/footer.php'; ?>
+        <?php include_once '../gui/footer.php'; ?>
+        
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#tablaprofesores').DataTable({
+                    language:{
+                    url: '../lib/datatable/es-ar.json'
+                    }
+                });
+            });
+        </script>
+        
     </body>
 </html>
