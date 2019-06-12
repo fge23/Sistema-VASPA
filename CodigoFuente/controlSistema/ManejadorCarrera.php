@@ -55,20 +55,23 @@ class ManejadorCarrera {
 
         //Creo objeto sin enviar ID y enviando todos los datos del formulario
         $Carrera = new Carrera(null, $datos);
-
-        if ($this->chequear($Carrera->getId())) {
-            //Seteo el nuevo ID como el ID que viene del formulario, completado con 0 a la izquierda
-            $Carrera->setId($this->completaConCeros($Carrera->getId()));
-            $this->query = "INSERT INTO CARRERA "
-                    . "VALUES ('{$Carrera->getId()}','{$Carrera->getNombre()}')";
-            $consulta = BDConexionSistema::getInstancia()->query($this->query);
-            if ($consulta) {
-                return true;
+        if ($this->validaEspaciosEnBlanco($Carrera->getNombre())) {
+            if ($this->chequearExistencia($Carrera->getId())) {
+                //Seteo el nuevo ID como el ID que viene del formulario, completado con 0 a la izquierda
+                $Carrera->setId($this->completaConCeros($Carrera->getId()));
+                $this->query = "INSERT INTO CARRERA "
+                        . "VALUES ('{$Carrera->getId()}','{$Carrera->getNombre()}')";
+                $consulta = BDConexionSistema::getInstancia()->query($this->query);
+                if ($consulta) {
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
-                return false;
+                throw new Exception("El c&oacute;digo  " . $Carrera->getId() . " ya corresponde a una carrera en la Base de Datos");
             }
         } else {
-            throw new Exception("El c&oacute;digo  " . $Carrera->getId() . " ya corresponde a una carrera en la Base de Datos");
+            throw new Exception("El nombre de la carrera no puede estar en blanco");
         }
     }
 
@@ -89,19 +92,24 @@ class ManejadorCarrera {
         $idAux = $this->completaConCeros($idCarrera);
         $Carrera->setId($idAux);
 
-        if ($Carrera->getId() == $id_) {
-            $this->query = "UPDATE CARRERA "
-                    . "SET nombre = '{$Carrera->getNombre()}' "
-                    . "WHERE id = '{$id_}'";
-        } else {
-            if ($this->chequear($Carrera->getId())) {
+        if ($this->validaEspaciosEnBlanco($Carrera->getNombre())) {
+            if ($Carrera->getId() == $id_) {
                 $this->query = "UPDATE CARRERA "
-                        . "SET id = '{$Carrera->getId()}' , nombre = '{$Carrera->getNombre()}' "
+                        . "SET nombre = '{$Carrera->getNombre()}' "
                         . "WHERE id = '{$id_}'";
             } else {
-                throw new Exception("El c&oacute;digo  " . $Carrera->getId() . " ya corresponde a una carrera en la Base de Datos");
+                if ($this->chequearExistencia($Carrera->getId())) {
+                    $this->query = "UPDATE CARRERA "
+                            . "SET id = '{$Carrera->getId()}' , nombre = '{$Carrera->getNombre()}' "
+                            . "WHERE id = '{$id_}'";
+                } else {
+                    throw new Exception("El c&oacute;digo  " . $Carrera->getId() . " ya corresponde a una carrera en la Base de Datos");
+                }
             }
+        } else {
+            throw new Exception("El nombre de la carrera no puede estar en blanco");
         }
+
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
         if ($consulta) {
             return true;
@@ -127,13 +135,22 @@ class ManejadorCarrera {
         return $idCarrera;
     }
 
-    function chequear($idCarrera) {
-        $this->resultado = BDConexionSistema::getInstancia()->query("SELECT 1 FROM CARRERA WHERE id = {$idCarrera} LIMIT 1");
+    function chequearExistencia($idCarrera_) {
+        $this->resultado = BDConexionSistema::getInstancia()->query("SELECT 1 FROM CARRERA WHERE id = {$idCarrera_} LIMIT 1");
         if ($this->resultado->num_rows == 1) {
             //El registro existe en la BD. No se puede insertar
             return false;
         } else {
             //El registro no existe en la BD. Se puede insertar
+            return true;
+        }
+    }
+
+    function validaEspaciosEnBlanco($nombre_) {
+        $nombre = trim($nombre_);
+        if ($nombre == "") {
+            return false;
+        } else {
             return true;
         }
     }
