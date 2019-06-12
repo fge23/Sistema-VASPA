@@ -15,6 +15,7 @@ $Carrera = new Carrera($codCarrera);
         <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../lib/js/soloTexto.js"></script>
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Actualizar Carrera</title>
 
     </head>
@@ -36,12 +37,12 @@ $Carrera = new Carrera($codCarrera);
                         
                           <div class="form-group">
                               <label for="inputCodigo">C&oacute;digo de Carrera</label>
-                              <input type="number" name="id" class="form-control" id="inputCodigo" value="<?= $Carrera->getId(); ?>" placeholder="C&oacute;digo de Carrera" min="001" max="999" required="">
+                              <input type="number" name="id" class="form-control" id="inputCodigo" value="<?= $Carrera->getId();?>" placeholder="C&oacute;digo de Carrera" min="001" max="999" required="">
                         </div>
                         
                         <div class="form-group">
                             <label for="inputNombre">Nombre de Carrera</label>
-                            <input type="text" name="nombre" class="form-control" id="inputNombre" value="<?= $Carrera->getNombre(); ?>" placeholder="Nombre de la Carrera" required="">
+                            <input type="text" name="nombre" class="form-control" id="inputNombre" value="<?= $Carrera->getNombre(); ?>" placeholder="Nombre de la Carrera" required="" onkeypress="return Solo_Texto(event);" >
                         </div>
                          
                         <input type="hidden" name="idAnterior" value="<?= $Carrera->getId(); ?>">

@@ -56,7 +56,7 @@ class ManejadorCarrera {
         //Creo objeto sin enviar ID y enviando todos los datos del formulario
         $Carrera = new Carrera(null, $datos);
 
-       if ($this->chequear($Carrera->getId())) {
+        if ($this->chequear($Carrera->getId())) {
             //Seteo el nuevo ID como el ID que viene del formulario, completado con 0 a la izquierda
             $Carrera->setId($this->completaConCeros($Carrera->getId()));
             $this->query = "INSERT INTO CARRERA "
@@ -67,11 +67,9 @@ class ManejadorCarrera {
             } else {
                 return false;
             }
+        } else {
+            throw new Exception("El c&oacute;digo  " . $Carrera->getId() . " ya corresponde a una carrera en la Base de Datos");
         }
-        else{
-            throw new Exception("El código  ".$Carrera->getId(). " ya corresponde a una carrera en la Base de Datos");
-        }
-        
     }
 
     function baja($id_) {
@@ -90,9 +88,20 @@ class ManejadorCarrera {
         $idCarrera = $datos['id'];
         $idAux = $this->completaConCeros($idCarrera);
         $Carrera->setId($idAux);
-        $this->query = "UPDATE CARRERA "
-                . "SET id = '{$Carrera->getId()}' , nombre = '{$Carrera->getNombre()}' "
-                . "WHERE id = '{$id_}'";
+
+        if ($Carrera->getId() == $id_) {
+            $this->query = "UPDATE CARRERA "
+                    . "SET nombre = '{$Carrera->getNombre()}' "
+                    . "WHERE id = '{$id_}'";
+        } else {
+            if ($this->chequear($Carrera->getId())) {
+                $this->query = "UPDATE CARRERA "
+                        . "SET id = '{$Carrera->getId()}' , nombre = '{$Carrera->getNombre()}' "
+                        . "WHERE id = '{$id_}'";
+            } else {
+                throw new Exception("El c&oacute;digo  " . $Carrera->getId() . " ya corresponde a una carrera en la Base de Datos");
+            }
+        }
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
         if ($consulta) {
             return true;
@@ -102,15 +111,19 @@ class ManejadorCarrera {
     }
 
     function completaConCeros($id_) {
+        //Se convierte a String
         $idCarrera = (String) $id_;
+
+        //Se quitan los 0 a la 
+        $idCarrera = ltrim($idCarrera, '0');
 
         if (strlen($idCarrera) == 2) {
             $idCarrera = "0" . $idCarrera;
+        } else {
+            if (strlen($idCarrera) == 1) {
+                $idCarrera = "00" . $idCarrera;
+            }
         }
-        if (strlen($idCarrera) == 1) {
-            $idCarrera = "00" . $idCarrera;
-        }
-
         return $idCarrera;
     }
 

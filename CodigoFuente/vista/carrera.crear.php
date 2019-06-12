@@ -9,6 +9,7 @@ include_once '../lib/ControlAcceso.Class.php';
         <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../lib/js/soloTexto.js"></script>
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Crear Carrera</title>
     </head>
     <body>
@@ -28,12 +29,12 @@ include_once '../lib/ControlAcceso.Class.php';
                         <h4>Propiedades</h4>
                         <div class="form-group">
                             <label for="inputCodigo">C&oacute;digo de Carrera</label>
-                            <input type="number" name="id" class="form-control" id="inputCodigo" placeholder="Ingrese el C&oacute;digo de la Carrera" min="001" max="999" required="">
+                            <input type="number" name="id" class="form-control" id="inputCodigo" placeholder="Ingrese el C&oacute;digo de la Carrera" min="001" max="999" required="" >
                         </div>
                         
                            <div class="form-group">
                             <label for="inputNombre">Nombre</label>
-                            <input type="text" name="nombre" class="form-control" id="inputNombre" placeholder="Ingrese el nombre de la Carrera" required="">
+                            <input type="text" name="nombre" class="form-control" id="inputNombre" placeholder="Ingrese el nombre de la Carrera" required="" onkeypress="return Solo_Texto(event);">
                         </div>
                     </div>
                     <div class="card-footer">

@@ -4,7 +4,7 @@ include_once '../lib/Constantes.Class.php';
 
 $DatosFormulario = $_POST;
 $ManejadorCarrera = new ManejadorCarrera();
-//CHEQUEAR SI DATOS FORMULARIO, SINO... Redirigir a pagina anterior
+
 if (empty($DatosFormulario)) {
     header("location: carreras.php");
 } else {
