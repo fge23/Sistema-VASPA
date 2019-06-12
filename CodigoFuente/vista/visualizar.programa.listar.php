@@ -65,9 +65,14 @@ $carrera = new Carrera($codCarrera, NULL);
                                     </a>
                                 </td>
                             </tr>
-                            <?php }} ?>
+                            <?php }} ?> 
                         </tbody>
                     </table>
+<!--                    <div  class="no-results-container" style="display: block;">
+                        No results have been found.</div>-->
+                    <div id="noResultMessage" class="alert alert-warning" role="alert" style="display: block;">
+                        No se han encontrados resultados
+                    </div>
                 </div>
 <!--                    <div class="card-body" id="datos"> 
                 </div>-->
@@ -78,9 +83,7 @@ $carrera = new Carrera($codCarrera, NULL);
         <?php include_once '../gui/footer.php'; ?>
     </body>
     <script>
-        $(function () {
-            $('#buscador').quicksearch('table tbody tr');								
-        });
+            $('#buscador').quicksearch('table tbody tr', {noResults: "#noResultMessage"});
     </script>
     
 </html>

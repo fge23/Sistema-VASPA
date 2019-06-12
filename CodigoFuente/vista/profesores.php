@@ -16,7 +16,7 @@ $Profesores = $ManejadorProfesor->getColeccion();
         <link rel="stylesheet" href="../lib/bootstrap-4.1.1-dist/css/bootstrap.css" />
         <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
         
-        <link rel="stylesheet" href="../lib/datatable/bootstrap.css" />
+        <!--<link rel="stylesheet" href="../lib/datatable/bootstrap.css" />-->
         <link rel="stylesheet" href="../lib/datatable/dataTables.bootstrap4.min.css" />
         
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>

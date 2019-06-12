@@ -26,7 +26,7 @@ function getAsignaturas() {
 
     if ($result->num_rows > 0) {
         while ($fila = $result->fetch_assoc()) {
-            $listas .= '<option value="'.$fila['id'].'">'.$fila['id'].' - '.utf8_encode($fila['nombre']).'</option>';
+            $listas .= '<option value="'.$fila['id'].'">'.$fila['id'].' - '.$fila['nombre'].'</option>';
         }
     }
     return $listas;

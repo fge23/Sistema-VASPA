@@ -18,7 +18,7 @@ foreach ($planes as $plan){
     //Comprobamos que anio sea mayor igual que anio inicio y menor igual a anio fin, o que solamente sea mayor a  anio inicio y que anio fin sea nulo 
     if (($plan->getAnio_inicio() <= $anio && $plan->getAnio_fin() >= $anio) || ($plan->getAnio_inicio() <= $anio && is_null($plan->getAnio_fin()))){
         $carrera = new Carrera($plan->getIdCarrera(), NULL);
-        $carreras .= '<option value="'.$carrera->getId().'">'.$carrera->getId().' - '.utf8_encode($carrera->getNombre()).'</option>';
+        $carreras .= '<option value="'.$carrera->getId().'">'.$carrera->getId().' - '.$carrera->getNombre().'</option>';
     }
 }
 
