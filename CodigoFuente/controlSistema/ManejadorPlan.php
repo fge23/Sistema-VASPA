@@ -1,6 +1,5 @@
 <?php
 
-
 include_once '../modeloSistema/BDConexionSistema.Class.php';
 include_once '../modeloSistema/Plan.Class.php';
 
@@ -56,10 +55,16 @@ class ManejadorPlan {
 
         //Creo objeto sin enviar ID y enviando todos los datos del formulario
         $Plan = new Plan(null, $datos);
-        
-        $this->query = "INSERT INTO PLAN "
-                . "VALUES ('{$Plan->getId()}',{$Plan->getAnio_inicio()},'{$Plan->getIdCarrera()}',{$Plan->getAnio_fin()} )";
 
+        //Si el año fin no está definido, la query cambia
+        if (!empty($Plan->getAnio_fin())) {
+            $this->query = "INSERT INTO PLAN "
+                    . "VALUES ('{$Plan->getId()}',{$Plan->getAnio_inicio()},'{$Plan->getIdCarrera()}',{$Plan->getAnio_fin()} )";
+        } else {
+            $this->query = "INSERT INTO PLAN "
+                    . "VALUES ('{$Plan->getId()}',{$Plan->getAnio_inicio()},'{$Plan->getIdCarrera()}', null )";
+        }
+        var_dump($this->query);
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
         if ($consulta) {
             return true;
@@ -82,13 +87,22 @@ class ManejadorPlan {
     function modificacion($datos, $id_) {
 
         $Plan = new Plan(null, $datos);
-        $this->query = "UPDATE PLAN "
-                . "SET id = '{$Plan->getId()}' ,"
-                . " anio_inicio = {$Plan->getAnio_inicio()}, "
-                . "idCarrera = '{$Plan->getIdCarrera()}' ,"
-                . "anio_fin = {$Plan->getAnio_fin()} "
-                . "WHERE id = '{$id_}'";
-        
+
+        if (!empty($Plan->getAnio_fin())) {
+            $this->query = "UPDATE PLAN "
+                    . "SET id = '{$Plan->getId()}' ,"
+                    . " anio_inicio = {$Plan->getAnio_inicio()}, "
+                    . "idCarrera = '{$Plan->getIdCarrera()}' ,"
+                    . "anio_fin = {$Plan->getAnio_fin()} "
+                    . "WHERE id = '{$id_}'";
+        } else {
+            $this->query = "UPDATE PLAN "
+                    . "SET id = '{$Plan->getId()}' ,"
+                    . " anio_inicio = {$Plan->getAnio_inicio()}, "
+                    . "idCarrera = '{$Plan->getIdCarrera()}' "
+                    . "WHERE id = '{$id_}'";
+        }
+        var_dump($this->query);
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
         if ($consulta) {
             return true;
@@ -96,22 +110,20 @@ class ManejadorPlan {
             return false;
         }
     }
-    
+
     /* Metodo innecesario ya que se puede recuperar directamente (tenia la cabeza quemada)
 
-    function buscarCarrera($idPlan) {
-        $this->query = "SELECT plan.idCarrera as idCarrera "
-                . "FROM CARRERA carrera "
-                . "INNER JOIN PLAN plan "
-                . "ON carrera.id = plan.idCarrera "
-                . "WHERE plan.id = '{$idPlan}'";
-        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
-       for ($x = 0; $x < $this->datos->num_rows; $x++) {
-          $fila =  $this->datos->fetch_row();
-          return $fila[0];
-        }        
-    }
-      */
-     
-
+      function buscarCarrera($idPlan) {
+      $this->query = "SELECT plan.idCarrera as idCarrera "
+      . "FROM CARRERA carrera "
+      . "INNER JOIN PLAN plan "
+      . "ON carrera.id = plan.idCarrera "
+      . "WHERE plan.id = '{$idPlan}'";
+      $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+      for ($x = 0; $x < $this->datos->num_rows; $x++) {
+      $fila =  $this->datos->fetch_row();
+      return $fila[0];
+      }
+      }
+     */
 }
