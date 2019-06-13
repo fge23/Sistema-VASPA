@@ -61,7 +61,7 @@ $Profesores = $ManejadorProfesor->getColeccion();
                         <div class="form-group">
                             <label for="selectProfesor">Docente Responsable</label>
                             <br>
-                            <select name="idProfesor" data-placeholder="Seleccione un Docente" class="chosen-select" tabindex="2" id="selectProfesor" required="true">
+                            <select name="idProfesor" data-placeholder="Seleccione un Docente" class="chosen-select" tabindex="2" id="selectProfesor" required>
                                 <option value=""></option>
                                  <?php foreach ($Profesores as $Profesor) { ?>
                                     <option value="<?= $Profesor->getId(); ?>"><?= $Profesor->getApellido() . ", " . $Profesor->getNombre(); ?></option>
@@ -72,7 +72,7 @@ $Profesores = $ManejadorProfesor->getColeccion();
 
                             <div class="form-group">
                             <label for="txtAreaContenidosMinimos">Contenidos M&iacute;nimos</label>
-                            <textarea class="form-control" rows="5" name="contenidosMinimos" id="txtAreaContenidosMinimos"></textarea>
+                            <textarea class="form-control" rows="5" name="contenidosMinimos" id="txtAreaContenidosMinimos" required></textarea>
                         </div>
                     </div>
                     <div class="card-footer">
