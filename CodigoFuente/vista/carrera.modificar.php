@@ -37,7 +37,7 @@ $Carrera = new Carrera($codCarrera);
                         
                           <div class="form-group">
                               <label for="inputCodigo">C&oacute;digo de Carrera</label>
-                              <input type="number" name="id" class="form-control" id="inputCodigo" value="<?= $Carrera->getId();?>" placeholder="C&oacute;digo de Carrera" min="001" max="999" required="">
+                              <input type="number" name="id" class="form-control" id="inputCodigo" value="<?= $Carrera->getId();?>" placeholder="C&oacute;digo de Carrera" min="001" max="999" required="" autofocus>
                         </div>
                         
                         <div class="form-group">

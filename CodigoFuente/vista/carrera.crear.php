@@ -13,7 +13,7 @@ include_once '../lib/ControlAcceso.Class.php';
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Crear Carrera</title>
     </head>
     <body>
-        <?php  include_once '../gui/navbar.php'; ?>
+        <?php include_once '../gui/navbar.php'; ?>
         <div class="container">
             <form action="carrera.crear.procesar.php" method="post"> 
                 <div class="card">
@@ -29,10 +29,10 @@ include_once '../lib/ControlAcceso.Class.php';
                         <h4>Propiedades</h4>
                         <div class="form-group">
                             <label for="inputCodigo">C&oacute;digo de Carrera</label>
-                            <input type="number" name="id" class="form-control" id="inputCodigo" placeholder="Ingrese el C&oacute;digo de la Carrera" min="001" max="999" required="" >
+                            <input type="number" name="id" class="form-control" id="inputCodigo" placeholder="Ingrese el C&oacute;digo de la Carrera" min="001" max="999" required="" autofocus>
                         </div>
-                        
-                           <div class="form-group">
+
+                        <div class="form-group">
                             <label for="inputNombre">Nombre</label>
                             <input type="text" name="nombre" class="form-control" id="inputNombre" placeholder="Ingrese el nombre de la Carrera" required="" onkeypress="return Solo_Texto(event);">
                         </div>

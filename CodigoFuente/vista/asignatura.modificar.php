@@ -52,7 +52,7 @@ $Asignatura = new Asignatura($codAsignatura);
                         <h4>Propiedades</h4>
                         <div class="form-group">
                             <label for="inputCodigo">C&oacute;digo de Asignatura</label>
-                            <input type="number" value="<?= $Asignatura->getId(); ?>" name="id" class="form-control" id="inputCodigo" placeholder="Ingrese el C&oacute;digo de la Asignatura" min="0001" max="9999" required="">
+                            <input type="number" value="<?= $Asignatura->getId(); ?>" name="id" class="form-control" id="inputCodigo" placeholder="Ingrese el C&oacute;digo de la Asignatura" min="0001" max="9999" required="" autofocus>
                         </div>
 
                         <div class="form-group">

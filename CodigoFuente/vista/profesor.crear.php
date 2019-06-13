@@ -32,7 +32,7 @@ $Departamentos = $ManejadorDepartamento->getColeccion();
                         
                         <div class="form-group">
                            <label for="inputApellidoProfesor">Apellido</label>
-                            <input type="text" name="apellido" class="form-control" id="inputApellidoProfesor" placeholder="Ingrese el Apellido del Profesor" required="">
+                            <input type="text" name="apellido" class="form-control" id="inputApellidoProfesor" placeholder="Ingrese el Apellido del Profesor" required="" autofocus>
                         </div>
                         
                         <div class="form-group">

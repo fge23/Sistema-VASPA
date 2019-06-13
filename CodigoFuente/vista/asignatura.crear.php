@@ -43,7 +43,7 @@ $Profesores = $ManejadorProfesor->getColeccion();
                         <h4>Propiedades</h4>
                         <div class="form-group">
                             <label for="inputCodigo">C&oacute;digo de Asignatura</label>
-                            <input type="number" name="id" class="form-control" id="inputCodigo" placeholder="Ingrese el C&oacute;digo de la Asignatura" min="0001" max="9999" required="">
+                            <input type="number" name="id" class="form-control" id="inputCodigo" placeholder="Ingrese el C&oacute;digo de la Asignatura" min="0001" max="9999" required="" autofocus>
                         </div>
 
                         <div class="form-group">

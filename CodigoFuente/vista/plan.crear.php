@@ -36,7 +36,7 @@ $Carreras = $ManejadorCarrera->getColeccion();
                            <div class="form-group">
                                <label for="inputCodigoPlan">C&oacute;digo del Plan</label>
                             <!--En el año maximo se coloca el año actual + 1-->
-                            <input type="text" name="id" class="form-control" id="inputCodigoPlan" placeholder="Ingrese el c&oacute;digo del Plan" required="">
+                            <input type="text" name="id" class="form-control" id="inputCodigoPlan" placeholder="Ingrese el c&oacute;digo del Plan" required="" autofocus>
                         </div>
                         
                         <div class="form-group">
