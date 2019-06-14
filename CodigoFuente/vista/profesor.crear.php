@@ -12,6 +12,7 @@ $Departamentos = $ManejadorDepartamento->getColeccion();
         <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../lib/js/soloTexto.js"></script>
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Crear Profesor</title>
     </head>
     <body>
@@ -32,12 +33,16 @@ $Departamentos = $ManejadorDepartamento->getColeccion();
                         
                         <div class="form-group">
                            <label for="inputApellidoProfesor">Apellido</label>
-                            <input type="text" name="apellido" class="form-control" id="inputApellidoProfesor" placeholder="Ingrese el Apellido del Profesor" required="" autofocus>
+                            <input type="text" name="apellido" class="form-control" id="inputApellidoProfesor" placeholder="Ingrese el Apellido del Profesor" required="" autofocus 
+                                   pattern="[A-Za-zñÑáéíóúáéíóúÁÉÍÓÚ']{2,}([A-Za-zñÑáéíóúáéíóúÁÉÍÓÚ']{2,}| [A-Za-zñÑáéíóúáéíóúÁÉÍÓÚ']{2,})*" 
+                                  title="Escriba el apellido, en caso de tener más de uno, escribirlos separados mediante un espacio" onkeypress="return Solo_Texto(event);">
                         </div>
                         
                         <div class="form-group">
                            <label for="inputNombreProfesor">Nombre</label> 
-                            <input type="text" name="nombre" class="form-control" id="inputNombreProfesor" placeholder="Ingrese el Nombre del Profesor" required="">
+                           <input type="text" name="nombre" class="form-control" id="inputNombreProfesor" placeholder="Ingrese el Nombre del Profesor" required="" 
+                                  pattern="[A-Za-zñÑáéíóúáéíóúÁÉÍÓÚ']{2,}([A-Za-zñÑáéíóúáéíóúÁÉÍÓÚ']{2,}| [A-Za-zñÑáéíóúáéíóúÁÉÍÓÚ']{2,})*" 
+                                  title="Escriba el nombre, en caso de tener más de uno, escribirlos separados mediante un espacio" onkeypress="return Solo_Texto(event);">
                         </div>
                         
                          <div class="form-group">
