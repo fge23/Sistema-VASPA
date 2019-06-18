@@ -15,6 +15,8 @@ $Carreras = $ManejadorCarrera->getColeccion();
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../lib/js/valida.anios.js"></script>
+        <script src="../lib/bootbox/bootbox.js"></script>
+        <script src="../lib/bootbox/bootbox.locales.js"></script>
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Crear Plan</title>
     </head>
     <body>
@@ -32,13 +34,12 @@ $Carreras = $ManejadorCarrera->getColeccion();
                     </div>
                     <div class="card-body">
                         <h4>Propiedades</h4>
-                        
-                           <div class="form-group">
-                               <label for="inputCodigoPlan">C&oacute;digo del Plan</label>
-                            <!--En el año maximo se coloca el año actual + 1-->
+
+                        <div class="form-group">
+                            <label for="inputCodigoPlan">C&oacute;digo del Plan</label>
                             <input type="text" name="id" class="form-control" id="inputCodigoPlan" placeholder="Ingrese el c&oacute;digo del Plan" required="" autofocus>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="selectCarrera">Carrera</label>
                             <select class="form-control" id="selectCarrera" name="idCarrera" >
@@ -58,7 +59,7 @@ $Carreras = $ManejadorCarrera->getColeccion();
                             <!--En el año maximo se coloca el año actual + 25-->
                             <input type="number" name="anio_fin" class="form-control" min="1980" max="<?= date("Y") + 25; ?>" id="inputAnioFin" placeholder="Ingrese el a&ntilde;o de Fin del Plan" >
                         </div>
-                        
+
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-outline-success" onclick="return valida_anios(event);">

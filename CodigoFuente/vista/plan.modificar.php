@@ -7,7 +7,6 @@ $ManejadorCarrera = new ManejadorCarrera();
 $Carreras = $ManejadorCarrera->getColeccion();
 $idPlan = $_GET["id"];
 $Plan = new Plan($idPlan, null);
-
 ?>
 
 <html>
@@ -18,6 +17,8 @@ $Plan = new Plan($idPlan, null);
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../lib/js/valida.anios.js"></script>
+        <script src="../lib/bootbox/bootbox.js"></script>
+        <script src="../lib/bootbox/bootbox.locales.js"></script>
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Modificar Plan</title>
     </head>
     <body>
@@ -35,42 +36,42 @@ $Plan = new Plan($idPlan, null);
                     </div>
                     <div class="card-body">
                         <h4>Propiedades</h4>
-                        
+
                         <div class="form-group">
                             <label for="inputCodigoPlan">C&oacute;digo del Plan</label>
                             <!--En el año maximo se coloca el año actual + 1-->
-                            <input type="text" name="id" class="form-control" id="inputCodigoPlan" placeholder="Ingrese el c&oacute;digo del Plan" value="<?= $Plan->getId();?>" required="" autofocus>
+                            <input type="text" name="id" class="form-control" id="inputCodigoPlan" placeholder="Ingrese el c&oacute;digo del Plan" value="<?= $Plan->getId(); ?>" required="" autofocus>
                         </div>
 
                         <div class="form-group">
                             <label for="selectCarrera">Carrera</label>
                             <select class="form-control" id="selectCarrera" name="idCarrera" >
                                 <?php foreach ($Carreras as $Carrera) { ?>
-                                <option
-                                     <?php 
-                                        if($Plan->getIdCarrera() == $Carrera->getId()){
-                                           echo "selected";
-                                       }
+                                    <option
+                                    <?php
+                                    if ($Plan->getIdCarrera() == $Carrera->getId()) {
+                                        echo "selected";
+                                    }
                                     ?>
-                                    
-                                    value="<?= $Carrera->getId(); ?>" ><?= $Carrera->getNombre(); ?>
-                                   
-                                </option> 
+
+                                        value="<?= $Carrera->getId(); ?>" ><?= $Carrera->getNombre(); ?>
+
+                                    </option> 
                                 <?php } ?> </select>
                         </div>
 
                         <div class="form-group">
                             <label for="inputAnioInicio">A&ntilde;o de Inicio</label>
                             <!--En el año maximo se coloca el año actual + 1-->
-                            <input type="number" name="anio_inicio" class="form-control" min="1980" max="<?= date("Y") + 1; ?>" value="<?= $Plan->getAnio_inicio();?>" id="inputAnioInicio" placeholder="Ingrese el a&ntilde;o de Inicio del Plan" required="">
+                            <input type="number" name="anio_inicio" class="form-control" min="1980" max="<?= date("Y") + 1; ?>" value="<?= $Plan->getAnio_inicio(); ?>" id="inputAnioInicio" placeholder="Ingrese el a&ntilde;o de Inicio del Plan" required="">
                         </div>
 
                         <div class="form-group">
                             <label for="inputAnioFin">A&ntilde;o de Fin</label>
                             <!--En el año maximo se coloca el año actual + 25-->
-                            <input type="number" name="anio_fin" class="form-control" min="1980" max="<?= date("Y") + 25; ?>" value="<?= $Plan->getAnio_fin();?>"  id="inputAnioFin" placeholder="Ingrese el a&ntilde;o de Fin del Plan">
+                            <input type="number" name="anio_fin" class="form-control" min="1980" max="<?= date("Y") + 25; ?>" value="<?= $Plan->getAnio_fin(); ?>"  id="inputAnioFin" placeholder="Ingrese el a&ntilde;o de Fin del Plan">
                         </div>
-                        
+
                         <input type="hidden" name="idAnterior" value="<?= $Plan->getId(); ?>">
 
                     </div>

@@ -64,7 +64,6 @@ class ManejadorPlan {
             $this->query = "INSERT INTO PLAN "
                     . "VALUES ('{$Plan->getId()}',{$Plan->getAnio_inicio()},'{$Plan->getIdCarrera()}', null )";
         }
-        var_dump($this->query);
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
         if ($consulta) {
             return true;
@@ -102,7 +101,6 @@ class ManejadorPlan {
                     . "idCarrera = '{$Plan->getIdCarrera()}' "
                     . "WHERE id = '{$id_}'";
         }
-        var_dump($this->query);
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
         if ($consulta) {
             return true;
@@ -111,7 +109,7 @@ class ManejadorPlan {
         }
     }
 
-    /* Metodo innecesario ya que se puede recuperar directamente (tenia la cabeza quemada)
+    /* Metodo innecesario ya que se puede recuperar directamente
 
       function buscarCarrera($idPlan) {
       $this->query = "SELECT plan.idCarrera as idCarrera "
