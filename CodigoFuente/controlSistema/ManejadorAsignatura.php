@@ -81,22 +81,41 @@ class ManejadorAsignatura {
         }
     }
 
+    // Arreglar y validar si funciona bien
     //Funcion para Modificación de Asignaturas
     function modificacion($datos, $id_) {
 
         $Asignatura = new Asignatura(null, $datos);
-        $this->query = "UPDATE ASIGNATURA "
-                . "SET id = '{$Asignatura->getId()}', "
-                . "nombre = '{$Asignatura->getNombre()}', "
-                . "idDepartamento = {$Asignatura->getIdDepartamento()} , "
-                . "contenidosMinimos = '{$Asignatura->getContenidosMinimos()}' , "
-                . "idProfesor = {$Asignatura->getIdProfesor()} "
-                . "WHERE id = '{$id_}'";
-        $consulta = BDConexionSistema::getInstancia()->query($this->query);
-        if ($consulta) {
-            return true;
+
+        if ($this->validaEspaciosEnBlanco($Asignatura->getNombre())) {
+            if ($Asignatura->getId() == $id_) {
+                $this->query = "UPDATE ASIGNATURA "
+                        . "SET nombre = '{$Asignatura->getNombre()}', "
+                        . "idDepartamento = {$Asignatura->getIdDepartamento()} , "
+                        . "contenidosMinimos = '{$Asignatura->getContenidosMinimos()}' , "
+                        . "idProfesor = {$Asignatura->getIdProfesor()} "
+                        . "WHERE id = '{$id_}'";
+            } else {
+                if ($this->chequearInexistencia($Asignatura->getId())) {
+                    $this->query = "UPDATE ASIGNATURA "
+                            . "SET id = '{$Asignatura->getId()}', "
+                            . "nombre = '{$Asignatura->getNombre()}', "
+                            . "idDepartamento = {$Asignatura->getIdDepartamento()} , "
+                            . "contenidosMinimos = '{$Asignatura->getContenidosMinimos()}' , "
+                            . "idProfesor = {$Asignatura->getIdProfesor()} "
+                            . "WHERE id = '{$id_}'";
+                } else {
+                    throw new Exception("El c&oacute;digo  " . $Asignatura->getId() . " ya corresponde a una Asignatura en la Base de Datos");
+                }
+            }
+            $consulta = BDConexionSistema::getInstancia()->query($this->query);
+            if ($consulta) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            return false;
+            throw new Exception("El nombre de la carrera no puede estar en blanco");
         }
     }
 
@@ -140,6 +159,15 @@ class ManejadorAsignatura {
             return false;
         } else {
             //El registro no existe en la BD. Se puede insertar
+            return true;
+        }
+    }
+
+    function validaEspaciosEnBlanco($nombre_) {
+        $nombre = trim($nombre_);
+        if ($nombre == "") {
+            return false;
+        } else {
             return true;
         }
     }

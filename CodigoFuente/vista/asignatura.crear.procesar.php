@@ -14,7 +14,6 @@ if (empty($DatosFormulario)) {
     try {
         $consulta = $ManejadorAsignatura->alta($DatosFormulario);
     } catch (Exception $e) {
-        echo "ERROR";
         $error = $e->getMessage();
     }
     ?>

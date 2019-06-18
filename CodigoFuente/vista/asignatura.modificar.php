@@ -107,7 +107,7 @@ $Asignatura = new Asignatura($codAsignatura);
                         <button type="submit" class="btn btn-outline-success">
                             <span class="oi oi-check"></span> Confirmar
                         </button>
-                        <a href="carreras.php">
+                        <a href="asignaturas.php">
                             <button type="button" class="btn btn-outline-danger">
                                 <span class="oi oi-x"></span> Cancelar
                             </button>
