@@ -4,10 +4,17 @@ include_once '../controlSistema/ManejadorAsignatura.php';
 
 $DatosFormulario = $_POST;
 $ManejadorAsignatura = new ManejadorAsignatura();
-$consulta = $ManejadorAsignatura->modificacion($DatosFormulario,$DatosFormulario['idAnterior']);
 
-
-
+if (empty($DatosFormulario)) {
+    header("location: asignaturas.php");
+} else {
+    $error = "";
+    $consulta = false;
+    try {
+        $consulta = $ManejadorAsignatura->modificacion($DatosFormulario,$DatosFormulario['idAnterior']);
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+    }
 ?>
 <html>
     <head>
@@ -28,14 +35,14 @@ $consulta = $ManejadorAsignatura->modificacion($DatosFormulario,$DatosFormulario
                 </div>
                 <div class="card-body">
                     <?php if ($consulta) { ?>
-                        <div class="alert alert-success" role="alert">
-                            Operaci&oacute;n realizada con &eacute;xito.
-                        </div>
+                    <div class="alert alert-success" role="alert">
+                        Operaci&oacute;n realizada con &eacute;xito.
+                    </div>
                     <?php } ?>   
                     <?php if (!$consulta) { ?>
-                        <div class="alert alert-danger" role="alert">
-                            Ha ocurrido un error.
-                        </div>
+                    <div class="alert alert-danger" role="alert">
+                        Ha ocurrido un error. <?= $error; ?>
+                    </div>
                     <?php } ?>
                     <hr />
                     <h5 class="card-text">Opciones</h5>
@@ -47,6 +54,9 @@ $consulta = $ManejadorAsignatura->modificacion($DatosFormulario,$DatosFormulario
                 </div>
             </div>
         </div>
-        <?php include_once '../gui/footer.php'; ?>
+                   <?php
+            include_once '../gui/footer.php';
+        }
+        ?>
     </body>
 </html>

@@ -54,20 +54,24 @@ class ManejadorAsignatura {
 
         //Creo objeto sin enviar ID y enviando todos los datos del formulario
         $Asignatura = new Asignatura(null, $datos);
-
-        if ($this->chequearInexistencia($Asignatura->getId())) {
-            $this->query = "INSERT INTO ASIGNATURA "
-                    . "VALUES ('{$Asignatura->getId()}', '{$Asignatura->getNombre()}', {$Asignatura->getIdDepartamento()} , "
-                    . "'{$Asignatura->getContenidosMinimos()}', {$Asignatura->getIdProfesor()} )";
+                
+        $Asignatura->setId($this->completaConCeros($Asignatura->getId()));
+        if ($this->validaEspaciosEnBlanco($Asignatura->getNombre())) {
+            if ($this->chequearInexistencia($Asignatura->getId())) {
+                $this->query = "INSERT INTO ASIGNATURA "
+                        . "VALUES ('{$Asignatura->getId()}', '{$Asignatura->getNombre()}', {$Asignatura->getIdDepartamento()} , "
+                        . "'{$Asignatura->getContenidosMinimos()}', {$Asignatura->getIdProfesor()} )";
+                $consulta = BDConexionSistema::getInstancia()->query($this->query);
+                if ($consulta) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                throw new Exception("El c&oacute;digo  " . $Asignatura->getId() . " ya corresponde a una Asignatura en la Base de Datos");
+            }
         } else {
-            throw new Exception("El c&oacute;digo  " . $Asignatura->getId() . " ya corresponde a una Asignatura en la Base de Datos");
-        }
-        var_dump($this->query);
-        $consulta = BDConexionSistema::getInstancia()->query($this->query);
-        if ($consulta) {
-            return true;
-        } else {
-            return false;
+            throw new Exception("El nombre de la carrera no puede estar en blanco");
         }
     }
 
@@ -81,12 +85,11 @@ class ManejadorAsignatura {
         }
     }
 
-    // Arreglar y validar si funciona bien
     //Funcion para Modificación de Asignaturas
     function modificacion($datos, $id_) {
 
         $Asignatura = new Asignatura(null, $datos);
-
+        $Asignatura->setId($this->completaConCeros($Asignatura->getId()));
         if ($this->validaEspaciosEnBlanco($Asignatura->getNombre())) {
             if ($Asignatura->getId() == $id_) {
                 $this->query = "UPDATE ASIGNATURA "
@@ -115,7 +118,7 @@ class ManejadorAsignatura {
                 return false;
             }
         } else {
-            throw new Exception("El nombre de la carrera no puede estar en blanco");
+            throw new Exception("El nombre de la Asignatura no puede estar en blanco");
         }
     }
 
@@ -170,6 +173,27 @@ class ManejadorAsignatura {
         } else {
             return true;
         }
+    }
+
+    function completaConCeros($id_) {
+        //Se convierte a String
+        $idAsignatura = (String) $id_;
+
+        //Se quitan los 0 a la 
+        $idAsignatura = ltrim($idAsignatura, '0');
+
+        if (strlen($idAsignatura) == 3) {
+            $idAsignatura = "0" . $idAsignatura;
+        } else {
+            if (strlen($idAsignatura) == 2) {
+                $idAsignatura = "00" . $idAsignatura;
+            } else {
+                if (strlen($idAsignatura) == 1) {
+                    $idAsignatura = "000" . $idAsignatura;
+                }
+            }
+        }
+        return $idAsignatura;
     }
 
 }

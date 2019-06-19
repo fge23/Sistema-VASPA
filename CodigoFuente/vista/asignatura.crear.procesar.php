@@ -5,7 +5,6 @@ include_once '../lib/Constantes.Class.php';
 $DatosFormulario = $_POST;
 $ManejadorAsignatura = new ManejadorAsignatura();
 
-
 if (empty($DatosFormulario)) {
     header("location: asignaturas.php");
 } else {

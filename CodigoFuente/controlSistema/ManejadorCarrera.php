@@ -88,9 +88,8 @@ class ManejadorCarrera {
     //Funcion para Modificación de Carreras
     function modificacion($datos, $id_) {
         $Carrera = new Carrera(null, $datos);
-        $idCarrera = $datos['id'];
-        $idAux = $this->completaConCeros($idCarrera);
-        $Carrera->setId($idAux);
+        
+        $Carrera->setId($this->completaConCeros($Carrera->getId()));
 
         if ($this->validaEspaciosEnBlanco($Carrera->getNombre())) {
             if ($Carrera->getId() == $id_) {
