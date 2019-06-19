@@ -22,17 +22,13 @@ $Asignatura = new Asignatura($codAsignatura);
 <html>
     <head>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="../lib/bootstrap-4.1.1-dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
-
-        <link rel="stylesheet" href="../chosen_v1.8.7/docsupport/style.css">
-        <link rel="stylesheet" href="../chosen_v1.8.7/docsupport/prism.css">
-        <link rel="stylesheet" href="../chosen_v1.8.7/chosen.css">
-        <meta http-equiv="Content-Security-Policy" content="default-src &apos;self&apos;; script-src &apos;self&apos; https://ajax.googleapis.com; style-src &apos;self&apos;; img-src &apos;self&apos; data:"> 
-
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
-        <link href="../lib/chosen_bootstrap/dist/css/component-chosen.css" rel="stylesheet">
+        <link rel="stylesheet" href="../lib/bootstrap-4.1.1-dist/css/bootstrap.css" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.8/css/bootstrap-select.min.css" rel="stylesheet"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.8/js/bootstrap-select.min.js"></script>
+        <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Actualizar Asignatura</title>
     </head>
     <body>
@@ -61,7 +57,7 @@ $Asignatura = new Asignatura($codAsignatura);
                         </div>
                         <div class="form-group">
                             <label for="selectDepartamento">Departamento</label>
-                            <select class="form-control" id="selectDepartamento" name="departamento" >
+                            <select class="selectpicker show-tick" data-width="100%" name="departamento" id="selectDepartamento" title="Seleccione un Departamento" required="">
                                 <?php foreach ($Departamentos as $Departamento) { ?>
                                     <option   
                                     <?php
@@ -71,14 +67,14 @@ $Asignatura = new Asignatura($codAsignatura);
                                     ?>
                                         value="<?= $Departamento->getId(); ?>"><?= $Departamento->getNombre(); ?>
                                     </option>
-                                <?php } ?> </select>
+                                <?php } ?>
+                            </select>
                         </div>
 
                         <div class="form-group">
                             <label for="selectProfesor">Docente Responsable</label>
                             <br>
-                            <select name="idProfesor" data-placeholder="Seleccione un Docente" class="chosen-select" tabindex="2" id="selectProfesor">
-                                <option value=""></option>
+                            <select class="selectpicker show-tick" data-live-search="true" data-width="100%" name="idProfesor" id="selectProfesor" title="Seleccione un Docente" required="">
                                 <?php foreach ($Profesores as $Profesor) { ?>
                                     <option 
                                     <?php
@@ -89,10 +85,6 @@ $Asignatura = new Asignatura($codAsignatura);
                                         value="<?= $Profesor->getId(); ?>"><?= $Profesor->getApellido() . ", " . $Profesor->getNombre(); ?>
                                     </option>
                                 <?php } ?>
-
-
-
-
                             </select>
                         </div>
 
@@ -118,9 +110,11 @@ $Asignatura = new Asignatura($codAsignatura);
 
         </div>
         <?php include_once '../gui/footer.php'; ?>
-        <script src="../lib/chosen_v1.8.7/docsupport/jquery-3.2.1.min.js" type="text/javascript"></script>
-        <script src="../lib/chosen_v1.8.7/chosen.jquery.js" type="text/javascript"></script>
-        <script src="../lib/chosen_v1.8.7/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../lib/chosen_v1.8.7/docsupport/init.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script type="text/javascript">
+            $('.selectpicker').selectpicker({
+            noneResultsText: 'No se encontraron resultados'});
+        </script>
+        
     </body>
 </html>
