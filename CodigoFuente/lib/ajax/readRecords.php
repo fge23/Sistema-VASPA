@@ -1,32 +1,40 @@
 <?php
-	// include Database connection file 
-	include("db_connection.php");
 
-	// Design initial table header 
-	$data = '<table class="table table-bordered table-striped">
+// include Database connection file 
+include_once '../../modeloSistema/BDConexionSistema.Class.php';
+/**
+ *
+ * @var mysqli_result
+ */
+$datos;
+
+// Design initial table header 
+$data = '<table class="table table-bordered table-striped">
 						<tr>
-							<th>No.</th>
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Email Address</th>
+							<th>T&iacute;tulo</th>
+							<th>Apellido</th>
+							<th>Nombre</th>
+							<th>Datos Adicionales</th>
+                                                        <th>Disponibilidad</th>
 							<th>Update</th>
 							<th>Delete</th>
 						</tr>';
 
-	$query = "SELECT * FROM users";
+$query = "SELECT * FROM recurso";
+$datos = BDConexionSistema::getInstancia()->query($query);
+if ($datos) {
+    echo "todo bien";
+} else {
+    echo "todo mal";
+}
 
-	if (!$result = mysql_query($query)) {
-        exit(mysql_error());
-    }
+$data = 0;
 
-    // if query results contains rows then featch those rows 
-    if(mysql_num_rows($result) > 0)
-    {
-    	$number = 1;
-    	while($row = mysql_fetch_assoc($result))
-    	{
-    		$data .= '<tr>
-				<td>'.$number.'</td>
+// if query results contains rows then featch those rows 
+ for ($x = 0; $x < $this->datos->num_rows; $x++) {
+     var_dump($datos);
+$data .= '<tr>
+				<td>'.$x.'</td>
 				<td>'.$row['first_name'].'</td>
 				<td>'.$row['last_name'].'</td>
 				<td>'.$row['email'].'</td>
@@ -37,16 +45,10 @@
 					<button onclick="DeleteUser('.$row['id'].')" class="btn btn-danger">Delete</button>
 				</td>
     		</tr>';
-    		$number++;
-    	}
-    }
-    else
-    {
-    	// records now found 
-    	$data .= '<tr><td colspan="6">Records not found!</td></tr>';
-    }
 
-    $data .= '</table>';
 
-    echo $data;
+
+}
+ $data .= '</table>';
+ echo $data;
 ?>

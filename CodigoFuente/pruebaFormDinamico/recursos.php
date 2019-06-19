@@ -1,8 +1,11 @@
-<!DOCTYPE html>
+<?php
+include_once '../lib/ControlAcceso.Class.php';
+
+?>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>PHP and MySQL CRUD Operations Demo</title>
+       <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Recursos</title>
 
         <!-- Bootstrap CSS File  -->
         <link rel="stylesheet" type="text/css" href="../lib/bootstrap-4.1.1-dist/css/bootstrap.css"/>
@@ -20,8 +23,6 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="pull-right">
-               
-                
                             <button type="button" class="btn btn-success"  data-toggle="modal" data-target="#add_new_record_modal">
                                 <span class="oi oi-plus"></span> Nuevo Recurso
                             </button>

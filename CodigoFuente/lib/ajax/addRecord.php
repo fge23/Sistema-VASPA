@@ -6,7 +6,6 @@ $query;
  * @var mysqli_result
  */
 $consulta;
-echo "aaaaaa";
 if (isset($_POST['nuevo_apellido']) && isset($_POST['nuevo_nombre']) && isset($_POST['nuevo_titulo'])
         && isset($_POST['nuevo_datos_adicionales']) && isset($_POST['nuevo_disponibilidad'])) {
     // include Database connection file 

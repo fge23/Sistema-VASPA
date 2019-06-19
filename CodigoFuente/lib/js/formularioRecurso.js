@@ -1,7 +1,6 @@
 // Add Record
 function addRecord() {
     // get values
-    alert("ALERTA");
     var nuevo_apellido = $("#nuevo_apellido").val();
     var nuevo_nombre = $("#nuevo_nombre").val();
     var nuevo_titulo = $("#nuevo_titulo").val();
@@ -33,7 +32,8 @@ function addRecord() {
 
 // READ records
 function readRecords() {
-    $.get("ajax/readRecords.php", {}, function (data, status) {
+    alert("read records");
+    $.get("../lib/ajax/readRecords.php", {}, function (data, status) {
         $(".records_content").html(data);
     });
 }
