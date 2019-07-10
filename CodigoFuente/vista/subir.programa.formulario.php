@@ -24,8 +24,8 @@ if (!is_dir($directorio)){
     if ($creado){
         //echo "Directorio creado <br>";
         //Insertamos el anio en la BD
-        $consulta = "INSERT INTO ANIO VALUES ({$anio})";
-        $resultado = BDConexionSistema::getInstancia()->query($consulta);
+        //$consulta = "INSERT INTO ANIO VALUES ({$anio})";
+        //$resultado = BDConexionSistema::getInstancia()->query($consulta);
         /*
         if ($resultado){
             echo 'Cargado en la BD';
