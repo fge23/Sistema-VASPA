@@ -24,7 +24,7 @@ $asignaturas = BDConexionSistema::getInstancia()->query($consulta);
         <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>        
-        <title>Sistema VASPA - Programas</title>
+           <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Programas</title>
     </head>
     <body>
 
@@ -57,7 +57,6 @@ $asignaturas = BDConexionSistema::getInstancia()->query($consulta);
                                         <button type="button" class="btn btn-outline-info">
                                             <span class="oi oi-zoom-in"></span>
                                         </button></a>
-                                    
                                 </td>
                                 </tr>
                         <?php } ?>   
