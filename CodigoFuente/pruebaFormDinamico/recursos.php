@@ -28,11 +28,13 @@ include_once '../lib/ControlAcceso.Class.php';
                             </button>
                     </div>
                 </div>
-            </div>
+            </div> 
+               <!-- /Content Section -->
+               <div class="container" id="divDatos">
+
         </div>
-        <!-- /Content Section -->
-
-
+        </div>
+     
         <!-- Bootstrap Modals -->
         <!-- Modal - Add New Record/User -->
         <div class="modal fade" id="add_new_record_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

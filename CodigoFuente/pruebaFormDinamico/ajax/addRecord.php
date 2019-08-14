@@ -31,6 +31,7 @@ if (isset($_POST['nuevo_apellido']) && isset($_POST['nuevo_nombre']) && isset($_
             . "'{$nuevo_datos_adicionales}' , "
             . "'{$nuevo_disponibilidad}' , "
             . " 2) ";
+    var_dump($query);
     $consulta = BDConexionSistema::getInstancia()->query($query);
     if ($consulta) {
         echo "1 Record Added!";

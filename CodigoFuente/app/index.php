@@ -56,7 +56,7 @@
                             <hr />
                             <h5>Ingreso al Sistema</h5>
                             <p>Ud. puede ingresar el sistema si est&aacute; conectado a su e-mail. Por favor haga click en el bot&oacute;n a continuaci&oacute;n y elija su cuenta o realice el login.</p>
-                            <div id="okgoogle" class="g-signin2" data-onsuccess="onSignIn" title="Acceder al Sistema eRecibo"></div>
+                            <div id="okgoogle" class="g-signin2" data-onsuccess="onSignIn" title="Acceder al <?= Constantes::NOMBRE_SISTEMA; ?>"></div>
                         </div>
                     </div>
                 </article>

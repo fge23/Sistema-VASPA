@@ -8,7 +8,7 @@ function addRecord() {
     var nuevo_disponibilidad = $("#nuevo_disponibilidad").val();
 
     // Add record
-    $.post("../lib/ajax/addRecord.php", {
+    $.post("../pruebaFormDinamico/ajax/addRecord.php", {
         nuevo_apellido: nuevo_apellido,
         nuevo_nombre: nuevo_nombre,
         nuevo_titulo: nuevo_titulo,
@@ -32,10 +32,10 @@ function addRecord() {
 
 // READ records
 function readRecords() {
-    alert("read records");
-    $.get("../lib/ajax/readRecords.php", {}, function (data, status) {
-        $(".records_content").html(data);
+    $.get("../pruebaFormDinamico/ajax/readRecords.php", {}, function (data, status) {
+        $("#divDatos").html(data);
     });
+    console.log("a");
 }
 
 
