@@ -1,34 +1,30 @@
 <?php
-// include Database connection file
-include("db_connection.php");
+
+// include Database connection file 
+include_once '../../modeloSistema/BDConexionSistema.Class.php';
+header('Content-Type: text/html; charset=UTF-8');
+
+/**
+ *
+ * @var mysqli_result
+ */
+$datos;
 
 // check request
-if(isset($_POST['id']) && isset($_POST['id']) != "")
-{
+//if (isset($_POST['id']) && isset($_POST['id']) != "") {
     // get User ID
-    $user_id = $_POST['id'];
+   // $id = $_POST['id'];
+ $id = 1;
 
     // Get User Details
-    $query = "SELECT * FROM users WHERE id = '$user_id'";
-    if (!$result = mysql_query($query)) {
-        exit(mysql_error());
+    $query = "SELECT * FROM RECURSO WHERE id = $id";
+
+    $datos = BDConexionSistema::getInstancia()->query($query);
+
+    for ($x = 0; $x < $datos->num_rows; $x++) {
+        $recursos[] = $datos->fetch_assoc();
     }
-    $response = array();
-    if(mysql_num_rows($result) > 0) {
-        while ($row = mysql_fetch_assoc($result)) {
-            $response = $row;
-        }
-    }
-    else
-    {
-        $response['status'] = 200;
-        $response['message'] = "Data not found!";
-    }
+   
     // display JSON data
-    echo json_encode($response);
-}
-else
-{
-    $response['status'] = 200;
-    $response['message'] = "Invalid Request!";
-}
+    echo json_encode($recursos);
+//}

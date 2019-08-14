@@ -1,17 +1,19 @@
 <?php
-// check request
-if(isset($_POST['id']) && isset($_POST['id']) != "")
-{
-    // include Database connection file
-    include("db_connection.php");
+// include Database connection file 
+include_once '../../modeloSistema/BDConexionSistema.Class.php';
+header('Content-Type: text/html; charset=UTF-8');
 
+// check request
+if (isset($_POST['id']) && isset($_POST['id']) != "") {
+ 
     // get user id
-    $user_id = $_POST['id'];
+    $id = $_POST['id'];
+    var_dump($id);
 
     // delete User
-    $query = "DELETE FROM users WHERE id = '$user_id'";
-    if (!$result = mysql_query($query)) {
-        exit(mysql_error());
-    }
+
+    $query = "DELETE FROM RECURSO WHERE id = {$id}";
+    $consulta = BDConexionSistema::getInstancia()->query($query);
+    
 }
 ?>

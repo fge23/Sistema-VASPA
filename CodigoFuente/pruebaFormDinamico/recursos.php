@@ -46,8 +46,6 @@ include_once '../lib/ControlAcceso.Class.php';
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
-
-
                         <div class="form-group">
                             <label for="nuevo_apellido">Apellido</label>
                             <input type="text" id="nuevo_apellido" class="form-control"/>
@@ -72,8 +70,6 @@ include_once '../lib/ControlAcceso.Class.php';
                             <label for="nuevo_disponibilidad">Disponibilidad</label>
                             <input type="text" id="nuevo_disponibilidad" class="form-control"/>
                         </div>
-
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -89,36 +85,40 @@ include_once '../lib/ControlAcceso.Class.php';
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Actualizar Recurso</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Update</h4>
                     </div>
                     <div class="modal-body">
 
                         <div class="form-group">
-                            <label for="update_first_name">Apellido</label>
-                            <input type="text" id="update_first_name" placeholder="First Name" class="form-control"/>
+                            <label for="apellido">Apellido</label>
+                            <input type="text" id="apellido" class="form-control"/>
                         </div>
 
                         <div class="form-group">
-                            <label for="update_last_name">Nombre</label>
-                            <input type="text" id="update_last_name" placeholder="Last Name" class="form-control"/>
+                            <label for="nombre">Nombre</label>
+                            <input type="text" id="nombre" class="form-control"/>
                         </div>
 
                         <div class="form-group">
-                            <label for="update_titulo">T&iacute;tulo</label>
-                            <input type="text" id="update_titulo" placeholder="titulo" class="form-control"/>
+                            <label for="titulo">T&iacute;tulo</label>
+                            <input type="text" id="titulo" class="form-control"/>
                         </div>
 
-
                         <div class="form-group">
-                            <label for="update_email">Email Address</label>
-                            <input type="text" id="update_email" placeholder="Email Address" class="form-control"/>
+                            <label for="datosAdicionales">Datos Adicionales</label>
+                            <input type="text" id="datosAdicionales"  class="form-control"/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="disponibilidad">Disponibilidad</label>
+                            <input type="text" id="disponibilidad" class="form-control"/>
                         </div>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary" onclick="UpdateUserDetails()" >Save Changes</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" onclick="UpdateUserDetails()" >Guardar</button>
                         <input type="hidden" id="hidden_user_id">
                     </div>
                 </div>

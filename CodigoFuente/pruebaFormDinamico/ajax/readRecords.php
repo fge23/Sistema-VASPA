@@ -13,7 +13,6 @@ $datos;
 // Design initial table header 
 $data = '<table class="table table-hover table-sm">
 						<tr class="table-info">
-                                                        <th>Registro</th>
 							<th>T&iacute;tulo</th>
 							<th>Apellido</th>
 							<th>Nombre</th>
@@ -29,25 +28,22 @@ $datos = BDConexionSistema::getInstancia()->query($query);
      $recursos[] = $datos->fetch_assoc();
 
 $data .= '<tr>
-				<td>'.$x.'</td>
 				<td>'.$recursos[$x]['titulo'].'</td>
 				<td>'.$recursos[$x]['apellido'].'</td>
 				<td>'.$recursos[$x]['nombre'].'</td>
                                 <td>'.$recursos[$x]['datosAdicionales'].'</td>
                                 <td>'.$recursos[$x]['disponibilidad'].'</td>
 				<td>
-                                <a title="Modificar" href="">
-                                            <button type="button" class="btn btn-outline-warning">
+                                <a title="Modificar">
+                                            <button type="button" class="btn btn-outline-warning" onclick="ReadUserDetails('.$recursos[$x]['id'].')">
                                                 <span class="oi oi-pencil"></span>
                                             </button>
                                 </a>
-                                 <a title="Eliminar" href="">
-                                            <button type="button" class="btn btn-outline-danger">
+                                 <a title="Eliminar">
+                                            <button type="button" class="btn btn-outline-danger" onclick="DeleteUser('.$recursos[$x]['id'].')" >
                                                 <span class="oi oi-trash"></span>
                                             </button>
                                  </a>  
-					  <!-- <button onclick="GetUserDetails('.$recursos[$x]['id'].')" class="btn btn-warning">Update</button> -->
-                                         <!-- <button onclick="DeleteUser('.$recursos[$x]['id'].')" class="btn btn-danger">Delete</button> -->
 				</td>
 
     		</tr>';

@@ -35,17 +35,18 @@ function readRecords() {
     $.get("../pruebaFormDinamico/ajax/readRecords.php", {}, function (data, status) {
         $("#divDatos").html(data);
     });
-    console.log("a");
+    console.log("Datos leídos");
 }
 
 
 function DeleteUser(id) {
-    var conf = confirm("Are you sure, do you really want to delete User?");
-    if (conf == true) {
-        $.post("ajax/deleteUser.php", {
+    var conf = confirm("¿Está seguro que desea eliminar este Recurso?");
+    if (conf === true) {
+        $.post("../pruebaFormDinamico/ajax/deleteUser.php", {
             id: id
         },
                 function (data, status) {
+                    console.log("Datos enviados: "+data);
                     // reload Users by using readRecords();
                     readRecords();
                 }
@@ -53,19 +54,19 @@ function DeleteUser(id) {
     }
 }
 
-function GetUserDetails(id) {
+function ReadUserDetails(id) {
     // Add User ID to the hidden field for furture usage
     $("#hidden_user_id").val(id);
-    $.post("ajax/readUserDetails.php", {
+    $.post("../pruebaFormDinamico/ajax/ReadRecords.php", {
         id: id
     },
             function (data, status) {
                 // PARSE json data
                 var user = JSON.parse(data);
                 // Assing existing values to the modal popup fields
-                $("#update_first_name").val(user.first_name);
-                $("#update_last_name").val(user.last_name);
-                $("#update_email").val(user.email);
+                $("#titulo").val(titulo);
+                $("#apellido").val(apellido);
+                $("#nombre").val(nombre);
             }
     );
     // Open modal popup
@@ -74,15 +75,15 @@ function GetUserDetails(id) {
 
 function UpdateUserDetails() {
     // get values
-    var first_name = $("#update_first_name").val();
-    var last_name = $("#update_last_name").val();
-    var email = $("#update_email").val();
+    var first_name = $("#titulo").val();
+    var last_name = $("#apellido").val();
+    var email = $("#nombre").val();
 
     // get hidden field value
     var id = $("#hidden_user_id").val();
 
     // Update the details by requesting to the server using ajax
-    $.post("ajax/updateUserDetails.php", {
+    $.post("../pruebaFormDinamico/ajax/UpdateUserDetails.php", {
         id: id,
         first_name: first_name,
         last_name: last_name,
@@ -96,7 +97,6 @@ function UpdateUserDetails() {
             }
     );
 }
-
 $(document).ready(function () {
     // READ recods on page load
     readRecords(); // calling function
