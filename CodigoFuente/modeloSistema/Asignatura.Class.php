@@ -163,7 +163,7 @@ class Asignatura {
      * @return Asignatura[]
      */
     function getAsigCorrelativaPrecedenteAprobada() {
-        $this->query = "SELECT idAsignatura_Correlativa_Anterior AS codAsignatura FROM asignatura JOIN correlativad WHERE idAsignatura = asignatura.id AND requisito LIKE 'Aprobada' AND asignatura.id LIKE '{$this->id}'";
+        $this->query = "SELECT idAsignatura_Correlativa_Anterior AS codAsignatura FROM asignatura JOIN correlativa_de WHERE idAsignatura = asignatura.id AND requisito LIKE 'Aprobada' AND asignatura.id LIKE '{$this->id}'";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
         $Asignaturas = NULL;
         if ($this->datos->num_rows > 0) {
@@ -181,7 +181,7 @@ class Asignatura {
     }
 
     function getAsigCorrelativaPrecedenteCursada() {
-        $this->query = "SELECT idAsignatura_Correlativa_Anterior AS codAsignatura FROM asignatura JOIN correlativad WHERE idAsignatura = asignatura.id AND requisito LIKE 'Regular' AND asignatura.id LIKE '{$this->id}'";
+        $this->query = "SELECT idAsignatura_Correlativa_Anterior AS codAsignatura FROM asignatura JOIN correlativa_de WHERE idAsignatura = asignatura.id AND requisito LIKE 'Regular' AND asignatura.id LIKE '{$this->id}'";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
         $Asignaturas = NULL;
         if ($this->datos->num_rows > 0) {
@@ -203,7 +203,7 @@ class Asignatura {
      * @return Asignatura[]
      */
     function getAsigCorrelativaSubsiguienteAprobada() {
-        $this->query = "SELECT idAsignatura AS codAsignatura FROM asignatura JOIN correlativad WHERE idAsignatura_Correlativa_Anterior = asignatura.id AND requisito LIKE 'Aprobada' AND asignatura.id LIKE '{$this->id}'";
+        $this->query = "SELECT idAsignatura AS codAsignatura FROM asignatura JOIN correlativa_de WHERE idAsignatura_Correlativa_Anterior = asignatura.id AND requisito LIKE 'Aprobada' AND asignatura.id LIKE '{$this->id}'";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
         $Asignaturas = NULL;
         if ($this->datos->num_rows > 0) {
@@ -221,7 +221,7 @@ class Asignatura {
     }
 
     function getAsigCorrelativaSubsiguienteCursada() {
-        $this->query = "SELECT idAsignatura AS codAsignatura FROM asignatura JOIN correlativad WHERE idAsignatura_Correlativa_Anterior = asignatura.id AND requisito LIKE 'Regular' AND asignatura.id LIKE '{$this->id}'";
+        $this->query = "SELECT idAsignatura AS codAsignatura FROM asignatura JOIN correlativa_de WHERE idAsignatura_Correlativa_Anterior = asignatura.id AND requisito LIKE 'Regular' AND asignatura.id LIKE '{$this->id}'";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
         $Asignaturas = NULL;
         if ($this->datos->num_rows > 0) {
