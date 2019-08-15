@@ -1,13 +1,12 @@
-// Add Record
 function addRecord() {
-    // get values
+    // recupera valores
     var nuevo_apellido = $("#nuevo_apellido").val();
     var nuevo_nombre = $("#nuevo_nombre").val();
     var nuevo_titulo = $("#nuevo_titulo").val();
     var nuevo_datos_adicionales = $("#nuevo_datos_adicionales").val();
     var nuevo_disponibilidad = $("#nuevo_disponibilidad").val();
 
-    // Add record
+    // se llama a la API addRecord para agregar nuevo registro
     $.post("../pruebaFormDinamico/ajax/addRecord.php", {
         nuevo_apellido: nuevo_apellido,
         nuevo_nombre: nuevo_nombre,
@@ -15,13 +14,13 @@ function addRecord() {
         nuevo_datos_adicionales: nuevo_datos_adicionales,
         nuevo_disponibilidad: nuevo_disponibilidad
     }, function (data, status) {
-        // close the popup
+        // oculta el Modal
         $("#add_new_record_modal").modal("hide");
 
-        // read records again
+        // actualiza tabla de registros mostrados
         readRecords();
 
-        // clear fields from the popup
+        // limpia los datos del Modal
         $("#nuevo_apellido").val("");
         $("#nuevo_nombre").val("");
         $("#nuevo_titulo").val("");
@@ -30,7 +29,7 @@ function addRecord() {
     });
 }
 
-// READ records
+
 function readRecords() {
     $.get("../pruebaFormDinamico/ajax/readRecords.php", {}, function (data, status) {
         $("#divDatos").html(data);
@@ -39,65 +38,73 @@ function readRecords() {
 }
 
 
-function DeleteUser(id) {
+function DeleteRecord(id) {
     var conf = confirm("¿Está seguro que desea eliminar este Recurso?");
     if (conf === true) {
-        $.post("../pruebaFormDinamico/ajax/deleteUser.php", {
+        $.post("../pruebaFormDinamico/ajax/deleteRecord.php", {
             id: id
         },
                 function (data, status) {
                     console.log("Datos enviados: "+data);
-                    // reload Users by using readRecords();
+                        // actualiza tabla de registros mostrados
                     readRecords();
                 }
         );
     }
 }
 
-function ReadUserDetails(id) {
-    // Add User ID to the hidden field for furture usage
-    $("#hidden_user_id").val(id);
-    $.post("../pruebaFormDinamico/ajax/ReadRecords.php", {
+function ReadRecordDetails(id) {
+    // recupera ID
+    $("#hidden_id").val(id);
+    $.post("../pruebaFormDinamico/ajax/ReadRecordDetails.php", {
         id: id
     },
             function (data, status) {
-                // PARSE json data
-                var user = JSON.parse(data);
-                // Assing existing values to the modal popup fields
-                $("#titulo").val(titulo);
-                $("#apellido").val(apellido);
-                $("#nombre").val(nombre);
+                // Se utiliza un JSON para manejar los datos
+                var recurso = JSON.parse(data);
+                //Carga campos del Modal con los datos del objeto
+                $("#titulo").val(recurso[0].titulo);
+                $("#apellido").val(recurso[0].apellido);
+                $("#nombre").val(recurso[0].nombre);
+                $("#datosAdicionales").val(recurso[0].datosAdicionales);
+                $("#disponibilidad").val(recurso[0].disponibilidad);
             }
     );
-    // Open modal popup
-    $("#update_user_modal").modal("show");
+    // se muestra Modal
+    $("#update_record_modal").modal("show");
 }
 
-function UpdateUserDetails() {
-    // get values
-    var first_name = $("#titulo").val();
-    var last_name = $("#apellido").val();
-    var email = $("#nombre").val();
+function UpdateRecordDetails() {
+    // recupera datos
+    var titulo = $("#titulo").val();
+    var apellido = $("#apellido").val();
+    var nombre = $("#nombre").val();
+    var datosAdicionales = $("#datosAdicionales").val();
+    var disponibilidad = $("#disponibilidad").val();
+    //se setea el ID obtenido anteriormente 
+    var id = $("#hidden_id").val();
+    
+    console.log(titulo);
+    console.log(id);
 
-    // get hidden field value
-    var id = $("#hidden_user_id").val();
-
-    // Update the details by requesting to the server using ajax
-    $.post("../pruebaFormDinamico/ajax/UpdateUserDetails.php", {
+  // Actualiza datos
+    $.post("../pruebaFormDinamico/ajax/UpdateRecordDetails.php", {
         id: id,
-        first_name: first_name,
-        last_name: last_name,
-        email: email
+        titulo: titulo,
+        nombre: nombre,
+        apellido: apellido,
+        datosAdicionales: datosAdicionales,
+        disponibilidad: disponibilidad
     },
             function (data, status) {
-                // hide modal popup
-                $("#update_user_modal").modal("hide");
-                // reload Users by using readRecords();
+                // Oculta Modal
+                $("#update_record_modal").modal("hide");
+                // actualiza tabla de registros mostrados
                 readRecords();
             }
     );
 }
 $(document).ready(function () {
-    // READ recods on page load
-    readRecords(); // calling function
+    // actualiza tabla de registros mostrados
+    readRecords(); 
 });

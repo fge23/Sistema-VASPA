@@ -1,6 +1,4 @@
 <?php
-
-// include Database connection file 
 include_once '../../modeloSistema/BDConexionSistema.Class.php';
 header('Content-Type: text/html; charset=UTF-8');    
 /**
@@ -10,7 +8,7 @@ header('Content-Type: text/html; charset=UTF-8');
 $datos;
 
 
-// Design initial table header 
+//Diseño de headers de tabla inicial 
 $data = '<table class="table table-hover table-sm">
 						<tr class="table-info">
 							<th>T&iacute;tulo</th>
@@ -35,12 +33,12 @@ $data .= '<tr>
                                 <td>'.$recursos[$x]['disponibilidad'].'</td>
 				<td>
                                 <a title="Modificar">
-                                            <button type="button" class="btn btn-outline-warning" onclick="ReadUserDetails('.$recursos[$x]['id'].')">
+                                            <button type="button" class="btn btn-outline-warning" onclick="ReadRecordDetails('.$recursos[$x]['id'].')">
                                                 <span class="oi oi-pencil"></span>
                                             </button>
                                 </a>
                                  <a title="Eliminar">
-                                            <button type="button" class="btn btn-outline-danger" onclick="DeleteUser('.$recursos[$x]['id'].')" >
+                                            <button type="button" class="btn btn-outline-danger" onclick="DeleteRecord('.$recursos[$x]['id'].')" >
                                                 <span class="oi oi-trash"></span>
                                             </button>
                                  </a>  

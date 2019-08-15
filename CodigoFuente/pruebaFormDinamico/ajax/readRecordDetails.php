@@ -1,6 +1,4 @@
 <?php
-
-// include Database connection file 
 include_once '../../modeloSistema/BDConexionSistema.Class.php';
 header('Content-Type: text/html; charset=UTF-8');
 
@@ -10,13 +8,11 @@ header('Content-Type: text/html; charset=UTF-8');
  */
 $datos;
 
-// check request
-//if (isset($_POST['id']) && isset($_POST['id']) != "") {
-    // get User ID
-   // $id = $_POST['id'];
- $id = 1;
+if (isset($_POST['id']) && isset($_POST['id']) != "") {
+    //recupero  ID
+  $id = $_POST['id'];
 
-    // Get User Details
+    // Recupero datos de Recurso
     $query = "SELECT * FROM RECURSO WHERE id = $id";
 
     $datos = BDConexionSistema::getInstancia()->query($query);
@@ -24,7 +20,6 @@ $datos;
     for ($x = 0; $x < $datos->num_rows; $x++) {
         $recursos[] = $datos->fetch_assoc();
     }
-   
-    // display JSON data
+    // Desplegar datos de JSON
     echo json_encode($recursos);
-//}
+}

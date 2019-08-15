@@ -1,21 +1,20 @@
 <?php
-// include Database connection file 
 include_once '../../modeloSistema/BDConexionSistema.Class.php';
 header('Content-Type: text/html; charset=UTF-8');
 
-// check request
 if(isset($_POST))
 {
-    // get values
+    // Recuperar ID
     $id = $_POST['id'];
     
+    //Recuperar datos
     $titulo = $_POST['titulo'];
     $apellido = $_POST['apellido'];
     $nombre = $_POST['nombre'];
     $datosAdicionales= $_POST['datosAdicionales'];
     $disponibilidad = $_POST['disponibilidad'];  
 
-    // Updaste User details
+    // Consulta a la BD para actualizar
     $query = "UPDATE RECURSO SET"
             . " titulo = '$titulo',"
             . " apellido = '$apellido',"

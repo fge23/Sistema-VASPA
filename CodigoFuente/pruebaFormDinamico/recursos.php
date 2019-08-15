@@ -1,19 +1,16 @@
 <?php
 include_once '../lib/ControlAcceso.Class.php';
-
 ?>
-<html lang="en">
+<html>
     <head>
         <meta charset="UTF-8">
-       <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Recursos</title>
-
-        <!-- Bootstrap CSS File  -->
+        <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Recursos</title>
+        <!-- Bootstrap CSS  -->
         <link rel="stylesheet" type="text/css" href="../lib/bootstrap-4.1.1-dist/css/bootstrap.css"/>
         <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
     </head>
     <body>
         <?php include_once '../gui/navbar.php'; ?>
-        <!-- Content Section -->
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -23,20 +20,18 @@ include_once '../lib/ControlAcceso.Class.php';
             <div class="row">
                 <div class="col-md-12">
                     <div class="pull-right">
-                            <button type="button" class="btn btn-success"  data-toggle="modal" data-target="#add_new_record_modal">
-                                <span class="oi oi-plus"></span> Nuevo Recurso
-                            </button>
+                        <button type="button" class="btn btn-success"  data-toggle="modal" data-target="#add_new_record_modal">
+                            <span class="oi oi-plus"></span> Nuevo Recurso
+                        </button>
                     </div>
                 </div>
             </div> 
-               <!-- /Content Section -->
-               <div class="container" id="divDatos">
+            <!-- Container donde se carga la tabla -->
+            <div class="container" id="divDatos">
+            </div>
+        </div>
 
-        </div>
-        </div>
-     
-        <!-- Bootstrap Modals -->
-        <!-- Modal - Add New Record/User -->
+        <!-- Modal - Nuevo recurso -->
         <div class="modal fade" id="add_new_record_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -61,12 +56,12 @@ include_once '../lib/ControlAcceso.Class.php';
                             <input type="text" id="nuevo_titulo" class="form-control"/>
                         </div>
 
-                          <div class="form-group">
+                        <div class="form-group">
                             <label for="nuevo_datos_adicionales">Datos Adicionales</label>
                             <input type="text" id="nuevo_datos_adicionales" class="form-control"/>
                         </div>
-                        
-                          <div class="form-group">
+
+                        <div class="form-group">
                             <label for="nuevo_disponibilidad">Disponibilidad</label>
                             <input type="text" id="nuevo_disponibilidad" class="form-control"/>
                         </div>
@@ -78,10 +73,9 @@ include_once '../lib/ControlAcceso.Class.php';
                 </div>
             </div>
         </div>
-        <!-- // Modal -->
 
-        <!-- Modal - Update User details -->
-        <div class="modal fade" id="update_user_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <!-- Modal - Actualiza Recurso-->
+        <div class="modal fade" id="update_record_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -109,7 +103,7 @@ include_once '../lib/ControlAcceso.Class.php';
                             <label for="datosAdicionales">Datos Adicionales</label>
                             <input type="text" id="datosAdicionales"  class="form-control"/>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="disponibilidad">Disponibilidad</label>
                             <input type="text" id="disponibilidad" class="form-control"/>
@@ -118,24 +112,17 @@ include_once '../lib/ControlAcceso.Class.php';
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" onclick="UpdateUserDetails()" >Guardar</button>
-                        <input type="hidden" id="hidden_user_id">
+                        <button type="button" class="btn btn-primary" onclick="UpdateRecordDetails()" >Guardar</button>
+                        <input type="hidden" id="hidden_id">
                     </div>
                 </div>
             </div>
         </div>
-        <!-- // Modal -->
 
-        <!-- Jquery JS file -->
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.min.js"></script>
-
-        <!-- Bootstrap JS file -->
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
-
-        <!-- Custom JS file -->
         <script type="text/javascript" src="../lib/js/formularioRecurso.js"></script>
-
-        <script>
+<!--       <script>
                             (function (i, s, o, g, r, a, m) {
                                 i['GoogleAnalyticsObject'] = r;
                                 i[r] = i[r] || function () {
@@ -151,7 +138,7 @@ include_once '../lib/ControlAcceso.Class.php';
                             ga('create', 'UA-75591362-1', 'auto');
                             ga('send', 'pageview');
 
-        </script>
+        </script>-->
         <?php include_once '../gui/footer.php'; ?>
     </body>
 </html>
