@@ -59,6 +59,16 @@
                     </a>
                 </li>                
             <?php } ?>
+                
+                 <!--                CREAR EL PERMISO CORRESPONDIENTE EN CONTASNTES Y BD-->
+            <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_PERMISOS)) { ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="../vista/asignaturas.php">
+                        <span class="oi oi-align-center" />
+                        Asignaturas
+                    </a>
+                </li>                
+            <?php } ?>
 
             <li class="nav-item">
                 <a class="nav-link" href="../app/salir.php">
