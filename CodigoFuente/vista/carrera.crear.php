@@ -33,7 +33,7 @@ include_once '../lib/ControlAcceso.Class.php';
                         </div>
 
                         <div class="form-group">
-                            <label for="inputNombre">Nombre</label>
+                            <label for="inputNombre">Nombre de Carrera</label>
                             <input type="text" name="nombre" class="form-control" id="inputNombre" placeholder="Ingrese el nombre de la Carrera" required="" onkeypress="return Solo_Texto(event);">
                         </div>
                     </div>
