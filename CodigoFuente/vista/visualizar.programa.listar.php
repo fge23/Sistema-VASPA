@@ -39,7 +39,7 @@ $carrera = new Carrera($codCarrera, NULL);
                     <hr>
                     <label for="buscador">Buscador</label>
                     <input type="text" name="buscador" id="buscador" 
-                    class="form-control" placeholder="Ingrese nombre de la asignatura a buscar...">
+                           class="form-control" placeholder="Ingrese nombre de la asignatura a buscar..." autofocus="">
                     
                 </div>
                 <div class="card-body">
@@ -47,18 +47,18 @@ $carrera = new Carrera($codCarrera, NULL);
                     <table class="table table-hover table-sm">
                         <thead>
                             <tr class="table-info">
+                                <th>C&oacute;digo</th>
                                 <th>Asignatura</th>
-<!--                                <th>Tama&ntilde;o (en MB)</th>-->
                                 <th>Opciones</th>
                             </tr>
                         </thead>
                         <tbody>
                         <tr>
                             <?php if (!is_null($Asignaturas)){ foreach ($Asignaturas as $Asignatura) { ?>
+                            <td><?= $Asignatura->getId(); ?></td>
                             <td><?= $Asignatura->getNombre(); ?></td>
-                            <!--<td></td>-->
                                 <td>
-                                    <a title="Visualizar Programa PDF" href="<?= $ManejadorProgramaPDF->tieneProgramaPDF($Asignatura->getId()); ?>" target="_blank">
+                                    <a title="Visualizar Programa de Asignatura" href="<?= $ManejadorProgramaPDF->tieneProgramaPDF($Asignatura->getId()); ?>" target="_blank">
                                         <button type="button" class="btn btn-outline-success">
                                             <span class="oi oi-document"></span>
                                         </button>
@@ -67,7 +67,7 @@ $carrera = new Carrera($codCarrera, NULL);
                             </tr>
                             <?php }} ?> 
                         </tbody>
-                    </table>
+                    </table>                    
 <!--                    <div  class="no-results-container" style="display: block;">
                         No results have been found.</div>-->
                     <div id="noResultMessage" class="alert alert-warning" role="alert" style="display: block;">

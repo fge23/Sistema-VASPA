@@ -77,7 +77,7 @@ if (!is_dir($directorio)){
                         <div class="row">
                             <div class="col-md-3">
                                 <p><label for="selectAnio">A&ntilde;o</label>
-                                <select class="selectpicker" data-live-search="true" data-width="100%" name="anio" id="selectAnio" title="Seleccione un a&ntilde;o" required="" liveSearchStyle='contains' data-none-results-text="No se encontraron resultados">
+                                    <select class="selectpicker" data-live-search="true" data-width="100%" name="anio" id="selectAnio" title="Seleccione un a&ntilde;o" required="" liveSearchStyle='contains' data-none-results-text="No se encontraron resultados" autofocus="">
                                      <?php for ($i=date('Y'); $i>=2011; $i--) { ?>
                                         <option value="<?= $i; ?>"><?= $i; ?></option>
                                     <?php } ?>
@@ -134,6 +134,7 @@ if (!is_dir($directorio)){
             $(document).ready(function(){
             $('input[type="file"]').on('change', function(){
                 var ext = $( this ).val().split('.').pop();
+                ext = ext.toLowerCase();
                 if ($( this ).val() != '') {
                   if(ext == "pdf"){
                     //alert("La extensión es: " + ext);
