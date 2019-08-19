@@ -45,7 +45,7 @@ $Carreras = $ManejadorCarrera->getColeccion();
                         <div class="form-group">
                             <label for="selectCarrera">Carrera</label>
                             <br>
-                            <select class="selectpicker show-tick" data-live-search="true" data-width="100%" name="selectCarrera" id="selectCarrera" title="Seleccione una carrera" required="">
+                            <select class="selectpicker show-tick" data-live-search="true" data-width="100%" name="selectCarrera" id="selectCarrera" title="Seleccione una carrera" required="" autofocus="">
                                 <?php 
                                 foreach($Carreras as $Carrera){ ?>
                                     <option value="<?= $Carrera->getId(); ?>"><?= $Carrera->getId() ?>&nbsp;-&nbsp;<?= $Carrera->getNombre(); ?> </option>
@@ -151,6 +151,43 @@ $Carreras = $ManejadorCarrera->getColeccion();
                 }
             });});
         </script>
+        
+        <script>
+        //Script que deja sin efecto al boton submit para luego desplegar una ventana de confirmacion
+        $("form").submit(function(e){
+         //Detenemos el envio del formulario para desplegar la ventana de dialogo de confirmacion
+         e.preventDefault();   
+         //obtenemos los valores de las listas
+         var carrera = $('#selectCarrera option:selected').text();
+         var codPlan = $('#selectPlan option:selected').text();
+         var nombreArchivo = $('#inputFile').prop('files')[0].name; 
+
+         bootbox.confirm({
+             title: "&iquest;Est&aacute; seguro de subir el siguiente plan de estudio?",
+             message: "<h6>Datos del plan: </h6> <i>C&oacute;digo: </i><b>"+codPlan+"</b><br><i>Carrera: </i><b>"+carrera+"</b><br><i>Archivo: </i><b>"+nombreArchivo+"</b>",
+             buttons: {
+                 confirm: {
+                     label: 'Confirmar',
+                     className: 'btn-success'
+                 },
+                 cancel: {
+                     label: 'Cancelar',
+                     className: 'btn-danger'
+                 }
+             },
+             callback: function (result) {
+                 if (result) {
+                     console.log("User confirmed dialog");
+                     document.getElementById("form").submit();
+                 } else {
+                     console.log("User declined dialog");
+                 }  
+                     console.log('This was logged in the callback: ' + result);
+             }
+         });
+
+     });
+    </script>
 
     </body>
 </html>

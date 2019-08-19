@@ -29,28 +29,24 @@ $salida = "<table class='table table-hover table-sm'>
 
 $planesCarrera = "";
 
-foreach ($planes as $plan){
-    if ($plan->getIdCarrera() == $codCarrera){
-        $rutaPlan = $manejadorPlanPDF->tienePlanPDF($plan->getId());
-        $planesCarrera .= "<tr><td>{$plan->getId()}</td>
-                                <td>
-                                    <a title='Visualizar Plan de Estudio' href='{$rutaPlan}' target='_blank'>
-                                        <button type='button' class='btn btn-outline-success'>
-                                            <span class='oi oi-document'></span> Visualizar Plan
-                                        </button>
-                                    </a>
-                                </td>
-                            </tr>";
+if (!is_null($planes)){
+    foreach ($planes as $plan){
+        if ($plan->getIdCarrera() == $codCarrera){
+            $rutaPlan = $manejadorPlanPDF->tienePlanPDF($plan->getId());
+            $planesCarrera .= "<tr><td>{$plan->getId()}</td>
+                                    <td>
+                                        <a title='Visualizar Plan de Estudio' href='{$rutaPlan}' target='_blank'>
+                                            <button type='button' class='btn btn-outline-success'>
+                                                <span class='oi oi-document'></span> Visualizar Plan
+                                            </button>
+                                        </a>
+                                    </td>
+                                </tr>";
+        }
     }
-}
+} 
 
 $salida .= $planesCarrera;
 $salida .= "</table>";
-
-//if (!empty($planesCarrera)){
-//    
-//}
-
-//var_dump($salida);
-
+        
 echo $salida;
