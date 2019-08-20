@@ -7,7 +7,7 @@ function addRecord() {
     var nuevo_disponibilidad = $("#nuevo_disponibilidad").val();
 
     // se llama a la API addRecord para agregar nuevo registro
-    $.post("../pruebaFormDinamico/ajax/addRecord.php", {
+    $.post("../gestionarBibliografia/ajaxRecursos/addRecord.php", {
         nuevo_apellido: nuevo_apellido,
         nuevo_nombre: nuevo_nombre,
         nuevo_titulo: nuevo_titulo,
@@ -31,7 +31,7 @@ function addRecord() {
 
 
 function readRecords() {
-    $.get("../pruebaFormDinamico/ajax/readRecords.php", {}, function (data, status) {
+    $.get("../gestionarBibliografia/ajaxRecursos/readRecords.php", {}, function (data, status) {
         $("#divDatos").html(data);
     });
     console.log("Datos leídos");
@@ -41,7 +41,7 @@ function readRecords() {
 function DeleteRecord(id) {
     var conf = confirm("¿Está seguro que desea eliminar este Recurso?");
     if (conf === true) {
-        $.post("../pruebaFormDinamico/ajax/deleteRecord.php", {
+        $.post("../gestionarBibliografia/ajaxRecursos/deleteRecord.php", {
             id: id
         },
                 function (data, status) {
@@ -56,7 +56,7 @@ function DeleteRecord(id) {
 function ReadRecordDetails(id) {
     // recupera ID
     $("#hidden_id").val(id);
-    $.post("../pruebaFormDinamico/ajax/ReadRecordDetails.php", {
+    $.post("../gestionarBibliografia/ajaxRecursos/readRecordDetails.php", {
         id: id
     },
             function (data, status) {
@@ -88,7 +88,7 @@ function UpdateRecordDetails() {
     console.log(id);
 
   // Actualiza datos
-    $.post("../pruebaFormDinamico/ajax/UpdateRecordDetails.php", {
+    $.post("../gestionarBibliografia/ajaxRecursos/updateRecordDetails.php", {
         id: id,
         titulo: titulo,
         nombre: nombre,

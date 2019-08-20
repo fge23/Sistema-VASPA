@@ -8,6 +8,9 @@ include_once '../lib/ControlAcceso.Class.php';
         <!-- Bootstrap CSS  -->
         <link rel="stylesheet" type="text/css" href="../lib/bootstrap-4.1.1-dist/css/bootstrap.css"/>
         <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
+        <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../lib/js/gestionarBibliografia/formularioRecurso.js"></script>
     </head>
     <body>
         <?php include_once '../gui/navbar.php'; ?>
@@ -119,9 +122,7 @@ include_once '../lib/ControlAcceso.Class.php';
             </div>
         </div>
 
-        <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.min.js"></script>
-        <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="../lib/js/formularioRecurso.js"></script>
+        
 <!--       <script>
                             (function (i, s, o, g, r, a, m) {
                                 i['GoogleAnalyticsObject'] = r;

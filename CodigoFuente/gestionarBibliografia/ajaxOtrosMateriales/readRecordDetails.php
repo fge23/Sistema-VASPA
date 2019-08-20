@@ -7,19 +7,19 @@ header('Content-Type: text/html; charset=UTF-8');
  * @var mysqli_result
  */
 $datos;
-
 if (isset($_POST['id']) && isset($_POST['id']) != "") {
     //recupero  ID
   $id = $_POST['id'];
-
-    // Recupero datos de Recurso
-    $query = "SELECT * FROM RECURSO WHERE id = $id";
+ // $id = 1;
+    // Recupero datos de Otro Material
+    $query = "SELECT * FROM otro_material WHERE id = $id";
 
     $datos = BDConexionSistema::getInstancia()->query($query);
-
+    //var_dump($datos);
     for ($x = 0; $x < $datos->num_rows; $x++) {
-        $recursos[] = $datos->fetch_assoc();
+        $otros[] = $datos->fetch_assoc();
     }
+   // var_dump($otros);
     // Desplegar datos de JSON
-    echo json_encode($recursos);
+    echo json_encode($otros);
 }
