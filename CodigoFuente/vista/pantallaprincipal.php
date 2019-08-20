@@ -21,14 +21,14 @@
             <div class="container navbar-dark bg-dark">
                 <a class="navbar-brand" href="#">
                     <img src="../lib/img/VASPA_isotipo.png" width="30" height="30" class="d-inline-block align-top" alt="">
-                    <b>Sistema <?php echo Constantes::NOMBRE_SISTEMA; ?></b>
+                    <b><?php echo Constantes::NOMBRE_SISTEMA; ?></b>
                 </a>
             </div>
         </nav>
         <div class="container">
             <div class="card">
                 <div class="card-header">
-                    <h3>Sistema <?php echo Constantes::NOMBRE_SISTEMA; ?> - Bienvenida</h3>
+                    <h3><?php echo Constantes::NOMBRE_SISTEMA; ?> - Bienvenida</h3>
                 </div>
 
                 <div class="card-body">
