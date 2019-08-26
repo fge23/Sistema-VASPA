@@ -71,7 +71,7 @@ $carrera = new Carrera($codCarrera, NULL);
 <!--                    <div  class="no-results-container" style="display: block;">
                         No results have been found.</div>-->
                     <div id="noResultMessage" class="alert alert-warning" role="alert" style="display: block;">
-                        No se han encontrados resultados
+                        No se han encontrado resultados
                     </div>
                 </div>
 <!--                    <div class="card-body" id="datos"> 
