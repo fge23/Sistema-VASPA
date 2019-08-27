@@ -12,16 +12,21 @@ $idProfesor = $_POST["idProfesor"];
  */
 $email = $_POST["email"];
 $mensaje = '';
+$error = "";
+$consulta = false;
+
 // Si cumple con la expresion regular realizamos la modificacion, caso contrario mostramos que ha ocurrido un error debido al email ingresado
 if (preg_match("/^[a-z]+@uarg.unpa.edu.ar$/", $email)){
-    $consulta = $ManejadorProfesor->modificacion($DatosFormulario, $idProfesor);
+    try {
+        $consulta = $ManejadorProfesor->modificacion($DatosFormulario, $idProfesor);
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+    }
 }
 else{
     $consulta = false;
     $mensaje .= 'El e-mail: <b>'.$email.'</b> no es valido, debe cumplir el siguiente formato: <b>nombreusuario@uarg.unpa.edu.ar</b>';
 }
-
-
 
 ?>
 <html>
@@ -50,7 +55,7 @@ else{
                     <?php } ?>   
                     <?php if (!$consulta) { ?>
                         <div class="alert alert-danger" role="alert">
-                            Ha ocurrido un error.
+                            Ha ocurrido un error. <?= $error; ?>
                             <p><?= $mensaje ?></p>
                         </div>
                     <?php } ?>

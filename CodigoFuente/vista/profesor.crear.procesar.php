@@ -11,9 +11,17 @@ $ManejadorProfesor = new ManejadorProfesor();
  */
 $email = $_POST["email"];
 $mensaje = '';
+$error = "";
+$consulta = false;
+
 // Si cumple con la expresion regular realizamos la modificacion, caso contrario mostramos que ha ocurrido un error debido al email ingresado
 if (preg_match("/^[a-z]+@uarg.unpa.edu.ar$/", $email)){
-    $consulta = $ManejadorProfesor->alta($DatosFormulario);
+    try {
+        $consulta = $ManejadorProfesor->alta($DatosFormulario);
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+    }
+    
 }
 else{
     $consulta = false;
@@ -48,7 +56,7 @@ else{
                     <?php } ?>   
                     <?php if (!$consulta) { ?>
                         <div class="alert alert-danger" role="alert">
-                            Ha ocurrido un error.
+                            Ha ocurrido un error. <?= $error; ?>
                             <p><?= $mensaje ?></p>
                         </div>
                     <?php } ?>
