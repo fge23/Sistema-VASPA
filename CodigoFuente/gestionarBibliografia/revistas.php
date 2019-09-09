@@ -13,6 +13,17 @@ include_once '../lib/ControlAcceso.Class.php';
         <script type="text/javascript" src="../lib/js/gestionarBibliografia/formularioRevista.js"></script>
     </head>
     <body>
+        <style type="text/css">
+            .row.no-margin {
+                margin-left: -7.5px;
+                margin-right: -7.5px;
+            }
+
+            .row.no-margin > .col-xs-3{
+                padding-left: 7.5px;
+                padding-right: 7.5px;
+            }
+        </style>
         <?php include_once '../gui/navbar.php'; ?>
         <div class="container col-12">
             <div class="row">
@@ -29,8 +40,9 @@ include_once '../lib/ControlAcceso.Class.php';
                     </div>
                 </div>
             </div> 
+            <br>
             <!-- Container donde se carga la tabla -->
-            <div class="container col-12" id="divDatos">
+            <div class="table-responsive" id="divDatos">
             </div>
         </div>
 
@@ -52,7 +64,7 @@ include_once '../lib/ControlAcceso.Class.php';
                         </div>
 
                         <div class="form-group">
-                            <label for="nuevo_nombre">Nombre/ Autor/es</label>
+                            <label for="nuevo_nombre">Nombre/s Autor/es</label>
                             <input type="text" id="nuevo_nombre" class="form-control"/>
                         </div>
 
@@ -81,14 +93,19 @@ include_once '../lib/ControlAcceso.Class.php';
                             <input type="text" id="nuevo_unidad" class="form-control"/>
                         </div>
 
-                        <div class="form-group">
-                            <label for="nuevo_bibilioteca">Biblioteca</label>
-                            <input type="text" id="nuevo_biblioteca"  class="form-control"/>
-                        </div>
 
-                        <div class="form-group">
-                            <label for="nuevo_siunpa">SIUNPA</label>
-                            <input type="text" id="nuevo_siunpa" class="form-control"/>
+
+
+
+                        <div class="row no-margin">
+                            <div class="col-xs-3">
+                                <label for="nuevo_bibilioteca">Biblioteca</label>
+                                <input type="text" id="nuevo_biblioteca"  class="form-control"/>
+                            </div>
+                            <div class="col-xs-3">
+                                <label for="nuevo_siunpa">SIUNPA</label>
+                                <input type="text" id="nuevo_siunpa" class="form-control"/>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -151,15 +168,18 @@ include_once '../lib/ControlAcceso.Class.php';
                             <input type="text" id="unidad" class="form-control"/>
                         </div>
 
-                        <div class="form-group">
-                            <label for="bibilioteca">Biblioteca</label>
-                            <input type="text" id="biblioteca"  class="form-control"/>
+
+                        <div class="row no-margin">
+                            <div class="col-xs-3">
+                                <label for="bibilioteca">Biblioteca</label>
+                                <input type="text" id="biblioteca"  class="form-control"/>
+                            </div>
+                            <div class="col-xs-3">
+                                <label for="siunpa">SIUNPA</label>
+                                <input type="text" id="siunpa" class="form-control"/>
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="siunpa">SIUNPA</label>
-                            <input type="text" id="siunpa" class="form-control"/>
-                        </div>
 
                         <div class="form-group">
                             <label for="otro">Otro</label>

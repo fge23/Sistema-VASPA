@@ -19,7 +19,7 @@ include_once '../lib/ControlAcceso.Class.php';
                 <div class="col-md-12">
                     <h3>Otros materiales:</h3>
                 </div>
-            </div>
+            </div> 
             <div class="row">
                 <div class="col-md-12">
                     <div class="pull-right">
@@ -29,8 +29,9 @@ include_once '../lib/ControlAcceso.Class.php';
                     </div>
                 </div>
             </div> 
+            <br>
             <!-- Container donde se carga la tabla -->
-            <div class="container" id="divDatos">
+            <div class="table-responsive" id="divDatos">
             </div>
         </div>
 

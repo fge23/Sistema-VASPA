@@ -29,8 +29,9 @@ include_once '../lib/ControlAcceso.Class.php';
                     </div>
                 </div>
             </div> 
+               <br>
             <!-- Container donde se carga la tabla -->
-            <div class="container" id="divDatos">
+            <div class="table-responsive" id="divDatos">
             </div>
         </div>
 
