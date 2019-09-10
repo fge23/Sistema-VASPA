@@ -12,6 +12,7 @@ $datos;
 $data = '<table class="table table-hover table-sm">
 						<tr class="table-info">
 							<th>Descripci&oacute;n</th>
+                                                        <th>Opciones</th>
 						</tr>';
 
 $query = "SELECT * FROM otro_material";
