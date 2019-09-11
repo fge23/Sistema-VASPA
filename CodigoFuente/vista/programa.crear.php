@@ -5,12 +5,18 @@ include_once '../modeloSistema/Asignatura.Class.php';
 $id = $_GET["id"];
 $Asignatura = new Asignatura($id);
 ?>
-<html>
+<!DOCTYPE html>
+<html lang="ES">
     <head>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="../lib/bootstrap-4.1.1-dist/css/bootstrap.min.css">
         <script src="../lib/JQuery/jquery-3.3.1.js"></script>
         <script src="../lib/bootstrap-4.1.1-dist/js/bootstrap.bundle.js"></script>
+        <!--         Librerias Summernote-->
+        <link href="../lib/summernote-master/dist/summernote-bs4.css" rel="stylesheet">
+        <script src="../lib/summernote-master/dist/summernote-bs4.js"></script>
+        <script src="../lib/summernote-master/lang/summernote-es-ES.js"></script>
+
         <style type="text/css">
             #regiration_form fieldset:not(:first-of-type) {
                 display: none;
@@ -21,6 +27,7 @@ $Asignatura = new Asignatura($id);
     <body>
         <?php include_once '../gui/navbar.php'; ?>
         <div class="container">
+
             <div class="card">
                 <div class="card-header">
                     <h3>Crear Programa de <?= $Asignatura->getNombre(); ?></h3>
@@ -30,7 +37,6 @@ $Asignatura = new Asignatura($id);
                         Si desea cancelar, presione el bot&oacute;n <b>Cancelar</b>.
                     </p>
                 </div>
-
 
                 <div class="card-body">
                     <div class="progress">
@@ -113,26 +119,32 @@ $Asignatura = new Asignatura($id);
 
                         <fieldset>
                             <h2>Paso 2 - Informaci&oacute;n de la Asignatura</h2>
-
+<!--
                             <div class="form-group">
                                 <label for="textAreaFundamentacion">Fundamentaci&oacute;n</label>
                                 <textarea name="fundamentacion" class="form-control" id="textAreaFundamentacion" required=""></textarea>
+                            </div>-->
+                            
+                            <div class="form-group">
+                                <label for="textAreaFundamentacion">Fundamentaci&oacute;n</label>
+                                <textarea class="summernote" id="textAreaFundamentacion" name="fundamentacion">   </textarea> 
                             </div>
 
+                                
                             <div class="form-group">
                                 <label for="textAreaObjetivosGenerales">Objetivos Generales</label>
-                                <textarea name="objetivosGenerales" class="form-control" id="textAreaObjetivosGenerales" required=""></textarea>
+                                <textarea class="summernote" name="objetivosGenerales" required=""></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="textAreaOrganizacionContenidos">Organizaci&oacute;n de los Contenidos - Programa Anal&iacute;tico</label>
-                                <textarea name="organizacionContenidos" class="form-control" id="textAreaOrganizacionContenidos" required=""></textarea>
+                                <textarea name="organizacionContenidos" class="summernote" id="textAreaOrganizacionContenidos" required=""></textarea>
                             </div>
 
 
                             <div class="form-group">
                                 <label for="textAreaCriteriosEvaluacion">Criterios de evaluaci&oacute;n</label>
-                                <textarea name="criteriosEvaluacion" class="form-control" id="textAreaCriteriosEvaluacion" required=""></textarea>
+                                <textarea name="criteriosEvaluacion" class="summernote" id="textAreaCriteriosEvaluacion" required=""></textarea>
                             </div>
 
                             <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
@@ -143,17 +155,17 @@ $Asignatura = new Asignatura($id);
                             <h2>Paso 4 - Metodolog&iacute;a, Regularizaci&oacute;n y Aprobaci&oacute;n Presencial</h2>
                             <div class="form-group">
                                 <label for="textAreaMetodologiaPresencial">Metodolog&iacute;a Presencial</label>
-                                <textarea name="metodologiaPresencial" class="form-control" id="textAreaMetodologiaPresencial" required=""></textarea>
+                                <textarea name="metodologiaPresencial" class="summernote" id="textAreaMetodologiaPresencial" required=""></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="textAreaRegularizacionPresencial">Regularizaci&oacute;n Presencial</label>
-                                <textarea name="regularizacionPresencial" class="form-control" id="textAreaRegularizacionPresencial" required=""></textarea>
+                                <textarea name="regularizacionPresencial" class="summernote" id="textAreaRegularizacionPresencial" required=""></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="textAreaAprobacionPresencial">Aprobaci&oacute;n Presencial</label>
-                                <textarea name="aprobacionPresencial" class="form-control" id="textAreaAprobacionPresencial" required=""></textarea>
+                                <textarea name="aprobacionPresencial" class="summernote" id="textAreaAprobacionPresencial" required=""></textarea>
                             </div>
 
 
@@ -167,17 +179,17 @@ $Asignatura = new Asignatura($id);
 
                             <div class="form-group">
                                 <label for="textAreaMetodologiaSATEP">Metodolog&iacute;a SATEP</label>
-                                <textarea name="metodologiaSATEP" class="form-control" id="textAreaMetodologiaSATEP" required=""></textarea>
+                                <textarea name="metodologiaSATEP" class="summernote" id="textAreaMetodologiaSATEP" required=""></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="textAreaRegularizacionSATEP">Regularizaci&oacute;n SATEP</label>
-                                <textarea name="regularizacionSATEP" class="form-control" id="textAreaRegularizacionSATEP" required=""></textarea>
+                                <textarea name="regularizacionSATEP" class="summernote" id="textAreaRegularizacionSATEP" required=""></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="textAreaAprobacionSATEP">Aprobaci&oacute;n SATEP</label>
-                                <textarea name="aprobacionSATEP" class="form-control" id="textAreaAprobacionSATEP" required=""></textarea>
+                                <textarea name="aprobacionSATEP" class="summernote" id="textAreaAprobacionSATEP" required=""></textarea>
                             </div>
                             <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
                             <input type="button" name="next" class="next btn btn-info" value="Siguiente" />
@@ -186,12 +198,12 @@ $Asignatura = new Asignatura($id);
                             <h2>Paso 6 - Metodolog&iacute;a y Aprobaci&oacute;n Libre</h2>
                             <div class="form-group">
                                 <label for="textAreaMetodologiaLibre">Metodolog&iacute;a Libre</label>
-                                <textarea name="metodologiaLibre" class="form-control" id="textAreaMetodologiaLibre" required=""></textarea>
+                                <textarea name="metodologiaLibre" class="summernote" id="textAreaMetodologiaLibre" required=""></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="textAreaAprobacionLibre">Aprobaci&oacute;n Libre</label>
-                                <textarea name="aprobacionLibre" class="form-control" id="textAreaAprobacionLibre" required=""></textarea>
+                                <textarea name="aprobacionLibre" class="summernote" id="textAreaAprobacionLibre" required=""></textarea>
                             </div>
 
                             <input type="hidden" name="codAsignatura" value="<?= $Asignatura->getId(); ?>">
@@ -208,8 +220,7 @@ $Asignatura = new Asignatura($id);
         </div>
         <?php include_once '../gui/footer.php'; ?>
     </body>
-</html>
-<script type="text/javascript">
+    <script type="text/javascript">
     $(document).ready(function () {
         var current = 1, current_step, next_step, steps;
         steps = $("fieldset").length;
@@ -238,3 +249,17 @@ $Asignatura = new Asignatura($id);
         }
     });
 </script>
+<script>
+    $(document).ready(function () {
+        $('.summernote').summernote({
+            lang: 'es-ES',
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline']],
+                ['para', ['ul', 'ol', 'paragraph']]
+            ]
+        });
+    });
+</script>
+</html>
+
+
