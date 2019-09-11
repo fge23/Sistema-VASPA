@@ -17,10 +17,10 @@ class BDConexionSistema extends mysqli {
     public static $instancia;
     
     function __construct() {
-        $this->host = "bgtfa3dnthygbzx1adfd-mysql.services.clever-cloud.com";
-        $this->usuario = "uo7jxw0qb79geplw";
-        $this->contrasenia = "QjZnnquDt9AVZhenapaK";
-        $this->schema = "bgtfa3dnthygbzx1adfd";
+        $this->host = "localhost";
+        $this->usuario = "root";
+        $this->contrasenia = "";
+        $this->schema = "bdGEF_VASPA";
 
         parent::__construct($this->host, $this->usuario, $this->contrasenia, $this->schema);
 
