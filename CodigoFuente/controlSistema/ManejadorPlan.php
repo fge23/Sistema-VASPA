@@ -98,6 +98,7 @@ class ManejadorPlan {
             $this->query = "UPDATE PLAN "
                     . "SET id = '{$Plan->getId()}' ,"
                     . " anio_inicio = {$Plan->getAnio_inicio()}, "
+                    . " anio_fin = NULL, "
                     . "idCarrera = '{$Plan->getIdCarrera()}' "
                     . "WHERE id = '{$id_}'";
         }
