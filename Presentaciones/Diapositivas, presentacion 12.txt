@@ -1,0 +1,30 @@
+1 	Todos
+2 	Fran
+3	Fabricio
+4	- (fabricio)
+5 	Fabricio
+6	Fran
+7	Fabricio
+8 	- (Nico)
+9 	Nico
+10	Fabricio
+11	Fabricio
+12	Todos
+13	Nico
+14	Nico
+15	Nico
+16	Nico
+17	Nico
+18	Fran
+19	Fran
+20	Fran
+21	- (Fran)
+22	Todos
+23	Todos 
+24	Todos	
+25	- (Fabricio)
+
+Todos: 		5
+Nico:		6
+Fran:		5
+Fabricio:	5
