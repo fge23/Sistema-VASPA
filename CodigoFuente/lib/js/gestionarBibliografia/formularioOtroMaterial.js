@@ -17,7 +17,6 @@ function addRecord() {
     });
 }
 
-
 function readRecords() {
     $.get("../gestionarBibliografia/ajaxOtrosMateriales/readRecords.php", {}, function (data, status) {
         $("#divDatos").html(data);
@@ -51,7 +50,6 @@ function ReadRecordDetails(id) {
                 // Se utiliza un JSON para manejar los datos    
                 console.log(data);
                 var otros = JSON.parse(data);
-
                 //Carga campos del Modal con los datos del objeto
                 $("#descripcion").val(otros[0].descripcion);
             }

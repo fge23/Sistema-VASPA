@@ -32,7 +32,7 @@ if (isset($_POST)) {
             . "titulo = '{$titulo}' , "
             . "capitulo = '{$capitulo}' , "
             . "lugarEdicion = '{$lugarEdicion}' , "
-            . "Editorial = '{$editorial}' , "
+            . "editorial = '{$editorial}' , "
             . "unidad = '{$unidad}' , "
             . "biblioteca = '{$biblioteca}' , "
             . "siunpa = '{$siunpa}' , "

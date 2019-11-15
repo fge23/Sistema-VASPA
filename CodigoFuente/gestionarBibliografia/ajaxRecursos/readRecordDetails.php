@@ -1,4 +1,5 @@
 <?php
+
 include_once '../../modeloSistema/BDConexionSistema.Class.php';
 header('Content-Type: text/html; charset=UTF-8');
 
@@ -7,12 +8,11 @@ header('Content-Type: text/html; charset=UTF-8');
  * @var mysqli_result
  */
 $datos;
-
 if (isset($_POST['id']) && isset($_POST['id']) != "") {
-    //recupero  ID
-  $id = $_POST['id'];
-
-    // Recupero datos de Recurso
+//recupero  ID
+    $id = $_POST['id'];
+    //$id = 1;
+// Recupero datos de Recurso
     $query = "SELECT * FROM RECURSO WHERE id = $id";
 
     $datos = BDConexionSistema::getInstancia()->query($query);
@@ -20,7 +20,7 @@ if (isset($_POST['id']) && isset($_POST['id']) != "") {
     for ($x = 0; $x < $datos->num_rows; $x++) {
         $recursos[] = $datos->fetch_assoc();
     }
-    // Desplegar datos de JSON
+//var_dump($recursos);
+// Desplegar datos de JSON
     echo json_encode($recursos);
-   
 }

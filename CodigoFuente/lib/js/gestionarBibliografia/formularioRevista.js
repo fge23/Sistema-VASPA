@@ -79,7 +79,7 @@ function ReadRecordDetails(id) {
                 //Carga campos del Modal con los datos del objeto
                 $("#apellido").val(revista[0].apellido);
                 $("#nombre").val(revista[0].nombre);
-                
+
                 $("#tituloArticulo").val(revista[0].tituloArticulo);
                 $("#tituloRevista").val(revista[0].tituloRevista);
                 $("#pagina").val(revista[0].pagina);
@@ -88,7 +88,6 @@ function ReadRecordDetails(id) {
                 $("#siunpa").val(revista[0].siunpa);
                 $("#biblioteca").val(revista[0].biblioteca);
                 $("#otro").val(revista[0].otro);
-                
             }
     );
     // se muestra Modal
@@ -97,7 +96,7 @@ function ReadRecordDetails(id) {
 
 function UpdateRecordDetails() {
     // recupera datos
-     var apellido = $("#apellido").val();
+    var apellido = $("#apellido").val();
     var nombre = $("#nombre").val();
     var tituloArticulo = $("#tituloArticulo").val();
     var tituloRevista = $("#tituloRevista").val();
@@ -107,7 +106,7 @@ function UpdateRecordDetails() {
     var biblioteca = $("#biblioteca").val();
     var siunpa = $("#siunpa").val();
     var otro = $("#otro").val();
-    
+
     //se setea el ID obtenido anteriormente 
     var id = $("#hidden_id").val();
 

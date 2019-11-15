@@ -101,7 +101,7 @@ function ReadRecordDetails(id) {
                 $("#titulo").val(libro[0].titulo);
                 $("#capitulo").val(libro[0].capitulo);
                 $("#lugarEdicion").val(libro[0].lugarEdicion);
-                $("#editorial").val(libro[0].Editorial);
+                $("#editorial").val(libro[0].editorial);
                 $("#pagina").val(libro[0].pagina);
                 $("#fecha").val(libro[0].fecha);
                 $("#unidad").val(libro[0].unidad);

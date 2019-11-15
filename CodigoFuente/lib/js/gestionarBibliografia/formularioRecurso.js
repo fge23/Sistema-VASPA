@@ -57,7 +57,7 @@ function ReadRecordDetails(id) {
     // recupera ID
     $("#hidden_id").val(id);
     $.post("../gestionarBibliografia/ajaxRecursos/readRecordDetails.php", {
-        id: id
+        id: id  
     },
             function (data, status) {
                 // Se utiliza un JSON para manejar los datos
