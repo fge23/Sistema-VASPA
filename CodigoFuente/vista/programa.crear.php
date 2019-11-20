@@ -53,7 +53,7 @@ $Asignatura = new Asignatura($id);
                                 <div class="form-row">
                                     <div class="col-md-3 col-lg-4">
                                         <label for="inputAnio">A&ntilde;o del Programa</label>
-                                        <input type="number" name="anio" class="form-control" id="inputAnio" required="">
+                                        <input type="number" name="anio" class="form-control" id="inputAnio" required="" value="<?= date("Y"); ?>">
                                     </div>
 
                                     <div class="col-md-3 col-lg-4">
@@ -72,13 +72,13 @@ $Asignatura = new Asignatura($id);
                             <div class="form-group">
                                 <div class="form-row">
                                     <div class="col-md-3 col-lg-4">
-                                        <label for="inputHorasTeoria">Horas semanalas de Teor&iacute;a</label>
-                                        <input type="number" name="horasTeoria" class="form-control" id="inputHorasTeoria" required="">
+                                        <label for="inputHorasTeoria">Horas semanales de Teor&iacute;a</label>
+                                        <input onkeyup="sumar();"type="number" name="horasTeoria" class="form-control" id="inputHorasTeoria" required="">
                                     </div>
 
                                     <div class="col-md-3 col-lg-4">
-                                        <label for="inputHorasPractica">Horas semanalas de Pr&aacute;ctica</label>
-                                        <input type="number" name="horasPractica" class="form-control" id="inputHorasPractica" required="">
+                                        <label for="inputHorasPractica">Horas semanales de Pr&aacute;ctica</label>
+                                        <input onkeyup="sumar();" type="number" name="horasPractica" class="form-control" id="inputHorasPractica" required="">
                                     </div>
 
                                     <div class="col-md-3 col-lg-4">
@@ -87,6 +87,9 @@ $Asignatura = new Asignatura($id);
                                     </div>
                                 </div>
                             </div>
+                            <input id="horasTotales">Cantidad total de horas semanales:
+                            <br><br>
+
 
                             <div class="form-group">
                                 <div class="form-row">
@@ -122,15 +125,15 @@ $Asignatura = new Asignatura($id);
                                 <label for="textAreaContenidosMinimos">Contenidos M&iacute;nimos</label>
                                 <textarea readonly class="form-control" id="textAreaContenidosMinimos" name="contenidosMinomos">
                                     <?= $Asignatura->getContenidosMinimos() ?>
-                               </textarea> 
+                                </textarea> 
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="textAreaFundamentacion">Fundamentaci&oacute;n</label>
                                 <textarea class="summernote" id="textAreaFundamentacion" name="fundamentacion">   </textarea> 
                             </div>
 
-                                
+
                             <div class="form-group">
                                 <label for="textAreaObjetivosGenerales">Objetivos Generales</label>
                                 <textarea class="summernote" name="objetivosGenerales" required=""></textarea>
@@ -221,45 +224,115 @@ $Asignatura = new Asignatura($id);
         <?php include_once '../gui/footer.php'; ?>
     </body>
     <script type="text/javascript">
-    $(document).ready(function () {
-        var current = 1, current_step, next_step, steps;
-        steps = $("fieldset").length;
-        $(".next").click(function () {
-            current_step = $(this).parent();
-            next_step = $(this).parent().next();
-            next_step.show();
-            current_step.hide();
-            setProgressBar(++current);
-        });
-        $(".previous").click(function () {
-            current_step = $(this).parent();
-            next_step = $(this).parent().prev();
-            next_step.show();
-            current_step.hide();
-            setProgressBar(--current);
-        });
-        setProgressBar(current);
-        // Change progress bar action
-        function setProgressBar(curStep) {
-            var percent = parseFloat(100 / steps) * curStep;
-            percent = percent.toFixed();
-            $(".progress-bar")
-                    .css("width", percent + "%")
-                    .html(percent + "%");
+        /**
+         * Funcion que se ejecuta cada vez que se añade una letra en un cuadro de texto
+         * Suma los valores de los cuadros de texto
+         */
+        function sumar()
+        {
+            var valor1 = verificar("inputHorasTeoria");
+            var valor2 = verificar("inputHorasPractica");
+            console.log("valor1 :"+valor1);
+            console.log("valor2 :"+valor2);
+            // realizamos la suma de los valores y los ponemos en la casilla del
+            // formulario que contiene el total
+            document.getElementById("horasTotales").value = parseFloat(valor1) + parseFloat(valor2);
         }
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        $('.summernote').summernote({
-            lang: 'es-ES',
-            toolbar: [
-                ['style', ['bold', 'italic', 'underline']],
-                ['para', ['ul', 'ol', 'paragraph']]
-            ]
+
+        /**
+         * Funcion para verificar los valores de los cuadros de texto. Si no es un
+         * valor numerico, cambia de color el borde del cuadro de texto
+         */
+        function verificar(id)
+        {
+            var obj = document.getElementById(id);
+            if (obj.value == "")
+                value = "0";
+            else
+                value = obj.value;
+            if (validate_importe(value, 1))
+            {
+                // marcamos como erroneo
+                obj.style.borderColor = "#808080";
+                return value;
+            } else {
+                // marcamos como erroneo
+                obj.style.borderColor = "#f00";
+                return 0;
+            }
+        }
+
+        /**
+         * Funcion para validar el importe
+         * Tiene que recibir:
+         *  El valor del importe (Ej. document.formName.operator)
+         *  Determina si permite o no decimales [1-si|0-no]
+         * Devuelve:
+         *  true-Todo correcto
+         *  false-Incorrecto
+         */
+        function validate_importe(value, decimal)
+        {
+            if (decimal == undefined)
+                decimal = 0;
+
+            if (decimal == 1)
+            {
+                // Permite decimales tanto por . como por ,
+                var patron = new RegExp("^[0-9]+((,|\.)[0-9]{1,2})?$");
+            } else {
+                // Numero entero normal
+                var patron = new RegExp("^([0-9])*$")
+            }
+
+            if (value && value.search(patron) == 0)
+            {
+                return true;
+            }
+            return false;
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var current = 1, current_step, next_step, steps;
+            steps = $("fieldset").length;
+            $(".next").click(function () {
+                current_step = $(this).parent();
+                next_step = $(this).parent().next();
+                next_step.show();
+                current_step.hide();
+                setProgressBar(++current);
+            });
+            $(".previous").click(function () {
+                current_step = $(this).parent();
+                next_step = $(this).parent().prev();
+                next_step.show();
+                current_step.hide();
+                setProgressBar(--current);
+            });
+            setProgressBar(current);
+            // Change progress bar action
+            function setProgressBar(curStep) {
+                var percent = parseFloat(100 / steps) * curStep;
+                percent = percent.toFixed();
+                $(".progress-bar")
+                        .css("width", percent + "%")
+                        .html(percent + "%");
+            }
         });
-    });
-</script>
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.summernote').summernote({
+                lang: 'es-ES',
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline']],
+                    ['para', ['ul', 'ol', 'paragraph']]
+                ]
+            });
+        });
+    </script>
 </html>
 
 
