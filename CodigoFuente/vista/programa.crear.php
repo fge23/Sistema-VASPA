@@ -112,18 +112,18 @@ $Asignatura = new Asignatura($id);
                                 </div>
                             </div>
 
-
                             <input type="button" name="data[password]" class="next btn btn-info" value="Siguiente" />
                         </fieldset>
 
-
                         <fieldset>
                             <h2>Paso 2 - Informaci&oacute;n de la Asignatura</h2>
-<!--
+
                             <div class="form-group">
-                                <label for="textAreaFundamentacion">Fundamentaci&oacute;n</label>
-                                <textarea name="fundamentacion" class="form-control" id="textAreaFundamentacion" required=""></textarea>
-                            </div>-->
+                                <label for="textAreaContenidosMinimos">Contenidos M&iacute;nimos</label>
+                                <textarea readonly class="form-control" id="textAreaContenidosMinimos" name="contenidosMinomos">
+                                    <?= $Asignatura->getContenidosMinimos() ?>
+                               </textarea> 
+                            </div>
                             
                             <div class="form-group">
                                 <label for="textAreaFundamentacion">Fundamentaci&oacute;n</label>

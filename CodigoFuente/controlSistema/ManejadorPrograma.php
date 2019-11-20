@@ -108,6 +108,7 @@ class ManejadorPrograma {
         }
     }
 
+    
 //    function modificacion($datos, $codCarrera){
 //        $Carrera = new Carrera();
 //        $Carrera->setCodCarrera($datos['codCarrera']);
@@ -122,4 +123,14 @@ class ManejadorPrograma {
 //            return false;
 //        }
 //    }
+    
+    /**
+     * 
+     * @return Programa
+     */
+    function getUltimoPrograma(){
+        $Programa = new Programa();
+        
+        return $Programa;
+    }
 }
