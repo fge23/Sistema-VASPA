@@ -16,6 +16,7 @@ class Asignatura {
     protected $idDepartamento;
     protected $contenidosMinimos;
     protected $idProfesor;
+    protected $horasSemanales;
     private $query;
 
     /**
@@ -33,6 +34,7 @@ class Asignatura {
             $this->setContenidosMinimos($datos['contenidosMinimos']);
             $this->setIdDepartamento($datos['departamento']);
             $this->setIdProfesor($datos['idProfesor']);
+            $this->setHorasSemanales($datos['horasSemanales']);
         } else {
             //Sino viene un nuevo Objeto, lo recupero (para Modificar)
             if (isset($id)) {
@@ -59,6 +61,14 @@ class Asignatura {
         unset($this->datos);
     }
 
+     function getHorasSemanales() {
+        return $this->horasSemanales;
+    }
+
+    function setHorasSemanales($horasSemanales) {
+        $this->horasSemanales = $horasSemanales;
+    }
+    
     function getIdDepartamento() {
         return $this->idDepartamento;
     }

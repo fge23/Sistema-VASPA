@@ -27,7 +27,6 @@ $Asignatura = new Asignatura($id);
     <body>
         <?php include_once '../gui/navbar.php'; ?>
         <div class="container">
-
             <div class="card">
                 <div class="card-header">
                     <h3>Crear Programa de <?= $Asignatura->getNombre(); ?></h3>
@@ -73,22 +72,25 @@ $Asignatura = new Asignatura($id);
                                 <div class="form-row">
                                     <div class="col-md-3 col-lg-4">
                                         <label for="inputHorasTeoria">Horas semanales de Teor&iacute;a</label>
-                                        <input onkeyup="sumar();"type="number" name="horasTeoria" class="form-control" id="inputHorasTeoria" required="">
+                                        <input onkeyup="sumar();"type="time" name="horasTeoria" class="form-control" id="inputHorasTeoria" required="">
                                     </div>
 
                                     <div class="col-md-3 col-lg-4">
                                         <label for="inputHorasPractica">Horas semanales de Pr&aacute;ctica</label>
-                                        <input onkeyup="sumar();" type="number" name="horasPractica" class="form-control" id="inputHorasPractica" required="">
+                                        <input onkeyup="sumar();" type="time" name="horasPractica" class="form-control" id="inputHorasPractica" required="">
                                     </div>
 
                                     <div class="col-md-3 col-lg-4">
                                         <label for="inputHorasOtros">Otras horas semanales</label>
-                                        <input type="number" name="horasOtros" class="form-control" id="inputHorasOtros" required="">
+                                        <input type="time" name="horasOtros" class="form-control" id="inputHorasOtros" required="">
                                     </div>
                                 </div>
                             </div>
-                            <input id="horasTotales">Cantidad total de horas semanales:
-                            <br><br>
+                            <b><p class="cantidadTotalHoras">
+                                    La suma total de horas semanales es: 
+                                </p></b>
+
+                            <br>
 
 
                             <div class="form-group">
@@ -210,9 +212,6 @@ $Asignatura = new Asignatura($id);
                             </div>
 
                             <input type="hidden" name="codAsignatura" value="<?= $Asignatura->getId(); ?>">
-
-
-
                             <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
                             <input type="submit" name="submit" class="submit btn btn-info" value="Guardar" id="submit_data" />
                             <input type="submit" name="submit2" class="submit btn btn-success" value="Guardar y Enviar" onclick=this.form.action = "prueba.php">
@@ -225,71 +224,35 @@ $Asignatura = new Asignatura($id);
     </body>
     <script type="text/javascript">
         /**
-         * Funcion que se ejecuta cada vez que se añade una letra en un cuadro de texto
-         * Suma los valores de los cuadros de texto
+         * Suma los valores de los cuadros de texto y valida que las horas semanales coincidan con el plan
          */
         function sumar()
         {
-            var valor1 = verificar("inputHorasTeoria");
-            var valor2 = verificar("inputHorasPractica");
-            console.log("valor1 :"+valor1);
-            console.log("valor2 :"+valor2);
-            // realizamos la suma de los valores y los ponemos en la casilla del
-            // formulario que contiene el total
-            document.getElementById("horasTotales").value = parseFloat(valor1) + parseFloat(valor2);
-        }
+            var horasTeoria = document.getElementById("inputHorasTeoria").value + ":00";
+            var horasPractica = document.getElementById("inputHorasPractica").value + ":00";
+            var hour = 0;
+            var minute = 0;
+            var horasTotales = 0
+            var splitTime1 = horasTeoria.split(':');
+            var splitTime2 = horasPractica.split(':');
 
-        /**
-         * Funcion para verificar los valores de los cuadros de texto. Si no es un
-         * valor numerico, cambia de color el borde del cuadro de texto
-         */
-        function verificar(id)
-        {
-            var obj = document.getElementById(id);
-            if (obj.value == "")
-                value = "0";
-            else
-                value = obj.value;
-            if (validate_importe(value, 1))
-            {
-                // marcamos como erroneo
-                obj.style.borderColor = "#808080";
-                return value;
-            } else {
-                // marcamos como erroneo
-                obj.style.borderColor = "#f00";
-                return 0;
+
+            hour = parseInt(splitTime1[0]) + parseInt(splitTime2[0]);
+            minute = parseInt(splitTime1[1]) + parseInt(splitTime2[1]);
+            hour = hour + minute / 60;
+            minute = minute % 60;
+            horasTotales = Math.floor(hour);
+            console.log("Cantidad de horas " + horasTotales);
+
+            if (!isNaN(horasTotales)) {
+                document.getElementsByClassName('cantidadTotalHoras')[0].textContent = "La suma total de horas semanales es: " + Math.floor(hour);
+                if (<?= $Asignatura->getHorasSemanales() ?> != Math.floor(hour)) {
+                    console.log("La cantidad de horas de cursada son DIFERENTES a las de la Asignatura");
+                    alert("La cantidad de horas semanales debe ser igual a las definidas en el Plan de la Carrera");
+                } else {
+                    console.log("La cantidad de horas de cursada son IGUALES a las de la Asignatura");
+                }
             }
-        }
-
-        /**
-         * Funcion para validar el importe
-         * Tiene que recibir:
-         *  El valor del importe (Ej. document.formName.operator)
-         *  Determina si permite o no decimales [1-si|0-no]
-         * Devuelve:
-         *  true-Todo correcto
-         *  false-Incorrecto
-         */
-        function validate_importe(value, decimal)
-        {
-            if (decimal == undefined)
-                decimal = 0;
-
-            if (decimal == 1)
-            {
-                // Permite decimales tanto por . como por ,
-                var patron = new RegExp("^[0-9]+((,|\.)[0-9]{1,2})?$");
-            } else {
-                // Numero entero normal
-                var patron = new RegExp("^([0-9])*$")
-            }
-
-            if (value && value.search(patron) == 0)
-            {
-                return true;
-            }
-            return false;
         }
     </script>
 
