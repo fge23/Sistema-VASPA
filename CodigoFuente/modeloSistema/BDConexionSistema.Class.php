@@ -23,7 +23,7 @@ class BDConexionSistema extends mysqli {
         $this->schema = "bdGEF_VASPA";
 
         parent::__construct($this->host, $this->usuario, $this->contrasenia, $this->schema);
-
+        parent::set_charset("utf8");
         if ($this->connect_errno) {
             throw new Exception("Error de Conexion a la Base de Datos", $this->connect_errno);
         }
