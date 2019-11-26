@@ -6,12 +6,13 @@ $id = $_GET["id"];
 $Asignatura = new Asignatura($id);
 ?>
 <!DOCTYPE html>
-<html lang="ES">
+<html>
     <head>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="../lib/bootstrap-4.1.1-dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
         <script src="../lib/JQuery/jquery-3.3.1.js"></script>
         <script src="../lib/bootstrap-4.1.1-dist/js/bootstrap.bundle.js"></script>
+        <link rel="stylesheet" href="../lib/bootstrap-4.1.1-dist/css/bootstrap.css" />
         <!--         Librerias Summernote-->
         <link href="../lib/summernote-master/dist/summernote-bs4.css" rel="stylesheet">
         <script src="../lib/summernote-master/dist/summernote-bs4.js"></script>
@@ -26,6 +27,7 @@ $Asignatura = new Asignatura($id);
     </head>
     <body>
         <?php include_once '../gui/navbar.php'; ?>
+
         <div class="container">
             <div class="card">
                 <div class="card-header">
@@ -46,7 +48,7 @@ $Asignatura = new Asignatura($id);
                         <fieldset>
                             <h2>Paso 1 - Datos B&aacute;sicos de la Asignatura</h2> 
                             <a href="#"><input type="button"  class="btn btn-outline-primary" value="Cargar Datos de &Uacute;ltimo Programa" /></a>
-                            <!--                            TODO: Implementar método que cargue datos del último prograa-->
+                            TODO: Implementar método que cargue datos del último prograa
                             <hr>
                             <div class="form-group">
                                 <div class="form-row">
