@@ -46,15 +46,15 @@ class ManejadorPlanPDF {
     function getColeccion() {
         return $this->coleccion;
     }
-        
+            
     /**
      * 
      * @return string
      */
     function tienePlanPDF($codPlan){
         //En caso de que tenga plan de la carrera vamos a devolver la ruta al plan, caso contrario
-        //damos la ruta a un pdf el cual indica que el plan no se encuentra disponible
-        $ruta = "../planes_de_estudio/plan_no_disponible.pdf";
+        //retornamos una cadena vacia que indica que el plan no se encuentra disponible
+        $ruta = "";
         
         if (!is_null($this->coleccion)){
             foreach ($this->coleccion as $PlanPDF){
@@ -67,7 +67,5 @@ class ManejadorPlanPDF {
         }    
         return $ruta;
     }
-    
-    
     
 }

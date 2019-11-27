@@ -33,7 +33,8 @@ if (!is_null($planes)){
     foreach ($planes as $plan){
         if ($plan->getIdCarrera() == $codCarrera){
             $rutaPlan = $manejadorPlanPDF->tienePlanPDF($plan->getId());
-            $planesCarrera .= "<tr><td>{$plan->getId()}</td>
+            if (!empty($rutaPlan)){
+                $planesCarrera .= "<tr><td>{$plan->getId()}</td>
                                     <td>
                                         <a title='Visualizar Plan de Estudio' href='{$rutaPlan}' target='_blank'>
                                             <button type='button' class='btn btn-outline-success'>
@@ -42,6 +43,21 @@ if (!is_null($planes)){
                                         </a>
                                     </td>
                                 </tr>";
+            }
+            else {
+                $planesCarrera .= "<tr><td>{$plan->getId()}</td>
+                                    <td>
+                                        <a title='Plan de Estudio no disponible'>
+                                            <button type='button' class='btn btn-outline-success' disabled>
+                                                <span class='oi oi-document'></span> Visualizar Plan
+                                            </button>
+                                        </a>
+                                    </td>
+                                </tr>";
+            }
+            
+            //$rutaPlan = $manejadorPlanPDF->tienePlanPDF($plan->getId());
+            
         }
     }
 } 

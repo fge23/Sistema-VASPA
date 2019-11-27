@@ -36,15 +36,16 @@ $codCarrera = $_POST['selectCarrera'];
  */
 
 $carrera = new Carrera($codCarrera);
+$nombreCarrera = sanear_string($carrera->getNombre());
 
 //nombre del archivo en el servidor
-$nombrePlan = $codPlan.'_'.$carrera->getNombre().'.pdf';
+$nombrePlan = $codPlan.'_'.$nombreCarrera.'.pdf';
 
 // Constante que nos indica el tamaño maximo del archivo a subir al sistema
 define('tamanioMaximo', 2097152);
 
 /*
- * A continuacion vamos a proceder a crear las carpeta de las carrera en caso de ser necesario
+ * A continuacion vamos a proceder a crear la carpeta de la carrera en caso de ser necesario
  */
 
 /* ESTRUCTURA DEL NOMBRE DE LA CARPETA QUE VA A CONTENER LOS PLANES DE UNA CARRERA EN EL SERVIDOR
@@ -53,7 +54,7 @@ define('tamanioMaximo', 2097152);
 
 //direccion donde se va a crear la carpeta
 $ruta = '../planes_de_estudio/';
-$directorio = $ruta.$carrera->getId().'_'.$carrera->getNombre();
+$directorio = $ruta.$carrera->getId().'_'.$nombreCarrera;
 
 //creamos la carpeta si es que no existe
 $creado = false;
@@ -64,11 +65,10 @@ if (!is_dir($directorio)){
 // variable nombre del archivo en el servidor
 // Esta variable nos servira para comprobar si ya se encuentra el plan de esa carrera en el sistema, con lo cual no se deberia resubir
 $rutaDestino = $directorio.'/'.$nombrePlan;
-//$rutaDestino = $_SERVER['DOCUMENT_ROOT'].'/pruebauargflow/programas/'.$anio.'/'.$name;
 
-// ruta donde se estara el plan y que se almacenara dicha informacion en la BD
-$ruta = 'planes_de_estudio/'.$carrera->getId().'_'.$carrera->getNombre().'/'.$nombrePlan;
-$ruta = utf8_decode($ruta);
+// ruta donde se alojara el plan (archivo) y se almacenara dicha informacion en la BD
+$ruta = 'planes_de_estudio/'.$carrera->getId().'_'.$nombreCarrera.'/'.$nombrePlan;
+//$ruta = utf8_decode($ruta);
 
 $subido = false;
 $cargadoBD = false;
@@ -168,3 +168,56 @@ if (!file_exists($rutaDestino)) {
         <?php include_once '../gui/footer.php'; ?>
     </body>
 </html>
+
+<?php
+/**
+ * Reemplaza todos los acentos por sus equivalentes sin ellos
+ *
+ * @param $string
+ *  string la cadena a sanear
+ *
+ * @return $string
+ *  string saneada
+ */
+function sanear_string($string){
+ 
+    $string = trim($string);
+ 
+    $string = str_replace(
+        array('á', 'à', 'ä', 'â', 'ª', 'Á', 'À', 'Â', 'Ä'),
+        array('a', 'a', 'a', 'a', 'a', 'A', 'A', 'A', 'A'),
+        $string
+    );
+ 
+    $string = str_replace(
+        array('é', 'è', 'ë', 'ê', 'É', 'È', 'Ê', 'Ë'),
+        array('e', 'e', 'e', 'e', 'E', 'E', 'E', 'E'),
+        $string
+    );
+ 
+    $string = str_replace(
+        array('í', 'ì', 'ï', 'î', 'Í', 'Ì', 'Ï', 'Î'),
+        array('i', 'i', 'i', 'i', 'I', 'I', 'I', 'I'),
+        $string
+    );
+ 
+    $string = str_replace(
+        array('ó', 'ò', 'ö', 'ô', 'Ó', 'Ò', 'Ö', 'Ô'),
+        array('o', 'o', 'o', 'o', 'O', 'O', 'O', 'O'),
+        $string
+    );
+ 
+    $string = str_replace(
+        array('ú', 'ù', 'ü', 'û', 'Ú', 'Ù', 'Û', 'Ü'),
+        array('u', 'u', 'u', 'u', 'U', 'U', 'U', 'U'),
+        $string
+    );
+ 
+    $string = str_replace(
+        array('ñ', 'Ñ', 'ç', 'Ç', ' '),
+        array('n', 'N', 'c', 'C', '_'),
+        $string
+    );
+  
+    return $string;
+}
