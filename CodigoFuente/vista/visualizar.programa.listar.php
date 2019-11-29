@@ -57,13 +57,26 @@ $carrera = new Carrera($codCarrera, NULL);
                             <?php if (!is_null($Asignaturas)){ foreach ($Asignaturas as $Asignatura) { ?>
                             <td><?= $Asignatura->getId(); ?></td>
                             <td><?= $Asignatura->getNombre(); ?></td>
-                                <td>
-                                    <a title="Visualizar Programa de Asignatura" href="<?= $ManejadorProgramaPDF->tieneProgramaPDF($Asignatura->getId()); ?>" target="_blank">
-                                        <button type="button" class="btn btn-outline-success">
+                            
+                            <?php 
+                                $ruta = $ManejadorProgramaPDF->tieneProgramaPDF($Asignatura->getId());
+                                if (!empty($ruta)){ ?>
+                                    <td>
+                                        <a title="Visualizar Programa de Asignatura" href="<?= $ruta; ?>" target="_blank">
+                                            <button type="button" class="btn btn-outline-success">
+                                                <span class="oi oi-document"></span>
+                                            </button>
+                                        </a>
+                                    </td>
+                                <?php } else { ?>
+                                    <td>
+                                    <a title="Programa no disponible">
+                                        <button type="button" class="btn btn-outline-success" disabled="">
                                             <span class="oi oi-document"></span>
                                         </button>
                                     </a>
                                 </td>
+                                <?php } ?>
                             </tr>
                             <?php }} ?> 
                         </tbody>

@@ -80,10 +80,9 @@ class ManejadorProgramaPDF {
      * @return string
      */
     function tieneProgramaPDF($codAsignatura){
-        //$tiene = false;
-        //En caso de que tenga programa la materia vamos a devolver la ruta al programa, caso contrario
-        //damos la ruta a un pdf el cual indica que el programa no se encuentra disponible
-        $ruta = "../programas/programa_no_disponible.pdf";
+        //En caso de que tenga programa la materia vamos a devolver la ruta a dicho programa, caso contrario
+        //retornamos un string vacio el cual va a indicar de que dicha asignatura no tiene programa 
+        $ruta = "";
         
         if (!is_null($this->coleccion)){
             foreach ($this->coleccion as $programaPDF){
@@ -95,10 +94,7 @@ class ManejadorProgramaPDF {
                 }
             }
         }    
-        //return $tiene;
         return $ruta;
     }
-    
-    
     
 }
