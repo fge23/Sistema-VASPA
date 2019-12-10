@@ -1,7 +1,6 @@
 <?php
-
-include_once '../modeloSistema/BDConexionSistema.Class.php';
-include_once '../modeloSistema/Programa.Class.php';
+include_once 'C:/xampp/htdocs/vaspa/CodigoFuente/modeloSistema/BDConexionSistema.Class.php';
+include_once 'C:/xampp/htdocs/vaspa/CodigoFuente/modeloSistema/Programa.Class.php';
 
 /**
  * Description of ManejadorPrograma
@@ -108,7 +107,6 @@ class ManejadorPrograma {
         }
     }
 
-    
 //    function modificacion($datos, $codCarrera){
 //        $Carrera = new Carrera();
 //        $Carrera->setCodCarrera($datos['codCarrera']);
@@ -123,14 +121,39 @@ class ManejadorPrograma {
 //            return false;
 //        }
 //    }
-    
+
     /**
      * 
      * @return Programa
      */
-    function getUltimoPrograma(){
-        $Programa = new Programa();
-        
-        return $Programa;
+    function getUltimoPrograma($anioActual, $idAsignatura) {
+        //echo "SERVER".$_SERVER['DOCUMENT_ROOT'];
+        //echo getcwd();
+        $id = 0;
+        // $Programa = new Programa();
+        $this->query = "SELECT id, anio "
+                . "FROM PROGRAMA "
+               // . "WHERE anio < 2019 AND idAsignatura LIKE '1668' "
+                . "ORDER BY anio DESC "
+                . "LIMIT 1";
+
+        try {
+            echo "antessss";
+            $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+            var_dump($this->datos);
+            echo "despuess";
+        } catch (Exception $e) {
+            echo "a";
+            $e->getMessage();
+        }
+        /*
+        $this->datos = $this->datos->fetch_assoc();
+        $id = datos['id'];
+        echo "despues";
+
+        return $id;
+         */
+         
     }
+
 }

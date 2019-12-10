@@ -47,7 +47,7 @@ $Asignatura = new Asignatura($id);
                     <form id="regiration_form" novalidate action="programa.crear.procesar.php"  method="post">
                         <fieldset>
                             <h2>Paso 1 - Datos B&aacute;sicos de la Asignatura</h2> 
-                            <a href="#"><input type="button"  class="btn btn-outline-primary" value="Cargar Datos de &Uacute;ltimo Programa" /></a>
+                            <a href="#"><input type="button"  class="btn btn-outline-primary" value="Cargar Datos de &Uacute;ltimo Programa" onclick="cargarDatosUltimoPrograma()"/></a>
                             TODO: Implementar método que cargue datos del último prograa
                             <hr>
                             <div class="form-group">
@@ -297,6 +297,29 @@ $Asignatura = new Asignatura($id);
                 ]
             });
         });
+    </script>
+    <script type="text/javascript">
+        function cargarDatosUltimoPrograma() {
+            console.log("Entró a la funcion cargarDatosUltimoPrograma()");
+            var idAsignatura = '<?= $Asignatura->getId() ?>';
+            var id = 0;
+            console.log("Código de Asignatura " + idAsignatura);
+            jQuery.ajax({
+                type: "POST",
+                url: '../lib/consultaAjax/cargaDatosUltimoPrograma.php',
+                dataType: 'json',
+                data: {arguments: [2019, '1668']},
+                success: function (obj, textstatus) {
+                    if (!('error' in obj)) {
+                        console.log("funcion");
+                         //var datos = obj.result;
+                //       console.log("ID del programa "+id);
+                    } else {
+                        console.log(obj.error);
+                    }
+                }
+            });
+        }
     </script>
 </html>
 
