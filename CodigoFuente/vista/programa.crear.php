@@ -67,6 +67,15 @@ $Asignatura = new Asignatura($id);
                                             <option value="5">5to A&ntilde;o</option>
                                         </select>
                                     </div>
+
+                                    <div class="col-md-3 col-lg-4">
+                                        <label for="inputVigencia">Vigencia</label>
+                                        <select name="vigencia" class="form-control" id="inputVigencia">
+                                            <option value="1">Solo este año</option>
+                                            <option value="2">2 a&ntilde;os</option>
+                                            <option value="3">3 a&ntilde;os</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 
@@ -212,8 +221,8 @@ $Asignatura = new Asignatura($id);
                                 <label for="textAreaAprobacionLibre">Aprobaci&oacute;n Libre</label>
                                 <textarea name="aprobacionLibre" class="summernote" id="textAreaAprobacionLibre" required=""></textarea>
                             </div>
-
-                            <input type="hidden" name="codAsignatura" value="<?= $Asignatura->getId(); ?>">
+                            <input type="hidden" name="fechaCarga" value="<?= getdate()['year'].'-'.  getdate()['mon'].'-'.getdate()['mday']; ?>">
+                            <input type="hidden" name="idAsignatura" value="<?= $Asignatura->getId(); ?>">
                             <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
                             <input type="submit" name="submit" class="submit btn btn-info" value="Guardar" id="submit_data" />
                             <input type="submit" name="submit2" class="submit btn btn-success" value="Guardar y Enviar" onclick=this.form.action = "prueba.php">
@@ -312,8 +321,8 @@ $Asignatura = new Asignatura($id);
                 success: function (obj, textstatus) {
                     if (!('error' in obj)) {
                         console.log("funcion");
-                         //var datos = obj.result;
-                //       console.log("ID del programa "+id);
+                        //var datos = obj.result;
+                        //       console.log("ID del programa "+id);
                     } else {
                         console.log(obj.error);
                     }

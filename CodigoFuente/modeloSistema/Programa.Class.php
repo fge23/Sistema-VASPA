@@ -35,7 +35,11 @@ class Programa {
     private $metodologiaLibre;
     private $aprobacionLibre;
     private $ubicacion;
-    private $codAsignatura;
+    private $idAsignatura;
+    private $aprobadoSa;
+    private $aprobadoDepto;
+    private $fechaCarga;
+    private $vigencia;
   
     private $query;
 
@@ -117,8 +121,8 @@ class Programa {
         return $this->observacionesCursada;
     }
 
-    function getCodAsignatura() {
-        return $this->codAsignatura;
+    function getIdAsignatura() {
+        return $this->idAsignatura;
     }
 
         function getFundamentacion() {
@@ -211,8 +215,8 @@ class Programa {
         $this->observacionesCursada = $observacionesCursada;
     }
 
-    function setCodAsignatura($codAsignatura) {
-        $this->codAsignatura = $codAsignatura;
+    function setIdAsignatura($idAsignatura) {
+        $this->idAsignatura = $idAsignatura;
     }
 
     
@@ -268,6 +272,39 @@ class Programa {
         $this->ubicacion = $ubicacion;
     }
     
+    function getAprobadoSa() {
+        return $this->aprobadoSa;
+    }
+
+    function getAprobadoDepto() {
+        return $this->aprobadoDepto;
+    }
+
+    function getFechaCarga() {
+        return $this->fechaCarga;
+    }
+
+    function getVigencia() {
+        return $this->vigencia;
+    }
+
+    function setAprobadoSa($aprobadoSa) {
+        $this->aprobadoSa = $aprobadoSa;
+    }
+
+    function setAprobadoDepto($aprobadoDepto) {
+        $this->aprobadoDepto = $aprobadoDepto;
+    }
+
+    function setFechaCarga($fechaCarga) {
+        $this->fechaCarga = $fechaCarga;
+    }
+
+    function setVigencia($vigencia) {
+        $this->vigencia = $vigencia;
+    }
+
+        
     /*
      * 
      * @return Asignatura

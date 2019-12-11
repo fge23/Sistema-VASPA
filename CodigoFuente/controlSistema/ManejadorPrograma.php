@@ -86,19 +86,25 @@ class ManejadorPrograma {
         $Programa->setAprobacionSATEP($datos['aprobacionSATEP']);
         $Programa->setMetodologiaLibre($datos['metodologiaLibre']);
         $Programa->setAprobacionLibre($datos['aprobacionLibre']);
-        $Programa->setCodAsignatura($datos['codAsignatura']);
+        $Programa->setIdAsignatura($datos['idAsignatura']);
+        $Programa->setAprobadoSa(0);
+        $Programa->setAprobadoDepto(0);
+        $Programa->setFechaCarga($datos['fechaCarga']);
+        $Programa->setVigencia($datos['vigencia']);
 
         //aniocarrera 1,2,3,4,5
         //regimen A,1,2, O
         $this->query = "INSERT INTO PROGRAMA "
                 . "VALUES (null,{$Programa->getAnio()}, '{$Programa->getAnioCarrera()}', "
-                . " {$Programa->getHorasTeoria()}, {$Programa->getHorasPractica()}, {$Programa->getHorasOtros()}, "
+                . " '{$Programa->getHorasTeoria()}', '{$Programa->getHorasPractica()}', '{$Programa->getHorasOtros()}', "
                 . " '{$Programa->getRegimenCursada()}', '{$Programa->getObservacionesHoras()}', '{$Programa->getObservacionesCursada()}', "
-                . " '{$Programa->getFundamentacion()}', '{$Programa->getObjetivosGenerales()}', '{$Programa->getOrganizacionContenidos()}', '{$Programa->getCriteriosEvaluacion()}', "
-                . " '{$Programa->getMetodologiaPresencial()}', '{$Programa->getRegularizacionPresencial()}', '{$Programa->getAprobacionPresencial()}', "
-                . " '{$Programa->getMetodologiaSATEP()}', '{$Programa->getRegularizacionSATEP()}', '{$Programa->getAprobacionSATEP()}', "
-                . " '{$Programa->getMetodologiaLibre()}', '{$Programa->getAprobacionLibre()}', 'SA','{$Programa->getCodAsignatura()}' , "
-                . " 0,0 )";
+                . " '{$Programa->getFundamentacion()}', '{$Programa->getObjetivosGenerales()}', '{$Programa->getOrganizacionContenidos()}', "
+                . "  '{$Programa->getCriteriosEvaluacion()}', '{$Programa->getMetodologiaPresencial()}', '{$Programa->getRegularizacionPresencial()}',"
+                . "  '{$Programa->getAprobacionPresencial()}','{$Programa->getMetodologiaSATEP()}', '{$Programa->getRegularizacionSATEP()}', "
+                . " '{$Programa->getAprobacionSATEP()}', '{$Programa->getMetodologiaLibre()}', '{$Programa->getAprobacionLibre()}',"
+                . "  'SA','{$Programa->getIdAsignatura()}' , {$Programa->getAprobadoSa()},"
+                . " {$Programa->getAprobadoDepto()}, '{$Programa->getFechaCarga()}', {$Programa->getVigencia()} )";
+        //var_dump($this->query);
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
         if ($consulta) {
             return true;

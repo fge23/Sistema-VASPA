@@ -13,6 +13,7 @@ function addRecord() {
     var nuevo_siunpa = $("#nuevo_siunpa").val();
     var nuevo_otro = $("#nuevo_otro").val();
 
+
     var ele = document.getElementsByName('nuevo_tipoBibliografia');
     var nuevo_tipoBibliografia;
 
@@ -20,44 +21,62 @@ function addRecord() {
         if (ele[i].checked)
             nuevo_tipoBibliografia = ele[i].value;
     }
-    // se llama a la API addRecord para agregar nuevo registro
-    $.post("../gestionarBibliografia/ajaxLibros/addRecord.php", {
-        nuevo_apellido: nuevo_apellido,
-        nuevo_nombre: nuevo_nombre,
-        nuevo_referencia: nuevo_referencia,
-        nuevo_anioEdicion: nuevo_anioEdicion,
-        nuevo_titulo: nuevo_titulo,
-        nuevo_capitulo: nuevo_capitulo,
-        nuevo_lugarEdicion: nuevo_lugarEdicion,
-        nuevo_editorial: nuevo_editorial,
-        nuevo_tipoBibliografia: nuevo_tipoBibliografia,
-        nuevo_unidad: nuevo_unidad,
-        nuevo_biblioteca: nuevo_biblioteca,
-        nuevo_siunpa: nuevo_siunpa,
-        nuevo_otro: nuevo_otro
-    }, function (data) {
-        // oculta el Modal
-        $("#add_new_record_modal").modal("hide");
+    /*
+     var nuevo_apellido = 
+     var nuevo_nombre = 
+     var nuevo_anioEdicion =
+     var nuevo_titulo = 
+     var nuevo_capitulo = 
+     var nuevo_lugarEdicion = 
+     var nuevo_editorial = 
+     var nuevo_unidad = 
 
-        // actualiza tabla de registros mostrados
-        readRecords();
-        // limpia los datos del Modal
-        $("#nuevo_apellido").val("");
-        $("#nuevo_nombre").val("");
-        $("#nuevo_referencia").val("");
-        $("#nuevo_anioEdicion").val("");
-        $("#nuevo_titulo").val("");
-        $("#nuevo_capitulo").val("");
-        $("#nuevo_lugarEdicion").val("");
-        $("#nuevo_editorial").val("");
-        $("#nuevo_pagina").val("");
-        $("#nuevo_fecha").val("");
-        $("#nuevo_unidad").val("");
-        $("#nuevo_biblioteca").val("");
-        $("#nuevo_siunpa").val("");
-        $("#nuevo_otro").val("");
-        $("#nuevo_tipoBibliografia").prop("checked", false)
-    });
+     */
+    if (nuevo_referencia == '' | nuevo_unidad == '' | nuevo_apellido == '' | nuevo_nombre == ''
+            | nuevo_titulo == '' | nuevo_capitulo == '' ) {
+        console.log("Campos inválidos");
+        alert("Hay datos sin completar en el formulario, completelos e intente nuevamente");
+
+    } else {
+        console.log("REF con contenido");
+        // se llama a la API addRecord para agregar nuevo registro
+        $.post("../gestionarBibliografia/ajaxLibros/addRecord.php", {
+            nuevo_apellido: nuevo_apellido,
+            nuevo_nombre: nuevo_nombre,
+            nuevo_referencia: nuevo_referencia,
+            nuevo_anioEdicion: nuevo_anioEdicion,
+            nuevo_titulo: nuevo_titulo,
+            nuevo_capitulo: nuevo_capitulo,
+            nuevo_lugarEdicion: nuevo_lugarEdicion,
+            nuevo_editorial: nuevo_editorial,
+            nuevo_tipoBibliografia: nuevo_tipoBibliografia,
+            nuevo_unidad: nuevo_unidad,
+            nuevo_biblioteca: nuevo_biblioteca,
+            nuevo_siunpa: nuevo_siunpa,
+            nuevo_otro: nuevo_otro
+        }, function (data) {
+            // oculta el Modal
+            $("#add_new_record_modal").modal("hide");
+            // actualiza tabla de registros mostrados
+            readRecords();
+            // limpia los datos del Modal
+            $("#nuevo_apellido").val("");
+            $("#nuevo_nombre").val("");
+            $("#nuevo_referencia").val("");
+            $("#nuevo_anioEdicion").val("");
+            $("#nuevo_titulo").val("");
+            $("#nuevo_capitulo").val("");
+            $("#nuevo_lugarEdicion").val("");
+            $("#nuevo_editorial").val("");
+            $("#nuevo_pagina").val("");
+            $("#nuevo_fecha").val("");
+            $("#nuevo_unidad").val("");
+            $("#nuevo_biblioteca").val("");
+            $("#nuevo_siunpa").val("");
+            $("#nuevo_otro").val("");
+            $("#nuevo_tipoBibliografia").prop("checked", false)
+        });
+    }
 }
 
 
@@ -110,9 +129,8 @@ function ReadRecordDetails(id) {
                 $("#otro").val(libro[0].otro);
                 if (libro[0].tipoLibro === 'O') {
                     $("#obligatoria").prop("checked", true)
-                }
-                else{
-                     $("#complementaria").prop("checked", true)
+                } else {
+                    $("#complementaria").prop("checked", true)
                 }
 
 
@@ -132,7 +150,7 @@ function selectedRadio() {
 }
 
 function UpdateRecordDetails() {
-      // recupera valores modificados
+    // recupera valores modificados
     var referencia = $("#referencia").val();
     var apellido = $("#apellido").val();
     var nombre = $("#nombre").val();
@@ -145,7 +163,7 @@ function UpdateRecordDetails() {
     var biblioteca = $("#biblioteca").val();
     var siunpa = $("#siunpa").val();
     var otro = $("#otro").val();
-    
+
     var elem = document.getElementsByName('tipoBibliografia');
     var tipoBibliografia;
 

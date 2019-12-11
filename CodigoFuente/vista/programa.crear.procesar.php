@@ -5,6 +5,7 @@ include_once '../controlSistema/ManejadorPrograma.php';
 
 $DatosFormulario = $_POST;
 $ManejadorPrograma = new ManejadorPrograma();
+//var_dump($DatosFormulario);
 $consulta = $ManejadorPrograma->alta($DatosFormulario);
 
 
