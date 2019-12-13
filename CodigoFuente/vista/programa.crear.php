@@ -92,7 +92,7 @@ $Asignatura = new Asignatura($id);
                                     </div>
 
                                     <div class="col-md-3 col-lg-4">
-                                        <label for="inputHorasOtros">Otras horas semanales</label>
+                                        <label for="inputHorasOtros">Otras horas semanales</label><small> - Opcional</small> 
                                         <input type="time" name="horasOtros" class="form-control" id="inputHorasOtros" required="">
                                     </div>
                                 </div>
@@ -117,12 +117,12 @@ $Asignatura = new Asignatura($id);
                                     </div>
 
                                     <div class="col-md-3 col-lg-4">
-                                        <label for="inputObservacionesHoras">Observaciones horas</label>
+                                        <label for="inputObservacionesHoras">Observaciones horas</label><small> - Opcional</small> 
                                         <input type="text" name="observacionesHoras" class="form-control" id="inputObservacionesHoras">
                                     </div>
 
                                     <div class="col-md-3 col-lg-4">
-                                        <label for="inputObservacionesCursada">Observaciones cursada</label>
+                                        <label for="inputObservacionesCursada">Observaciones cursada</label><small> - Opcional</small> 
                                         <input type="text" name="observacionesCursada" class="form-control" id="inputObservacionesCursada">
                                     </div>
                                 </div>
@@ -168,7 +168,7 @@ $Asignatura = new Asignatura($id);
                         </fieldset>
 
                         <fieldset>
-                            <h2>Paso 4 - Metodolog&iacute;a, Regularizaci&oacute;n y Aprobaci&oacute;n Presencial</h2>
+                            <h2>Paso 3 - Metodolog&iacute;a, Regularizaci&oacute;n y Aprobaci&oacute;n Presencial</h2>
                             <div class="form-group">
                                 <label for="textAreaMetodologiaPresencial">Metodolog&iacute;a Presencial</label>
                                 <textarea name="metodologiaPresencial" class="summernote" id="textAreaMetodologiaPresencial" required=""></textarea>
@@ -191,7 +191,7 @@ $Asignatura = new Asignatura($id);
                         </fieldset>
 
                         <fieldset>
-                            <h2>Paso 5 - Metodolog&iacute;a, Regularizaci&oacute;n y Aprobaci&oacute;n SATEP</h2>
+                            <h2>Paso 4 - Metodolog&iacute;a, Regularizaci&oacute;n y Aprobaci&oacute;n SATEP</h2>
 
                             <div class="form-group">
                                 <label for="textAreaMetodologiaSATEP">Metodolog&iacute;a SATEP</label>
@@ -211,7 +211,7 @@ $Asignatura = new Asignatura($id);
                             <input type="button" name="next" class="next btn btn-info" value="Siguiente" />
                         </fieldset>
                         <fieldset>
-                            <h2>Paso 6 - Metodolog&iacute;a y Aprobaci&oacute;n Libre</h2>
+                            <h2>Paso 5 - Metodolog&iacute;a y Aprobaci&oacute;n Libre</h2>
                             <div class="form-group">
                                 <label for="textAreaMetodologiaLibre">Metodolog&iacute;a Libre</label>
                                 <textarea name="metodologiaLibre" class="summernote" id="textAreaMetodologiaLibre" required=""></textarea>

@@ -1,4 +1,5 @@
 <?php
+
 include_once 'BDConexionSistema.Class.php';
 include_once 'Asignatura.Class.php';
 include_once 'Libro.Class.php';
@@ -40,7 +41,6 @@ class Programa {
     private $aprobadoDepto;
     private $fechaCarga;
     private $vigencia;
-  
     private $query;
 
     /**
@@ -48,15 +48,39 @@ class Programa {
      * @var mysqli_result
      */
     private $datos;
-    
-    
+
     function __construct($id = null, $datos = null) {
         //Si vienen datos de formulario (Alta) setea valores de Objeto
         if (isset($datos)) {
             //SETEAR TODOS LOS DATOS
             $this->setId($datos['id']);
-            
-           
+            $this->setAnio($datos['anio']);
+            $this->setAnioCarrera($datos['anioCarrera']);
+            $this->setHorasTeoria($datos['horasTeoria']);
+            $this->setHorasPractica($datos['horasPractica']);
+            $this->setHorasOtros($datos['horasOtros']);
+            $this->setRegimenCursada($datos['regimenCursada']);
+            $this->setObservacionesHoras($datos['observacionesHoras']);
+            $this->setObservacionesCursada($datos['observacionesCursada']);
+            $this->setFundamentacion($datos['fundamentacion']);
+            $this->setObjetivosGenerales($datos['objetivosGenerales']);
+            $this->setOrganizacionContenidos($datos['organizacionContenidos']);
+            $this->setCriteriosEvaluacion($datos['criteriosEvaluacion']);
+            $this->setMetodologiaPresencial($datos['metodologiaPresencial']);
+            $this->setRegularizacionPresencial($datos['regularizacionPresencial']);
+            $this->setAprobacionPresencial($datos['aprobacionPresencial']);
+            $this->setMetodologiaSATEP($datos['metodologiaSATEP']);
+            $this->setRegularizacionSATEP($datos['regularizacionSATEP']);
+            $this->setAprobacionSATEP($datos['aprobacionSATEP']);
+            $this->setMetodologiaLibre($datos['metodologiaLibre']);
+            $this->setAprobacionLibre($datos['aprobacionLibre']);
+            $this->setUbicacion($datos['ubicacion']);
+            $this->setIdAsignatura($datos['idAsignatura']);
+            $this->setAprobadoSa($datos['aprobadoSa']);
+            $this->setAprobadoDepto($datos['aprobadoDepto']);
+            $this->setFechaCarga($datos['fechaCarga']);
+            $this->setVigencia($datos['vigencia']);
+    
         } else {
             //Sino viene un nuevo Objeto, lo recupero (para Modificar)
             if (isset($id)) {
@@ -82,9 +106,7 @@ class Programa {
         unset($this->query);
         unset($this->datos);
     }
-    
 
-    
     function getId() {
         return $this->id;
     }
@@ -125,7 +147,7 @@ class Programa {
         return $this->idAsignatura;
     }
 
-        function getFundamentacion() {
+    function getFundamentacion() {
         return $this->fundamentacion;
     }
 
@@ -177,8 +199,6 @@ class Programa {
         return $this->ubicacion;
     }
 
-  
-
     function setId($id) {
         $this->id = $id;
     }
@@ -219,7 +239,6 @@ class Programa {
         $this->idAsignatura = $idAsignatura;
     }
 
-    
     function setFundamentacion($fundamentacion) {
         $this->fundamentacion = $fundamentacion;
     }
@@ -271,7 +290,7 @@ class Programa {
     function setUbicacion($ubicacion) {
         $this->ubicacion = $ubicacion;
     }
-    
+
     function getAprobadoSa() {
         return $this->aprobadoSa;
     }
@@ -304,40 +323,40 @@ class Programa {
         $this->vigencia = $vigencia;
     }
 
-        
     /*
      * 
      * @return Asignatura
      */
-    function getAsignatura(){
+
+    function getAsignatura() {
         //Consulta para obtener los datos de la asigantura correspondiente al programa
         $this->query = "SELECT asignatura.id FROM ASIGNATURA JOIN PROGRAMA WHERE asignatura.id = programa.idAsignatura AND programa.id = '{$this->id}';";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
         $Asignatura = new Asignatura(null, null);
-       
-        if ($this->datos->num_rows > 0){
+
+        if ($this->datos->num_rows > 0) {
             //echo '<br> hola';
             $result = $this->datos->fetch_assoc();
             $Asignatura = new Asignatura($result['id'], null);
         }
-                
+
         unset($this->query);
         unset($this->datos);
-        
+
         return $Asignatura;
     }
-    
+
     /**
      * 
      * @return Libro[]
      */
-    function getLibrosObligatorios(){
+    function getLibrosObligatorios() {
         $this->query = "SELECT libro.id FROM libro JOIN programa WHERE programa.id = idPrograma AND tipoLibro LIKE 'O' AND idPrograma = {$this->id}";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
-        
+
         $Libros = NULL;
-        
-        if ($this->datos->num_rows > 0){
+
+        if ($this->datos->num_rows > 0) {
             for ($x = 0; $x < $this->datos->num_rows; $x++) {
                 $resultado = $this->datos->fetch_assoc();
                 $Libros[] = new Libro($resultado['id']);
@@ -346,21 +365,21 @@ class Programa {
 
         unset($this->query);
         unset($this->datos);
-        
+
         return $Libros;
     }
-    
+
     /**
      * 
      * @return Libro[]
      */
-    function getLibrosComplementarios(){
+    function getLibrosComplementarios() {
         $this->query = "SELECT libro.id FROM libro JOIN programa WHERE programa.id = idPrograma AND tipoLibro LIKE 'C' AND idPrograma = {$this->id}";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
-        
+
         $Libros = NULL;
-        
-        if ($this->datos->num_rows > 0){
+
+        if ($this->datos->num_rows > 0) {
             for ($x = 0; $x < $this->datos->num_rows; $x++) {
                 $resultado = $this->datos->fetch_assoc();
                 $Libros[] = new Libro($resultado['id']);
@@ -369,21 +388,21 @@ class Programa {
 
         unset($this->query);
         unset($this->datos);
-        
+
         return $Libros;
     }
-    
+
     /**
      * 
      * @return Revista[]
      */
-    function getRevistas(){
+    function getRevistas() {
         $this->query = "SELECT revista.id FROM revista JOIN programa WHERE programa.id = idPrograma AND idPrograma = {$this->id}";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
-        
+
         $Revistas = NULL;
-        
-        if ($this->datos->num_rows > 0){
+
+        if ($this->datos->num_rows > 0) {
             for ($x = 0; $x < $this->datos->num_rows; $x++) {
                 $resultado = $this->datos->fetch_assoc();
                 $Revistas[] = new Revista($resultado['id']);
@@ -392,21 +411,21 @@ class Programa {
 
         unset($this->query);
         unset($this->datos);
-        
+
         return $Revistas;
     }
-    
+
     /**
      * 
      * @return Recurso[]
      */
-    function getRecursos(){
+    function getRecursos() {
         $this->query = "SELECT recurso.id FROM recurso JOIN programa WHERE programa.id = idPrograma AND idPrograma = {$this->id}";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
-        
+
         $Recursos = NULL;
-        
-        if ($this->datos->num_rows > 0){
+
+        if ($this->datos->num_rows > 0) {
             for ($x = 0; $x < $this->datos->num_rows; $x++) {
                 $resultado = $this->datos->fetch_assoc();
                 $Recursos[] = new Recurso($resultado['id']);
@@ -415,21 +434,21 @@ class Programa {
 
         unset($this->query);
         unset($this->datos);
-        
+
         return $Recursos;
     }
-    
+
     /**
      * 
      * @return OtroMaterial[]
      */
-    function getOtroMateriales(){
+    function getOtroMateriales() {
         $this->query = "SELECT otro_material.id FROM otro_material JOIN programa WHERE programa.id = idPrograma AND idPrograma = {$this->id}";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
-        
+
         $OtroMateriales = NULL;
-        
-        if ($this->datos->num_rows > 0){
+
+        if ($this->datos->num_rows > 0) {
             for ($x = 0; $x < $this->datos->num_rows; $x++) {
                 $resultado = $this->datos->fetch_assoc();
                 $OtroMateriales[] = new OtroMaterial($resultado['id']);
@@ -438,8 +457,8 @@ class Programa {
 
         unset($this->query);
         unset($this->datos);
-        
+
         return $OtroMateriales;
     }
-    
+
 }
