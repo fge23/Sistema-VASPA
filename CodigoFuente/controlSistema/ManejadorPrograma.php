@@ -1,4 +1,5 @@
 <?php
+
 include_once 'C:/xampp/htdocs/vaspa/CodigoFuente/modeloSistema/BDConexionSistema.Class.php';
 include_once 'C:/xampp/htdocs/vaspa/CodigoFuente/modeloSistema/Programa.Class.php';
 
@@ -133,33 +134,15 @@ class ManejadorPrograma {
      * @return Programa
      */
     function getUltimoPrograma($anioActual, $idAsignatura) {
-        //echo "SERVER".$_SERVER['DOCUMENT_ROOT'];
-        //echo getcwd();
-        $id = 0;
-        // $Programa = new Programa();
         $this->query = "SELECT id, anio "
                 . "FROM PROGRAMA "
-               // . "WHERE anio < 2019 AND idAsignatura LIKE '1668' "
+                . "WHERE anio < {$anioActual} AND idAsignatura LIKE '{$idAsignatura}' "
                 . "ORDER BY anio DESC "
                 . "LIMIT 1";
 
-        try {
-            echo "antessss";
-            $this->datos = BDConexionSistema::getInstancia()->query($this->query);
-            var_dump($this->datos);
-            echo "despuess";
-        } catch (Exception $e) {
-            echo "a";
-            $e->getMessage();
-        }
-        /*
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
         $this->datos = $this->datos->fetch_assoc();
-        $id = datos['id'];
-        echo "despues";
-
-        return $id;
-         */
-         
+        return $this->datos['id'];
     }
 
 }

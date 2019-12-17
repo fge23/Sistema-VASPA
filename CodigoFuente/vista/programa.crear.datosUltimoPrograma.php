@@ -1,9 +1,18 @@
 <?php
 include_once '../lib/ControlAcceso.Class.php';
 include_once '../modeloSistema/Asignatura.Class.php';
+include_once '../controlSistema/ManejadorPrograma.php';
 
+$anioActual = date("Y");
 $idAsignatura = $_GET["id"];
 $Asignatura = new Asignatura($idAsignatura);
+$ManejadorPrograma = new ManejadorPrograma();
+$idProgramaAnterior = $ManejadorPrograma->getUltimoPrograma($anioActual, $idAsignatura);
+if (!isset($idProgramaAnterior)) {
+    echo '<script language="javascript">alert("No hay Programa anterior");</script>';
+}
+
+$Programa = new Programa($idProgramaAnterior);
 ?>
 <!DOCTYPE html>
 <html>
@@ -47,33 +56,79 @@ $Asignatura = new Asignatura($idAsignatura);
                     <form id="regiration_form" novalidate action="programa.crear.procesar.php"  method="post">
                         <fieldset>
                             <h2>Paso 1 - Datos B&aacute;sicos de la Asignatura</h2> 
-                            <a href="programa.crear.datosUltimoPrograma.php?id=<?= $Asignatura->getId(); ?>"><input type="button"  class="btn btn-outline-primary" value="Cargar Datos de &Uacute;ltimo Programa" onclick="cargarDatosUltimoPrograma()"/></a>
-                            TODO: Implementar método que cargue datos del último prograa
                             <hr>
                             <div class="form-group">
                                 <div class="form-row">
                                     <div class="col-md-3 col-lg-4">
                                         <label for="inputAnio">A&ntilde;o del Programa</label>
-                                        <input type="number" name="anio" class="form-control" id="inputAnio" required="" value="<?= date("Y"); ?>">
+                                        <input type="number" name="anio" class="form-control" id="inputAnio" required="" value="<?= $anioActual; ?>">
                                     </div>
 
                                     <div class="col-md-3 col-lg-4">
                                         <label for="inputAnioCarrera">A&ntilde;o de la Carrera</label>
                                         <select name="anioCarrera" class="form-control" id="inputAnioCarrera">
-                                            <option value="1">1er A&ntilde;o</option>
-                                            <option value="2">2do A&ntilde;o</option>
-                                            <option value="3">3er A&ntilde;o</option>
-                                            <option value="4">4to A&ntilde;o</option>
-                                            <option value="5">5to A&ntilde;o</option>
+                                            <option   
+                                            <?php
+                                            if ($Programa->getAnioCarrera() == 1) {
+                                                echo "selected";
+                                            }
+                                            ?>
+                                                value="1">1er A&ntilde;o</option>
+                                            <option 
+                                            <?php
+                                            if ($Programa->getAnioCarrera() == 2) {
+                                                echo "selected";
+                                            }
+                                            ?>  
+                                                value="2">2do A&ntilde;o</option>
+                                            <option
+                                            <?php
+                                            if ($Programa->getAnioCarrera() == 3) {
+                                                echo "selected";
+                                            }
+                                            ?>  
+                                                value="3">3er A&ntilde;o</option>
+                                            <option 
+                                            <?php
+                                            if ($Programa->getAnioCarrera() == 4) {
+                                                echo "selected";
+                                            }
+                                            ?>  
+                                                value="4">4to A&ntilde;o</option>
+                                            <option 
+                                            <?php
+                                            if ($Programa->getAnioCarrera() == 5) {
+                                                echo "selected";
+                                            }
+                                            ?>   
+                                                value="5">5to A&ntilde;o</option>
                                         </select>
                                     </div>
 
                                     <div class="col-md-3 col-lg-4">
                                         <label for="inputVigencia">Vigencia</label>
                                         <select name="vigencia" class="form-control" id="inputVigencia">
-                                            <option value="1">Solo este año</option>
-                                            <option value="2">2 a&ntilde;os</option>
-                                            <option value="3">3 a&ntilde;os</option>
+                                            <option 
+                                            <?php
+                                            if ($Programa->getVigencia() == 1) {
+                                                echo "selected";
+                                            }
+                                            ?>  
+                                                value="1">Solo este año</option>
+                                            <option 
+                                            <?php
+                                            if ($Programa->getVigencia() == 2) {
+                                                echo "selected";
+                                            }
+                                            ?>  
+                                                value="2">2 a&ntilde;os</option>
+                                            <option 
+                                            <?php
+                                            if ($Programa->getVigencia() == 3) {
+                                                echo "selected";
+                                            }
+                                            ?>  
+                                                value="3">3 a&ntilde;os</option>
                                         </select>
                                     </div>
                                 </div>
@@ -83,17 +138,17 @@ $Asignatura = new Asignatura($idAsignatura);
                                 <div class="form-row">
                                     <div class="col-md-3 col-lg-4">
                                         <label for="inputHorasTeoria">Horas semanales de Teor&iacute;a</label>
-                                        <input onkeyup="sumar();"type="time" name="horasTeoria" class="form-control" id="inputHorasTeoria" required="">
+                                        <input onkeyup="sumar();"type="time" name="horasTeoria" class="form-control" id="inputHorasTeoria" required="" value="<?= substr($Programa->getHorasTeoria(), 0, 5); ?>">
                                     </div>
 
                                     <div class="col-md-3 col-lg-4">
                                         <label for="inputHorasPractica">Horas semanales de Pr&aacute;ctica</label>
-                                        <input onkeyup="sumar();" type="time" name="horasPractica" class="form-control" id="inputHorasPractica" required="">
+                                        <input onkeyup="sumar();" type="time" name="horasPractica" class="form-control" id="inputHorasPractica" required="" value="<?= substr($Programa->getHorasPractica(), 0, 5); ?>">
                                     </div>
 
                                     <div class="col-md-3 col-lg-4">
                                         <label for="inputHorasOtros">Otras horas semanales</label><small> - Opcional</small> 
-                                        <input type="time" name="horasOtros" class="form-control" id="inputHorasOtros" required="">
+                                        <input type="time" name="horasOtros" class="form-control" id="inputHorasOtros" required="" value="<?= substr($Programa->getHorasOtros(), 0, 5); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -109,21 +164,40 @@ $Asignatura = new Asignatura($idAsignatura);
                                     <div class="col-md-3 col-lg-4">
                                         <label for="inputRegimen">R&eacute;gimen cursada</label>
                                         <select name="regimenCursada" class="form-control" id="inputRegimen">
-                                            <option value="1">Primer Cuatrimestre</option>
-                                            <option value="2">Segundo Cuatrimestre</option>
-                                            <option value="A">Anual</option>
+
+                                            <option
+                                            <?php
+                                            if ($Programa->getRegimenCursada() == 1) {
+                                                echo "selected";
+                                            }
+                                            ?>  
+                                                value="1">Primer Cuatrimestre</option>
+                                            <option 
+                                              <?php
+                                            if ($Programa->getRegimenCursada() == 2) {
+                                                echo "selected";
+                                            }
+                                            ?> 
+                                                value="2">Segundo Cuatrimestre</option>
+                                            <option 
+                                                      <?php
+                                            if ($Programa->getRegimenCursada() == 'A') {
+                                                echo "selected";
+                                            }
+                                            ?> 
+                                                value="A">Anual</option>
                                             <option value="O">Otro</option>
                                         </select>
                                     </div>
 
                                     <div class="col-md-3 col-lg-4">
                                         <label for="inputObservacionesHoras">Observaciones horas</label><small> - Opcional</small> 
-                                        <input type="text" name="observacionesHoras" class="form-control" id="inputObservacionesHoras">
+                                        <input type="text" name="observacionesHoras" class="form-control" id="inputObservacionesHoras" value="<?= $Programa->getObservacionesHoras(); ?>">
                                     </div>
 
                                     <div class="col-md-3 col-lg-4">
                                         <label for="inputObservacionesCursada">Observaciones cursada</label><small> - Opcional</small> 
-                                        <input type="text" name="observacionesCursada" class="form-control" id="inputObservacionesCursada">
+                                        <input type="text" name="observacionesCursada" class="form-control" id="inputObservacionesCursada" value="<?= $Programa->getObservacionesCursada(); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -143,24 +217,28 @@ $Asignatura = new Asignatura($idAsignatura);
 
                             <div class="form-group">
                                 <label for="textAreaFundamentacion">Fundamentaci&oacute;n</label>
-                                <textarea class="summernote" id="textAreaFundamentacion" name="fundamentacion">   </textarea> 
+                                <textarea class="summernote" id="textAreaFundamentacion" name="fundamentacion"> <?= $Programa->getFundamentacion(); ?>  </textarea> 
                             </div>
 
 
                             <div class="form-group">
                                 <label for="textAreaObjetivosGenerales">Objetivos Generales</label>
-                                <textarea class="summernote" name="objetivosGenerales" required=""></textarea>
+                                <textarea class="summernote" name="objetivosGenerales" required=""><?= $Programa->getObjetivosGenerales(); ?>  </textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="textAreaOrganizacionContenidos">Organizaci&oacute;n de los Contenidos - Programa Anal&iacute;tico</label>
-                                <textarea name="organizacionContenidos" class="summernote" id="textAreaOrganizacionContenidos" required=""></textarea>
+                                <textarea name="organizacionContenidos" class="summernote" id="textAreaOrganizacionContenidos" required="">
+                                    <?= $Programa->getOrganizacionContenidos(); ?>  
+                                </textarea>
                             </div>
 
 
                             <div class="form-group">
                                 <label for="textAreaCriteriosEvaluacion">Criterios de evaluaci&oacute;n</label>
-                                <textarea name="criteriosEvaluacion" class="summernote" id="textAreaCriteriosEvaluacion" required=""></textarea>
+                                <textarea name="criteriosEvaluacion" class="summernote" id="textAreaCriteriosEvaluacion" required="">
+                                    <?= $Programa->getCriteriosEvaluacion(); ?>  
+                                </textarea>
                             </div>
 
                             <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
@@ -171,17 +249,23 @@ $Asignatura = new Asignatura($idAsignatura);
                             <h2>Paso 3 - Metodolog&iacute;a, Regularizaci&oacute;n y Aprobaci&oacute;n Presencial</h2>
                             <div class="form-group">
                                 <label for="textAreaMetodologiaPresencial">Metodolog&iacute;a Presencial</label>
-                                <textarea name="metodologiaPresencial" class="summernote" id="textAreaMetodologiaPresencial" required=""></textarea>
+                                <textarea name="metodologiaPresencial" class="summernote" id="textAreaMetodologiaPresencial" required="">
+                                    <?= $Programa->getMetodologiaPresencial(); ?>  
+                                </textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="textAreaRegularizacionPresencial">Regularizaci&oacute;n Presencial</label>
-                                <textarea name="regularizacionPresencial" class="summernote" id="textAreaRegularizacionPresencial" required=""></textarea>
+                                <textarea name="regularizacionPresencial" class="summernote" id="textAreaRegularizacionPresencial" required=""> 
+                                    <?= $Programa->getRegularizacionPresencial(); ?>  
+                                </textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="textAreaAprobacionPresencial">Aprobaci&oacute;n Presencial</label>
-                                <textarea name="aprobacionPresencial" class="summernote" id="textAreaAprobacionPresencial" required=""></textarea>
+                                <textarea name="aprobacionPresencial" class="summernote" id="textAreaAprobacionPresencial" required="">
+                                    <?= $Programa->getAprobacionPresencial(); ?>  
+                                </textarea>
                             </div>
 
 
@@ -195,17 +279,23 @@ $Asignatura = new Asignatura($idAsignatura);
 
                             <div class="form-group">
                                 <label for="textAreaMetodologiaSATEP">Metodolog&iacute;a SATEP</label>
-                                <textarea name="metodologiaSATEP" class="summernote" id="textAreaMetodologiaSATEP" required=""></textarea>
+                                <textarea name="metodologiaSATEP" class="summernote" id="textAreaMetodologiaSATEP" required="">
+                                    <?= $Programa->getMetodologiaSATEP(); ?>  
+                                </textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="textAreaRegularizacionSATEP">Regularizaci&oacute;n SATEP</label>
-                                <textarea name="regularizacionSATEP" class="summernote" id="textAreaRegularizacionSATEP" required=""></textarea>
+                                <textarea name="regularizacionSATEP" class="summernote" id="textAreaRegularizacionSATEP" required="">
+                                    <?= $Programa->getRegularizacionSATEP(); ?>  
+                                </textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="textAreaAprobacionSATEP">Aprobaci&oacute;n SATEP</label>
-                                <textarea name="aprobacionSATEP" class="summernote" id="textAreaAprobacionSATEP" required=""></textarea>
+                                <textarea name="aprobacionSATEP" class="summernote" id="textAreaAprobacionSATEP" required="">
+                                    <?= $Programa->getAprobacionSATEP(); ?>  
+                                </textarea>
                             </div>
                             <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
                             <input type="button" name="next" class="next btn btn-info" value="Siguiente" />
@@ -214,14 +304,18 @@ $Asignatura = new Asignatura($idAsignatura);
                             <h2>Paso 5 - Metodolog&iacute;a y Aprobaci&oacute;n Libre</h2>
                             <div class="form-group">
                                 <label for="textAreaMetodologiaLibre">Metodolog&iacute;a Libre</label>
-                                <textarea name="metodologiaLibre" class="summernote" id="textAreaMetodologiaLibre" required=""></textarea>
+                                <textarea name="metodologiaLibre" class="summernote" id="textAreaMetodologiaLibre" required="">
+                                    <?= $Programa->getMetodologiaLibre(); ?>  
+                                </textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="textAreaAprobacionLibre">Aprobaci&oacute;n Libre</label>
-                                <textarea name="aprobacionLibre" class="summernote" id="textAreaAprobacionLibre" required=""></textarea>
+                                <textarea name="aprobacionLibre" class="summernote" id="textAreaAprobacionLibre" required="">
+                                    <?= $Programa->getAprobacionLibre(); ?>  
+                                </textarea>
                             </div>
-                            <input type="hidden" name="fechaCarga" value="<?= getdate()['year'].'-'.  getdate()['mon'].'-'.getdate()['mday']; ?>">
+                            <input type="hidden" name="fechaCarga" value="<?= getdate()['year'] . '-' . getdate()['mon'] . '-' . getdate()['mday']; ?>">
                             <input type="hidden" name="idAsignatura" value="<?= $Asignatura->getId(); ?>">
                             <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
                             <input type="submit" name="submit" class="submit btn btn-info" value="Guardar" id="submit_data" />
