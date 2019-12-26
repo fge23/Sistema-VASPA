@@ -117,7 +117,7 @@ class Asignatura {
         $this->query = "SELECT carrera.id, carrera.nombre FROM asignatura JOIN plan_asignatura JOIN plan JOIN carrera WHERE asignatura.id = plan_asignatura.idAsignatura AND plan_asignatura.idPlan = plan.id AND plan.idCarrera = carrera.id AND asignatura.id = '{$this->id}'";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
 
-        //$Carreras[];
+        $Carreras = NULL;
 
         for ($x = 0; $x < $this->datos->num_rows; $x++) {
             $Carreras[] = $this->datos->fetch_object("Carrera");
@@ -126,7 +126,7 @@ class Asignatura {
 
         unset($this->query);
         unset($this->datos);
-
+        //echo $Carreras;
         return $Carreras;
     }
 
@@ -136,6 +136,25 @@ class Asignatura {
      */
     function getProfesoresPractica() {
         $this->query = "SELECT profesor_asignatura.idProfesor FROM profesor_asignatura JOIN asignatura WHERE asignatura.id = profesor_asignatura.idAsignatura AND rol LIKE 'practica' AND asignatura.id = {$this->id}";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        $Profesores = NULL;
+        for ($x = 0; $x < $this->datos->num_rows; $x++) {
+            $resultado = $this->datos->fetch_assoc();
+            $Profesores[] = new Profesor($resultado['idProfesor']);
+        }
+
+        unset($this->query);
+        unset($this->datos);
+
+        return $Profesores;
+    }
+    
+    /**
+     * 
+     * @return Profesor[]
+     */
+    function getProfesoresPracticaSinResponsable() {
+        $this->query = "SELECT profesor_asignatura.idProfesor FROM profesor_asignatura JOIN asignatura WHERE asignatura.id = profesor_asignatura.idAsignatura AND rol LIKE 'practica' AND asignatura.id = {$this->id} AND profesor_asignatura.idProfesor != {$this->idProfesor}";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
         $Profesores = NULL;
         for ($x = 0; $x < $this->datos->num_rows; $x++) {
@@ -167,6 +186,27 @@ class Asignatura {
 
         return $Profesores;
     }
+    
+    /**
+     * 
+     * @return Profesor[]
+     *
+    function getProfesoresTeoriaSinResponsable() {
+        $this->query = "SELECT profesor_asignatura.idProfesor FROM profesor_asignatura JOIN asignatura WHERE asignatura.id = profesor_asignatura.idAsignatura AND rol LIKE 'teoria' AND asignatura.id = {$this->id} AND profesor_asignatura.idProfesor != {$this->idProfesor}";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        $Profesores = NULL;
+        for ($x = 0; $x < $this->datos->num_rows; $x++) {
+            $resultado = $this->datos->fetch_assoc();
+            $Profesores[] = new Profesor($resultado['idProfesor']);
+        }
+
+        unset($this->query);
+        unset($this->datos);
+
+        return $Profesores;
+    }
+     * 
+     */
 
     /**
      * 

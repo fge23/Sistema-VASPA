@@ -43,7 +43,7 @@ class MYPDF extends TCPDF {
     public function Header() {
     	
         $Carreras = $this->asignatura->getCarreras();
-        //var_dump($this->programa);
+        //var_dump($Carreras);
               
         //Concatenamos el html
         $tbl ='';
@@ -62,7 +62,11 @@ class MYPDF extends TCPDF {
                 </table>    
                 <table cellspacing="0" cellpadding="2" border="1">';
                 
-                foreach ($Carreras as $Carrera){
+        if (is_null($Carreras)){
+            throw new Exception('El programa de la asignatura: '.$this->asignatura->getNombre().' - '.$this->asignatura->getId().' <b>no se encuentra asociado a un Plan de Estudio y/o Carrera.</b>');
+        }
+        else {
+            foreach ($Carreras as $Carrera){
                     $tbl .= '<tr>
                                 <td colspan="6"><b>Carrera: '.$Carrera->getNombre().'</b></td>
                                 <td><b>Cod. Carr.</b></td>
@@ -71,7 +75,9 @@ class MYPDF extends TCPDF {
                 }   
                 $tbl .= '</table>';
 
-       $this->writeHTML($tbl, true, false, false, false, '');
+            $this->writeHTML($tbl, true, false, false, false, '');
+        }
+                
     }
     
     public function Footer() {
@@ -116,7 +122,25 @@ class MYPDF extends TCPDF {
         //poner a 65 si se trata de una carrera + 4 por carrera
         //IMPORTANTE HACER UN SWITCH EN DONDE SE TIENE EN CUENTA LAS 23 O 22 CARRERAS OFRECIDAS POR LA UNPA-UARG, y un poco mas porque no ?
         //69 si headermargin es de 5, si es de 10 sumarle 5
-        parent::setTopMargin(74);
+        
+        $topMargin = 64 + (5 * $this->getCantidadCarreras());
+        //74 si es que si la asignatura corresponde a dos carreras
+        //parent::setTopMargin(74);
+        parent::setTopMargin($topMargin);
+    }
+    
+    /*
+     * @ return int
+     */
+    private function getCantidadCarreras() {
+        $Carreras = $this->asignatura->getCarreras();
+        if (is_null($Carreras)){
+            return 0;
+        }
+        else {
+            return count($Carreras);
+        }
+        
     }
     
     private function setearInformacionDocumento(){
@@ -239,25 +263,45 @@ class MYPDF extends TCPDF {
         $ProfesoresPractica = $this->asignatura->getProfesoresPractica();
         $ProfesoresTeoria = $this->asignatura->getProfesoresTeoria();
         $profesorResponsable = new Profesor($this->asignatura->getIdProfesor(), null);
+        
+        $profesoresPracticaSinResponsable = $this->asignatura->getProfesoresPracticaSinResponsable();
+        
+        /* La siguiente variable nos va a servir para ver si el profesor responsable de la asignatura
+         * tambien se encuentra en la practica
+         */
+        $hayResponsablePractica = false;
+        if (!is_null($ProfesoresPractica)){
+            foreach ($ProfesoresPractica as $prof) {
+                if ($prof->getId() == $profesorResponsable->getId()){
+                    $hayResponsablePractica = true;
+                    break;
+                }
+            }
+        }
+        
         $departamento = new Departamento($profesorResponsable->getIdDepartamento(), null);
-
+        
+        // El profesor responsable de la materia se da por entendido que da la teoria de la asignatura
         if ($ProfesoresPractica != NULL && $ProfesoresTeoria == NULL){
-            $ProfesorPractica = $ProfesoresPractica[0];
-            $dpto = new Departamento($ProfesorPractica->getIdDepartamento(), null);
-            $this->html .= '<tr>
+            
+            if ($hayResponsablePractica){
+                // Esto quiere decir que tanto en la primera fila de la tabla Docentes
+                // el profesor responsable aparece tanto en la teoria como en la practica
+                $this->html .= '<tr>
                         <td valign="top" style="width: 3.1%;"><p align="center">R</p></td>
                         <td valign="top" style="width: 28%;">'.$profesorResponsable->getApellido().', '.$profesorResponsable->getNombre().'</td>
                         <td valign="top" style="width: 18.9%;" align="center">'.$departamento->getNombre().' </td>
-                        <td valign="top" style="width: 3.1%;"><p align="center">I</p></td>
-                        <td valign="top" style="width: 28%;">'.$ProfesorPractica->getApellido().', '.$ProfesorPractica->getNombre().'</td>
-                        <td valign="top" style="width: 18.9%;" align="center">'.$dpto->getNombre().'</td>
+                        <td valign="top" style="width: 3.1%;"><p align="center">R</p></td>
+                        <td valign="top" style="width: 28%;">'.$profesorResponsable->getApellido().', '.$profesorResponsable->getNombre().'</td>
+                        <td valign="top" style="width: 18.9%;" align="center">'.$departamento->getNombre().'</td>
                 </tr>';
-            $tamanio = sizeof($ProfesoresPractica);
-            if ($tamanio > 1){
-                for ($i=1; $i<$tamanio; $i++){
-                    $ProfesorPractica = $ProfesoresPractica[$i];
-                    $dpto = new Departamento($ProfesorPractica->getIdDepartamento(), null);
-                    $this->html .= '<tr>
+                
+                //comprobamos si es que hay mas profesores de practica
+                if (!is_null($profesoresPracticaSinResponsable)){
+                    foreach ($profesoresPracticaSinResponsable as $ProfesorPractica) {
+                    //if ($ProfesorPractica->getId() != $profesorResponsable->getId()){
+                        $dpto = new Departamento($ProfesorPractica->getIdDepartamento(), null);
+                        $this->html .= '<tr>
                                 <td valign="top" style="width: 3.1%;"><p align="center"> </p></td>
                                 <td valign="top" style="width: 28%;"></td>
                                 <td valign="top" style="width: 18.9%;" align="center"></td>
@@ -265,10 +309,313 @@ class MYPDF extends TCPDF {
                                 <td valign="top" style="width: 28%;">'.$ProfesorPractica->getApellido().', '.$ProfesorPractica->getNombre().'</td>
                                 <td valign="top" style="width: 18.9%;" align="center">'.$dpto->getNombre().'</td>
                         </tr>';
+                    //}
+                    }
+                }
+                    
+            } else {
+                $ProfesorPractica = $ProfesoresPractica[0];
+                $dpto = new Departamento($ProfesorPractica->getIdDepartamento(), null);
+                $this->html .= '<tr>
+                            <td valign="top" style="width: 3.1%;"><p align="center">R</p></td>
+                            <td valign="top" style="width: 28%;">'.$profesorResponsable->getApellido().', '.$profesorResponsable->getNombre().'</td>
+                            <td valign="top" style="width: 18.9%;" align="center">'.$departamento->getNombre().' </td>
+                            <td valign="top" style="width: 3.1%;"><p align="center">I</p></td>
+                            <td valign="top" style="width: 28%;">'.$ProfesorPractica->getApellido().', '.$ProfesorPractica->getNombre().'</td>
+                            <td valign="top" style="width: 18.9%;" align="center">'.$dpto->getNombre().'</td>
+                    </tr>';
+                $tamanio = sizeof($ProfesoresPractica);
+                if ($tamanio > 1){
+                    for ($i=1; $i<$tamanio; $i++){
+                        $ProfesorPractica = $ProfesoresPractica[$i];
+                        $dpto = new Departamento($ProfesorPractica->getIdDepartamento(), null);
+                        $this->html .= '<tr>
+                                    <td valign="top" style="width: 3.1%;"><p align="center"> </p></td>
+                                    <td valign="top" style="width: 28%;"></td>
+                                    <td valign="top" style="width: 18.9%;" align="center"></td>
+                                    <td valign="top" style="width: 3.1%;"><p align="center">I</p></td>
+                                    <td valign="top" style="width: 28%;">'.$ProfesorPractica->getApellido().', '.$ProfesorPractica->getNombre().'</td>
+                                    <td valign="top" style="width: 18.9%;" align="center">'.$dpto->getNombre().'</td>
+                            </tr>';
+                    }
                 }
             }
+        } elseif (!is_null($ProfesoresTeoria) && !is_null($ProfesoresPractica)) {
+            
+            if ($hayResponsablePractica){
+                // Esto quiere decir que tanto en la primera fila de la tabla Docentes
+                // el profesor responsable aparece tanto en la teoria como en la practica
+                
+                $this->html .= '<tr>
+                        <td valign="top" style="width: 3.1%;"><p align="center">R</p></td>
+                        <td valign="top" style="width: 28%;">'.$profesorResponsable->getApellido().', '.$profesorResponsable->getNombre().'</td>
+                        <td valign="top" style="width: 18.9%;" align="center">'.$departamento->getNombre().' </td>
+                        <td valign="top" style="width: 3.1%;"><p align="center">R</p></td>
+                        <td valign="top" style="width: 28%;">'.$profesorResponsable->getApellido().', '.$profesorResponsable->getNombre().'</td>
+                        <td valign="top" style="width: 18.9%;" align="center">'.$departamento->getNombre().'</td>
+                    </tr>';
+                
+                $cantidadProfTeoria = count($ProfesoresTeoria);
+                
+                if (!is_null($profesoresPracticaSinResponsable)){
+                    $cantidadProfPracticaSinResponsable = count($profesoresPracticaSinResponsable);
+                    
+                    if ($cantidadProfTeoria == $cantidadProfPracticaSinResponsable){
+                    
+                        for ($i = 0; $i < $cantidadProfPracticaSinResponsable; $i++) {
+                            $ProfesorPractica = $profesoresPracticaSinResponsable[$i];
+                            $ProfesorTeoria = $ProfesoresTeoria[$i];
+                            $dptoPractica = new Departamento($ProfesorPractica->getIdDepartamento(), null);
+                            $dptoTeoria = new Departamento($ProfesorTeoria->getIdDepartamento(), null);
+                            $this->html .= '<tr>
+                                        <td valign="top" style="width: 3.1%;"><p align="center">I</p></td>
+                                        <td valign="top" style="width: 28%;">'.$ProfesorTeoria->getApellido().', '.$ProfesorTeoria->getNombre().'</td>
+                                        <td valign="top" style="width: 18.9%;" align="center">'.$dptoTeoria->getNombre().'</td>
+                                        <td valign="top" style="width: 3.1%;"><p align="center">I</p></td>
+                                        <td valign="top" style="width: 28%;">'.$ProfesorPractica->getApellido().', '.$ProfesorPractica->getNombre().'</td>
+                                        <td valign="top" style="width: 18.9%;" align="center">'.$dptoPractica->getNombre().'</td>
+                                </tr>';
+                        }
+                    
+                    } elseif ($cantidadProfTeoria > $cantidadProfPracticaSinResponsable) {
+                        
+                        for ($i=0; $i<$cantidadProfPracticaSinResponsable; $i++){
+                            $ProfesorPractica = $profesoresPracticaSinResponsable[$i];
+                            $ProfesorTeoria = $ProfesoresTeoria[$i];
+                            $dptoPractica = new Departamento($ProfesorPractica->getIdDepartamento(), null);
+                            $dptoTeoria = new Departamento($ProfesorTeoria->getIdDepartamento(), null);
+                            $this->html .= '<tr>
+                                        <td valign="top" style="width: 3.1%;"><p align="center">I</p></td>
+                                        <td valign="top" style="width: 28%;">'.$ProfesorTeoria->getApellido().', '.$ProfesorTeoria->getNombre().'</td>
+                                        <td valign="top" style="width: 18.9%;" align="center">'.$dptoTeoria->getNombre().'</td>
+                                        <td valign="top" style="width: 3.1%;"><p align="center">I</p></td>
+                                        <td valign="top" style="width: 28%;">'.$ProfesorPractica->getApellido().', '.$ProfesorPractica->getNombre().'</td>
+                                        <td valign="top" style="width: 18.9%;" align="center">'.$dptoPractica->getNombre().'</td>
+                                </tr>';
+                        }
+                        
+                        for ($j=$i; $j<$cantidadProfTeoria; $j++){
+                            $ProfesorTeoria = $ProfesoresTeoria[$j];
+                            $dptoTeoria = new Departamento($ProfesorTeoria->getIdDepartamento(), null);
+                            $this->html .= '<tr>
+                                        <td valign="top" style="width: 3.1%;"><p align="center">I</p></td>
+                                        <td valign="top" style="width: 28%;">'.$ProfesorTeoria->getApellido().', '.$ProfesorTeoria->getNombre().'</td>
+                                        <td valign="top" style="width: 18.9%;" align="center">'.$dptoTeoria->getNombre().'</td>
+                                        <td valign="top" style="width: 3.1%;"><p align="center"></p></td>
+                                        <td valign="top" style="width: 28%;"></td>
+                                        <td valign="top" style="width: 18.9%;" align="center"></td>
+                                </tr>';
+                        }
+                        
+                    } else {
+                        
+                        for ($i=0; $i<$cantidadProfTeoria; $i++){
+                            $ProfesorPractica = $profesoresPracticaSinResponsable[$i];
+                            $ProfesorTeoria = $ProfesoresTeoria[$i];
+                            $dptoPractica = new Departamento($ProfesorPractica->getIdDepartamento(), null);
+                            $dptoTeoria = new Departamento($ProfesorTeoria->getIdDepartamento(), null);
+                            $this->html .= '<tr>
+                                        <td valign="top" style="width: 3.1%;"><p align="center">I</p></td>
+                                        <td valign="top" style="width: 28%;">'.$ProfesorTeoria->getApellido().', '.$ProfesorTeoria->getNombre().'</td>
+                                        <td valign="top" style="width: 18.9%;" align="center">'.$dptoTeoria->getNombre().'</td>
+                                        <td valign="top" style="width: 3.1%;"><p align="center">I</p></td>
+                                        <td valign="top" style="width: 28%;">'.$ProfesorPractica->getApellido().', '.$ProfesorPractica->getNombre().'</td>
+                                        <td valign="top" style="width: 18.9%;" align="center">'.$dptoPractica->getNombre().'</td>
+                                </tr>';
+                        }
+                        
+                        for ($j=$i; $j<$cantidadProfPracticaSinResponsable; $j++){
+                            $ProfesorPractica = $profesoresPracticaSinResponsable[$j];
+                            $dptoPractica = new Departamento($ProfesorPractica->getIdDepartamento(), null);
+                            $this->html .= '<tr>
+                                        <td valign="top" style="width: 3.1%;"><p align="center"></p></td>
+                                        <td valign="top" style="width: 28%;"></td>
+                                        <td valign="top" style="width: 18.9%;" align="center"></td>
+                                        <td valign="top" style="width: 3.1%;"><p align="center">I</p></td>
+                                        <td valign="top" style="width: 28%;">'.$ProfesorPractica->getApellido().', '.$ProfesorPractica->getNombre().'</td>
+                                        <td valign="top" style="width: 18.9%;" align="center">'.$dptoPractica->getNombre().'</td>
+                                </tr>';
+                        }
+                        
+                    }
+                     
+                } else {
+                    
+                    for ($i=0; $i<$cantidadProfTeoria; $i++){
+                            $ProfesorTeoria = $ProfesoresTeoria[$i];
+                            $dptoTeoria = new Departamento($ProfesorTeoria->getIdDepartamento(), null);
+                            $this->html .= '<tr>
+                                        <td valign="top" style="width: 3.1%;"><p align="center">I</p></td>
+                                        <td valign="top" style="width: 28%;">'.$ProfesorTeoria->getApellido().', '.$ProfesorTeoria->getNombre().'</td>
+                                        <td valign="top" style="width: 18.9%;" align="center">'.$dptoTeoria->getNombre().'</td>
+                                        <td valign="top" style="width: 3.1%;"><p align="center"></p></td>
+                                        <td valign="top" style="width: 28%;"></td>
+                                        <td valign="top" style="width: 18.9%;" align="center"></td>
+                                </tr>';
+                    }
+                    
+                }
+            } else {
+                
+                $ProfesorPractica = $ProfesoresPractica[0];
+                $dptoPractica = new Departamento($ProfesorPractica->getIdDepartamento(), null);
+                
+                $this->html .= '<tr>
+                        <td valign="top" style="width: 3.1%;"><p align="center">R</p></td>
+                        <td valign="top" style="width: 28%;">'.$profesorResponsable->getApellido().', '.$profesorResponsable->getNombre().'</td>
+                        <td valign="top" style="width: 18.9%;" align="center">'.$departamento->getNombre().' </td>
+                        <td valign="top" style="width: 3.1%;"><p align="center">I</p></td>
+                        <td valign="top" style="width: 28%;">'.$ProfesorPractica->getApellido().', '.$ProfesorPractica->getNombre().'</td>
+                        <td valign="top" style="width: 18.9%;" align="center">'.$dptoPractica->getNombre().'</td>
+                    </tr>';
+                
+                
+                $cantidadProfTeoria = count($ProfesoresTeoria);
+                $cantidadProfPractica = count($ProfesoresPractica) - 1;
+                
+                if ($cantidadProfPractica > 0){
+                    
+                    if ($cantidadProfTeoria == $cantidadProfPractica){
+                    
+                        for ($i = 0; $i < $cantidadProfPractica; $i++) {
+                            $ProfesorPractica = $ProfesoresPractica[$i+1];
+                            $ProfesorTeoria = $ProfesoresTeoria[$i];
+                            $dptoPractica = new Departamento($ProfesorPractica->getIdDepartamento(), null);
+                            $dptoTeoria = new Departamento($ProfesorTeoria->getIdDepartamento(), null);
+                            $this->html .= '<tr>
+                                        <td valign="top" style="width: 3.1%;"><p align="center">I</p></td>
+                                        <td valign="top" style="width: 28%;">'.$ProfesorTeoria->getApellido().', '.$ProfesorTeoria->getNombre().'</td>
+                                        <td valign="top" style="width: 18.9%;" align="center">'.$dptoTeoria->getNombre().'</td>
+                                        <td valign="top" style="width: 3.1%;"><p align="center">I</p></td>
+                                        <td valign="top" style="width: 28%;">'.$ProfesorPractica->getApellido().', '.$ProfesorPractica->getNombre().'</td>
+                                        <td valign="top" style="width: 18.9%;" align="center">'.$dptoPractica->getNombre().'</td>
+                                </tr>';
+                        }
+                    
+                    } elseif ($cantidadProfTeoria > $cantidadProfPractica) {
+                        
+                        for ($i=0; $i<$cantidadProfPractica; $i++){
+                            $ProfesorPractica = $ProfesoresPractica[$i+1];
+                            $ProfesorTeoria = $ProfesoresTeoria[$i];
+                            $dptoPractica = new Departamento($ProfesorPractica->getIdDepartamento(), null);
+                            $dptoTeoria = new Departamento($ProfesorTeoria->getIdDepartamento(), null);
+                            $this->html .= '<tr>
+                                        <td valign="top" style="width: 3.1%;"><p align="center">I</p></td>
+                                        <td valign="top" style="width: 28%;">'.$ProfesorTeoria->getApellido().', '.$ProfesorTeoria->getNombre().'</td>
+                                        <td valign="top" style="width: 18.9%;" align="center">'.$dptoTeoria->getNombre().'</td>
+                                        <td valign="top" style="width: 3.1%;"><p align="center">I</p></td>
+                                        <td valign="top" style="width: 28%;">'.$ProfesorPractica->getApellido().', '.$ProfesorPractica->getNombre().'</td>
+                                        <td valign="top" style="width: 18.9%;" align="center">'.$dptoPractica->getNombre().'</td>
+                                </tr>';
+                        }
+                        
+                        for ($j=$i; $j<$cantidadProfTeoria; $j++){
+                            $ProfesorTeoria = $ProfesoresTeoria[$j];
+                            $dptoTeoria = new Departamento($ProfesorTeoria->getIdDepartamento(), null);
+                            $this->html .= '<tr>
+                                        <td valign="top" style="width: 3.1%;"><p align="center">I</p></td>
+                                        <td valign="top" style="width: 28%;">'.$ProfesorTeoria->getApellido().', '.$ProfesorTeoria->getNombre().'</td>
+                                        <td valign="top" style="width: 18.9%;" align="center">'.$dptoTeoria->getNombre().'</td>
+                                        <td valign="top" style="width: 3.1%;"><p align="center"></p></td>
+                                        <td valign="top" style="width: 28%;"></td>
+                                        <td valign="top" style="width: 18.9%;" align="center"></td>
+                                </tr>';
+                        }
+                        
+                    } else {
+                        
+                        for ($i=0; $i<$cantidadProfTeoria; $i++){
+                            $ProfesorPractica = $ProfesoresPractica[$i+1];
+                            $ProfesorTeoria = $ProfesoresTeoria[$i];
+                            $dptoPractica = new Departamento($ProfesorPractica->getIdDepartamento(), null);
+                            $dptoTeoria = new Departamento($ProfesorTeoria->getIdDepartamento(), null);
+                            $this->html .= '<tr>
+                                        <td valign="top" style="width: 3.1%;"><p align="center">I</p></td>
+                                        <td valign="top" style="width: 28%;">'.$ProfesorTeoria->getApellido().', '.$ProfesorTeoria->getNombre().'</td>
+                                        <td valign="top" style="width: 18.9%;" align="center">'.$dptoTeoria->getNombre().'</td>
+                                        <td valign="top" style="width: 3.1%;"><p align="center">I</p></td>
+                                        <td valign="top" style="width: 28%;">'.$ProfesorPractica->getApellido().', '.$ProfesorPractica->getNombre().'</td>
+                                        <td valign="top" style="width: 18.9%;" align="center">'.$dptoPractica->getNombre().'</td>
+                                </tr>';
+                        }
+                        
+                        for ($j=$i; $j<$cantidadProfPractica; $j++){
+                            $ProfesorPractica = $ProfesoresPractica[$j+1];
+                            $dptoPractica = new Departamento($ProfesorPractica->getIdDepartamento(), null);
+                            $this->html .= '<tr>
+                                        <td valign="top" style="width: 3.1%;"><p align="center"></p></td>
+                                        <td valign="top" style="width: 28%;"></td>
+                                        <td valign="top" style="width: 18.9%;" align="center"></td>
+                                        <td valign="top" style="width: 3.1%;"><p align="center">I</p></td>
+                                        <td valign="top" style="width: 28%;">'.$ProfesorPractica->getApellido().', '.$ProfesorPractica->getNombre().'</td>
+                                        <td valign="top" style="width: 18.9%;" align="center">'.$dptoPractica->getNombre().'</td>
+                                </tr>';
+                        }
+                        
+                    }
+                     
+                } else {
+                    
+                    for ($i=0; $i<$cantidadProfTeoria; $i++){
+                            $ProfesorTeoria = $ProfesoresTeoria[$i];
+                            $dptoTeoria = new Departamento($ProfesorTeoria->getIdDepartamento(), null);
+                            $this->html .= '<tr>
+                                        <td valign="top" style="width: 3.1%;"><p align="center">I</p></td>
+                                        <td valign="top" style="width: 28%;">'.$ProfesorTeoria->getApellido().', '.$ProfesorTeoria->getNombre().'</td>
+                                        <td valign="top" style="width: 18.9%;" align="center">'.$dptoTeoria->getNombre().'</td>
+                                        <td valign="top" style="width: 3.1%;"><p align="center"></p></td>
+                                        <td valign="top" style="width: 28%;"></td>
+                                        <td valign="top" style="width: 18.9%;" align="center"></td>
+                                </tr>';
+                    }
+                    
+                }
+                
+                
+            }
+        } elseif (!is_null($ProfesoresTeoria) && is_null($ProfesoresPractica)) {
+            
+            $this->html .= '<tr>
+                        <td valign="top" style="width: 3.1%;"><p align="center">R</p></td>
+                        <td valign="top" style="width: 28%;">'.$profesorResponsable->getApellido().', '.$profesorResponsable->getNombre().'</td>
+                        <td valign="top" style="width: 18.9%;" align="center">'.$departamento->getNombre().'</td>
+                        <td valign="top" style="width: 3.1%;"><p align="center"></p></td>
+                        <td valign="top" style="width: 28%;"></td>
+                        <td valign="top" style="width: 18.9%;" align="center"></td>
+                    </tr>';
+                
+                
+            $cantidadProfTeoria = count($ProfesoresTeoria);
+            
+            for ($i = 0; $i < $cantidadProfTeoria; $i++) {
+                $ProfesorTeoria = $ProfesoresTeoria[$i];
+                $dptoTeoria = new Departamento($ProfesorTeoria->getIdDepartamento(), null);
+                $this->html .= '<tr>
+                                        <td valign="top" style="width: 3.1%;"><p align="center">I</p></td>
+                                        <td valign="top" style="width: 28%;">' . $ProfesorTeoria->getApellido() . ', ' . $ProfesorTeoria->getNombre() . '</td>
+                                        <td valign="top" style="width: 18.9%;" align="center">' . $dptoTeoria->getNombre() . '</td>
+                                        <td valign="top" style="width: 3.1%;"><p align="center"></p></td>
+                                        <td valign="top" style="width: 28%;"></td>
+                                        <td valign="top" style="width: 18.9%;" align="center"></td>
+                                </tr>';
+            }
+            
+        } else {
+            
+            $this->html .= '<tr>
+                        <td valign="top" style="width: 3.1%;"><p align="center">R</p></td>
+                        <td valign="top" style="width: 28%;">'.$profesorResponsable->getApellido().', '.$profesorResponsable->getNombre().'</td>
+                        <td valign="top" style="width: 18.9%;" align="center">'.$departamento->getNombre().'</td>
+                        <td valign="top" style="width: 3.1%;"><p align="center"></p></td>
+                        <td valign="top" style="width: 28%;"></td>
+                        <td valign="top" style="width: 18.9%;" align="center"></td>
+                    </tr>';
+            
         }
-
+        
+        /*
+         * Nota falta los casos en donde tanto los profes de teoria como de practica son nulos
+        */
         
     }   
     
