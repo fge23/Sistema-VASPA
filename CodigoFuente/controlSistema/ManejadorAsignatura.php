@@ -59,8 +59,8 @@ class ManejadorAsignatura {
         if ($this->validaEspaciosEnBlanco($Asignatura->getNombre())) {
             if ($this->chequearInexistencia($Asignatura->getId())) {
                 $this->query = "INSERT INTO ASIGNATURA "
-                        . "VALUES ('{$Asignatura->getId()}', '{$Asignatura->getNombre()}', {$Asignatura->getIdDepartamento()} , "
-                        . "'{$Asignatura->getContenidosMinimos()}', {$Asignatura->getIdProfesor()} )";
+                        . "VALUES ('{$Asignatura->getId()}', '{$Asignatura->getNombre()}', '{$Asignatura->getIdDepartamento()}' , "
+                        . "'{$Asignatura->getContenidosMinimos()}', '{$Asignatura->getIdProfesor()}', '{$Asignatura->getHorasSemanales()}' )";
                 $consulta = BDConexionSistema::getInstancia()->query($this->query);
                 if ($consulta) {
                     return true;
@@ -94,18 +94,20 @@ class ManejadorAsignatura {
             if ($Asignatura->getId() == $id_) {
                 $this->query = "UPDATE ASIGNATURA "
                         . "SET nombre = '{$Asignatura->getNombre()}', "
-                        . "idDepartamento = {$Asignatura->getIdDepartamento()} , "
+                        . "idDepartamento = '{$Asignatura->getIdDepartamento()}' , "
                         . "contenidosMinimos = '{$Asignatura->getContenidosMinimos()}' , "
-                        . "idProfesor = {$Asignatura->getIdProfesor()} "
+                        . "idProfesor = '{$Asignatura->getIdProfesor()}', "
+                        . "horasSemanales = '{$Asignatura->getHorasSemanales()}'"
                         . "WHERE id = '{$id_}'";
             } else {
                 if ($this->chequearInexistencia($Asignatura->getId())) {
                     $this->query = "UPDATE ASIGNATURA "
                             . "SET id = '{$Asignatura->getId()}', "
                             . "nombre = '{$Asignatura->getNombre()}', "
-                            . "idDepartamento = {$Asignatura->getIdDepartamento()} , "
+                            . "idDepartamento = '{$Asignatura->getIdDepartamento()}' , "
                             . "contenidosMinimos = '{$Asignatura->getContenidosMinimos()}' , "
-                            . "idProfesor = {$Asignatura->getIdProfesor()} "
+                            . "idProfesor = '{$Asignatura->getIdProfesor()}', "
+                            . "horasSemanales = '{$Asignatura->getHorasSemanales()}'"
                             . "WHERE id = '{$id_}'";
                 } else {
                     throw new Exception("El c&oacute;digo  " . $Asignatura->getId() . " ya corresponde a una Asignatura en la Base de Datos");

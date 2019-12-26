@@ -89,6 +89,11 @@ $Asignatura = new Asignatura($codAsignatura);
                         </div>
 
                         <div class="form-group">
+                            <label for="inputHora">Horas Semanales</label>
+                            <input type="number" value="<?= $Asignatura->getHorasSemanales(); ?>" name="horasSemanales" class="form-control" id="inputHora" placeholder="Ingrese la cantidad de horas semanales" required="">
+                        </div>
+                        
+                        <div class="form-group">
                             <label for="txtAreaContenidosMinimos">Contenidos M&iacute;nimos</label>
                             <textarea class="form-control" rows="5" name="contenidosMinimos" id="txtAreaContenidosMinimos"><?= $Asignatura->getContenidosMinimos(); ?></textarea>
                         </div>
