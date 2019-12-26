@@ -2,19 +2,26 @@ function addRecord() {
     // recupera valores
     var nuevo_descripcion = $("#nuevo_descripcion").val();
 
-    // se llama a la API addRecord para agregar nuevo registro
-    $.post("../gestionarBibliografia/ajaxOtrosMateriales/addRecord.php", {
-        nuevo_descripcion: nuevo_descripcion,
-    }, function (data, status) {
-        // oculta el Modal
-        $("#add_new_record_modal").modal("hide");
 
-        // actualiza tabla de registros mostrados
-        readRecords();
+    if (nuevo_descripcion == '') {
+        console.log("Campos inválidos");
+        alert("El campo no tiene datos, complételo e intente nuevamente");
 
-        // limpia los datos del Modal
-        $("#nuevo_descripcion").val("");
-    });
+    } else {
+        // se llama a la API addRecord para agregar nuevo registro
+        $.post("../gestionarBibliografia/ajaxOtrosMateriales/addRecord.php", {
+            nuevo_descripcion: nuevo_descripcion,
+        }, function (data, status) {
+            // oculta el Modal
+            $("#add_new_record_modal").modal("hide");
+
+            // actualiza tabla de registros mostrados
+            readRecords();
+
+            // limpia los datos del Modal
+            $("#nuevo_descripcion").val("");
+        });
+    }
 }
 
 function readRecords() {
@@ -67,18 +74,24 @@ function UpdateRecordDetails() {
     console.log(id);
     console.log(descripcion);
 
-    // Actualiza datos
-    $.post("../gestionarBibliografia/ajaxOtrosMateriales/updateRecordDetails.php", {
-        id: id,
-        descripcion: descripcion
-    },
-            function (data, status) {
-                // Oculta Modal
-                $("#update_record_modal").modal("hide");
-                // actualiza tabla de registros mostrados
-                readRecords();
-            }
-    );
+    if (descripcion == '') {
+        console.log("Campos inválidos");
+        alert("El campo no tiene datos, complételo e intente nuevamente");
+
+    } else {
+        // Actualiza datos
+        $.post("../gestionarBibliografia/ajaxOtrosMateriales/updateRecordDetails.php", {
+            id: id,
+            descripcion: descripcion
+        },
+                function (data, status) {
+                    // Oculta Modal
+                    $("#update_record_modal").modal("hide");
+                    // actualiza tabla de registros mostrados
+                    readRecords();
+                }
+        );
+    }
 }
 $(document).ready(function () {
     // actualiza tabla de registros mostrados

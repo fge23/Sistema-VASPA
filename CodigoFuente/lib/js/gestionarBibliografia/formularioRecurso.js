@@ -6,27 +6,34 @@ function addRecord() {
     var nuevo_datos_adicionales = $("#nuevo_datos_adicionales").val();
     var nuevo_disponibilidad = $("#nuevo_disponibilidad").val();
 
-    // se llama a la API addRecord para agregar nuevo registro
-    $.post("../gestionarBibliografia/ajaxRecursos/addRecord.php", {
-        nuevo_apellido: nuevo_apellido,
-        nuevo_nombre: nuevo_nombre,
-        nuevo_titulo: nuevo_titulo,
-        nuevo_datos_adicionales: nuevo_datos_adicionales,
-        nuevo_disponibilidad: nuevo_disponibilidad
-    }, function (data, status) {
-        // oculta el Modal
-        $("#add_new_record_modal").modal("hide");
+    if (nuevo_titulo == '' | nuevo_disponibilidad == '') {
+        console.log("Campos inválidos");
+        alert("Hay datos sin completar en el formulario, completelos e intente nuevamente");
 
-        // actualiza tabla de registros mostrados
-        readRecords();
+    } else {
 
-        // limpia los datos del Modal
-        $("#nuevo_apellido").val("");
-        $("#nuevo_nombre").val("");
-        $("#nuevo_titulo").val("");
-        $("#nuevo_datos_adicionales").val("");
-        $("#nuevo_disponibilidad").val("");
-    });
+        // se llama a la API addRecord para agregar nuevo registro
+        $.post("../gestionarBibliografia/ajaxRecursos/addRecord.php", {
+            nuevo_apellido: nuevo_apellido,
+            nuevo_nombre: nuevo_nombre,
+            nuevo_titulo: nuevo_titulo,
+            nuevo_datos_adicionales: nuevo_datos_adicionales,
+            nuevo_disponibilidad: nuevo_disponibilidad
+        }, function (data, status) {
+            // oculta el Modal
+            $("#add_new_record_modal").modal("hide");
+
+            // actualiza tabla de registros mostrados
+            readRecords();
+
+            // limpia los datos del Modal
+            $("#nuevo_apellido").val("");
+            $("#nuevo_nombre").val("");
+            $("#nuevo_titulo").val("");
+            $("#nuevo_datos_adicionales").val("");
+            $("#nuevo_disponibilidad").val("");
+        });
+    }
 }
 
 
@@ -45,8 +52,8 @@ function DeleteRecord(id) {
             id: id
         },
                 function (data, status) {
-                    console.log("Datos enviados: "+data);
-                        // actualiza tabla de registros mostrados
+                    console.log("Datos enviados: " + data);
+                    // actualiza tabla de registros mostrados
                     readRecords();
                 }
         );
@@ -57,7 +64,7 @@ function ReadRecordDetails(id) {
     // recupera ID
     $("#hidden_id").val(id);
     $.post("../gestionarBibliografia/ajaxRecursos/readRecordDetails.php", {
-        id: id  
+        id: id
     },
             function (data, status) {
                 // Se utiliza un JSON para manejar los datos
@@ -83,28 +90,34 @@ function UpdateRecordDetails() {
     var disponibilidad = $("#disponibilidad").val();
     //se setea el ID obtenido anteriormente 
     var id = $("#hidden_id").val();
-    
+
     console.log(titulo);
     console.log(id);
 
-  // Actualiza datos
-    $.post("../gestionarBibliografia/ajaxRecursos/updateRecordDetails.php", {
-        id: id,
-        titulo: titulo,
-        nombre: nombre,
-        apellido: apellido,
-        datosAdicionales: datosAdicionales,
-        disponibilidad: disponibilidad
-    },
-            function (data, status) {
-                // Oculta Modal
-                $("#update_record_modal").modal("hide");
-                // actualiza tabla de registros mostrados
-                readRecords();
-            }
-    );
+    if (titulo == '' | disponibilidad == '') {
+        console.log("Campos inválidos");
+        alert("Hay datos sin completar en el formulario, completelos e intente nuevamente");
+
+    } else {
+        // Actualiza datos
+        $.post("../gestionarBibliografia/ajaxRecursos/updateRecordDetails.php", {
+            id: id,
+            titulo: titulo,
+            nombre: nombre,
+            apellido: apellido,
+            datosAdicionales: datosAdicionales,
+            disponibilidad: disponibilidad
+        },
+                function (data, status) {
+                    // Oculta Modal
+                    $("#update_record_modal").modal("hide");
+                    // actualiza tabla de registros mostrados
+                    readRecords();
+                }
+        );
+    }
 }
 $(document).ready(function () {
     // actualiza tabla de registros mostrados
-    readRecords(); 
+    readRecords();
 });

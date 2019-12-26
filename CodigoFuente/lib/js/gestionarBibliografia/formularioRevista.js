@@ -12,35 +12,44 @@ function addRecord() {
     var nuevo_otro = $("#nuevo_otro").val();
 
     // se llama a la API addRecord para agregar nuevo registro
-    $.post("../gestionarBibliografia/ajaxRevistas/addRecord.php", {
-        nuevo_apellido: nuevo_apellido,
-        nuevo_nombre: nuevo_nombre,
-        nuevo_tituloArticulo: nuevo_tituloArticulo,
-        nuevo_tituloRevista: nuevo_tituloRevista,
-        nuevo_pagina: nuevo_pagina,
-        nuevo_fecha: nuevo_fecha,
-        nuevo_unidad: nuevo_unidad,
-        nuevo_biblioteca: nuevo_biblioteca,
-        nuevo_siunpa: nuevo_siunpa,
-        nuevo_otro: nuevo_otro
-    }, function (data, status) {
-        // oculta el Modal
-        $("#add_new_record_modal").modal("hide");
+    if (nuevo_tituloArticulo == '' | nuevo_tituloRevista == '' | nuevo_apellido == ''
+            | nuevo_nombre == '') {
+        console.log("Campos inválidos");
+        alert("Hay datos sin completar en el formulario, completelos e intente nuevamente");
 
-        // actualiza tabla de registros mostrados
-        readRecords();
-        // limpia los datos del Modal
-        $("#nuevo_apellido").val("");
-        $("#nuevo_nombre").val("");
-        $("#nuevo_tituloArticulo").val("");
-        $("#nuevo_tituloRevista").val("");
-        $("#nuevo_pagina").val("");
-        $("#nuevo_fecha").val("");
-        $("#nuevo_unidad").val("");
-        $("#nuevo_biblioteca").val("");
-        $("#nuevo_siunpa").val("");
-        $("#nuevo_otro").val("");
-    });
+    } else {
+
+
+        $.post("../gestionarBibliografia/ajaxRevistas/addRecord.php", {
+            nuevo_apellido: nuevo_apellido,
+            nuevo_nombre: nuevo_nombre,
+            nuevo_tituloArticulo: nuevo_tituloArticulo,
+            nuevo_tituloRevista: nuevo_tituloRevista,
+            nuevo_pagina: nuevo_pagina,
+            nuevo_fecha: nuevo_fecha,
+            nuevo_unidad: nuevo_unidad,
+            nuevo_biblioteca: nuevo_biblioteca,
+            nuevo_siunpa: nuevo_siunpa,
+            nuevo_otro: nuevo_otro
+        }, function (data, status) {
+            // oculta el Modal
+            $("#add_new_record_modal").modal("hide");
+
+            // actualiza tabla de registros mostrados
+            readRecords();
+            // limpia los datos del Modal
+            $("#nuevo_apellido").val("");
+            $("#nuevo_nombre").val("");
+            $("#nuevo_tituloArticulo").val("");
+            $("#nuevo_tituloRevista").val("");
+            $("#nuevo_pagina").val("");
+            $("#nuevo_fecha").val("");
+            $("#nuevo_unidad").val("");
+            $("#nuevo_biblioteca").val("");
+            $("#nuevo_siunpa").val("");
+            $("#nuevo_otro").val("");
+        });
+    }
 }
 
 
@@ -111,27 +120,35 @@ function UpdateRecordDetails() {
     var id = $("#hidden_id").val();
 
 
-    // Actualiza datos
-    $.post("../gestionarBibliografia/ajaxRevistas/updateRecordDetails.php", {
-        id: id,
-        apellido: apellido,
-        nombre: nombre,
-        tituloArticulo: tituloArticulo,
-        tituloRevista: tituloRevista,
-        pagina: pagina,
-        fecha: fecha,
-        unidad: unidad,
-        biblioteca: biblioteca,
-        siunpa: siunpa,
-        otro: otro
-    },
-            function (data, status) {
-                // Oculta Modal
-                $("#update_record_modal").modal("hide");
-                // actualiza tabla de registros mostrados
-                readRecords();
-            }
-    );
+    if (tituloArticulo == '' | tituloRevista == '' | apellido == ''
+            | nombre == '') {
+        console.log("Campos inválidos");
+        alert("Hay datos sin completar en el formulario, completelos e intente nuevamente");
+
+    } else {
+
+        // Actualiza datos
+        $.post("../gestionarBibliografia/ajaxRevistas/updateRecordDetails.php", {
+            id: id,
+            apellido: apellido,
+            nombre: nombre,
+            tituloArticulo: tituloArticulo,
+            tituloRevista: tituloRevista,
+            pagina: pagina,
+            fecha: fecha,
+            unidad: unidad,
+            biblioteca: biblioteca,
+            siunpa: siunpa,
+            otro: otro
+        },
+                function (data, status) {
+                    // Oculta Modal
+                    $("#update_record_modal").modal("hide");
+                    // actualiza tabla de registros mostrados
+                    readRecords();
+                }
+        );
+    }
 }
 $(document).ready(function () {
     // actualiza tabla de registros mostrados

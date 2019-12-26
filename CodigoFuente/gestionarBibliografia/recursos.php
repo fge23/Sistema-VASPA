@@ -46,12 +46,12 @@ include_once '../lib/ControlAcceso.Class.php';
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="nuevo_apellido">Apellido</label>
+                            <label for="nuevo_apellido">Apellido/s de Autor/es</label>
                             <input type="text" id="nuevo_apellido" class="form-control"/>
                         </div>
 
                         <div class="form-group">
-                            <label for="nuevo_nombre">Nombre</label>
+                            <label for="nuevo_nombre">Nombre/s de Autor/es</label>
                             <input type="text" id="nuevo_nombre" class="form-control"/>
                         </div>
 
@@ -89,12 +89,12 @@ include_once '../lib/ControlAcceso.Class.php';
                     <div class="modal-body">
 
                         <div class="form-group">
-                            <label for="apellido">Apellido</label>
+                            <label for="apellido">Apellido/s de Autor/es</label>
                             <input type="text" id="apellido" class="form-control"/>
                         </div>
 
                         <div class="form-group">
-                            <label for="nombre">Nombre</label>
+                            <label for="nombre">Nombre/s de Autor/es</label>
                             <input type="text" id="nombre" class="form-control"/>
                         </div>
 

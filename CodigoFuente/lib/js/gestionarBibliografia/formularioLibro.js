@@ -21,61 +21,56 @@ function addRecord() {
         if (ele[i].checked)
             nuevo_tipoBibliografia = ele[i].value;
     }
-    /*
-     var nuevo_apellido = 
-     var nuevo_nombre = 
-     var nuevo_anioEdicion =
-     var nuevo_titulo = 
-     var nuevo_capitulo = 
-     var nuevo_lugarEdicion = 
-     var nuevo_editorial = 
-     var nuevo_unidad = 
 
-     */
-    if (nuevo_referencia == '' | nuevo_unidad == '' | nuevo_apellido == '' | nuevo_nombre == ''
-            | nuevo_titulo == '' | nuevo_capitulo == '' ) {
+    console.log("Bibliografia: " + nuevo_tipoBibliografia)
+
+    if (nuevo_titulo == '' | nuevo_nombre == '' | nuevo_apellido == '' | nuevo_editorial == ''
+            | nuevo_anioEdicion == '') {
         console.log("Campos inválidos");
         alert("Hay datos sin completar en el formulario, completelos e intente nuevamente");
 
     } else {
-        console.log("REF con contenido");
-        // se llama a la API addRecord para agregar nuevo registro
-        $.post("../gestionarBibliografia/ajaxLibros/addRecord.php", {
-            nuevo_apellido: nuevo_apellido,
-            nuevo_nombre: nuevo_nombre,
-            nuevo_referencia: nuevo_referencia,
-            nuevo_anioEdicion: nuevo_anioEdicion,
-            nuevo_titulo: nuevo_titulo,
-            nuevo_capitulo: nuevo_capitulo,
-            nuevo_lugarEdicion: nuevo_lugarEdicion,
-            nuevo_editorial: nuevo_editorial,
-            nuevo_tipoBibliografia: nuevo_tipoBibliografia,
-            nuevo_unidad: nuevo_unidad,
-            nuevo_biblioteca: nuevo_biblioteca,
-            nuevo_siunpa: nuevo_siunpa,
-            nuevo_otro: nuevo_otro
-        }, function (data) {
-            // oculta el Modal
-            $("#add_new_record_modal").modal("hide");
-            // actualiza tabla de registros mostrados
-            readRecords();
-            // limpia los datos del Modal
-            $("#nuevo_apellido").val("");
-            $("#nuevo_nombre").val("");
-            $("#nuevo_referencia").val("");
-            $("#nuevo_anioEdicion").val("");
-            $("#nuevo_titulo").val("");
-            $("#nuevo_capitulo").val("");
-            $("#nuevo_lugarEdicion").val("");
-            $("#nuevo_editorial").val("");
-            $("#nuevo_pagina").val("");
-            $("#nuevo_fecha").val("");
-            $("#nuevo_unidad").val("");
-            $("#nuevo_biblioteca").val("");
-            $("#nuevo_siunpa").val("");
-            $("#nuevo_otro").val("");
-            $("#nuevo_tipoBibliografia").prop("checked", false)
-        });
+        if (typeof nuevo_tipoBibliografia === 'undefined') {
+            alert("Debe elegir si la bibliografía es Obligatoria o Complementaria ");
+        } else {
+            // se llama a la API addRecord para agregar nuevo registro
+            $.post("../gestionarBibliografia/ajaxLibros/addRecord.php", {
+                nuevo_apellido: nuevo_apellido,
+                nuevo_nombre: nuevo_nombre,
+                nuevo_referencia: nuevo_referencia,
+                nuevo_anioEdicion: nuevo_anioEdicion,
+                nuevo_titulo: nuevo_titulo,
+                nuevo_capitulo: nuevo_capitulo,
+                nuevo_lugarEdicion: nuevo_lugarEdicion,
+                nuevo_editorial: nuevo_editorial,
+                nuevo_tipoBibliografia: nuevo_tipoBibliografia,
+                nuevo_unidad: nuevo_unidad,
+                nuevo_biblioteca: nuevo_biblioteca,
+                nuevo_siunpa: nuevo_siunpa,
+                nuevo_otro: nuevo_otro
+            }, function (data) {
+                // oculta el Modal
+                $("#add_new_record_modal").modal("hide");
+                // actualiza tabla de registros mostrados
+                readRecords();
+                // limpia los datos del Modal
+                $("#nuevo_apellido").val("");
+                $("#nuevo_nombre").val("");
+                $("#nuevo_referencia").val("");
+                $("#nuevo_anioEdicion").val("");
+                $("#nuevo_titulo").val("");
+                $("#nuevo_capitulo").val("");
+                $("#nuevo_lugarEdicion").val("");
+                $("#nuevo_editorial").val("");
+                $("#nuevo_pagina").val("");
+                $("#nuevo_fecha").val("");
+                $("#nuevo_unidad").val("");
+                $("#nuevo_biblioteca").val("");
+                $("#nuevo_siunpa").val("");
+                $("#nuevo_otro").val("");
+                $("#nuevo_tipoBibliografia").prop("checked", false)
+            });
+        }
     }
 }
 
@@ -175,32 +170,43 @@ function UpdateRecordDetails() {
     var id = $("#hidden_id").val();
 
 
-    // Actualiza datos
-    $.post("../gestionarBibliografia/ajaxLibros/updateRecordDetails.php", {
-        id: id,
-        apellido: apellido,
-        nombre: nombre,
-        referencia: referencia,
-        anioEdicion: anioEdicion,
-        titulo: titulo,
-        capitulo: capitulo,
-        lugarEdicion: lugarEdicion,
-        editorial: editorial,
-        tipoBibliografia: tipoBibliografia,
-        unidad: unidad,
-        biblioteca: biblioteca,
-        siunpa: siunpa,
-        otro: otro
-    },
-            function (data, status) {
-                // Oculta Modal
-                $("#update_record_modal").modal("hide");
-                // actualiza tabla de registros mostrados
-                readRecords();
-            }
-    );
+    if (titulo == '' | nombre == '' | apellido == '' | editorial == ''
+            | anioEdicion == '') {
+        console.log("Campos inválidos");
+        alert("Hay datos sin completar en el formulario, completelos e intente nuevamente");
+    } else {
+        if (typeof tipoBibliografia === 'undefined') {
+            alert("Debe elegir si la bibliografía es Obligatoria o Complementaria ");
+        } else {
+            // Actualiza datos
+            $.post("../gestionarBibliografia/ajaxLibros/updateRecordDetails.php", {
+                id: id,
+                apellido: apellido,
+                nombre: nombre,
+                referencia: referencia,
+                anioEdicion: anioEdicion,
+                titulo: titulo,
+                capitulo: capitulo,
+                lugarEdicion: lugarEdicion,
+                editorial: editorial,
+                tipoBibliografia: tipoBibliografia,
+                unidad: unidad,
+                biblioteca: biblioteca,
+                siunpa: siunpa,
+                otro: otro
+            },
+                    function (data, status) {
+                        // Oculta Modal
+                        $("#update_record_modal").modal("hide");
+                        // actualiza tabla de registros mostrados
+                        readRecords();
+                    }
+            );
+        }
+    }
 }
 $(document).ready(function () {
     // actualiza tabla de registros mostrados
     readRecords();
-});
+}
+);
