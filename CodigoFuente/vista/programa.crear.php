@@ -48,7 +48,6 @@ $Asignatura = new Asignatura($idAsignatura);
                         <fieldset>
                             <h2>Paso 1 - Datos B&aacute;sicos de la Asignatura</h2> 
                             <a href="programa.crear.datosUltimoPrograma.php?id=<?= $Asignatura->getId(); ?>"><input type="button"  class="btn btn-outline-primary" value="Cargar Datos de &Uacute;ltimo Programa" onclick="cargarDatosUltimoPrograma()"/></a>
-                            TODO: Implementar método que cargue datos del último prograa
                             <hr>
                             <div class="form-group">
                                 <div class="form-row">
@@ -83,17 +82,17 @@ $Asignatura = new Asignatura($idAsignatura);
                                 <div class="form-row">
                                     <div class="col-md-3 col-lg-4">
                                         <label for="inputHorasTeoria">Horas semanales de Teor&iacute;a</label>
-                                        <input onkeyup="sumar();"type="time" name="horasTeoria" class="form-control" id="inputHorasTeoria" required="">
+                                        <input onkeyup="sumar();"type="time" name="horasTeoria" class="form-control" id="inputHorasTeoria" required value="00:00">
                                     </div>
 
                                     <div class="col-md-3 col-lg-4">
                                         <label for="inputHorasPractica">Horas semanales de Pr&aacute;ctica</label>
-                                        <input onkeyup="sumar();" type="time" name="horasPractica" class="form-control" id="inputHorasPractica" required="">
+                                        <input onkeyup="sumar();" type="time" name="horasPractica" class="form-control" id="inputHorasPractica" required value="00:00">
                                     </div>
 
                                     <div class="col-md-3 col-lg-4">
                                         <label for="inputHorasOtros">Otras horas semanales</label><small> - Opcional</small> 
-                                        <input type="time" name="horasOtros" class="form-control" id="inputHorasOtros" required="">
+                                        <input type="time" name="horasOtros" class="form-control" id="inputHorasOtros" required value="00:00">
                                     </div>
                                 </div>
                             </div>
@@ -128,7 +127,7 @@ $Asignatura = new Asignatura($idAsignatura);
                                 </div>
                             </div>
 
-                            <input type="button" name="data[password]" class="next btn btn-info" value="Siguiente" />
+                            <input type="button" name="data[password]" disabled id="btnSiguiente" class="next btn btn-info" value="Siguiente" />
                         </fieldset>
 
                         <fieldset>
@@ -235,7 +234,7 @@ $Asignatura = new Asignatura($idAsignatura);
     </body>
     <script type="text/javascript">
         /**
-         * Suma los valores de los cuadros de texto y valida que las horas semanales coincidan con el plan
+         * Suma los valores de los cuadros de texto y vaida que las horas semanales coincidan con el plan
          */
         function sumar()
         {
@@ -260,8 +259,10 @@ $Asignatura = new Asignatura($idAsignatura);
                 if (<?= $Asignatura->getHorasSemanales() ?> != Math.floor(hour)) {
                     console.log("La cantidad de horas de cursada son DIFERENTES a las de la Asignatura");
                     alert("La cantidad de horas semanales debe ser igual a las definidas en el Plan de la Carrera");
+                    document.getElementById("btnSiguiente").disabled = true;
                 } else {
                     console.log("La cantidad de horas de cursada son IGUALES a las de la Asignatura");
+                    document.getElementById("btnSiguiente").disabled = false;
                 }
             }
         }
@@ -306,29 +307,6 @@ $Asignatura = new Asignatura($idAsignatura);
                 ]
             });
         });
-    </script>
-    <script type="text/javascript">
-        function cargarDatosUltimoPrograma() {
-            console.log("Entró a la funcion cargarDatosUltimoPrograma()");
-            var idAsignatura = '<?= $Asignatura->getId() ?>';
-            var id = 0;
-            console.log("Código de Asignatura " + idAsignatura);
-            jQuery.ajax({
-                type: "POST",
-                url: '../lib/consultaAjax/cargaDatosUltimoPrograma.php',
-                dataType: 'json',
-                data: {arguments: [2019, '1668']},
-                success: function (obj, textstatus) {
-                    if (!('error' in obj)) {
-                        console.log("funcion");
-                        //var datos = obj.result;
-                        //       console.log("ID del programa "+id);
-                    } else {
-                        console.log(obj.error);
-                    }
-                }
-            });
-        }
     </script>
 </html>
 

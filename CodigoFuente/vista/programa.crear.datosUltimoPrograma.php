@@ -202,7 +202,7 @@ $Programa = new Programa($idProgramaAnterior);
                                 </div>
                             </div>
 
-                            <input type="button" name="data[password]" class="next btn btn-info" value="Siguiente" />
+                            <input type="button" name="data[password]" disabled id="btnSiguiente" class="next btn btn-info" value="Siguiente" />
                         </fieldset>
 
                         <fieldset>
@@ -354,8 +354,10 @@ $Programa = new Programa($idProgramaAnterior);
                 if (<?= $Asignatura->getHorasSemanales() ?> != Math.floor(hour)) {
                     console.log("La cantidad de horas de cursada son DIFERENTES a las de la Asignatura");
                     alert("La cantidad de horas semanales debe ser igual a las definidas en el Plan de la Carrera");
+                    document.getElementById("btnSiguiente").disabled = true;
                 } else {
                     console.log("La cantidad de horas de cursada son IGUALES a las de la Asignatura");
+                    document.getElementById("btnSiguiente").disabled = false;
                 }
             }
         }
@@ -400,29 +402,6 @@ $Programa = new Programa($idProgramaAnterior);
                 ]
             });
         });
-    </script>
-    <script type="text/javascript">
-        function cargarDatosUltimoPrograma() {
-            console.log("Entró a la funcion cargarDatosUltimoPrograma()");
-            var idAsignatura = '<?= $Asignatura->getId() ?>';
-            var id = 0;
-            console.log("Código de Asignatura " + idAsignatura);
-            jQuery.ajax({
-                type: "POST",
-                url: '../lib/consultaAjax/cargaDatosUltimoPrograma.php',
-                dataType: 'json',
-                data: {arguments: [2019, '1668']},
-                success: function (obj, textstatus) {
-                    if (!('error' in obj)) {
-                        console.log("funcion");
-                        //var datos = obj.result;
-                        //       console.log("ID del programa "+id);
-                    } else {
-                        console.log(obj.error);
-                    }
-                }
-            });
-        }
     </script>
 </html>
 
