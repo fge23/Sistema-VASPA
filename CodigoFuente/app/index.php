@@ -35,7 +35,8 @@
                         <div class="card-body">
 
                             <h5>Bienvenido</h5>
-                            <p>Estimado usuario: Bienvenido a la aplicaci&oacute;n UARGFlow BS, una aplicaci&oacute;n desarrollada en la UARG - UNPA.</p>
+                            <p>Estimado usuario: Bienvenido al <?php echo Constantes::NOMBRE_SISTEMA; ?>, una aplicaci&oacute;n desarrollada en la UARG - UNPA
+                            para la Gesti&oacute;n de Programas de Asignaturas</p>
 
                             <div class="row">
                                 <div class="col-12">
@@ -63,7 +64,7 @@
             </section>
         </div>
         <footer class="footer">
-            UARGFlow BS 
+            <?php echo Constantes::NOMBRE_SISTEMA; ?> 
             <span class="oi oi-globe"></span> 
             UNPA-UARG
         </footer>
