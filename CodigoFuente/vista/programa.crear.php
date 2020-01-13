@@ -6,6 +6,7 @@ $idAsignatura = $_GET["id"];
 $Asignatura = new Asignatura($idAsignatura);
 ?>
 <!DOCTYPE html>
+<!--Se deben agregar validaciones para evitar que vayan vacios los campos que deberían tener datos-->
 <html>
     <head>
         <meta charset="UTF-8">

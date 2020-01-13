@@ -61,7 +61,7 @@ $Carreras = $ManejadorCarrera->getColeccion();
                </div>
                 
                 <div class="card-footer">
-                        <a href="#">
+                    <a href="../app/index.php">
                             <button type="button" class="btn btn-outline-danger">
                                 <span class="oi oi-x"></span> Cancelar
                             </button>

@@ -19,7 +19,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container navbar-dark bg-dark">
                 <a class="navbar-brand" href="#">
-                    <img src="../lib/img/Logo-UNPA-UARG-azul.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                    <img src="../lib/img/VASPA_isotipo.png" width="40" height="35" class="d-inline-block align-top" alt="">
                     <?php echo Constantes::NOMBRE_SISTEMA; ?> - Login
                 </a>
             </div>
@@ -36,7 +36,7 @@
 
                             <h5>Bienvenido</h5>
                             <p>Estimado usuario: Bienvenido al <?php echo Constantes::NOMBRE_SISTEMA; ?>, una aplicaci&oacute;n desarrollada en la UARG - UNPA
-                            para la Gesti&oacute;n de Programas de Asignaturas</p>
+                            para la Gesti&oacute;n de Programas de Asignaturas.</p>
 
                             <div class="row">
                                 <div class="col-12">
@@ -65,8 +65,8 @@
         </div>
         <footer class="footer">
             <?php echo Constantes::NOMBRE_SISTEMA; ?> 
-            <span class="oi oi-globe"></span> 
-            UNPA-UARG
+            <img src="../lib/img/VASPA_isotipo.png" width="25" height="20"  alt="">
+            UNPA-UARG 
         </footer>
     </body>
 </html>

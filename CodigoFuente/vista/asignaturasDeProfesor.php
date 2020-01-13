@@ -53,6 +53,8 @@ $Asignaturas = $ManejadorAsignatura->getColeccion();
                                             <span class="oi oi-pencil"></span>
                                         </button>
                                     </a>
+                                    <!--if Programa.aprobadoSA == true AND Programa.aprobadoDepto == true 
+                                    and programa.fueradevigencia then habilitar boton GenerarPDF-->
                                     <a title="Generar PDF" href="#">
                                         <button type="button" class="btn btn-outline-info">
                                             <span class="oi oi-document"></span>

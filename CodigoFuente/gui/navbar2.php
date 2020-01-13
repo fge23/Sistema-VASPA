@@ -20,7 +20,6 @@
                     Usuarios
                 </a>
             </li>
-
             <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_ROLES)) { ?>
                 <li class = "nav-item">
                     <a class = "nav-link" href = "../app/roles.php">
@@ -79,7 +78,6 @@
         </ul>
     </div>
 </nav>
-
 
 <div class="alert alert-info alert-dismissible fade show" role="alert">
     Ud. est&aacute; conectad@ como <strong><?= $_SESSION['usuario']->nombre; ?></strong>.

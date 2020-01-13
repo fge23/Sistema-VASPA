@@ -131,10 +131,10 @@ $Carreras = $ManejadorCarrera->getColeccion();
         </div>
     </div>
         
-        <footer class="footer">
-            Sistema VASPA    
-            <span class="oi oi-globe"></span> 
-            UNPA-UARG
+         <footer class="footer">
+            <?php echo Constantes::NOMBRE_SISTEMA; ?> 
+            <img src="../lib/img/VASPA_isotipo.png" width="25" height="20"  alt="">
+             UNPA-UARG
         </footer>
         
         <script type="text/javascript">$('.selectpicker').selectpicker({
