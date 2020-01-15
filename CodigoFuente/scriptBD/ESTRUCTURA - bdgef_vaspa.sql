@@ -109,18 +109,18 @@ CREATE TABLE `fecha` (
 
 CREATE TABLE `libro` (
   `id` int(10) UNSIGNED NOT NULL,
-  `referencia` varchar(20) NOT NULL,
+  `referencia` varchar(20),
   `apellido` varchar(45) NOT NULL,
   `nombre` varchar(45) NOT NULL,
   `anioEdicion` year(4) NOT NULL,
   `titulo` text NOT NULL,
-  `capitulo` varchar(45) NOT NULL,
-  `lugarEdicion` varchar(45) NOT NULL,
+  `capitulo` varchar(45),
+  `lugarEdicion` varchar(45),
   `editorial` varchar(45) NOT NULL,
-  `unidad` varchar(30) NOT NULL,
-  `biblioteca` varchar(4) DEFAULT NULL,
-  `siunpa` varchar(4) DEFAULT NULL,
-  `otro` varchar(20) DEFAULT NULL,
+  `unidad` varchar(30),
+  `biblioteca` varchar(4),
+  `siunpa` varchar(4),
+  `otro` varchar(20),
   `tipoLibro` enum('O','C') NOT NULL,
   `idPrograma` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -298,7 +298,9 @@ CREATE TABLE `programa` (
   `aprobadoSa` tinyint(1) NOT NULL,
   `aprobadoDepto` tinyint(1) NOT NULL,
   `fechaCarga` date NOT NULL,
-  `vigencia` enum('1','2','3') NOT NULL
+  `vigencia` enum('1','2','3') NOT NULL,
+  `comentarioSa` text,
+  `comentarioDepto` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -323,10 +325,10 @@ CREATE TABLE `programa_pdf` (
 
 CREATE TABLE `recurso` (
   `id` int(10) UNSIGNED NOT NULL,
-  `apellido` varchar(45) NOT NULL,
-  `nombre` varchar(45) NOT NULL,
+  `apellido` varchar(45),
+  `nombre` varchar(45),
   `titulo` text NOT NULL,
-  `datosAdicionales` varchar(45) DEFAULT NULL,
+  `datosAdicionales` varchar(45),
   `disponibilidad` varchar(100) NOT NULL,
   `idPrograma` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -357,12 +359,12 @@ CREATE TABLE `revista` (
   `nombre` varchar(45) NOT NULL,
   `tituloArticulo` text NOT NULL,
   `tituloRevista` text NOT NULL,
-  `pagina` varchar(20) DEFAULT NULL,
-  `fecha` date DEFAULT NULL,
-  `unidad` varchar(20) DEFAULT NULL,
-  `biblioteca` varchar(4) DEFAULT NULL,
-  `siunpa` varchar(4) DEFAULT NULL,
-  `otro` varchar(20) DEFAULT NULL,
+  `pagina` varchar(20),
+  `fecha` date,
+  `unidad` varchar(20),
+  `biblioteca` varchar(4),
+  `siunpa` varchar(4),
+  `otro` varchar(20),
   `idPrograma` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
