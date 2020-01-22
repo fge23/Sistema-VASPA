@@ -259,10 +259,10 @@ $Asignatura = new Asignatura($idAsignatura);
                 document.getElementsByClassName('cantidadTotalHoras')[0].textContent = "La suma total de horas semanales es: " + Math.floor(hour);
                 if (<?= $Asignatura->getHorasSemanales() ?> != Math.floor(hour)) {
                     console.log("La cantidad de horas de cursada son DIFERENTES a las de la Asignatura");
-                    alert("La cantidad de horas semanales debe ser igual a las definidas en el Plan de la Carrera");
+                    document.getElementsByClassName('cantidadTotalHoras')[0].textContent += "\nLa cantidad de horas semanales debe ser igual a las definidas en el Plan de la Carrera";
                     document.getElementById("btnSiguiente").disabled = true;
                 } else {
-                    console.log("La cantidad de horas de cursada son IGUALES a las de la Asignatura");
+                    document.getElementsByClassName('cantidadTotalHoras')[0].textContent += "\nLa cantidad de horas semanales es igual a las definidas en el Plan de la Carrera";
                     document.getElementById("btnSiguiente").disabled = false;
                 }
             }
@@ -308,6 +308,13 @@ $Asignatura = new Asignatura($idAsignatura);
                 ]
             });
         });
+    </script>
+<!--    Se debe desarrollar una funcionalidad que valide que no haya campos vacíos -->
+      <script>
+      function validaCampos() {
+            
+        
+        }
     </script>
 </html>
 

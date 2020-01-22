@@ -95,6 +95,7 @@ class ManejadorPrograma {
 
         //aniocarrera 1,2,3,4,5
         //regimen A,1,2, O
+        /*Se debe considerar el tema de los comentatios de Depto y de SA y el tema de la ubicacion predefinida*/
         $this->query = "INSERT INTO PROGRAMA "
                 . "VALUES (null,{$Programa->getAnio()}, '{$Programa->getAnioCarrera()}', "
                 . " '{$Programa->getHorasTeoria()}', '{$Programa->getHorasPractica()}', '{$Programa->getHorasOtros()}', "
@@ -104,7 +105,8 @@ class ManejadorPrograma {
                 . "  '{$Programa->getAprobacionPresencial()}','{$Programa->getMetodologiaSATEP()}', '{$Programa->getRegularizacionSATEP()}', "
                 . " '{$Programa->getAprobacionSATEP()}', '{$Programa->getMetodologiaLibre()}', '{$Programa->getAprobacionLibre()}',"
                 . "  'SA','{$Programa->getIdAsignatura()}' , {$Programa->getAprobadoSa()},"
-                . " {$Programa->getAprobadoDepto()}, '{$Programa->getFechaCarga()}', {$Programa->getVigencia()} )";
+                . " {$Programa->getAprobadoDepto()}, '{$Programa->getFechaCarga()}', {$Programa->getVigencia()},"
+                . "' ', ' ' )";
         //var_dump($this->query);
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
         if ($consulta) {
