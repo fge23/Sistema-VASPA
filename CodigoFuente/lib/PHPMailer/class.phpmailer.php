@@ -3302,7 +3302,7 @@ class PHPMailer
     protected function lang($key)
     {
         if (count($this->language) < 1) {
-            $this->setLanguage('en'); // set the default language
+            $this->setLanguage('es'); // set the default language
         }
 
         if (array_key_exists($key, $this->language)) {
