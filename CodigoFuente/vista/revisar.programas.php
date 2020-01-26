@@ -1,14 +1,26 @@
 <?php
 header ('Content-Type: text/html; charset=ISO-8859-1');
-/*
- * Muestra el listado de todos los programas que se pueden generar en PDF
+/* Aqui comienza el CU Revisar Programa
+ * Observaciones: 
+ * - Falta filtrar de acuerdo al departamento de la materia y dependiendo
+ * el rol del usuario, si es de SA puede revisar todos los programas pero si es el 
+ * director del departamento de CS Sociales, solo deberia revisar los programas de 
+ * aquellas asignaturas que correspondan al departamento anterior
+ * 
+ * - Falta Validar el "id" del programa de asignatura (que sea un id que corresponda a un
+ * programa de la BD), esto hay que hacerlo en el revisar.programa.php
+ * 
+ * - Tanto cuando se aprueba o se desaprueba un programa, se actualizan ambos atributos
+ * (aprobadoSa y aprobadoDepto al igual que los comentarios). Estoy hay que corregir una 
+ * vez definido los roles y gestion de usuarios
  */
 include_once '../lib/ControlAcceso.Class.php';
 //include_once '../modeloSistema/Programa.Class.php';
 //include_once '../modeloSistema/Asignatura.Class.php';
 include_once '../modeloSistema/BDConexionSistema.Class.php';
 
-//Se obtiene las asignaturas las cuales tengan cargado su programa para luego generar el PDF.
+
+//Se obtiene las asignaturas las cuales tengan cargado su programa para luego revisar el documento
 $consulta = 'SELECT nombre, asignatura.id as idAsignatura, programa.id as idPrograma FROM asignatura JOIN programa WHERE asignatura.id = programa.idAsignatura ORDER BY nombre ASC';
 $asignaturas = BDConexionSistema::getInstancia()->query($consulta);
 //$asignaturas=$mysqli->query($consulta);
@@ -34,36 +46,36 @@ $asignaturas = BDConexionSistema::getInstancia()->query($consulta);
 
             <div class="card">
                 <div class="card-header">
-                    <h3>Programas de asignaturas</h3>
+                    <h3>Revisar Programa - <span class="text-info">Programas de asignaturas</span></h3>
                 </div>
                 <div class="card-body">
                     
                     <table class="table table-hover table-sm">
-                        <tr class="table-info">
+                        <tr class="table-info text-center">
                             <th>Programa de:</th>
-                            <th>C&oacute;digo</th>
-                            <th>Opciones</th>
+                            <th>C&oacute;digo asignatura</th>
+                            <th></th>
                         </tr>
                         <tr>
                             <?php while ($asignatura=$asignaturas->fetch_assoc()){ ?>
                                 <td><?php echo $asignatura['nombre']; ?></td>
-                                <td><?php echo $asignatura['idAsignatura']; ?></td>
-                                <td>
-                                    <form action="revisarPrograma.php" method="get">
-                                        <input type="hidden" value="<?= $asignatura['idPrograma']; ?>" name="id">
-                                        <input type="submit" value="Revisar Programa" class="btn btn-outline-success">
-                                        
-                                        <a title="Ver detalle" href="#">
+                                <td class="text-center"><?php echo $asignatura['idAsignatura']; ?></td>
+                                <td class="text-center">
+                                        <a title="Revisar Programa" href="revisar.programa.php?id=<?= $asignatura['idPrograma']; ?>">
+                                        <button type="button" class="btn btn-outline-success">
+                                            <span class="oi oi-document"></span>
+                                        </button></a>
+<!--                                        <a title="Ver detalle" href="#">
                                         <button type="button" class="btn btn-outline-info">
                                             <span class="oi oi-zoom-in"></span>
-                                        </button></a>
-                                    </form>
+                                        </button></a>-->
                                 </td>
                                 </tr>
                         <?php } ?>   
                                 
                                 
                     </table>
+                        
                 </div>
             </div>
         </div>
