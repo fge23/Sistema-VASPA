@@ -49,14 +49,14 @@ $asignaturas = BDConexionSistema::getInstancia()->query($consulta);
                                 <td><?php echo $asignatura['nombre']; ?></td>
                                 <td><?php echo $asignatura['idAsignatura']; ?></td>
                                 <td>
-                                    <a title="Generar PDF" href="generarPDFprograma.php?id=<?= $asignatura['idPrograma']; ?>">
+                                    <a title="Generar PDF" href="generarPDFprograma.php?id=<?= $asignatura['idPrograma']; ?>" target="_blank">
                                         <button type="button" class="btn btn-outline-success">
                                             <span class="oi oi-document"></span>
                                         </button></a>
-                                    <a title="Ver detalle" href="#">
+<!--                                    <a title="Ver detalle" href="#">
                                         <button type="button" class="btn btn-outline-info">
                                             <span class="oi oi-zoom-in"></span>
-                                        </button></a>
+                                        </button></a>-->
                                 </td>
                                 </tr>
                         <?php } ?>   

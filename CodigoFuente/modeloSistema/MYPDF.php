@@ -88,12 +88,41 @@ class MYPDF extends TCPDF {
         $foot = '<table cellspacing="0" cellpadding="1" border="1" style="font-family:Arial;font-size:10pt;">
                     <tr>
                         <td colspan="6"><b>VIGENCIA AÑOS </b></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>';
+        
+        if ($this->programa->getVigencia() == 1){
+            $foot = '<table cellspacing="0" cellpadding="1" border="1" style="font-family:Arial;font-size:10pt;">
+                    <tr>
+                        <td colspan="6"><b>VIGENCIA AÑOS </b></td>
                         <td align="center">'.$this->programa->getAnio().'</td>
                         <td></td>
                         <td></td>
                     </tr>
                 </table>';
-
+        } elseif ($this->programa->getVigencia() == 2) {
+            $foot = '<table cellspacing="0" cellpadding="1" border="1" style="font-family:Arial;font-size:10pt;">
+                    <tr>
+                        <td colspan="6"><b>VIGENCIA AÑOS </b></td>
+                        <td align="center">'.$this->programa->getAnio().'</td>
+                        <td align="center">'.($this->programa->getAnio()+1).'</td>
+                        <td></td>
+                    </tr>
+                </table>';
+        } elseif ($this->programa->getVigencia() == 3) {
+            $foot = '<table cellspacing="0" cellpadding="1" border="1" style="font-family:Arial;font-size:10pt;">
+                    <tr>
+                        <td colspan="6"><b>VIGENCIA AÑOS </b></td>
+                        <td align="center">'.$this->programa->getAnio().'</td>
+                        <td align="center">'.($this->programa->getAnio()+1).'</td>
+                        <td align="center">'.($this->programa->getAnio()+2).'</td>
+                    </tr>
+                </table>';
+        }
+        
        $this->writeHTML($foot, true, false, false, false, '');
        
        $this->Cell(0,10,'Pag - '.$this->getAliasNumPage().' -',0,false,'R',0,'',false,'T','M');  
@@ -170,7 +199,7 @@ class MYPDF extends TCPDF {
         <body><table border="1" cellspacing="0" cellpadding="2" style="width: 100%;"> 
                 <tbody>
                 <tr>
-                        <td colspan="8" valign="top" ><p>Ciclo Académico:</p></td>
+                        <td colspan="8" valign="top" ><p>Ciclo Académico: '.$this->programa->getAnio().'</p></td>
                 </tr>
 
                 <tr>
