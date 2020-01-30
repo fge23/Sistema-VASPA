@@ -221,7 +221,7 @@ $Asignatura = new Asignatura($idAsignatura);
                                 <label for="textAreaAprobacionLibre">Aprobaci&oacute;n Libre</label>
                                 <textarea name="aprobacionLibre" class="summernote" id="textAreaAprobacionLibre" required=""></textarea>
                             </div>
-                            <input type="hidden" name="fechaCarga" value="<?= getdate()['year'].'-'.  getdate()['mon'].'-'.getdate()['mday']; ?>">
+                            <input type="hidden" name="fechaCarga" value="<?= getdate()['year'] . '-' . getdate()['mon'] . '-' . getdate()['mday']; ?>">
                             <input type="hidden" name="idAsignatura" value="<?= $Asignatura->getId(); ?>">
                             <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
                             <input type="submit" name="submit" class="submit btn btn-info" value="Guardar" id="submit_data" />
@@ -309,12 +309,31 @@ $Asignatura = new Asignatura($idAsignatura);
             });
         });
     </script>
-<!--    Se debe desarrollar una funcionalidad que valide que no haya campos vacíos -->
-      <script>
-      function validaCampos() {
+    <!--    Se debe desarrollar una funcionalidad que valide que no haya campos vacíos -->
+    <script>
+        $('#regiration_form').on('submit', function (e) {
+            var bandera = true;
             
-        
-        }
+             if ($('#textAreaOrganizacionContenidos').summernote('isEmpty')) {
+                alert("El campo 'Organización de Contenidos' no puede estar en blanco");
+                bandera = false;
+            }
+            
+            if ($('#textAreaMetodologiaLibre').summernote('isEmpty')) {
+                alert("El campo 'Metodologia Libre' no puede estar en blanco");
+                bandera = false;
+            }
+            if ($('#textAreaAprobacionLibre').summernote('isEmpty')) {
+                alert("El campo 'Aprobacion Libre' no puede estar en blanco");
+                bandera = false;
+            }
+
+            if (bandera === true) {
+                $("#regiration_form").submit();
+            } else {
+                e.preventDefault();
+            }
+        })
     </script>
 </html>
 
