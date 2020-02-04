@@ -31,7 +31,7 @@ $resultados = BDConexionSistema::getInstancia()->query($consulta);
         <script src="../lib/bootstrap-table/extensions/filter-control/bootstrap-table-filter-control.js"></script>
         <script src="../lib/bootstrap-table/extensions/export/bootstrap-table-export.min.js"></script>
         <script src="../lib/bootstrap-table/extensions/toolbar/bootstrap-table-toolbar.min.js"></script>
-        <script src= "../lib/bootstrap-table/locale/bootstrap-table-es-ES.js" ></script>
+        <script src="../lib/bootstrap-table/locale/bootstrap-table-es-ES.js" ></script>
 
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Vigencia de los Programas</title>
 

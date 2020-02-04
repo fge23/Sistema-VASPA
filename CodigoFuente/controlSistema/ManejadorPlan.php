@@ -125,4 +125,17 @@ class ManejadorPlan {
       }
       }
      */
+    
+    function getPlanesSegunCarrera($codCarrera) {
+        $planes = NULL;
+        if (!empty($this->coleccion)){
+            foreach ($this->coleccion as $plan) {
+                if ($plan->getIdCarrera() == $codCarrera){
+                    $planes[] = $plan;
+                }
+            }
+        }
+        return $planes;
+    }
+    
 }
