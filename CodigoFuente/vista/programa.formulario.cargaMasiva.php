@@ -111,13 +111,13 @@ include_once '../modeloSistema/BDConexionSistema.Class.php';
                                         <div class="modal-body alinIzq">
                                   <!--          <p>Los archivos en <span class="text-success">verde</span> se podran subir.</p>
                                             <p>Los archivos en <span class="text-danger">rojo</span>no se podran subir.</p>-->
-                                            Los archivos resaltado en <span class="text-success">verde</span> se podran subir. 
-                                            Mientras que los archivos resaltado en <span class="text-danger">rojo</span> no se podran subir.
+                                            Los archivos resaltados en <span class="text-success">verde</span> se podran subir. <br/> 
+                                            Los archivos resaltados en <span class="text-danger">rojo</span> no se podran subir.
                                             <output id="list"></output>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">No estoy seguro</button>
-                                            <button type="submit" class="btn btn-primary" name="subirProgramas">Si Subir Programas</button>
+                                            <button type="submit" class="btn btn-primary" name="subirProgramas">Si, Subir Programas</button>
                                         </div>
                                     </div>
                                 </div>
