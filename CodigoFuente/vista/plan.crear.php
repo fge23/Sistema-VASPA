@@ -34,10 +34,11 @@ $Carreras = $ManejadorCarrera->getColeccion();
                     </div>
                     <div class="card-body">
                         <h4>Propiedades</h4>
-
+                        
                         <div class="form-group">
                             <label for="inputCodigoPlan">C&oacute;digo del Plan</label>
-                            <input type="text" name="id" class="form-control" id="inputCodigoPlan" placeholder="Ingrese el c&oacute;digo del Plan" required="" autofocus>
+                            <input type="text" name="id" class="form-control" id="inputCodigoPlan" placeholder="Ingrese el c&oacute;digo del Plan" 
+                                   pattern="^\d{3}P\d{1,2}$" title="(C&oacute;digoCarrera)P(N&uacute;meroPlan) ejemplo: 016P4" required="" autofocus>
                         </div>
 
                         <div class="form-group">

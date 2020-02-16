@@ -21,7 +21,7 @@ header('Content-Type: text/html; charset=UTF-8');
         <div class="container">
             <form action="plan.eliminar.procesar.php" method="post">
                 <div class="card">
-                    <div c  lass="card-header">
+                    <div class="card-header">
                         <h3>Eliminar Plan</h3>
                     </div>
                     <div class="card-body">

@@ -40,7 +40,8 @@ $Plan = new Plan($idPlan, null);
                         <div class="form-group">
                             <label for="inputCodigoPlan">C&oacute;digo del Plan</label>
                             <!--En el año maximo se coloca el año actual + 1-->
-                            <input type="text" name="id" class="form-control" id="inputCodigoPlan" placeholder="Ingrese el c&oacute;digo del Plan" value="<?= $Plan->getId(); ?>" required="" autofocus>
+                            <input type="text" name="id" class="form-control" id="inputCodigoPlan" placeholder="Ingrese el c&oacute;digo del Plan" value="<?= $Plan->getId(); ?>" 
+                                   pattern="^\d{3}P\d{1,2}$" title="(C&oacute;digoCarrera)P(N&uacute;meroPlan) ejemplo: 016P4" required="" autofocus>
                         </div>
 
                         <div class="form-group">

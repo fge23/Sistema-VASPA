@@ -36,6 +36,8 @@ class ManejadorPlan {
         for ($x = 0; $x < $this->datos->num_rows; $x++) {
             $this->addElemento($this->datos->fetch_object("Plan"));
         }
+        unset($this->query);
+        unset($this->datos);
     }
 
     function addElemento($elemento_) {
@@ -55,21 +57,26 @@ class ManejadorPlan {
 
         //Creo objeto sin enviar ID y enviando todos los datos del formulario
         $Plan = new Plan(null, $datos);
-
-        //Si el año fin no está definido, la query cambia
-        if (!empty($Plan->getAnio_fin())) {
-            $this->query = "INSERT INTO PLAN "
-                    . "VALUES ('{$Plan->getId()}',{$Plan->getAnio_inicio()},'{$Plan->getIdCarrera()}',{$Plan->getAnio_fin()} )";
+        //validamos existencia la existencia del plan
+        if ($this->chequearExistencia($Plan->getId())){
+            //Si el año fin no está definido, la query cambia
+            if (!empty($Plan->getAnio_fin())) {
+                $this->query = "INSERT INTO PLAN "
+                        . "VALUES ('{$Plan->getId()}',{$Plan->getAnio_inicio()},'{$Plan->getIdCarrera()}',{$Plan->getAnio_fin()} )";
+            } else {
+                $this->query = "INSERT INTO PLAN "
+                        . "VALUES ('{$Plan->getId()}',{$Plan->getAnio_inicio()},'{$Plan->getIdCarrera()}', null )";
+            }
+            $consulta = BDConexionSistema::getInstancia()->query($this->query);
+            if ($consulta) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            $this->query = "INSERT INTO PLAN "
-                    . "VALUES ('{$Plan->getId()}',{$Plan->getAnio_inicio()},'{$Plan->getIdCarrera()}', null )";
+            throw new Exception("El c&oacute;digo  <b>" . $Plan->getId() . "</b> ya corresponde a un Plan de Estudio en la Base de Datos");
         }
-        $consulta = BDConexionSistema::getInstancia()->query($this->query);
-        if ($consulta) {
-            return true;
-        } else {
-            return false;
-        }
+        
     }
 
     function baja($id_) {
@@ -86,28 +93,52 @@ class ManejadorPlan {
     function modificacion($datos, $id_) {
 
         $Plan = new Plan(null, $datos);
-
-        if (!empty($Plan->getAnio_fin())) {
-            $this->query = "UPDATE PLAN "
-                    . "SET id = '{$Plan->getId()}' ,"
-                    . " anio_inicio = {$Plan->getAnio_inicio()}, "
-                    . "idCarrera = '{$Plan->getIdCarrera()}' ,"
-                    . "anio_fin = {$Plan->getAnio_fin()} "
-                    . "WHERE id = '{$id_}'";
+        if ($id_ == $Plan->getId()){
+            if (!empty($Plan->getAnio_fin())) {
+                $this->query = "UPDATE PLAN "
+                        . "SET id = '{$Plan->getId()}' ,"
+                        . " anio_inicio = {$Plan->getAnio_inicio()}, "
+                        . "idCarrera = '{$Plan->getIdCarrera()}' ,"
+                        . "anio_fin = {$Plan->getAnio_fin()} "
+                        . "WHERE id = '{$id_}'";
+            } else {
+                $this->query = "UPDATE PLAN "
+                        . "SET id = '{$Plan->getId()}' ,"
+                        . " anio_inicio = {$Plan->getAnio_inicio()}, "
+                        . " anio_fin = NULL, "
+                        . "idCarrera = '{$Plan->getIdCarrera()}' "
+                        . "WHERE id = '{$id_}'";
+            }
         } else {
-            $this->query = "UPDATE PLAN "
-                    . "SET id = '{$Plan->getId()}' ,"
-                    . " anio_inicio = {$Plan->getAnio_inicio()}, "
-                    . " anio_fin = NULL, "
-                    . "idCarrera = '{$Plan->getIdCarrera()}' "
-                    . "WHERE id = '{$id_}'";
+            if ($this->chequearExistencia($Plan->getId())) {
+                if (!empty($Plan->getAnio_fin())) {
+                    $this->query = "UPDATE PLAN "
+                            . "SET id = '{$Plan->getId()}' ,"
+                            . " anio_inicio = {$Plan->getAnio_inicio()}, "
+                            . "idCarrera = '{$Plan->getIdCarrera()}' ,"
+                            . "anio_fin = {$Plan->getAnio_fin()} "
+                            . "WHERE id = '{$id_}'";
+                } else {
+                    $this->query = "UPDATE PLAN "
+                            . "SET id = '{$Plan->getId()}' ,"
+                            . " anio_inicio = {$Plan->getAnio_inicio()}, "
+                            . " anio_fin = NULL, "
+                            . "idCarrera = '{$Plan->getIdCarrera()}' "
+                            . "WHERE id = '{$id_}'";
+                }
+            } else {
+                throw new Exception("El c&oacute;digo  <b>" . $Plan->getId() . "</b> ya corresponde a un Plan de Estudio en la Base de Datos");
+            }
         }
+        
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
         if ($consulta) {
             return true;
         } else {
             return false;
         }
+        
+        
     }
 
     /* Metodo innecesario ya que se puede recuperar directamente
@@ -125,6 +156,18 @@ class ManejadorPlan {
       }
       }
      */
+    
+    function chequearExistencia($idPlan_) {
+        $this->query = "SELECT * FROM PLAN WHERE id = '{$idPlan_}'";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        if ($this->datos->num_rows == 1) {
+            //El registro existe en la BD. No se puede insertar
+            return false;
+        } else {
+            //El registro no existe en la BD. Se puede insertar
+            return true;
+        }
+    }
     
     function getPlanesSegunCarrera($codCarrera) {
         $planes = NULL;

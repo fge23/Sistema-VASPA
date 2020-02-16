@@ -62,17 +62,17 @@ $Planes = $ManejadorPlan->getColeccion();
                                     <td><?= $Plan->getAnio_fin(); ?></td>
 
                                     <td>
-                                        <a title="Ver detalle" href="carrera.verAsignaturas.php">
+                                        <a title="Ver detalle" href="carrera.verAsignaturas.php?id=<?= urlencode($Plan->getId()); ?>">
                                             <button type="button" class="btn btn-outline-info">
                                                 <span class="oi oi-zoom-in"></span>
                                             </button>
                                         </a>
-                                        <a title="Modificar" href="plan.modificar.php?id=<?= $Plan->getId(); ?>">
+                                        <a title="Modificar" href="plan.modificar.php?id=<?= urlencode($Plan->getId()); ?>">
                                             <button type="button" class="btn btn-outline-warning">
                                                 <span class="oi oi-pencil"></span>
                                             </button>
                                         </a>
-                                        <a title="Eliminar" href="plan.eliminar.php?id=<?= $Plan->getId(); ?>">
+                                        <a title="Eliminar" href="plan.eliminar.php?id=<?= urlencode($Plan->getId()); ?>">
                                             <button type="button" class="btn btn-outline-danger">
                                                 <span class="oi oi-trash"></span>
                                             </button>

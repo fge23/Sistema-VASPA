@@ -1,9 +1,18 @@
 <?php
 include_once '../lib/Constantes.Class.php';
-include_once '../controlSistema/ManejadorCarrera.php';
+include_once '../modeloSistema/Plan.Class.php';
 
-$DatosFormulario = $_POST;
-$ManejadorCarrera = new ManejadorCarrera();
+if (empty($_GET['id'])) {
+    header("location: planes.php");
+}
+else {
+    $plan = new Plan($_GET['id'], NULL);
+    if (is_null($plan->getId())){
+        header("location: planes.php");
+    }
+    $carreras = $plan->getCarreras();
+
+}
 
 ?>
 <html>
@@ -21,18 +30,46 @@ $ManejadorCarrera = new ManejadorCarrera();
             <p></p>
             <div class="card">
                 <div class="card-header">
-                    <h3>Asignaturas por Carrera</h3>
+                    <h3>Asignaturas por Carrera - Plan <?= $plan->getId()?></h3>
                 </div>
                 <div class="card-body">
                     
                   
-                    <hr />
-                    <h5 class="card-text">Opciones</h5>
-                    <a href="carreras.php">
+                    <table class="table table-hover table-sm text-center" id="tablaPlanes">
+                        <thead>
+                            <tr class="table-info">
+                                <th>C&oacute;digo de Asignatura</th>
+                                <th>Nombre de Asignatura</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                                
+                                <?php
+                                if (is_null($carreras)){
+                                    echo '<tr><td colspan="2"> <b> No hay asignaturas asociadas al Plan de Estudio </b></td></tr>';
+                                } else {
+                                    foreach ($carreras as $carrera) {
+                                ?>
+                                        <tr><td><?= $carrera->getId(); ?></td>
+                                        <td><?= $carrera->getNombre(); ?></td></tr>
+                                    
+                                <?php } }?>
+                                    
+                                
+                            
+                        </tbody>
+                    </table>
+                    
+<!--                    <hr />
+                    <h5 class="card-text">Opciones</h5>-->
+                    <div class="card-footer text-center">
+                        <a href="planes.php">
                         <button type="button" class="btn btn-primary">
-                            <span class="oi oi-account-logout"></span> Salir
+                            <span class="oi oi-account-logout"></span> Volver A Planes
                         </button>
-                    </a>
+                        </a>
+                    </div>    
                 </div>
             </div>
         </div>

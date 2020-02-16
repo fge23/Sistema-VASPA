@@ -1,6 +1,7 @@
 <?php
 
 include_once 'BDConexionSistema.Class.php';
+include_once 'Asignatura.Class.php';
 
 /**
  * Description of Plan
@@ -45,12 +46,19 @@ class Plan {
         $this->query = "SELECT * FROM PLAN WHERE id = '{$this->id}'";
 
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        
+        // comprobamos si luego de ejecutar la consulta a la BD esta devuelve un registro
+        if ($this->datos->num_rows == 1){
+            $this->datos = $this->datos->fetch_assoc();
 
-        $this->datos = $this->datos->fetch_assoc();
-
-        foreach ($this->datos as $atributo => $valor) {
-            $this->{$atributo} = $valor;
+            foreach ($this->datos as $atributo => $valor) {
+                $this->{$atributo} = $valor;
+            }
+        // Sino devuelve un registro entonces seteamos el id del objeto en NULL, con esto se validara la existencia o no de dicho objeto    
+        } else {
+            $this->setId(NULL);
         }
+        //var_dump($this->datos->num_rows);
         unset($this->query);
         unset($this->datos);
     }
@@ -85,6 +93,27 @@ class Plan {
     function setAnio_inicio($anio_inicio) {
         $this->anio_inicio = $anio_inicio;
     }
+    
+    function getCarreras(){
+        $carreras = NULL;
+        
+        //$this->query = "SELECT * FROM PLAN_ASIGNATURA WHERE idPlan = '{$this->id}'";
+        $this->query = "SELECT B.* FROM PLAN_ASIGNATURA A JOIN ASIGNATURA B ON idAsignatura = id WHERE idPlan = '{$this->id}'";
+        
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        //var_dump($this->datos);
+        
+        //var_dump($this->datos->num_rows);
+        
+        if ($this->datos->num_rows > 0){
+            for ($x = 0; $x < $this->datos->num_rows; $x++) {
+                $carreras[] = $this->datos->fetch_object("Asignatura");
+            }
+        }
+        
+        return $carreras;
 
+    }
+    
 
 }

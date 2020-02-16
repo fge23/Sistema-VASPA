@@ -4,10 +4,19 @@ include_once '../lib/Constantes.Class.php';
 $DatosFormulario = $_POST;
 $ManejadorPlan = new ManejadorPlan();
 $idPlan = $DatosFormulario['idAnterior'];
-$consulta = $ManejadorPlan->modificacion($DatosFormulario, $idPlan);
+
 if (empty($DatosFormulario)) {
     header("location: planes.php");
 } else {
+    
+    $error = "";
+    $consulta = false;
+    try {
+        $consulta = $ManejadorPlan->modificacion($DatosFormulario, $idPlan);
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+    }
+    
     ?>
     <html>
         <head>
@@ -35,7 +44,7 @@ if (empty($DatosFormulario)) {
     <?php } ?>   
                         <?php if (!$consulta) { ?>
                             <div class="alert alert-danger" role="alert">
-                                Ha ocurrido un error.
+                                Ha ocurrido un error. <?= $error; ?>
                             </div>
     <?php } ?>
                         <hr />
