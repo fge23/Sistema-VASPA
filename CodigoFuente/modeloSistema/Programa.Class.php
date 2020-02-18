@@ -41,6 +41,8 @@ class Programa {
     private $aprobadoDepto;
     private $fechaCarga;
     private $vigencia;
+    private $comentarioSa;
+    private $comentarioDepto;
     private $query;
 
     /**
@@ -93,16 +95,21 @@ class Programa {
 
     function recuperaObjeto($id) {
         $this->id = $id;
-
+        
         $this->query = "SELECT * FROM PROGRAMA WHERE id = {$this->id}";
-
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
-
-        $this->datos = $this->datos->fetch_assoc();
-
-        foreach ($this->datos as $atributo => $valor) {
-            $this->{$atributo} = $valor;
+        
+        //validamos que devuelva un registro para setaear los atributos del objeto
+        if ($this->datos->num_rows == 1){
+            $this->datos = $this->datos->fetch_assoc();
+            foreach ($this->datos as $atributo => $valor) {
+                $this->{$atributo} = $valor;
+            }    
+        } else {
+            // seteamos a NULL el id del objeto, con lo que se deberia validar si el id es NULL es que el no existe un programa con tal ID
+            $this->setId(NULL);
         }
+
         unset($this->query);
         unset($this->datos);
     }
@@ -322,7 +329,24 @@ class Programa {
     function setVigencia($vigencia) {
         $this->vigencia = $vigencia;
     }
+    
+    function getComentarioSa() {
+        return $this->comentarioSa;
+    }
 
+    function getComentarioDepto() {
+        return $this->comentarioDepto;
+    }
+
+    function setComentarioSa($comentarioSa) {
+        $this->comentarioSa = $comentarioSa;
+    }
+
+    function setComentarioDepto($comentarioDepto) {
+        $this->comentarioDepto = $comentarioDepto;
+    }
+
+    
     /*
      * 
      * @return Asignatura

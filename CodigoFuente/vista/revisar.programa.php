@@ -13,8 +13,10 @@ include_once '../modeloSistema/Asignatura.Class.php';
 //    header("location: revisarProgramas.php");;
 //}
 
-// validamos que el id del programa este definido y sea un numero
-if (!isset($_GET['id']) || $_GET['id'] == "" || !is_numeric($_GET['id']) || $_GET['id'] < 0){
+$programa = new Programa($_GET['id']);
+
+// validamos que el id del programa este definido, sea un numero mayor o igual a 0, y que sea un programa existente en la BD
+if (!isset($_GET['id']) || $_GET['id'] == "" || !is_numeric($_GET['id']) || $_GET['id'] < 0 || is_null($programa->getId())){
     header("location: revisar.programas.php"); 
     
 }
@@ -25,9 +27,6 @@ $enlace = "../controlSistema/programa.revisar.generarpdf.php?id=".$_GET['id']."#
 //$enlace = "generarPDFprograma.php?id=".$_GET['id']."#toolbar=0&navpanes=0&scrollbar=0";
 
 
-// ¡VALIDAR QUE EL ID CORRESPONDA A UN REGISTRO DE PROGRAMA EN LA BD, PREGUNTAR SI ESTA LISTO
-// EL MANEJADOR PROGRAMA!
-$programa = new Programa($_GET['id']);
 //if (empty($programa->getId())){
 //    var_dump($programa);
 //}
@@ -149,30 +148,30 @@ $carreras = $asignatura->getCarreras();
                         </div>
                         
                         <div class="card-footer">
-                            <!-- Comments Form -->
-<!--                            <div class="card my-4">
-                                <h5 class="card-header">Deja un comentario:</h5>
-                                <div class="card-body">
-                                    <form action="revisar.programa.guardar.comentario.php" method="POST">
-                                        <div class="form-group">
-                                            <textarea class="form-control" rows="3" name="comentario"></textarea>
-                                        </div>
-                                        <button name="enviarComentario" type="submit" class="btn btn-primary">Enviar</button>
-                                    </form>
-                                </div>
-                            </div>-->
 
-                            <!-- Single Comment -->
-                            <div class="media mb-4" id="comentarios">
-                                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                                <div class="media-body">
-                                    <h5 class="mt-0">Secretaria Academica</h5>
-                                    ... 
+                                <div class="card mb-12">
+                                    <div class="card-header"><h4 class="card-title" id="comentarios">Comentarios</h4></div>
+            
+            <?php 
+                                
+                                if (!is_null($programa->getComentarioSa())){
+                                    echo '<div class="card-body">
+                                            <h5 class="card-title">Secretar&iacute;a Acad&eacute;mica</h5>
+                                            <p class="card-text text-muted">'.$programa->getComentarioSa().'</p>
+                                          </div>';
+                                }
+                                if (!is_null($programa->getComentarioDepto())){
+                                    echo '<hr>
+                                          <div class="card-body">
+                                            <h5 class="card-title">Departamento</h5>
+                                            <p class="card-text text-muted">'.$programa->getComentarioDepto().'</p>
+                                          </div>';
+                                }
+                                
+                                ?>
                                 </div>
-                            </div>
-
+                            <!--</div>-->
                         </div>
-                        
                     </div>
                 </div>
                 

@@ -7,9 +7,6 @@ header ('Content-Type: text/html; charset=ISO-8859-1');
  * director del departamento de CS Sociales, solo deberia revisar los programas de 
  * aquellas asignaturas que correspondan al departamento anterior
  * 
- * - Falta Validar el "id" del programa de asignatura (que sea un id que corresponda a un
- * programa de la BD), esto hay que hacerlo en el revisar.programa.php
- * 
  * - Tanto cuando se aprueba o se desaprueba un programa, se actualizan ambos atributos
  * (aprobadoSa y aprobadoDepto al igual que los comentarios). Estoy hay que corregir una 
  * vez definido los roles y gestion de usuarios
