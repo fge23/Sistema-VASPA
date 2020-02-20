@@ -18,6 +18,9 @@ $Asignatura = new Asignatura($idAsignatura);
         <link href="../lib/summernote-master/dist/summernote-bs4.css" rel="stylesheet">
         <script src="../lib/summernote-master/dist/summernote-bs4.js"></script>
         <script src="../lib/summernote-master/lang/summernote-es-ES.js"></script>
+        <!--         Librerias Bootbox-->
+        <script src="../lib/bootbox/bootbox.js"></script>
+        <script src="../lib/bootbox/bootbox.locales.js"></script>
 
         <style type="text/css">
             #regiration_form fieldset:not(:first-of-type) {
@@ -143,13 +146,13 @@ $Asignatura = new Asignatura($idAsignatura);
 
                             <div class="form-group">
                                 <label for="textAreaFundamentacion">Fundamentaci&oacute;n</label>
-                                <textarea class="summernote" id="textAreaFundamentacion" name="fundamentacion">   </textarea> 
+                                <textarea class="summernote" id="textAreaFundamentacion" name="fundamentacion"></textarea> 
                             </div>
 
 
                             <div class="form-group">
                                 <label for="textAreaObjetivosGenerales">Objetivos Generales</label>
-                                <textarea class="summernote" name="objetivosGenerales" required=""></textarea>
+                                <textarea class="summernote" id="textAreaObjetivosGenerales" name="objetivosGenerales"></textarea>
                             </div>
 
                             <div class="form-group">
@@ -313,26 +316,108 @@ $Asignatura = new Asignatura($idAsignatura);
     <script>
         $('#regiration_form').on('submit', function (e) {
             var bandera = true;
-            
-             if ($('#textAreaOrganizacionContenidos').summernote('isEmpty')) {
-                alert("El campo 'Organización de Contenidos' no puede estar en blanco");
+            var camposFaltantes = "";
+                        
+            //Año de programa
+            if ($('#inputAnio').val().length == 0) {
+                //alert("El campo 'Fundamentación' no puede estar en blanco");
+                camposFaltantes += "<br><li>Año de Programa";
                 bandera = false;
             }
-            
+
+            //Fundamentacion
+            if ($('#textAreaFundamentacion').summernote('isEmpty')) {
+                //alert("El campo 'Fundamentación' no puede estar en blanco");
+                camposFaltantes += "<br><li>Fundamentación";
+                bandera = false;
+            }
+
+            //Objetivos generales
+            if ($('#textAreaObjetivosGenerales').summernote('isEmpty')) {
+                //  alert("El campo 'Objetivos generales' no puede estar en blanco");
+                camposFaltantes += "<br><li>Objetivos generales";
+                bandera = false;
+            }
+
+            //Organizacion contenidos
+            if ($('#textAreaOrganizacionContenidos').summernote('isEmpty')) {
+                //alert("El campo 'Organización de Contenidos' no puede estar en blanco");
+                camposFaltantes += "<br><li>Organización de Contenidos";
+                bandera = false;
+            }
+
+            //Criterios de evaluacion
+            if ($('#textAreaCriteriosEvaluacion').summernote('isEmpty')) {
+                //  alert("El campo 'Criterios de evaluación' no puede estar en blanco");
+                camposFaltantes += "<br><li>Criterios de evaluación";
+                bandera = false;
+            }
+
+            //Metodologia presencial
+            if ($('#textAreaMetodologiaPresencial').summernote('isEmpty')) {
+                //  alert("El campo 'Metodología presencial' no puede estar en blanco");
+                camposFaltantes += "<br><li>Metodología presencial";
+                bandera = false;
+            }
+
+            //Regularizacion presencial
+            if ($('#textAreaRegularizacionPresencial').summernote('isEmpty')) {
+                //  alert("El campo 'Regularización presencial' no puede estar en blanco");
+                camposFaltantes += "<br><li>Regularización presencial";
+                bandera = false;
+            }
+
+            //Aprobación presencial
+            if ($('#textAreaAprobacionPresencial').summernote('isEmpty')) {
+                //alert("El campo 'Aprobación presencial' no puede estar en blanco");
+                camposFaltantes += "<br><li>Aprobación presencial";
+                bandera = false;
+            }
+
+            //Metodologia SATEP
+            if ($('#textAreaMetodologiaSATEP').summernote('isEmpty')) {
+                //  alert("El campo 'Metodología SATEP' no puede estar en blanco");
+                camposFaltantes += "<br><li>Metodología SATEP";
+                bandera = false;
+            }
+
+            //Regularizacion SATEP
+            if ($('#textAreaRegularizacionSATEP').summernote('isEmpty')) {
+                // alert("El campo 'Regularización SATEP' no puede estar en blanco");
+                camposFaltantes += "<br><li>Regularización SATEP";
+                bandera = false;
+            }
+
+            //Aprobación SATEP
+            if ($('#textAreaAprobacionSATEP').summernote('isEmpty')) {
+                //alert("El campo 'Aprobación SATEP' no puede estar en blanco");
+                camposFaltantes += "<br><li>Aprobación SATEP";
+                bandera = false;
+            }
+
+            //Metodologia libre
             if ($('#textAreaMetodologiaLibre').summernote('isEmpty')) {
-                alert("El campo 'Metodologia Libre' no puede estar en blanco");
+                // alert("El campo 'Metodologia Libre' no puede estar en blanco");
+                camposFaltantes += "<br><li>Metodologia Libre";
                 bandera = false;
             }
+
+            //Aprobacion libre
             if ($('#textAreaAprobacionLibre').summernote('isEmpty')) {
-                alert("El campo 'Aprobacion Libre' no puede estar en blanco");
+                // alert("El campo 'Aprobacion Libre' no puede estar en blanco");
+                camposFaltantes += "<br><li>Aprobación Libre";
                 bandera = false;
             }
+
 
             if (bandera === true) {
                 $("#regiration_form").submit();
             } else {
                 e.preventDefault();
+                bootbox.alert("Faltan completar los siguientes campos: <br>" + camposFaltantes);
+                camposFaltantes = " ";
             }
+
         })
     </script>
 </html>
