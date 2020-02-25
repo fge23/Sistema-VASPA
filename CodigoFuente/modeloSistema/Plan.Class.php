@@ -94,24 +94,43 @@ class Plan {
         $this->anio_inicio = $anio_inicio;
     }
     
-    function getCarreras(){
-        $carreras = NULL;
+    /**
+     * 
+     * @return Asignatura[]
+     */
+    function getAsignaturas(){
+        $asignaturas = NULL;
         
-        //$this->query = "SELECT * FROM PLAN_ASIGNATURA WHERE idPlan = '{$this->id}'";
         $this->query = "SELECT B.* FROM PLAN_ASIGNATURA A JOIN ASIGNATURA B ON idAsignatura = id WHERE idPlan = '{$this->id}'";
         
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
-        //var_dump($this->datos);
-        
-        //var_dump($this->datos->num_rows);
-        
+       
         if ($this->datos->num_rows > 0){
             for ($x = 0; $x < $this->datos->num_rows; $x++) {
-                $carreras[] = $this->datos->fetch_object("Asignatura");
+                $asignaturas[] = $this->datos->fetch_object("Asignatura");
             }
         }
         
-        return $carreras;
+        return $asignaturas;
+
+    }
+    
+    /*
+     * Funcion que retorna un array asociativo (clave(idAsignatura), valor(nombreAsignatura) de este plan)
+    */
+    function getAsignaturasArrayAsociativo(){
+        $asignaturas = NULL;
+        
+        $this->query = "SELECT B.* FROM PLAN_ASIGNATURA A JOIN ASIGNATURA B ON idAsignatura = id WHERE idPlan = '{$this->id}'";
+        
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+       
+        if ($this->datos->num_rows > 0){
+            while ($fila = $this->datos->fetch_assoc()) {
+                $asignaturas[$fila['id']] = $fila['nombre'];
+            }           
+        }
+        return $asignaturas;
 
     }
     

@@ -10,7 +10,7 @@ else {
     if (is_null($plan->getId())){
         header("location: planes.php");
     }
-    $carreras = $plan->getCarreras();
+    $asignaturas = $plan->getAsignaturas();
 
 }
 
@@ -46,13 +46,13 @@ else {
                             
                                 
                                 <?php
-                                if (is_null($carreras)){
+                                if (is_null($asignaturas)){
                                     echo '<tr><td colspan="2"> <b> No hay asignaturas asociadas al Plan de Estudio </b></td></tr>';
                                 } else {
-                                    foreach ($carreras as $carrera) {
+                                    foreach ($asignaturas as $asignatura) {
                                 ?>
-                                        <tr><td><?= $carrera->getId(); ?></td>
-                                        <td><?= $carrera->getNombre(); ?></td></tr>
+                                        <tr><td><?= $asignatura->getId(); ?></td>
+                                        <td><?= $asignatura->getNombre(); ?></td></tr>
                                     
                                 <?php } }?>
                                     
