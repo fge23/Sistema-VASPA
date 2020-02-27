@@ -123,7 +123,7 @@ include_once '../modeloSistema/BDConexionSistema.Class.php';
                                 </div>
                             </div>
 
-                            <a href="panelSA3.php">
+                            <a href="panelSA.php">
                                 <button type="button" class="btn btn-outline-secondary">
                                     <span class="oi oi-home"></span> Volver a Inicio
                                 </button>

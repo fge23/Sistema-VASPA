@@ -76,15 +76,15 @@ $Carreras = $ManejadorCarrera->getColeccion();
                         </div>
                            
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer text-center">
                         <button type="submit" class="btn btn-outline-primary" id="boton" name="boton">
                             <span class="oi oi-cloud-upload"></span> Subir Plan
                         </button>
                         
-                        <a href="#">
-                            <button type="button" class="btn btn-outline-danger">
-                                <span class="oi oi-x"></span> Cancelar
-                            </button>
+                        <a href="panelSA.php">
+                                <button type="button" class="btn btn-outline-secondary">
+                                    <span class="oi oi-home"></span> Volver a Inicio
+                                </button>
                         </a>
                     </div>
                 </div>

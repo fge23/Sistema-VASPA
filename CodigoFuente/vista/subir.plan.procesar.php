@@ -148,20 +148,19 @@ if (!file_exists($rutaDestino)) {
                             Ha ocurrido un error. <?php echo '<br>'.$mensajeError; ?>
                         </div>
                     <?php } ?>
-                    <hr />
-                    <h5 class="card-text">Opciones</h5>
-                    <a href="#">
-                        <button type="button" class="btn btn-primary">
-                            <span class="oi oi-home"></span> Volver a Inicio
-                        </button>
-                    </a>
-                    
+                </div>
+                <div class="card-footer text-center">
                     <a href="subir.plan.formulario.php">
-                        <button type="button" class="btn btn-primary">
+                        <button type="button" class="btn btn-outline-primary">
                             <span class="oi oi-cloud-upload"></span> Subir otro Plan de Estudio
                         </button>
                     </a>
                     
+                    <a href="panelSA.php">
+                                <button type="button" class="btn btn-outline-secondary">
+                                    <span class="oi oi-home"></span> Volver a Inicio
+                                </button>
+                     </a>
                 </div>
             </div>
         </div>

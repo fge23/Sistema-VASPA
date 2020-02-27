@@ -168,7 +168,7 @@ if (isset($_POST['subirProgramas']) && $_SERVER["REQUEST_METHOD"] == "POST"){
                                     <span class="oi oi-cloud-upload"></span> Cargar m&aacute;s Programas
                                 </button>
                             </a>
-                            <a href="panelSA3.php">
+                            <a href="panelSA.php">
                                 <button type="button" class="btn btn-outline-secondary">
                                     <span class="oi oi-home"></span> Volver a Inicio
                                 </button>
