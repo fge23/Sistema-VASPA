@@ -1,6 +1,7 @@
 <?php
 
 require '../lib/PHPMailer/PHPMailerAutoload.php';
+include_once '../lib/funcionesUtiles/constantesMail.php';
 
 
 //(observacion: el correo del emisor debe ser un correo de gmail, el cual se 
@@ -8,15 +9,6 @@ require '../lib/PHPMailer/PHPMailerAutoload.php';
 //Ir a su cuenta/seleccionar inicio de sesión y seguridad, 
 //luego ir hasta la sección “Aplicaciones con acceso a la cuenta” y habilitar el 
 //acceso a las aplicaciones pocos seguras, eso es todo.)
-
-//constante que almacena la direccion de correo del emisor del mensaje 
-define("MAIL_EMISOR", "");
-//constante que almacena la contraseña del correo del emisor
-define("CONTRASENA", "");
-
-//constante que almacena la direccion de correo del receptor del mensaje
-define("MAIL_RECEPTOR", "");
-
 
 //Author: Obed Alvarado
 //Author URL: http://obedalvarado.pw
@@ -78,9 +70,9 @@ function enviarMailNuevoProgramaSA($idPrograma) {
         /* Configuracion de variables para enviar el correo 
         usar correo gmail*/
         
-        $mail_username = MAIL_EMISOR; //Correo electronico saliente ejemplo: tucorreo@gmail.com
-        $mail_userpassword = CONTRASENA; //Tu contraseña de gmail
-        $mail_addAddress = MAIL_RECEPTOR; //correo electronico que recibira el mensaje
+        $mail_username = MAIL_SISTEMA; //Correo electronico saliente ejemplo: tucorreo@gmail.com
+        $mail_userpassword = CONTRASENA_SISTEMA; //Tu contraseña de gmail
+        $mail_addAddress = MAIL_SA; //correo electronico que recibira el mensaje
         
         $template = "../lib/plantillaMail/mail_Secretaria_Academica_Nuevo_Programa.html"; //Ruta de la plantilla HTML para enviar nuestro mensaje
         $mail_subject = "Nuevo Programa de $nombreAsignatura para revisar";
@@ -95,11 +87,13 @@ function enviarMailNuevoProgramaDepartamento($idPrograma) {
     include_once '../modeloSistema/Asignatura.Class.php';
     include_once '../modeloSistema/Profesor.Class.php';
     include_once '../modeloSistema/Programa.Class.php';
+    include_once '../modeloSistema/Departamento.Class.php';
     //if (isset($_GET['codAsig'])) {
         //include("../sendemail.php"); //Mando a llamar la funcion que se encarga de enviar el correo electronico
         $programa = new Programa($idPrograma);
         $asignatura = new Asignatura($programa->getIdAsignatura());
         $profesor = new Profesor($asignatura->getIdProfesor());
+        $departamento = new Departamento($asignatura->getIdDepartamento());
         $nombreProfesor = $profesor->getApellido().', '.$profesor->getNombre(); 
         //$codAsignatura = $Asignatura->getId();
         $nombreAsignatura = $asignatura->getNombre();
@@ -107,9 +101,14 @@ function enviarMailNuevoProgramaDepartamento($idPrograma) {
         /* Configuracion de variables para enviar el correo 
         usar correo gmail*/
         
-        $mail_username = MAIL_EMISOR; //Correo electronico saliente ejemplo: tucorreo@gmail.com
-        $mail_userpassword = CONTRASENA; //Tu contraseña de gmail
-        $mail_addAddress = MAIL_RECEPTOR; //correo electronico que recibira el mensaje
+        $mail_username = MAIL_SISTEMA; //Correo electronico saliente ejemplo: tucorreo@gmail.com
+        $mail_userpassword = CONTRASENA_SISTEMA; //Tu contraseña de gmail
+        if ($departamento->getNombre() == 'Ciencias Sociales'){
+            $mail_addAddress = MAIL_DEPTO_CS; //correo electronico que recibira el mensaje
+        } else {
+            $mail_addAddress = MAIL_DEPTO_CNE; //correo electronico que recibira el mensaje
+        }
+
         $template = "../lib/plantillaMail/mail_Departamento_Nuevo_Programa.html"; //Ruta de la plantilla HTML para enviar nuestro mensaje
         $mail_subject = "Nuevo Programa de $nombreAsignatura para revisar";
         sendemail($mail_username, $mail_userpassword, $mail_addAddress, $mail_subject, $template, $asignatura->getId(), $nombreAsignatura, $nombreProfesor, $idPrograma); //Enviar el mensaje
