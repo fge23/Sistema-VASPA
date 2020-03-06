@@ -62,9 +62,9 @@ $Planes = $ManejadorPlan->getColeccion();
                                     <td><?= $Plan->getAnio_fin(); ?></td>
 
                                     <td>
-                                        <a title="Ver detalle" href="carrera.verAsignaturas.php?id=<?= urlencode($Plan->getId()); ?>">
+                                        <a title="Ver Asignaturas" href="plan.asignaturas.php?id=<?= urlencode($Plan->getId()); ?>">
                                             <button type="button" class="btn btn-outline-info">
-                                                <span class="oi oi-zoom-in"></span>
+                                                <span class="oi oi-list"></span>
                                             </button>
                                         </a>
                                         <a title="Modificar" href="plan.modificar.php?id=<?= urlencode($Plan->getId()); ?>">
