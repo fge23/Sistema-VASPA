@@ -1,16 +1,6 @@
 <?php
 include_once '../lib/ControlAcceso.Class.php';
-include_once '../controlSistema/ManejadorAsignatura.php';
-include_once '../controlSistema/ManejadorProgramaPDF.php';
-include_once '../modeloSistema/Carrera.Class.php';
-include_once '../modeloSistema/Asignatura.Class.php';
-include_once '../modeloSistema/Programa.Class.php';
-
-
-$codAsignatura = $_GET['codAsignatura'];
-echo ($codAsignatura);
-$asignatura = new Asignatura($codAsignatura);
-$anio=($_GET['anio']);
+include_once '../controlSistema/ManejadorPrograma.php';
 
 ?>
 
@@ -45,74 +35,60 @@ $anio=($_GET['anio']);
         <?php include_once '../gui/navbar.php';   ?>
         <div class="container">
           
-            <form action="visualizar.programaPdf.listar.ubicacion.php" method="get"> 
-            <div class="card">
+            <form action="programaPdf.procesar.php" method="post"> 
+                <div class="card">
                 
-                <div class="card-header">
-                    <h3>Seguir Programa</h3>
-                </div>
+                    <div class="card-header">
+                        <h3>Seguir Programa - <i>Ubicación actual</i> </h3>
+                    </div>
                 
                 
-                
-                <div class="form-group">
-                    <label> Ubicación actual del Programa: </label>
                     <br/>
-                    <input type="radio" name="ubicacion" value="SA"> SA
-                    <br/>
-                    <input type="radio" name="ubicacion" value="DPTO"> DPTO
-                </div>
+                    
+                    <div class="form-group">
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;Estimado usuario, seleccione la ubicaci&oacute;n actual donde se encuentra el Programa y luego presione el bot&oacute;n <b>Confirmar</b>.</p>
+                        <br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" name="ubicacion" value="SA" id="SA">
+                        <label for="SA"><b>SA</b></label>
+                        <br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" name="ubicacion" value="DPTO" id="DPTO">
+                        <label for="DPTO"><b>DPTO</b></label>
+                    </div>
                 
                 
-                <div class="card-body">
+                    <div class="card-body">
                     
                                    
-                    <div class="card-footer">
+                        <div class="card-footer">
                         
                         
-                        <button type="submit" class="btn btn-outline-success">
-                            <span class="oi oi-check"></span> Confirmar
-                        </button>
+                            <button type="submit" class="btn btn-outline-success">
+                                <span class="oi oi-check"></span> Confirmar
+                            </button>
                      
                         
                         
-                        <a href="visualizar.programaPdf.listar.seguimiento.php">
-                            <button type="button" class="btn btn-outline-danger">
-                                <span class="oi oi-x"></span> Cancelar
-                            </button>
-                        </a>
-                    </div>
+                            <a href="programa.seguirPdf.php">
+                                <button type="button" class="btn btn-outline-danger">
+                                    <span class="oi oi-x"></span> Cancelar
+                                </button>
+                            </a>
+                        </div>
                  
+                    </div>
+
                 </div>
 
-            </div>
-        </form>
-            
-            <!-- A partir de acá el código se encuentra incompleto. Falta terminar de codificar. -->
-            
-            <?php 
-    
-                $ubicacion = $_GET['ubicacion'];
-    
-                $this->query = "UPDATE PROGRAMA "
-                        . "SET ubicacion = '{$ubicacion}'"
-                        . "WHERE idAsignatura = '{$codAsignatura}' AND anio = '{$anio}'";
-      
-                        
-                        
-            ?>
-            <!-- Estas dos lineas estan de mas, no hacen nada -->
-            <input type="hidden" name="codCarrera" id="codCarrera" value="<?= $_POST['idCarrera']; ?>">
-            <input type="hidden" name="anio" id="anio" value="<?= $_POST['anio']; ?>">
-            
-          
+                <input type="hidden" name="codAsignatura" id="codAsignatura" value="<?= $_GET['codAsignatura']; ?>">
+                <input type="hidden" name="anio" id="anio" value="<?= $_GET['anio']; ?>">
+
+            </form>
+       
         </div>        
         <?php include_once '../gui/footer.php'; ?>
     </body>
   
     
-    
-    
- 
 </html>
-
-

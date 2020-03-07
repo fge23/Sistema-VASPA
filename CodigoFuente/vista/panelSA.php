@@ -116,7 +116,7 @@ $carreras = $manejadorCarrera->getColeccion();
                                 <h5 class="card-title">Accesos r&aacute;pidos   </h5>
                                 <hr>
                                 <a href="programas.pendientes.php" class="btn btn-outline-secondary btn-block">Programas pendientes</a>
-                                <a href="#" class="btn btn-outline-secondary btn-block">Seguimiento de Programa</a>
+                                <a href="programa.seguirPdf.php" class="btn btn-outline-secondary btn-block">Seguimiento de Programa</a>
                                 <a href="subir.programa.formulario.php" class="btn btn-outline-secondary btn-block">Subir Programa</a>
                                 <a href="subir.plan.formulario.php" class="btn btn-outline-secondary btn-block">Subir Plan</a>
                             </div>

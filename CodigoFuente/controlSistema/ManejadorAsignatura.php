@@ -201,21 +201,21 @@ class ManejadorAsignatura {
     
     
     
-    /* El metodo getAsignaturasDeCarrera() me devuelve todas las asignaturas de una carrera de un determinado plan. 
+     /* El metodo getAsignaturasDeCarrera() me devuelve todas las asignaturas de una carrera de un determinado plan. 
 
-       primera modificacion: el metodo asignaturasConProgramasAprobadosDeCarrera() me devuelve todos los programas de asignaturas de una carrera de un determinado plan
+       primera modificacion: el metodo asignaturasConProgramasAprobadosDeCarreraa() me devuelve todos los programas de asignaturas de una carrera de un determinado plan
        pero solo aquellas que se encuentran aprobados (por SA y DEPTO, para realizar su seguimiento fisico). El inconveniente es que en todos los años que se encuentra
        habil el plan, me muestra todos los mismos programas desde año inicio hasta año fin del programa. No tiene en cuenta el año del programa especifico. 
 
-       Segunda modificacion: el metodo asignaturasConProgramasAprobadosDeCarreraa() me devuelve todos los programas de asignaturas de una carrera de un determinado 
+       Segunda modificacion: el metodo asignaturasConProgramasAprobadosDeCarrera() me devuelve todos los programas de asignaturas de una carrera de un determinado 
        año especifico pero solo aquellos que se encuentran aprobados (por SA y DEPTO, para realizar su seguimiento fisico).
        En este metodo se soluciona el inconveniente del metodo anterior, ya que solo toma como referencia para comparar, el año del programa (atributo en tabla programa)
        de esta forma, el programa no se repite todos los años que dura un plan. 
      */
     
     
-    
-    function asignaturasConProgramasAprobadosDeCarrera($codCarrera, $anio) {
+   /* 
+    function asignaturasConProgramasAprobadosDeCarreraa($codCarrera, $anio) {
         // La siguiente consulta devuelve el codigo de todas las asignaturas que pertenecen a un plan de una carrera
         // Para saber cual es el plan correcto de la carrera se utiliza el anio
         $this->query = "SELECT asignatura.nombre, asignatura.id 
@@ -238,14 +238,14 @@ class ManejadorAsignatura {
         return $Asignaturas;
     }
     
+    */
     
     
     
     
+    //ESTE ES EL METODO QUE FUNCIONA CORRECTAMENTE
     
-    //ESTE ES EL QUE FUNCIONA CORRECTAMENTE
-    
-     function asignaturasConProgramasAprobadosDeCarreraa($codCarrera, $anio) {
+     function asignaturasConProgramasAprobadosDeCarrera($codCarrera, $anio) {
         // La siguiente consulta devuelve el codigo de todas las asignaturas que pertenecen a un plan de una carrera
         // Para saber cual es el plan correcto de la carrera se utiliza el anio
         $this->query = "SELECT asignatura.nombre, asignatura.id FROM carrera JOIN plan JOIN plan_asignatura JOIN asignatura JOIN programa" .

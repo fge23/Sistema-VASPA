@@ -1,14 +1,14 @@
 <?php
 include_once '../lib/ControlAcceso.Class.php';
 include_once '../controlSistema/ManejadorAsignatura.php';
-include_once '../controlSistema/ManejadorProgramaPDF.php';
 include_once '../modeloSistema/Carrera.Class.php';
 include_once '../modeloSistema/Asignatura.Class.php';
+
 
 $anio = $_POST['anio'];
 $codCarrera = $_POST['idCarrera'];
 $ManejadorAsignatura = new ManejadorAsignatura();
-$Asignaturas = $ManejadorAsignatura->asignaturasConProgramasAprobadosDeCarreraa($codCarrera, $anio);
+$Asignaturas = $ManejadorAsignatura->asignaturasConProgramasAprobadosDeCarrera($codCarrera, $anio);
 
 $carrera = new Carrera($codCarrera, NULL);
 
@@ -67,7 +67,7 @@ $carrera = new Carrera($codCarrera, NULL);
                         
                                 <a href="visualizar.programaPdf.listar.ubicacion.php?anio=<?php echo $anio ?>&codAsignatura=<?php echo $Asignatura->getId() ?>" >
     
-                                    <button type="button" class="btn btn-outline-success">
+                                    <button type="button" class="btn btn-outline-success" title="Ver ubicacion del programa">
                                         <span class="oi oi-document"></span>
                                     </button>
                                 </a>
@@ -85,11 +85,6 @@ $carrera = new Carrera($codCarrera, NULL);
                 </div>
 
             </div>
-            
-            <!-- Estas dos lineas estan de mas, no hacen nada -->
-            <input type="hidden" name="codCarrera" id="codCarrera" value="<?= $_POST['idCarrera']; ?>">
-            <input type="hidden" name="anio" id="anio" value="<?= $_POST['anio']; ?>">
-            
          
         </div>        
         <?php include_once '../gui/footer.php'; ?>

@@ -58,7 +58,7 @@ header('Content-Type: text/html; charset=ISO-8859-1');
                             <button type="submit" class="btn btn-outline-success">
                                 <span class="oi oi-check"></span> Confirmar
                             </button>
-                            <a href="#">
+                            <a href="panelSA.php">
                                 <button type="button" class="btn btn-outline-danger">
                                     <span class="oi oi-x"></span> Cancelar
                                 </button>
