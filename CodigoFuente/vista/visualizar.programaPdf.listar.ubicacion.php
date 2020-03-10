@@ -1,6 +1,5 @@
 <?php
 include_once '../lib/ControlAcceso.Class.php';
-include_once '../controlSistema/ManejadorPrograma.php';
 
 ?>
 
@@ -23,23 +22,21 @@ include_once '../controlSistema/ManejadorPrograma.php';
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.8/js/bootstrap-select.min.js"></script>
        
         
-        <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Visualizar Programa</title>
-    </head>
-    <body>
-        
-       
+        <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Seguir Programa</title>
 
-        
-   
+    </head>
+
+
+    <body>
         
         <?php include_once '../gui/navbar.php';   ?>
         <div class="container">
           
-            <form action="programaPdf.procesar.php" method="post"> 
+            <form action="programaPdf.procesar.php" method="post" id="formulario"> 
                 <div class="card">
                 
                     <div class="card-header">
-                        <h3>Seguir Programa - <i>Ubicación actual</i> </h3>
+                        <h3>Seguir Programa - <i>Actualizar Ubicación</i> </h3>
                     </div>
                 
                 
@@ -49,7 +46,7 @@ include_once '../controlSistema/ManejadorPrograma.php';
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;Estimado usuario, seleccione la ubicaci&oacute;n actual donde se encuentra el Programa y luego presione el bot&oacute;n <b>Confirmar</b>.</p>
                         <br/>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="radio" name="ubicacion" value="SA" id="SA">
+                        <input type="radio" name="ubicacion" value="SA" id="SA" checked>
                         <label for="SA"><b>SA</b></label>
                         <br/>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -81,14 +78,12 @@ include_once '../controlSistema/ManejadorPrograma.php';
 
                 </div>
 
-                <input type="hidden" name="codAsignatura" id="codAsignatura" value="<?= $_GET['codAsignatura']; ?>">
-                <input type="hidden" name="anio" id="anio" value="<?= $_GET['anio']; ?>">
-
+                <input type="hidden" name="idPrograma" id="idPrograma" value="<?= $_GET['idPrograma']; ?>">
+               
             </form>
        
         </div>        
         <?php include_once '../gui/footer.php'; ?>
     </body>
   
-    
 </html>

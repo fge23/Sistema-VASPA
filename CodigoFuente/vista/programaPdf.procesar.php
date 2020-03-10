@@ -3,13 +3,12 @@ include_once '../lib/ControlAcceso.Class.php';
 include_once '../controlSistema/ManejadorPrograma.php';
 
 
-$codAsignatura = $_POST['codAsignatura'];
-$anio = $_POST['anio'];
+$idPrograma = $_POST['idPrograma'];
 $ubicacion = $_POST['ubicacion'];
 
 $ManejadorPrograma = new ManejadorPrograma();
 
-$consulta = $ManejadorPrograma->modificarUbicacion($ubicacion, $anio, $codAsignatura);
+$consulta = $ManejadorPrograma->modificarUbicacion($ubicacion, $idPrograma);
 
 ?>
 
@@ -61,3 +60,4 @@ $consulta = $ManejadorPrograma->modificarUbicacion($ubicacion, $anio, $codAsigna
         <?php include_once '../gui/footer.php'; ?>
     </body>
 </html>
+

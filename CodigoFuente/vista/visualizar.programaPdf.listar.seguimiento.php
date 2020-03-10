@@ -1,16 +1,21 @@
 <?php
 include_once '../lib/ControlAcceso.Class.php';
-include_once '../controlSistema/ManejadorAsignatura.php';
 include_once '../modeloSistema/Carrera.Class.php';
-include_once '../modeloSistema/Asignatura.Class.php';
+include_once '../modeloSistema/BDConexionSistema.Class.php';
 
 
 $anio = $_POST['anio'];
 $codCarrera = $_POST['idCarrera'];
-$ManejadorAsignatura = new ManejadorAsignatura();
-$Asignaturas = $ManejadorAsignatura->asignaturasConProgramasAprobadosDeCarrera($codCarrera, $anio);
 
 $carrera = new Carrera($codCarrera, NULL);
+
+
+$consulta = "SELECT asignatura.nombre, asignatura.id, programa.ubicacion, programa.id AS idPrograma FROM carrera JOIN plan JOIN plan_asignatura JOIN asignatura JOIN programa" .
+                       " WHERE carrera.`id` = plan.`idCarrera` AND plan.`id` = plan_asignatura.`idPlan` "
+                       . "AND asignatura.`id` = plan_asignatura.`idAsignatura` AND (carrera.`id` LIKE '$codCarrera') AND (programa.`anio` = $anio)"
+                       . " AND (asignatura.`id` = programa.`idAsignatura`) AND (programa.`aprobadoSa` = '1' AND programa.`aprobadoDepto` = '1')";
+
+$asignaturas = BDConexionSistema::getInstancia()->query($consulta);
 
 ?>
 
@@ -24,14 +29,9 @@ $carrera = new Carrera($codCarrera, NULL);
         <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
         <script type="text/javascript" src="../lib/quicksearch/jquery.quicksearch.js"></script>
 
-        <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Visualizar Programa</title>
+        <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Seguir Programa</title>
     </head>
     <body>
-        
-       
-
-        
-   
         
         <?php include_once '../gui/navbar.php';   ?>
         <div class="container">
@@ -54,34 +54,47 @@ $carrera = new Carrera($codCarrera, NULL);
                             <tr class="table-info">
                                 <th>C&oacute;digo</th>
                                 <th>Asignatura</th>
-                                <th>Opciones</th>
+                                <th>Ubicaci&oacute;n Actual</th>
+                                <th>Actualizar Ubicaci&oacute;n</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <?php if (!is_null($Asignaturas)){ foreach ($Asignaturas as $Asignatura) { ?>
-                            <td><?= $Asignatura->getId(); ?></td>
-                            <td><?= $Asignatura->getNombre(); ?></td>
-                          
-                            <td>
-                        
-                                <a href="visualizar.programaPdf.listar.ubicacion.php?anio=<?php echo $anio ?>&codAsignatura=<?php echo $Asignatura->getId() ?>" >
+
+                            <tr>
+                            <?php while ($asignatura=$asignaturas->fetch_assoc()){ ?>
+
+                                <td><?php echo $asignatura['id']; ?></td>
+                                <td><?php echo $asignatura['nombre']; ?></td>
+                                <td><?php echo $asignatura['ubicacion']; ?></td>
+                                <td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="visualizar.programaPdf.listar.ubicacion.php?idPrograma=<?php echo $asignatura['idPrograma'];?>">
     
-                                    <button type="button" class="btn btn-outline-success" title="Ver ubicacion del programa">
-                                        <span class="oi oi-document"></span>
-                                    </button>
-                                </a>
-                              
-                            </td>
-             
-                        </tr>
-                            <?php }} ?> 
+                                        <button type="button" class="btn btn-outline-success" title="Actualizar ubicacion del programa">
+                                            <span class="oi oi-document"></span>
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+
+                        <?php } ?>   
+                          
                         </tbody>
                     </table>                    
 
                     <div id="noResultMessage" class="alert alert-warning" role="alert" style="display: block;">
                         No se han encontrado resultados
                     </div>
+
+                    <div class="card-footer text-center">
+                        <a href="programa.seguirPdf.php">
+                        <button type="button" class="btn btn-primary">
+                            <span class="oi oi-account-logout"></span> Volver atras
+                        </button>
+                        </a>
+                    </div>   
+
                 </div>
 
             </div>

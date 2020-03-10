@@ -147,25 +147,10 @@ class ManejadorPrograma {
         return $this->datos['id'];
     }
     
-    
-    
-    
-    function modificarUbicacion($ubicacion, $anio, $codAsignatura) {
-     
-        $this->query = "UPDATE PROGRAMA "
-                  . "SET ubicacion = '{$ubicacion}'"
-                  . "WHERE idAsignatura = '{$codAsignatura}' AND anio = '{$anio}'";
-        $consulta = BDConexionSistema::getInstancia()->query($this->query);
-        if ($consulta) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+   
 
 
-
-/*    function modificarUbicacion2($ubicacion, $id) {
+    function modificarUbicacion($ubicacion, $id) {
      
         $this->query = "UPDATE PROGRAMA "
                   . "SET ubicacion = '{$ubicacion}'"
@@ -178,6 +163,6 @@ class ManejadorPrograma {
         }
     }
 
-*/
+
 
 }
