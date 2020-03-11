@@ -7,6 +7,20 @@ $DatosFormulario = $_POST;
 $ManejadorPrograma = new ManejadorPrograma();
 //var_dump($DatosFormulario);
 $consulta = $ManejadorPrograma->alta($DatosFormulario);
+//Se obtiene el ID del último programa insertado de dos formas
+$idPrograma1 = $ManejadorPrograma->getUltimoID1($DatosFormulario['anio'], $DatosFormulario['idAsignatura'],$DatosFormulario['fechaCarga']);
+$idPrograma2 = $ManejadorPrograma->getUltimoID2();
+//Se compara que ambas formas esten obteniendo el mismo ID
+if($idPrograma1 == $idPrograma2){
+    $idPrograma = $idPrograma1;
+}
+else{
+    $idPrograma = PHP_INT_MAX;
+}
+//echo "ID PROGRAMA".$idPrograma;
+
+
+
 
 
 ?>
@@ -41,7 +55,7 @@ $consulta = $ManejadorPrograma->alta($DatosFormulario);
                     <?php } ?>
                     <hr />
                     <h5 class="card-text">Opciones</h5>
-                    <a href="cargarBibliografia.php">
+                    <a href="cargarBibliografia.php?id=<?= $idPrograma; ?>">
                         <button type="button" class="btn btn-primary">
                             <span class="oi oi-document"></span> Cargar Bibliograf&iacute;a
                         </button>

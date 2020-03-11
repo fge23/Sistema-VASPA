@@ -109,6 +109,7 @@ class ManejadorPrograma {
                 . "' ', ' ' )";
         //var_dump($this->query);
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
+        
         if ($consulta) {
             return true;
         } else {
@@ -163,6 +164,26 @@ class ManejadorPrograma {
         }
     }
 
-
+    function getUltimoID1($anio, $idAsignatura, $fechaCarga){
+        
+        $this->query = "SELECT id "
+                     . "FROM PROGRAMA "
+                     . "WHERE idAsignatura = {$idAsignatura} "
+                     . "AND anio = {$anio} "
+                     . "AND fechaCarga = '{$fechaCarga}' "
+                     . "ORDER BY id desc "
+                     . "LIMIT 1";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        $this->datos = $this->datos->fetch_assoc();
+        return $this->datos['id'];
+        
+    }
+    
+    function getUltimoID2(){
+       $this->query = "SELECT LAST_INSERT_ID() as id";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        $this->datos = $this->datos->fetch_assoc();
+        return $this->datos['id'];
+    }
 
 }
