@@ -7,15 +7,16 @@ $DatosFormulario = $_POST;
 $ManejadorPrograma = new ManejadorPrograma();
 //var_dump($DatosFormulario);
 $consulta = $ManejadorPrograma->alta($DatosFormulario);
+
+//Asignamos valor MAX al Id del Programa
+$idPrograma = PHP_INT_MAX;
 //Se obtiene el ID del último programa insertado de dos formas
 $idPrograma1 = $ManejadorPrograma->getUltimoID1($DatosFormulario['anio'], $DatosFormulario['idAsignatura'],$DatosFormulario['fechaCarga']);
 $idPrograma2 = $ManejadorPrograma->getUltimoID2();
+
 //Se compara que ambas formas esten obteniendo el mismo ID
 if($idPrograma1 == $idPrograma2){
     $idPrograma = $idPrograma1;
-}
-else{
-    $idPrograma = PHP_INT_MAX;
 }
 //echo "ID PROGRAMA".$idPrograma;
 
@@ -45,7 +46,7 @@ else{
                 <div class="card-body">
                     <?php if ($consulta) { ?>
                         <div class="alert alert-success" role="alert">
-                            Operaci&oacute;n realizada con &eacute;xito.
+                            Los datos del Programa se han guardado con &eacute;xito.
                         </div>
                     <?php } ?>   
                     <?php if (!$consulta) { ?>
@@ -57,12 +58,12 @@ else{
                     <h5 class="card-text">Opciones</h5>
                     <a href="cargarBibliografia.php?id=<?= $idPrograma; ?>">
                         <button type="button" class="btn btn-primary">
-                            <span class="oi oi-document"></span> Cargar Bibliograf&iacute;a
+                            <span class="oi oi-document"></span> Agregar Bibliograf&iacute;a
                         </button>
                     </a>
                     <a href="asignaturasDeProfesor.php">
                         <button type="button" class="btn btn-primary">
-                            <span class="oi oi-account-logout"></span> Salir
+                            <span class="oi oi-account-logout"></span> Continuar m&aacute;s tarde
                         </button>
                     </a>
                 </div>

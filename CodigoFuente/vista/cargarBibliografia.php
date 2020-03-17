@@ -1,5 +1,7 @@
 <?php
 include_once '../lib/Constantes.Class.php';
+$idPrograma = $_GET["id"];
+//echo "El ID del programa es: " . $idPrograma;
 ?>
 
 <html>
@@ -10,72 +12,70 @@ include_once '../lib/Constantes.Class.php';
         <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
-        <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Agregar Revista</title>
+        <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Bibliograf&ia&iacute;a</title>
     </head>
-
 </head>
 <body>
+    <?php include_once '../gui/navbar.php'; ?>
     <div class="container">
         <div class="card">
             <div class="card-header">
                 <h3>Agregar Bibliografia</h3>
                 <p>
-                    Complete los campos a continuaci&oacute;n. 
-                    Luego, presione el bot&oacute;n <b>Siguiente</b> para pasar a la siguiente secci&oacute;n.<br />
-                    Si desea cancelar, presione el bot&oacute;n <b>Cancelar</b>.
+                    A continuaci&oacute;n, podr&aacute; observar el estado de la Bibliograf&iacute;a cargada para el Programa.<br/>
+                    Si desea enviar el Programa a revisi&oacute;n, presione el bot&oacute;n <b>Enviar a revisi&oacute;n</b><br/>
+                    Si desea continuar m&aacute;s tarde, presione el bot&oacute;n <b>Continuar m&aacute;s tarde</b>
                 </p>
             </div>
             <div class="card-body">
-                <form method="post" action="prueba2.php">
-                    <h3 class="bg-primary text-center pad-basic no-btm">Agregar Revista </h3>
-                    <table class="table table-borderless" id="tabla">
+                <table class="table table-hover table-sm">
+                    <tr class="table-info">
+                        <th>Tipo de Bibliograf&iacute;a</th>
+                        <th>Estado</th>
+                    </tr>
+                    <tr>
+                  
+                        <td><a href="../gestionarBibliografia/libros.php">Libros - Bibliograf&iacute;a Obligatoria </a></td>
+                   
+                        <td>Estado Libros</td>
+                    </tr>
+                    <tr>
+                        <td><a href="../gestionarBibliografia/libros.php">Libros - Bibliograf&iacute;a Complementaria</a></td>
+                        <td>Estado Libros</td>
+                    </tr>
+                    <tr>
+                        <td><a href="../gestionarBibliografia/revistas.php">Art&iacute;culos de Revistas</a></td>
+                        <td>Estado Revistas</td>
+                    </tr>
+                    <tr>
+                        <td><a href="../gestionarBibliografia/recursos.php">Recursos en Internet</a></td>
+                        <td>Estado Recursos</td>
+                    </tr>
+                    <tr>
+                        <td><a href="../gestionarBibliografia/otrosMateriales.php?id=<?= $idPrograma; ?>">Otros</a></td>
+                        <td>Estado otros</td>
+                    </tr>
 
-                        <tr class="fila-fija">
-                            <td><input class="form-control" required name="apellido[]" placeholder="Apellido del Autor"/></td>
-                            <td><input class="form-control" required name="nombre[]" placeholder="Nombre del Autor"/></td>
-                            <td><input class="form-control" required name="tituloArticulo[]" placeholder="T&iacute;tulo del Art&iacute;culo"/></td>
-                            <td><input class="form-control" required name="tituloRevista[]" placeholder="T&iacute;tulo de la Revista"/></td>
-                            <td><input class="form-control" required name="pagina[]" placeholder="Tomo, Volumen o P&aacute;gina"/></td>
 
-                        </tr>
-                        <tr class="fila-fija">
-                            <td><input class="form-control" required name="fecha[]" placeholder="Fecha"/></td>
-                            <td><input class="form-control" required name="unidad[]" placeholder="Unidad"/></td>
-                            <td><input class="form-control" required name="biblioteca[]" placeholder="Biblioteca"/></td>
-                            <td><input class="form-control" required name="siunpa[]" placeholder="SIUNPA"/></td>
-                            <td><input class="form-control" required name="otro[]" placeholder="Otro"/></td>
-                            <td class="eliminar"><input class="btn-danger" type="button"   value="Menos -"/></td>
-                        </tr>
 
-                    </table>
 
-                    <div class="btn-der">
-                        <input type="submit" name="insertar" value="Guardar" class="btn btn-info"/>
-                        <button id="adicional" name="adicional" type="button" class="btn btn-warning"> Agregar + </button>
+                </table>
 
-                    </div>
-                </form>
+
             </div>
-            <script>
-                $(function () {
-                    // Clona la fila oculta que tiene los campos base, y la agrega al final de la tabla
-                    $("#adicional").on('click', function () {
-                        $("#tabla tbody tr:eq(0),tr:eq(1)").clone().removeClass('fila-fija').appendTo("#tabla");
-                    });
+            <div class="card-footer">
+                    <a href="cargarBibliografia.php?id=<?= $idPrograma; ?>">
+                        <button type="button" class="btn btn-primary">
+                            <span class="oi oi-document"></span> Enviar Programa a Revisi&oacute;n
+                        </button>
+                    </a>
+                <a href="asignaturasDeProfesor.php">
+                        <button type="button" class="btn btn-primary">
+                            <span class="oi oi-account-logout"></span> Continuar m&aacute;s tarde
+                        </button>
+                    </a>
+            </div>
+        </div>
+    </div>
 
-                    // Evento que selecciona la fila y la elimina 
-                    $(document).on("click", ".eliminar", function () {
-                        var parent = $(this).parents().get(0);
-
-                        var p1 = $(parent).parents().children().get(0);
-                        var p2 = $(parent).parents().children().get(1);
-                        $(p1).remove();
-                        $(p2).remove();
-
-
-                    });
-                });
-
-            </script>
-            </body>
-            </html
+</html

@@ -1,4 +1,4 @@
-function addRecord() {
+function addRecord(idPrograma) {
     // recupera valores
     var nuevo_descripcion = $("#nuevo_descripcion").val();
 
@@ -9,7 +9,7 @@ function addRecord() {
 
     } else {
         // se llama a la API addRecord para agregar nuevo registro
-        $.post("../gestionarBibliografia/ajaxOtrosMateriales/addRecord.php", {
+        $.post("../gestionarBibliografia/ajaxOtrosMateriales/addRecord.php?id="+idPrograma, {
             nuevo_descripcion: nuevo_descripcion,
         }, function (data, status) {
             // oculta el Modal

@@ -1,7 +1,7 @@
 <?php
 
-include_once 'C:/xampp/htdocs/vaspa/CodigoFuente/modeloSistema/BDConexionSistema.Class.php';
-include_once 'C:/xampp/htdocs/vaspa/CodigoFuente/modeloSistema/Programa.Class.php';
+include_once '../modeloSistema/BDConexionSistema.Class.php';
+include_once '../modeloSistema/Programa.Class.php';
 
 /**
  * Description of ManejadorPrograma
@@ -107,7 +107,7 @@ class ManejadorPrograma {
                 . "  'SA','{$Programa->getIdAsignatura()}' , {$Programa->getAprobadoSa()},"
                 . " {$Programa->getAprobadoDepto()}, '{$Programa->getFechaCarga()}', {$Programa->getVigencia()},"
                 . "' ', ' ' )";
-        //var_dump($this->query);
+       // var_dump($this->query);
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
         
         if ($consulta) {
@@ -116,21 +116,6 @@ class ManejadorPrograma {
             return false;
         }
     }
-
-//    function modificacion($datos, $codCarrera){
-//        $Carrera = new Carrera();
-//        $Carrera->setCodCarrera($datos['codCarrera']);
-//        $Carrera->setNombre($datos['nombre']);
-//        $this->query = "UPDATE CARRERA "
-//                . "SET codCarrera = {$Carrera->getCodCarrera()} , nombre = '{$Carrera->getNombre()}' "
-//                . "WHERE codCarrera = {$codCarrera}";
-//        $consulta = BDConexionSistema::getInstancia()->query($this->query);
-//        if ($consulta) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
 
     /**
      * 
