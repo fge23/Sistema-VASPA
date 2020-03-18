@@ -35,13 +35,34 @@ class PermisosSistema {
     const PERMISO_USUARIOS = "Usuarios";
     const PERMISO_PERMISOS = "Permisos";
     const PERMISO_ROLES = "Roles";
+    
+    // 
+    const PERMISO_CARRERAS = "Carreras";
+    const PERMISO_PLANES = "Planes";
+    const PERMISO_ASIGNATURAS = "Asignaturas";
+    const PERMISO_PROFESORES = "Profesores";
+    const PERMISO_GENERAR_PDF = "Generar_PDF";
+    const PERMISO_SUBIR_PROGRAMA_FIRMADO = "Subir_Programa_Firmado";
+    const PERMISO_SUBIR_PLAN = "Subir_Plan";
+    const PERMISO_GESTIONAR_PROGRAMA = "Gestionar_Programa";
+    const PERMISO_GESTIONAR_BIBLIOGRAFIA = "Gestionar_Bibliografia";
+    const PERMISO_SEGUIR_PROGRAMA = "Seguir_Programa";
+    const PERMISO_VER_INFORMACION_ASIGNATURA = "Ver_Informacion_Asignatura";
+    const PERMISO_ENVIAR_NOTIFICACION = "Enviar_Notificacion";
+    const PERMISO_OBTENER_ASIGNATURAS_PENDIENTES = "Obtener_Asignaturas_Pendientes";
+    const PERMISO_REVISAR_PROGRAMA = "Revisar_Programa";
 
     /**
      * Roles del Sistema.
      * La definición de los todos roles es Opcional, pero se requiere cargar un rol Estandar para el autoregistro de Usuarios.
      * 
      */
-    const ROL_ESTANDAR = 'Usuario Comun';
+    const ROL_ESTANDAR = 'Usuario Comun'; // Eliminar este ROL
+    const ROL_ADMIN = "Administrador";
+    const ROL_SECRETARIO_ACADEMICO = "Secretario Académico";
+    const ROL_DIRECTOR_DEPARTAMENTO = "Director de Departamento";
+    const ROL_PROFESOR = "Profesor";
+    //const ROL_INVITADO = "Invitado";
 
 }
 
@@ -142,15 +163,32 @@ class UsuarioSesion {
             throw new Exception($ex->getMessage(), $ex->getCode());
         }
         
-        if (!$this->id){
-            try {
-                $this->registrarUsuario();
-            } catch (Exception $ex) {
-                throw new Exception($ex->getMessage(), $ex->getCode());
-            }
-        }
-            
-        $this->setRoles();
+        // Si no se encuentra registrado el usuario
+        
+//        if (!$this->id){
+//            $_SESSION['msgLogin'] = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+//                                        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+//                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+//                                          <span aria-hidden="true">&times;</span>
+//                                        </button>
+//                                      </div>';
+//            echo "<b>No existe el usuario con el mail: $email_</b>";
+////            try {
+////                echo '<br>voy a registrar un nuevo usuario<br>';
+////                $this->registrarUsuario();
+////            } catch (Exception $ex) {
+////                throw new Exception($ex->getMessage(), $ex->getCode());
+////            }
+//        }
+        
+        //echo $_SESSION['msgLogin'];
+        //var_dump($_SESSION);
+        //echo '<br>';
+        //var_dump($this->id);
+        //exit();
+        
+        if ($this->id){    
+        $this->setRoles();}
 
     }
 
@@ -274,13 +312,13 @@ class ControlAcceso {
         /**
          * Luego de loguear, redireccion al index correspondiente a cada usuario.
          */
-        if (
-                ($this->ubicacion == Constantes::HOMEURL) &&
-                (isset($_SESSION['usuario'])) &&
-                (is_a($_SESSION['usuario'], 'UsuarioGoogle'))
-        ) {
-            $this->redireccionaIndex();
-        }
+//        if (
+//                ($this->ubicacion == Constantes::HOMEURL) &&
+//                (isset($_SESSION['usuario'])) &&
+//                (is_a($_SESSION['usuario'], 'UsuarioGoogle'))
+//        ) {
+//            $this->redireccionaIndex();
+//        }
     }
 
     /**
@@ -355,17 +393,52 @@ class ControlAcceso {
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
-        $_SESSION['usuario'] = $Usuario;
+        
+        /* la sesion se asigna cuando el usuario existe */
+        if($Usuario->id != NULL){
+            $_SESSION['usuario'] = $Usuario;
+        }else{
+            //session_unset();
+            $_SESSION['usuario'] = ""; // SI EL USUARIO NO ESTA REGISTRADO EN EL SISTEMA DEVOLVEMOS LA SESION DEL USUARIO CON LA CADENA VACIA
+        }
+        
+        //$_SESSION['usuario'] = $Usuario;
     }
 
     /**
      * 
      */
     function redireccionaIndex() {
-        $this->ubicacion = Constantes::HOMEAUTH;
-        header("Location: {$this->ubicacion}");
+//        $this->ubicacion = Constantes::HOMEAUTH;
+//        header("Location: {$this->ubicacion}");
+        
+        // Obtenemos el primer Rol del Usuario, por ahora se considera que un usuario solo puede tener un solo rol
+        // Se debe modificar el ABM USUARIOS en caso de que sea asi
+        if ($_SESSION['usuario'] != ""){
+            $Usuario = $_SESSION['usuario'];
+            // Obtenemos el nombre del ROL del usuario
+            $rol = $Usuario->roles[0]->nombre;
+
+            // De acuerdo al ROL del Usuario lo derivamos a su pantalla principal.
+            if ($rol == PermisosSistema::ROL_ADMIN){
+                $this->ubicacion = Constantes::HOMEAUTH;
+                header("Location: {$this->ubicacion}");
+            }
+            if ($rol == PermisosSistema::ROL_SECRETARIO_ACADEMICO){
+                $this->ubicacion = Constantes::HOME_SA;
+                header("Location: {$this->ubicacion}");
+            }
+            if ($rol == PermisosSistema::ROL_PROFESOR){
+                $this->ubicacion = Constantes::HOME_PROF;
+                header("Location: {$this->ubicacion}");
+            }
+            if ($rol == PermisosSistema::ROL_DIRECTOR_DEPARTAMENTO){
+                $this->ubicacion = Constantes::HOME_DPTO;
+                header("Location: {$this->ubicacion}");
+            }
+        }
+        
     }
 
 }
-
 $ControlAcceso = new ControlAcceso();

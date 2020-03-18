@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-11-2018 a las 12:04:22
--- Versión del servidor: 10.1.36-MariaDB
--- Versión de PHP: 7.2.10
+-- Tiempo de generación: 18-03-2020 a las 01:56:25
+-- Versión del servidor: 10.1.37-MariaDB
+-- Versión de PHP: 7.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,9 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `bdusuarios`
 --
+DROP DATABASE IF EXISTS `bdusuarios`;
+CREATE DATABASE IF NOT EXISTS `bdusuarios` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `bdusuarios`;
 
 -- --------------------------------------------------------
 
@@ -42,7 +45,19 @@ INSERT INTO `permiso` (`id`, `nombre`) VALUES
 (8, 'Roles'),
 (9, 'Permisos'),
 (11, 'Salir'),
-(12, 'Ingresar');
+(12, 'Ingresar'),
+(13, 'Carreras'),
+(14, 'Planes'),
+(15, 'Asignaturas'),
+(16, 'Profesores'),
+(17, 'GenerarPDF'),
+(18, 'SubirProgramaFirmado'),
+(19, 'SubirPlan'),
+(20, 'GestionarPrograma'),
+(21, 'GestionarBibliografia'),
+(22, 'SeguirPrograma'),
+(23, 'EnviarNotificacion'),
+(24, 'RevisarPrograma');
 
 -- --------------------------------------------------------
 
@@ -61,7 +76,10 @@ CREATE TABLE `rol` (
 
 INSERT INTO `rol` (`id`, `nombre`) VALUES
 (7, 'Usuario Comun'),
-(8, 'Administrador');
+(8, 'Administrador'),
+(9, 'Profesor'),
+(10, 'Director de Departamento'),
+(11, 'Secretario Académico');
 
 -- --------------------------------------------------------
 
@@ -84,7 +102,37 @@ INSERT INTO `rol_permiso` (`id_rol`, `id_permiso`) VALUES
 (8, 7),
 (8, 8),
 (8, 9),
-(8, 11);
+(8, 11),
+(8, 13),
+(8, 14),
+(8, 15),
+(8, 16),
+(8, 17),
+(8, 18),
+(8, 19),
+(8, 20),
+(8, 21),
+(8, 22),
+(8, 23),
+(8, 24),
+(9, 11),
+(9, 17),
+(9, 20),
+(9, 21),
+(10, 11),
+(10, 24),
+(11, 7),
+(11, 11),
+(11, 13),
+(11, 14),
+(11, 15),
+(11, 16),
+(11, 17),
+(11, 18),
+(11, 19),
+(11, 22),
+(11, 23),
+(11, 24);
 
 -- --------------------------------------------------------
 
@@ -103,12 +151,14 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `nombre`, `email`) VALUES
-(28, 'Claudio', 'Claudio@gmail.com'),
-(27, 'sagsagdh', 'dsadsadad@gmail.com'),
+(29, 'Jefe Departamento Cs. Naturales y Exactas', 'dcienciasnaturalesyexactas@gmail.com'),
+(28, 'Jefa Departamento Cs. Sociales', 'dcienciasociales@gmail.com'),
 (23, 'Eder dos Santos', 'esantos@uarg.unpa.edu.ar'),
+(32, 'Fabricio Gonzalez', 'fabriciowgonzalez@gmail.com'),
 (24, 'Francisco Estrada', 'franciscoestrada2395@gmail.com'),
-(26, 'Gabriel', 'gabriel@gmail.com'),
-(25, 'Pablo', 'pablo@gmail.com');
+(33, 'Nicolás Sartini', 'nsartini66@gmail.com'),
+(30, 'Profesor UARG', 'profesor.uarg@gmail.com'),
+(31, 'Secretaría Académica', 'secretariaacademicauniv@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -128,8 +178,12 @@ CREATE TABLE `usuario_rol` (
 INSERT INTO `usuario_rol` (`id_usuario`, `id_rol`) VALUES
 (23, 8),
 (24, 8),
-(25, 7),
-(28, 7);
+(28, 10),
+(29, 10),
+(30, 9),
+(31, 11),
+(32, 8),
+(33, 8);
 
 --
 -- Índices para tablas volcadas
@@ -183,19 +237,19 @@ ALTER TABLE `usuario_rol`
 -- AUTO_INCREMENT de la tabla `permiso`
 --
 ALTER TABLE `permiso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- Restricciones para tablas volcadas

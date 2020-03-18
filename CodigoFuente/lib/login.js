@@ -1,14 +1,24 @@
-
+/* Global Variable para que no se inicie automaticamente cuando se ha salido del sistema
+ * pero sigue logueado en la cuenta de gmail */
+var clicked = false;
+function ClickLogin()
+{
+    clicked = true;
+}
 
 function onSignIn(googleUser) {
-    var profile = googleUser.getBasicProfile();
-    var url = '../app/index.php';
+    
+    if (clicked) {
+        var profile = googleUser.getBasicProfile();
+        var url = '../app/index.php';
 
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-    $.redirectPost(url, {"email": profile.getEmail(), "nombre": profile.getName(), "imagen": profile.getImageUrl(), "googleid": profile.getId()});
+        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+        $.redirectPost(url, {"email": profile.getEmail(), "nombre": profile.getName(), "imagen": profile.getImageUrl(), "googleid": profile.getId()});
+    }
+    
 }
 
 // jquery extend function
