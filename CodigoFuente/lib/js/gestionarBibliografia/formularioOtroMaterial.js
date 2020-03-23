@@ -31,7 +31,6 @@ function readRecords(idPrograma_) {
         $("#divDatos").html(data);
     });
     idPrograma = idPrograma_;
-    
     console.log("Datos leídos");
 }
 

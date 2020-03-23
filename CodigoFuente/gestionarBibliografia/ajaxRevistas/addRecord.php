@@ -1,6 +1,7 @@
 <?php
 
 include_once '../../modeloSistema/BDConexionSistema.Class.php';
+$idPrograma = $_GET["id"];
 
 $query;
 /**
@@ -39,7 +40,7 @@ if (isset($_POST['nuevo_apellido']) && isset($_POST['nuevo_nombre'])) {
             . "'{$nuevo_biblioteca}' , "
             . "'{$nuevo_siunpa}' , "
             . "'{$nuevo_otro}' ,"
-            . " 2) ";
+            . " {$idPrograma}) ";
 
     $consulta = BDConexionSistema::getInstancia()->query($query);
 }

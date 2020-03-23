@@ -1,3 +1,5 @@
+var idPrograma = 0;
+
 function addRecord() {
     // recupera valores
     var nuevo_referencia = $("#nuevo_referencia").val();
@@ -34,7 +36,7 @@ function addRecord() {
             alert("Debe elegir si la bibliografía es Obligatoria o Complementaria ");
         } else {
             // se llama a la API addRecord para agregar nuevo registro
-            $.post("../gestionarBibliografia/ajaxLibros/addRecord.php", {
+            $.post("../gestionarBibliografia/ajaxLibros/addRecord.php?id=" + idPrograma, {
                 nuevo_apellido: nuevo_apellido,
                 nuevo_nombre: nuevo_nombre,
                 nuevo_referencia: nuevo_referencia,
@@ -52,7 +54,7 @@ function addRecord() {
                 // oculta el Modal
                 $("#add_new_record_modal").modal("hide");
                 // actualiza tabla de registros mostrados
-                readRecords();
+                readRecords(idPrograma);
                 // limpia los datos del Modal
                 $("#nuevo_apellido").val("");
                 $("#nuevo_nombre").val("");
@@ -75,10 +77,11 @@ function addRecord() {
 }
 
 
-function readRecords() {
-    $.get("../gestionarBibliografia/ajaxLibros/readRecords.php", {}, function (data, status) {
+function readRecords(idPrograma_) {
+    $.get("../gestionarBibliografia/ajaxLibros/readRecords.php?id=" + idPrograma_, {}, function (data, status) {
         $("#divDatos").html(data);
     });
+    idPrograma = idPrograma_;
     console.log("Datos leídos");
 }
 
@@ -92,7 +95,7 @@ function DeleteRecord(id) {
                 function (data, status) {
                     console.log("Datos enviados: " + data);
                     // actualiza tabla de registros mostrados
-                    readRecords();
+                    readRecords(idPrograma);
                 }
         );
     }
@@ -199,14 +202,16 @@ function UpdateRecordDetails() {
                         // Oculta Modal
                         $("#update_record_modal").modal("hide");
                         // actualiza tabla de registros mostrados
-                        readRecords();
+                        readRecords(idPrograma);
                     }
             );
         }
     }
 }
-$(document).ready(function () {
-    // actualiza tabla de registros mostrados
-    readRecords();
-}
-);
+/*
+ $(document).ready(function () {
+ // actualiza tabla de registros mostrados
+ readRecords();
+ }
+ );
+ */

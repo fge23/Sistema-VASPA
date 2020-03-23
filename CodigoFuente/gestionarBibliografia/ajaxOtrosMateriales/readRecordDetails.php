@@ -11,7 +11,6 @@ $datos;
 if (isset($_POST['id']) && isset($_POST['id']) != "") {
 //recupero  ID
     $id = $_POST['id'];
-    //$id = 1;
 // Recupero datos de Otro Material
     $query = "SELECT * FROM otro_material WHERE id = $id";
 

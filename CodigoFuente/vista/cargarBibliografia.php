@@ -35,20 +35,16 @@ $idPrograma = $_GET["id"];
                     </tr>
                     <tr>
                   
-                        <td><a href="../gestionarBibliografia/libros.php">Libros - Bibliograf&iacute;a Obligatoria </a></td>
+                        <td><a href="../gestionarBibliografia/libros.php?id=<?= $idPrograma; ?>">Libros - Bibliograf&iacute;a Obligatoria y Complementaria</a></td>
                    
                         <td>Estado Libros</td>
                     </tr>
                     <tr>
-                        <td><a href="../gestionarBibliografia/libros.php">Libros - Bibliograf&iacute;a Complementaria</a></td>
-                        <td>Estado Libros</td>
-                    </tr>
-                    <tr>
-                        <td><a href="../gestionarBibliografia/revistas.php">Art&iacute;culos de Revistas</a></td>
+                        <td><a href="../gestionarBibliografia/revistas.php?id=<?= $idPrograma; ?>">Art&iacute;culos de Revistas</a></td>
                         <td>Estado Revistas</td>
                     </tr>
                     <tr>
-                        <td><a href="../gestionarBibliografia/recursos.php">Recursos en Internet</a></td>
+                        <td><a href="../gestionarBibliografia/recursos.php?id=<?= $idPrograma; ?>">Recursos en Internet</a></td>
                         <td>Estado Recursos</td>
                     </tr>
                     <tr>

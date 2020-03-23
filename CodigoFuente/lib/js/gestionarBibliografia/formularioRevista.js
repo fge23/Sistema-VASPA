@@ -1,3 +1,5 @@
+var idPrograma = 0;
+
 function addRecord() {
     // recupera valores
     var nuevo_apellido = $("#nuevo_apellido").val();
@@ -20,7 +22,7 @@ function addRecord() {
     } else {
 
 
-        $.post("../gestionarBibliografia/ajaxRevistas/addRecord.php", {
+        $.post("../gestionarBibliografia/ajaxRevistas/addRecord.php?id=" + idPrograma, {
             nuevo_apellido: nuevo_apellido,
             nuevo_nombre: nuevo_nombre,
             nuevo_tituloArticulo: nuevo_tituloArticulo,
@@ -36,7 +38,7 @@ function addRecord() {
             $("#add_new_record_modal").modal("hide");
 
             // actualiza tabla de registros mostrados
-            readRecords();
+            readRecords(idPrograma);
             // limpia los datos del Modal
             $("#nuevo_apellido").val("");
             $("#nuevo_nombre").val("");
@@ -53,10 +55,11 @@ function addRecord() {
 }
 
 
-function readRecords() {
-    $.get("../gestionarBibliografia/ajaxRevistas/readRecords.php", {}, function (data, status) {
+function readRecords(idPrograma_) {
+    $.get("../gestionarBibliografia/ajaxRevistas/readRecords.php?id="+idPrograma_, {}, function (data, status) {
         $("#divDatos").html(data);
     });
+    idPrograma = idPrograma_;
     console.log("Datos leídos");
 }
 
@@ -70,7 +73,7 @@ function DeleteRecord(id) {
                 function (data, status) {
                     console.log("Datos enviados: " + data);
                     // actualiza tabla de registros mostrados
-                    readRecords();
+                    readRecords(idPrograma);
                 }
         );
     }
@@ -145,12 +148,14 @@ function UpdateRecordDetails() {
                     // Oculta Modal
                     $("#update_record_modal").modal("hide");
                     // actualiza tabla de registros mostrados
-                    readRecords();
+                    readRecords(idPrograma);
                 }
         );
     }
 }
+/*
 $(document).ready(function () {
     // actualiza tabla de registros mostrados
     readRecords();
 });
+*/

@@ -1,7 +1,7 @@
 <?php
-
 include_once '../../modeloSistema/BDConexionSistema.Class.php';
 header('Content-Type: text/html; charset=UTF-8');
+$idPrograma = $_GET["id"];
 /**
  *
  * @var mysqli_result
@@ -25,7 +25,7 @@ $data = '<table class="table table-hover table-sm">
 							<th>Opciones</th>
 						</tr>';
 
-$query = "SELECT * FROM libro order by tipoLibro ASC";
+$query = "SELECT * FROM libro  WHERE idPrograma = {$idPrograma} order by tipoLibro ASC";
 $datos = BDConexionSistema::getInstancia()->query($query);
 
 for ($x = 0; $x < $datos->num_rows; $x++) {

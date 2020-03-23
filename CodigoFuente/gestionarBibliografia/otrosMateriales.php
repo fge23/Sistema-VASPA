@@ -53,7 +53,7 @@ $idPrograma = $_GET["id"];
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary" onclick="addRecord(<?= $idPrograma ?>)">Agregar material</button>
+                            <button type="button" class="btn btn-primary" onclick="addRecord()">Agregar material</button>
                         </div>
                     </div>
                 </div>

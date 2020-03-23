@@ -1,7 +1,7 @@
 <?php
-
 include_once '../../modeloSistema/BDConexionSistema.Class.php';
 header('Content-Type: text/html; charset=UTF-8');
+$idPrograma = $_GET["id"];
 /**
  *
  * @var mysqli_result
@@ -35,7 +35,8 @@ $query = "SELECT id, "
         . "unidad, "
         . "biblioteca, "
         . "siunpa, "
-        . "otro FROM revista";
+        . "otro FROM revista "
+        . "WHERE idPrograma = {$idPrograma}";
 $datos = BDConexionSistema::getInstancia()->query($query);
 
 for ($x = 0; $x < $datos->num_rows; $x++) {

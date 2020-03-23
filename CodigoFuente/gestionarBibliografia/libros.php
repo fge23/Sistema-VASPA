@@ -1,5 +1,6 @@
 <?php
 include_once '../lib/ControlAcceso.Class.php';
+$idPrograma = $_GET["id"];
 ?>
 <html>
     <head>
@@ -56,12 +57,12 @@ include_once '../lib/ControlAcceso.Class.php';
                     </div>
                     <div class="modal-body">
                         <div class="row no-margin">
-                        
-                                <div class="col-xs-3">
-                                    <label for="nuevo_referencia" >Referencia</label>
-                                    <input type="text"  id="nuevo_referencia" name="nuevo_referencia" class="form-control required">
-                                </div>
-                            
+
+                            <div class="col-xs-3">
+                                <label for="nuevo_referencia" >Referencia</label>
+                                <input type="text"  id="nuevo_referencia" name="nuevo_referencia" class="form-control required">
+                            </div>
+
                             <div class="col-xs-3">
                                 <label for="nuevo_anioEdicion">A&ntilde;o de Edici&oacute;n</label>
                                 <input type="number" id="nuevo_anioEdicion" class="form-control">
@@ -228,6 +229,13 @@ include_once '../lib/ControlAcceso.Class.php';
                 </div>
             </div>
         </div>    
+        <script>
+            $(document).ready(function () {
+                // actualiza tabla de registros mostrados
+                var idPrograma = <?= $idPrograma ?>;
+                readRecords(idPrograma);
+            });
+        </script>
         <?php include_once '../gui/footer.php'; ?>
     </body>
 </html>
