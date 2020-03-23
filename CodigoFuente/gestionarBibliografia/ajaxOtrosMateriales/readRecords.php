@@ -1,6 +1,7 @@
 <?php
 include_once '../../modeloSistema/BDConexionSistema.Class.php';
 header('Content-Type: text/html; charset=UTF-8');    
+$idPrograma = $_GET["id"];
 /**
  *
  * @var mysqli_result
@@ -15,7 +16,7 @@ $data = '<table class="table table-hover table-sm">
                                                         <th>Opciones</th>
 						</tr>';
 
-$query = "SELECT * FROM otro_material";
+$query = "SELECT * FROM otro_material WHERE idPrograma = {$idPrograma}";
 $datos = BDConexionSistema::getInstancia()->query($query);
 
  for ($x = 0; $x < $datos->num_rows; $x++) {

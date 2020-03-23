@@ -1,4 +1,6 @@
-function addRecord(idPrograma) {
+var idPrograma = 0;
+
+function addRecord() {
     // recupera valores
     var nuevo_descripcion = $("#nuevo_descripcion").val();
 
@@ -16,7 +18,7 @@ function addRecord(idPrograma) {
             $("#add_new_record_modal").modal("hide");
 
             // actualiza tabla de registros mostrados
-            readRecords();
+            readRecords(idPrograma);
 
             // limpia los datos del Modal
             $("#nuevo_descripcion").val("");
@@ -24,10 +26,12 @@ function addRecord(idPrograma) {
     }
 }
 
-function readRecords() {
-    $.get("../gestionarBibliografia/ajaxOtrosMateriales/readRecords.php", {}, function (data, status) {
+function readRecords(idPrograma_) {
+    $.get("../gestionarBibliografia/ajaxOtrosMateriales/readRecords.php?id="+idPrograma_, {}, function (data, status) {
         $("#divDatos").html(data);
     });
+    idPrograma = idPrograma_;
+    
     console.log("Datos leídos");
 }
 
@@ -41,7 +45,7 @@ function DeleteRecord(id) {
                 function (data, status) {
                     console.log("Datos enviados: " + data);
                     // actualiza tabla de registros mostrados
-                    readRecords();
+                    readRecords(idPrograma);
                 }
         );
     }
@@ -64,6 +68,7 @@ function ReadRecordDetails(id) {
     // se muestra Modal
     $("#update_record_modal").modal("show");
 }
+
 
 function UpdateRecordDetails() {
     // recupera datos
@@ -88,12 +93,15 @@ function UpdateRecordDetails() {
                     // Oculta Modal
                     $("#update_record_modal").modal("hide");
                     // actualiza tabla de registros mostrados
-                    readRecords();
+                    readRecords(idPrograma);
                 }
         );
     }
 }
+
+/*
 $(document).ready(function () {
     // actualiza tabla de registros mostrados
-    readRecords();
+    readRecords(idPrograma);
 });
+*/
