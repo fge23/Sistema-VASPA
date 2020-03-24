@@ -42,7 +42,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-
+            <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_USUARIOS)) { ?>
             <div class="dropdown">
                 <li class="nav-item">
                     <a class="nav-link" href="#">
@@ -70,8 +70,75 @@
                     <?php } ?>
                 </div>
             </div>
+            <?php } ?>
+            
+            <!--                MENU "GESTIONAR PROGRAMA"             -->
+            <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_SEGUIR_PROGRAMA)) { ?>
+            <div class="dropdown">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <span class="oi oi-document" />
+                        Gestionar Programas
+                    </a>
+                </li>
+                <div class="dropdown-content">
+                    <a class="nav-link" href="../vista/programas.pendientes.php">
+                        <span class="oi oi-document" />
+                        Programas Pendientes
+                    </a>
+
+                    <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_SEGUIR_PROGRAMA)) { ?>
+                    <a class = "nav-link" href = "../vista/programa.seguirPdf.php">
+                            <span class = "oi oi-document" />
+                            Seguimiento de Programas
+                        </a>
+                    <?php } ?>
+                    
+                    <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_REVISAR_PROGRAMA)) { ?>
+                    <a class = "nav-link" href = "../vista/revisar.programas.php">
+                            <span class = "oi oi-document" />
+                            Revisar Programa
+                        </a>
+                    <?php } ?>
+                </div>
+            </div>
+            <?php } ?>
+            
+            <!--                MENU "CARGA DE ARCHIVOS"             -->
+            <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_SUBIR_PROGRAMA_FIRMADO)) { ?>
+            <div class="dropdown">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <span class="oi oi-cloud-upload" />
+                        Carga de Archivos
+                    </a>
+                </li>
+                <div class="dropdown-content">
+                    <a class="nav-link" href="../vista/subir.programa.formulario.php">
+                        <span class="oi oi-document" />
+                        Subir Programa
+                    </a>
+                    
+                    <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_CARGA_MASIVA_PROGRAMAS)) { ?>
+                    <a class = "nav-link" href = "../vista/programa.formulario.cargaMasiva.php">
+                            <span class = "oi oi-document" />
+                            Carga Masiva de Programas
+                        </a>
+                    <?php } ?>
+
+                    <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_SUBIR_PLAN)) { ?>
+                    <a class = "nav-link" href = "../vista/subir.plan.formulario.php">
+                            <span class = "oi oi-document" />
+                            Subir Plan
+                        </a>
+                    <?php } ?>
+                    
+                </div>
+            </div>
+            <?php } ?>
+            
             <!--                CREAR EL PERMISO CORRESPONDIENTE EN CONTASNTES Y BD-->
-            <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_PERMISOS)) { ?>
+            <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_CARRERAS)) { ?>
                 <li class="nav-item">
                     <a class="nav-link" href="../vista/carreras.php">
                         <span class="oi oi-spreadsheet" />
@@ -81,7 +148,7 @@
             <?php } ?>
 
             <!--                CREAR EL PERMISO CORRESPONDIENTE EN CONTASNTES Y BD-->
-            <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_PERMISOS)) { ?>
+            <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_PLANES)) { ?>
                 <li class="nav-item">
                     <a class="nav-link" href="../vista/planes.php">
                         <span class="oi oi-justify-center" />
@@ -91,7 +158,7 @@
             <?php } ?>
 
             <!--                CREAR EL PERMISO CORRESPONDIENTE EN CONTASNTES Y BD-->
-            <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_PERMISOS)) { ?>
+            <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_PROFESORES)) { ?>
                 <li class="nav-item">
                     <a class="nav-link" href="../vista/profesores.php">
                         <span class="oi oi-people" />
@@ -101,7 +168,7 @@
             <?php } ?>
 
             <!--                CREAR EL PERMISO CORRESPONDIENTE EN CONTASNTES Y BD-->
-            <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_PERMISOS)) { ?>
+            <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_ASIGNATURAS)) { ?>
                 <li class="nav-item">
                     <a class="nav-link" href="../vista/asignaturas.php">
                         <span class="oi oi-align-center" />

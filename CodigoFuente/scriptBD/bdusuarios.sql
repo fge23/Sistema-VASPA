@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-03-2020 a las 01:56:25
+-- Tiempo de generación: 24-03-2020 a las 21:56:54
 -- Versión del servidor: 10.1.37-MariaDB
 -- Versión de PHP: 7.2.12
 
@@ -50,14 +50,17 @@ INSERT INTO `permiso` (`id`, `nombre`) VALUES
 (14, 'Planes'),
 (15, 'Asignaturas'),
 (16, 'Profesores'),
-(17, 'GenerarPDF'),
-(18, 'SubirProgramaFirmado'),
-(19, 'SubirPlan'),
-(20, 'GestionarPrograma'),
-(21, 'GestionarBibliografia'),
-(22, 'SeguirPrograma'),
-(23, 'EnviarNotificacion'),
-(24, 'RevisarPrograma');
+(17, 'Generar Programa PDF'),
+(18, 'Subir Programa Firmado'),
+(19, 'Subir Plan'),
+(20, 'Gestionar Programa'),
+(21, 'Gestionar Bibliografia'),
+(22, 'Seguir Programa'),
+(23, 'Enviar Notificacion'),
+(24, 'Revisar Programa'),
+(25, 'Carga Masiva Programas'),
+(26, 'Generar Informe Gerencial'),
+(27, 'Ver Informacion Asignatura');
 
 -- --------------------------------------------------------
 
@@ -75,7 +78,6 @@ CREATE TABLE `rol` (
 --
 
 INSERT INTO `rol` (`id`, `nombre`) VALUES
-(7, 'Usuario Comun'),
 (8, 'Administrador'),
 (9, 'Profesor'),
 (10, 'Director de Departamento'),
@@ -97,8 +99,6 @@ CREATE TABLE `rol_permiso` (
 --
 
 INSERT INTO `rol_permiso` (`id_rol`, `id_permiso`) VALUES
-(7, 7),
-(7, 11),
 (8, 7),
 (8, 8),
 (8, 9),
@@ -115,6 +115,9 @@ INSERT INTO `rol_permiso` (`id_rol`, `id_permiso`) VALUES
 (8, 22),
 (8, 23),
 (8, 24),
+(8, 25),
+(8, 26),
+(8, 27),
 (9, 11),
 (9, 17),
 (9, 20),
@@ -132,7 +135,10 @@ INSERT INTO `rol_permiso` (`id_rol`, `id_permiso`) VALUES
 (11, 19),
 (11, 22),
 (11, 23),
-(11, 24);
+(11, 24),
+(11, 25),
+(11, 26),
+(11, 27);
 
 -- --------------------------------------------------------
 
@@ -151,8 +157,8 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `nombre`, `email`) VALUES
-(29, 'Jefe Departamento Cs. Naturales y Exactas', 'dcienciasnaturalesyexactas@gmail.com'),
-(28, 'Jefa Departamento Cs. Sociales', 'dcienciasociales@gmail.com'),
+(29, 'Director Departamento Cs. Naturales y Exactas', 'dcienciasnaturalesyexactas@gmail.com'),
+(28, 'Directora Departamento Cs. Sociales', 'dcienciasociales@gmail.com'),
 (23, 'Eder dos Santos', 'esantos@uarg.unpa.edu.ar'),
 (32, 'Fabricio Gonzalez', 'fabriciowgonzalez@gmail.com'),
 (24, 'Francisco Estrada', 'franciscoestrada2395@gmail.com'),
@@ -237,7 +243,7 @@ ALTER TABLE `usuario_rol`
 -- AUTO_INCREMENT de la tabla `permiso`
 --
 ALTER TABLE `permiso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`

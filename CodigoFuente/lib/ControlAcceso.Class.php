@@ -36,28 +36,40 @@ class PermisosSistema {
     const PERMISO_PERMISOS = "Permisos";
     const PERMISO_ROLES = "Roles";
     
-    // 
+    /* 
+     * Observacion: no se agregaron como permisos el visualizar Programa y el de Plan
+     * ya esas funcionalidades las puede realizar el invitado, no necesita iniciar
+     * sesion en el sistema.
+     */
+    // Permisos para ABM del sistema (Rol "Secretario Academico" y "Admin")
     const PERMISO_CARRERAS = "Carreras";
     const PERMISO_PLANES = "Planes";
     const PERMISO_ASIGNATURAS = "Asignaturas";
     const PERMISO_PROFESORES = "Profesores";
-    const PERMISO_GENERAR_PDF = "Generar_PDF";
-    const PERMISO_SUBIR_PROGRAMA_FIRMADO = "Subir_Programa_Firmado";
-    const PERMISO_SUBIR_PLAN = "Subir_Plan";
-    const PERMISO_GESTIONAR_PROGRAMA = "Gestionar_Programa";
-    const PERMISO_GESTIONAR_BIBLIOGRAFIA = "Gestionar_Bibliografia";
-    const PERMISO_SEGUIR_PROGRAMA = "Seguir_Programa";
-    const PERMISO_VER_INFORMACION_ASIGNATURA = "Ver_Informacion_Asignatura";
-    const PERMISO_ENVIAR_NOTIFICACION = "Enviar_Notificacion";
-    const PERMISO_OBTENER_ASIGNATURAS_PENDIENTES = "Obtener_Asignaturas_Pendientes";
-    const PERMISO_REVISAR_PROGRAMA = "Revisar_Programa";
-
+    
+    // Permisos para el Rol "Secretario Academico" y "Admin"
+    const PERMISO_SUBIR_PROGRAMA_FIRMADO = "Subir Programa Firmado";
+    const PERMISO_SUBIR_PLAN = "Subir Plan";
+    const PERMISO_SEGUIR_PROGRAMA = "Seguir Programa";
+    const PERMISO_ENVIAR_NOTIFICACION = "Enviar Notificacion";
+    const PERMISO_CARGA_MASIVA_PROGRAMAS = "Carga Masiva Programas";
+    const PERMISO_GENERAR_INFORME_GERENCIAL = "Generar Informe Gerencial";
+    const PERMISO_VER_INFORMACION_ASIGNATURA = "Ver Informacion Asignatura";
+    
+    // Permisos para el Rol "Profesor"
+    const PERMISO_GENERAR_PDF = "Generar Programa PDF"; // tambien lo puede relizar "Secretario Academico"
+    const PERMISO_GESTIONAR_PROGRAMA = "Gestionar Programa";
+    const PERMISO_GESTIONAR_BIBLIOGRAFIA = "Gestionar Bibliografia";
+    
+    // Permiso para el Rol "Director de Departamento"
+    const PERMISO_REVISAR_PROGRAMA = "Revisar Programa"; // tambien lo puede relizar "Secretario Academico"
+    
     /**
      * Roles del Sistema.
      * La definición de los todos roles es Opcional, pero se requiere cargar un rol Estandar para el autoregistro de Usuarios.
      * 
      */
-    const ROL_ESTANDAR = 'Usuario Comun'; // Eliminar este ROL
+    //const ROL_ESTANDAR = 'Usuario Comun'; // Eliminar este ROL
     const ROL_ADMIN = "Administrador";
     const ROL_SECRETARIO_ACADEMICO = "Secretario Académico";
     const ROL_DIRECTOR_DEPARTAMENTO = "Director de Departamento";

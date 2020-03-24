@@ -47,7 +47,7 @@ $carreras = $manejadorCarrera->getColeccion();
         <?php include_once '../gui/navbar.php'; ?>
         <div class="container">
             <div class="row">
-                <div class="col-md-9">
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
                             <h3>Panel Secretar&iacute;a Acad&eacute;mica</h3>
@@ -88,9 +88,9 @@ $carreras = $manejadorCarrera->getColeccion();
                                                         if (!empty($planes)){
                                                             foreach ($planes as $plan) {
                                                                 if ($_GET['codPlan'] == $plan->getId()){
-                                                                    echo '<option value="panelSA3.php?codCarrera='.$plan->getIdCarrera().'&codPlan='.$plan->getId().'" selected>'.$plan->getId().'    ('.$plan->getAnio_inicio().' - '.$plan->getAnio_fin().')</option>';
+                                                                    echo '<option value="panelSA.php?codCarrera='.$plan->getIdCarrera().'&codPlan='.$plan->getId().'" selected>'.$plan->getId().'    ('.$plan->getAnio_inicio().' - '.$plan->getAnio_fin().')</option>';
                                                                 } else {
-                                                                    echo '<option value="panelSA3.php?codCarrera='.$plan->getIdCarrera().'&codPlan='.$plan->getId().'">'.$plan->getId().'    ('.$plan->getAnio_inicio().' - '.$plan->getAnio_fin().')</option>';
+                                                                    echo '<option value="panelSA.php?codCarrera='.$plan->getIdCarrera().'&codPlan='.$plan->getId().'">'.$plan->getId().'    ('.$plan->getAnio_inicio().' - '.$plan->getAnio_fin().')</option>';
                                                                 }
                                                             }
                                                         }
@@ -109,7 +109,7 @@ $carreras = $manejadorCarrera->getColeccion();
                 </div>
 
                 <!-- Sidebar Column -->
-                <div class="col-md-3">
+<!--                <div class="col-md-3">
                     <div class="card">
                         <div class="card h-100">
                             <div class="card-body">
@@ -122,7 +122,7 @@ $carreras = $manejadorCarrera->getColeccion();
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
         <?php include_once '../gui/footer.php'; ?>
