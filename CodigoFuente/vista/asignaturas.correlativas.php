@@ -79,7 +79,11 @@ $asignatura = new Asignatura($idAsignatura);
                         </div>
                     </form>
                     </p>
+
+                    <div id="aviso"></div>
+
                     <div id="tabla"></div>
+
                 </div>
                 <div class="card-footer text-center">
                         <a href="asignaturas.php">
@@ -158,7 +162,9 @@ $asignatura = new Asignatura($idAsignatura);
                 })
                 .done(function(resultado){
                     $('#tabla').load('../lib/consultaAjax/asignaturaCorrelativa/correlativasDeAsignatura.php?id='+idAsignatura);
+                    
                     //alert(resultado);
+                    $('#aviso').html(resultado);
                     //$('#carrera').html(carreras).selectpicker('refresh');
                 })
                 .fail(function(){
