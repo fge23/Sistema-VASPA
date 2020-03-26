@@ -300,7 +300,8 @@ CREATE TABLE `programa` (
   `fechaCarga` date NOT NULL,
   `vigencia` enum('1','2','3') NOT NULL,
   `comentarioSa` text,
-  `comentarioDepto` text
+  `comentarioDepto` text,
+  `enRevision` bit NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
