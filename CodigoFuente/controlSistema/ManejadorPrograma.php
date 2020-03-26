@@ -106,7 +106,7 @@ class ManejadorPrograma {
                 . " '{$Programa->getAprobacionSATEP()}', '{$Programa->getMetodologiaLibre()}', '{$Programa->getAprobacionLibre()}',"
                 . "  'SA','{$Programa->getIdAsignatura()}' , {$Programa->getAprobadoSa()},"
                 . " {$Programa->getAprobadoDepto()}, '{$Programa->getFechaCarga()}', {$Programa->getVigencia()},"
-                . "' ', ' ' )";
+                . "' ', ' ', 0)";
        // var_dump($this->query);
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
         

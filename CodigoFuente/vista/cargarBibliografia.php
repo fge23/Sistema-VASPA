@@ -4,6 +4,12 @@ include_once '../modeloSistema/BDConexionSistema.Class.php';
 
 $idPrograma = $_GET["id"];
 //echo "El ID del programa es: " . $idPrograma;
+
+$cantidadLibrosObligatorios = getEstadoLibrosObligatorios($idPrograma);
+$cantidadLibrosComplementarios = getEstadoLibrosComplementarios($idPrograma);
+$cantidadRevistas = getEstado($idPrograma, "revista");
+$cantidadRecursos = getEstado($idPrograma, "recurso");
+$cantidadOtros = getEstado($idPrograma, "otro_material");
 ?>
 
 <html>
@@ -30,7 +36,11 @@ $idPrograma = $_GET["id"];
                 </p>
             </div>
             <div class="card-body">
-                <table class="table table-hover table-sm">
+                <style>
+                    .letragrande{font-size:17px;}
+                </style>
+
+                <table class="table table-hover table-sm letragrande">
                     <tr class="table-info">
                         <th>Tipo de Bibliograf&iacute;a</th>
                         <th>Estado</th>
@@ -38,22 +48,22 @@ $idPrograma = $_GET["id"];
                     <tr>
 
                         <td><a href="../gestionarBibliografia/libros.php?id=<?= $idPrograma; ?>">Libros - Bibliograf&iacute;a Obligatoria y Complementaria</a></td>
-                        <td>
-                            Se han cargado <?= getEstadoLibrosObligatorios($idPrograma) ?> libros de tipo 'Bibliograf&iacute;a Obligatoria' 
-                            y <?= getEstadoLibrosComplementarios($idPrograma) ?> libros de tipo 'Bibliograf&iacute;a Complementaria' 
+                        <td id="estadoLibros">
+                            Se han cargado <?= $cantidadLibrosObligatorios ?> libros de tipo 'Bibliograf&iacute;a Obligatoria' 
+                            y <?= $cantidadLibrosComplementarios ?> libros de tipo 'Bibliograf&iacute;a Complementaria' 
                         </td>
                     </tr>
                     <tr>
                         <td><a href="../gestionarBibliografia/revistas.php?id=<?= $idPrograma; ?>">Art&iacute;culos de Revistas</a></td>
-                        <td> Se han cargado <?= getEstado($idPrograma, "revista") ?> Art&iacute;culos de Revistas </td>
+                        <td id="estadoRevistas"> Se han cargado <?= $cantidadRevistas ?> Art&iacute;culos de Revistas </td>
                     </tr>
                     <tr>
                         <td><a href="../gestionarBibliografia/recursos.php?id=<?= $idPrograma; ?>">Recursos de Internet</a></td>
-                        <td> Se han cargado <?= getEstado($idPrograma, "recurso") ?> Recursos en Internet </td>
+                        <td id="estadoRecursos"> Se han cargado <?= $cantidadRecursos ?> Recursos en Internet </td>
                     </tr>
                     <tr>
                         <td><a href="../gestionarBibliografia/otrosMateriales.php?id=<?= $idPrograma; ?>">Otros</a></td>
-                        <td> Se han cargado <?= getEstado($idPrograma, "otro_material") ?> Otros materiales</td>
+                        <td id="estadoOtros"> Se han cargado <?= $cantidadOtros ?> Otros materiales</td>
                     </tr>
                 </table>
             </div>
@@ -71,7 +81,32 @@ $idPrograma = $_GET["id"];
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            if (<?= $cantidadRevistas ?> === 0) {
+                document.getElementById("estadoRevistas").style.color = "#F4B400";
+            } else {
+                document.getElementById("estadoRevistas").style.color = "green";
+            }
+             if (<?= $cantidadRecursos ?> === 0) {
+                document.getElementById("estadoRecursos").style.color = "#F4B400";
+            } else {
+                document.getElementById("estadoRecursos").style.color = "green";
+            }
+             if (<?= $cantidadOtros ?> === 0) {
+                document.getElementById("estadoOtros").style.color = "#F4B400";
+            } else {
+                document.getElementById("estadoOtros").style.color = "green";
+            }
+            if (<?= $cantidadLibrosObligatorios ?> === 0) {
+                document.getElementById("estadoLibros").style.color = "red";
+            } else {
+                document.getElementById("estadoLibros").style.color = "green";
+            }
 
+        });
+    </script>
+</body>
 </html
 
 <?php
