@@ -48,6 +48,7 @@ if (is_null($plan->getAnio_fin())){
                     <h3>Asignaturas del Plan: <span class="text-info"><?= $plan->getId().$periodo;?></span></h3>
                 </div>
                 <div class="card-body">
+                    <div id="mensajeResultado"></div>
                     <p> <form id="form">
                         <input type="hidden" id="codPlan" name="codPlan" value="<?=$plan->getId();?>">
                         <div class="row justify-content-md-center">
@@ -80,28 +81,16 @@ if (is_null($plan->getAnio_fin())){
             </div>
         </div>
         <?php include_once '../gui/footer.php'; ?>
-        <script type="text/javascript">
-            //$(document).ready(function () {
-                $('#tablaAsignaturas').DataTable({
-                    language: {
-                        url: '../lib/datatable/es-ar.json'
-                    }
-                });
-            //});
-        </script>
+
         <script type="text/javascript">
             $(document).ready(function(){
                 var codPlan = $("#codPlan").val();
 		$('#tabla').load('../lib/consultaAjax/planAsignatura/asignaturasDelPlan.php?id='+codPlan);
-                $('#tablaAsignaturas').DataTable({
-                    language: {
-                        url: '../lib/datatable/es-ar.json'
-                    }
-                });
             });
         </script>
+        
         <script type="text/javascript">
-            // detenemos el envio del formulario (para que valide los campos requiros)
+            // detenemos el envio del formulario (para que valide los campos requeridos)
             $('#form').on('submit', function (event) {
                 event.preventDefault(); // se previene la acción por defecto
                 //console.log($(this).serialize()); // serializa los datos del formulario (name->valor)
@@ -117,6 +106,7 @@ if (is_null($plan->getAnio_fin())){
                             codPlan: codPlan}
                 })
                 .done(function(resultado){
+                    $('#mensajeResultado').html(resultado);
                     $('#tabla').load('../lib/consultaAjax/planAsignatura/asignaturasDelPlan.php?id='+codPlan);
                     //alert(resultado);
                     //$('#carrera').html(carreras).selectpicker('refresh');
@@ -148,6 +138,7 @@ if (is_null($plan->getAnio_fin())){
                       $('body').removeClass('modal-open'); 
                       $('.modal-backdrop').remove(); 
                     };
+                    $('#mensajeResultado').html(resultado);
                     $('#tabla').load('../lib/consultaAjax/planAsignatura/asignaturasDelPlan.php?id='+codPlan);
             
                     //alert(resultado);
