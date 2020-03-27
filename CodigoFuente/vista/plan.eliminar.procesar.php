@@ -34,7 +34,7 @@ $consulta = $ManejadorPlan->baja($DatosFormulario['id']);
                     <?php } ?>   
                     <?php if (!$consulta) { ?>
                         <div class="alert alert-danger" role="alert">
-                            Ha ocurrido un error.
+                            Ha ocurrido un error. El plan que desea eliminar tiene asignaturas asociadas.
                         </div>
                     <?php } ?>
                     <hr />
