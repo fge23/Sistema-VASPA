@@ -134,5 +134,20 @@ class Plan {
 
     }
     
+    /*
+     * Devuelve un String con el periodo de año del programa
+     * con el siguiente formato: (anio_inicio - anio_fin)
+     * en caso de no tener anio_fin se pondra "Presente"
+     */
+    function getPeriodo() {
+        $periodo = '';
+        if (is_null($this->anio_fin)) {
+            $periodo = '(' . $this->anio_inicio . ' - Presente)';
+        } else {
+            $periodo = '(' . $this->anio_inicio . ' - ' . $this->anio_fin . ')';
+        }
+        
+        return $periodo;
+    }
 
 }

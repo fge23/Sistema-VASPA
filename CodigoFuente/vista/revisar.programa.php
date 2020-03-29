@@ -57,6 +57,16 @@ $carreras = $asignatura->getCarreras();
                             <h3>Revisar Programa de <span class="text-info"><?= $asignatura->getNombre().' - '.$asignatura->getId()?></span></h3>
                         </div>
                         <div class="card-body">
+                            <div>
+                                <?php 
+                                
+                                if (isset($_SESSION['mensajeRevisarPrograma'])){
+                                    echo $_SESSION['mensajeRevisarPrograma'];
+                                    unset($_SESSION['mensajeRevisarPrograma']); //
+                                }
+                                
+                                ?>
+                            </div>
 
                             <div class="text-center">
                                 <!-- Button trigger modal -->
