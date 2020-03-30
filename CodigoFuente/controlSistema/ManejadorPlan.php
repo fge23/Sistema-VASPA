@@ -80,6 +80,14 @@ class ManejadorPlan {
     }
 
     function baja($id_) {
+        // comprobamos que el Plan no tenga asociados asignaturas para recien poder borrarlo sino devolvemos un string (mensaje)
+        $plan = new Plan($id_);
+        if (!is_null($plan->getAsignaturas())){
+            // tiene Asignaturas lanzamos un excepcion
+            throw new Exception("No se pudo llevar a cabo la operaci&oacute;n dado que <b>el plan {$id_} tiene asociados asignaturas</b>.");
+            //return "";
+        }
+        
         $this->query = "DELETE FROM PLAN WHERE id = '{$id_}'";
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
         if ($consulta) {

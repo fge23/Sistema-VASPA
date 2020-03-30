@@ -4,7 +4,16 @@ include_once '../controlSistema/ManejadorPlan.php';
 
 $DatosFormulario = $_POST;
 $ManejadorPlan = new ManejadorPlan();
-$consulta = $ManejadorPlan->baja($DatosFormulario['id']);
+
+$mensaje = "";
+try {
+    $consulta = $ManejadorPlan->baja($DatosFormulario['id']);
+} catch (Exception $e) {
+    $consulta = false;
+    $mensaje = $e->getMessage();
+}
+
+
 
 
 
@@ -34,7 +43,7 @@ $consulta = $ManejadorPlan->baja($DatosFormulario['id']);
                     <?php } ?>   
                     <?php if (!$consulta) { ?>
                         <div class="alert alert-danger" role="alert">
-                            Ha ocurrido un error.
+                            Ha ocurrido un error. <?= $mensaje; ?>
                         </div>
                     <?php } ?>
                     <hr />
