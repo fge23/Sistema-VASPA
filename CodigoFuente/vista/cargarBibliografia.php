@@ -30,8 +30,9 @@ $cantidadOtros = getEstado($idPrograma, "otro_material");
             <div class="card-header">
                 <h3>Agregar Bibliografia</h3>
                 <p>
-                    A continuaci&oacute;n, podr&aacute; observar el estado de la Bibliograf&iacute;a cargada para el Programa.<br/>
-                    Si desea enviar el Programa a revisi&oacute;n, presione el bot&oacute;n <b>Enviar a revisi&oacute;n</b><br/>
+                    A continuaci&oacute;n, podr&aacute; observar el estado de la Bibliograf&iacute;a cargada para el Programa.<br/><br/>
+                    Si desea cargar autom&aacute;ticamente la Bibliograf&iacute;a del &uacute;ltimo Programa cargado, presione el bot&oacute;n <b>Cargar Bibliograf&iacute;a de Programa Anterior</b>. Esto solo podr&aacute; realizarse previo a cargar Bibliograf&iacute;a para este Programa.<br/><br/>
+                    Si desea enviar el Programa a revisi&oacute;n, presione el bot&oacute;n <b>Enviar a revisi&oacute;n</b>. Esto solo podr&aacute; realizarse tras cargar al menos un libro de tipo Bibliograf&iacute;a Obligatoria.<br/><br/>
                     Si desea continuar m&aacute;s tarde, presione el bot&oacute;n <b>Continuar m&aacute;s tarde</b>
                 </p>
             </div>
@@ -39,7 +40,12 @@ $cantidadOtros = getEstado($idPrograma, "otro_material");
                 <style>
                     .letragrande{font-size:17px;}
                 </style>
-
+                <a href="cargarBibliografiaProgramaAnterior.php?id=<?= $idPrograma; ?>">
+                    <button type="button" class="btn btn-primary" id="btnCargarProgramaAnterior">
+                        <span class="oi oi-caret-bottom"></span> Cargar Bibliograf&iacute;a de Programa Anterior
+                    </button>
+                </a>
+                <br><br>
                 <table class="table table-hover table-sm letragrande">
                     <tr class="table-info">
                         <th>Tipo de Bibliograf&iacute;a</th>
@@ -69,7 +75,7 @@ $cantidadOtros = getEstado($idPrograma, "otro_material");
             </div>
             <div class="card-footer">
                 <a href="cargarBibliografia.php?id=<?= $idPrograma; ?>">
-                    <button type="button" class="btn btn-primary">
+                    <button type="button" class="btn btn-primary" id="btnEnviarPrograma">
                         <span class="oi oi-document"></span> Enviar Programa a Revisi&oacute;n
                     </button>
                 </a>
@@ -87,21 +93,27 @@ $cantidadOtros = getEstado($idPrograma, "otro_material");
                 document.getElementById("estadoRevistas").style.color = "#F4B400";
             } else {
                 document.getElementById("estadoRevistas").style.color = "green";
+                document.getElementById("btnCargarProgramaAnterior").style.display = "none";
             }
-             if (<?= $cantidadRecursos ?> === 0) {
+            if (<?= $cantidadRecursos ?> === 0) {
                 document.getElementById("estadoRecursos").style.color = "#F4B400";
             } else {
                 document.getElementById("estadoRecursos").style.color = "green";
+                document.getElementById("btnCargarProgramaAnterior").style.display = "none";
             }
-             if (<?= $cantidadOtros ?> === 0) {
+            if (<?= $cantidadOtros ?> === 0) {
                 document.getElementById("estadoOtros").style.color = "#F4B400";
             } else {
                 document.getElementById("estadoOtros").style.color = "green";
+                document.getElementById("btnCargarProgramaAnterior").style.display = "none";
             }
             if (<?= $cantidadLibrosObligatorios ?> === 0) {
                 document.getElementById("estadoLibros").style.color = "red";
+                document.getElementById("btnEnviarPrograma").disabled = true;
             } else {
                 document.getElementById("estadoLibros").style.color = "green";
+                document.getElementById("btnEnviarPrograma").disabled = false;
+                document.getElementById("btnCargarProgramaAnterior").style.display = "none";
             }
 
         });

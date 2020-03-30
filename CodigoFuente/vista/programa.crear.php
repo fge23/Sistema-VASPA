@@ -228,7 +228,6 @@ $Asignatura = new Asignatura($idAsignatura);
                             <input type="hidden" name="idAsignatura" value="<?= $Asignatura->getId(); ?>">
                             <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
                             <input type="submit" name="submit" class="submit btn btn-info" value="Guardar" id="submit_data" />
-                            <input type="submit" name="submit2" class="submit btn btn-success" value="Guardar y Enviar" onclick=this.form.action = "prueba.php">
                         </fieldset>
                     </form>
                 </div>
