@@ -18,20 +18,117 @@ $carreras = $manejadorCarrera->getColeccion();
 $Usuario = $_SESSION['usuario'];
 $rol = $Usuario->roles[0]->nombre;
 
+$filtro = '';// Filtro para utilizar en la query
+
 if ($rol == PermisosSistema::ROL_ADMIN || $rol == PermisosSistema::ROL_SECRETARIO_ACADEMICO){
     $rol = 'SA'; // administrador / SA
+    $filtro = " aprobadoSa IS NULL"; // Filtro para utilizar en la query
 } elseif ($rol == PermisosSistema::ROL_DIRECTOR_DEPARTAMENTO) {
     include_once '../lib/funcionesUtiles/constantesMail.php';
     if ($Usuario->email == MAIL_DEPTO_CNE){
         $rol = 'DCNE'; // Dpto Ciencias Naturales y Exactas;
+        $filtro = " idDepartamento = '2' AND aprobadoDepto IS NULL"; // Filtro para utilizar en la query
     } elseif ($Usuario->email == MAIL_DEPTO_CS) {
-        $rol = 'DCS'; // Dpto Ciencias Sociales
+        $rol = 'DCS'; // Dpto Ciencias Sociales 
+        $filtro = " idDepartamento = '1' AND aprobadoDepto IS NULL"; // Filtro para utilizar en la query
     } else {
         $rol = 'NA'; // No se  encontro el rol del Usuario
     }  
 }
 
+// ARMAMOS LA CONSULTA EN DONDE SE OBTENDRAN LOS 20 PROGRAMAS DE ASIGNATURAS "NO REVISADOS" MAS RECIENTES
+$query = "SELECT DISTINCT (p.id) as idPrograma, nombre, a.id, anio, vigencia, fechaCarga 
+                FROM plan pl
+                JOIN plan_asignatura pa 
+                ON pl.id = pa.idPlan
+                JOIN asignatura a 
+                ON pa.idAsignatura = a.id 
+                JOIN programa p 
+                ON a.id = p.idAsignatura 
+                WHERE$filtro "
+                . "ORDER BY fechaCarga DESC "
+                . "LIMIT 20";
 
+        //var_dump($query);
+        //exit();
+
+// Ejecutamos la query
+
+function getVigencia($anio, $vigencia) {
+    switch ($vigencia) {
+        case 1:
+            return $anio;
+            //break;
+        case 2:
+            return $anio.' - '.($anio+1);
+            //break;
+        case 3:
+            return $anio.' - '.($anio+1).' - '.($anio+2);
+            //break;
+
+        default:
+            return $anio;
+            //break;
+    }
+}
+
+function obtenerProgramasAsignaturasRecientes($query) {
+    $resultado = BDConexionSistema::getInstancia()->query($query);
+    //$html = '<br>'; // variable a retornar
+    $html = '<h5 class="text-center text-muted">Programas recientes No Revisados</h5>';
+    //$html .= '<br>'; 
+    if ($resultado !== false){
+        if ($resultado->num_rows > 0) {
+            // Creamos la tabla donde presentaremos la info
+            $html .= '<table class="table table-hover table-sm" id="tablaPrograma">
+                        <thead>
+                            <tr class="table-info">
+                                <th>Programa de</th>
+                                <th>C&oacute;digo</th>
+                                <th>Vigencia</th>
+                                <th>Fecha de Carga</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>';
+            for ($x = 0; $x < $resultado->num_rows; $x++) {
+                
+                $fila = $resultado->fetch_assoc();
+                $fechaCarga = new DateTime($fila['fechaCarga']);
+                $fechaCarga = $fechaCarga->format('d/m/y');
+                $html .= '<tr>';
+                $html .= '<td>'.$fila['nombre'].'</td>';
+                $html .= '<td>'.$fila['id'].'</td>';
+                $html .= '<td>'.getVigencia($fila['anio'], $fila['vigencia']).'</td>';
+                $html .= '<td>'.$fechaCarga.'</td>';
+                $html .= '<td><a title="Revisar Programa" href="revisar.programa.php?id='.$fila['idPrograma'].'">
+                                        <button type="button" class="btn btn-outline-success">
+                                            <span class="oi oi-document"></span>
+                                        </button></a></td>';
+                $html .= '</tr>';
+
+            }
+            // cerramos etiquetas de la tabla
+            $html .= '</tbody>';
+            $html .= '</table>';
+        } else { // No hay registros --> Mostramos mensaje 
+            $html .= '<div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+                    No hay programas de asignaturas.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>';
+        }
+    } else { // Ocurrio un error al realizar peticion --> Mostramos mensaje
+            $html .= '<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                    Ocurrio un Error al realizar peticion a la BD.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>';
+        }
+    return $html;
+}
 ?>
 <html>
     <head>
@@ -86,7 +183,11 @@ if ($rol == PermisosSistema::ROL_ADMIN || $rol == PermisosSistema::ROL_SECRETARI
 
                     </div>
                     <br>
-                    <div id="tabProgramas"></div>
+                    <div id="tabProgramas">
+                        <?php 
+                            echo obtenerProgramasAsignaturasRecientes($query); // Mostramos tabla programas recientes o mensaje
+                        ?>
+                    </div>
                     <br>
                     
                     
@@ -145,7 +246,15 @@ if ($rol == PermisosSistema::ROL_ADMIN || $rol == PermisosSistema::ROL_SECRETARI
                   
               });
     </script>
-        
+    
+    <script type="text/javascript">
+                $('#tablaPrograma').DataTable({
+                    language: {
+                        url: '../lib/datatable/es-ar.json'
+                    }
+                });
+</script>
+    
     </body>
 </html>
 
