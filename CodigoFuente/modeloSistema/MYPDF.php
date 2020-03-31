@@ -738,6 +738,7 @@ class MYPDF extends TCPDF {
                     }
                 }
         } elseif (is_null($aprobadas) && !is_null($cursadas)){
+            $cantCursadas = sizeof($cursadas);
             for ($i = 0; $i < $cantCursadas; $i++) {
                 $AsigCur = $cursadas[$i];
                 $this->html .= '<tr>
@@ -748,13 +749,14 @@ class MYPDF extends TCPDF {
                         </tr>';
             }
         } elseif (!is_null($aprobadas) && is_null($cursadas)){
+            $cantAprobadas = sizeof($aprobadas);
             for ($i = 0; $i < $cantAprobadas; $i++) {
                 $AsigAprob = $aprobadas[$i];
                 $this->html .= '<tr>
-                                <td valign="top" style="width: 40%;" align="center"> </td>
-                                <td valign="top" style="width: 10%;" align="center"> </td>
                                 <td valign="top" style="width: 40%;" align="center">' . $AsigAprob->getNombre() . '</td>
                                 <td valign="top" style="width: 10%;" align="center">' . $AsigAprob->getId() . '</td>
+                                <td valign="top" style="width: 40%;" align="center"> </td>
+                                <td valign="top" style="width: 10%;" align="center"> </td>
                         </tr>';
             }
         } else {
@@ -875,13 +877,14 @@ class MYPDF extends TCPDF {
                         </tr>';
             }
         } elseif (!is_null($aprobadas) && is_null($cursadas)){
+            $cantAprobadas = sizeof($aprobadas);
             for ($i = 0; $i < $cantAprobadas; $i++) {
                 $AsigAprob = $aprobadas[$i];
                 $this->html .= '<tr>
-                                <td valign="top" style="width: 40%;" align="center"> </td>
-                                <td valign="top" style="width: 10%;" align="center"> </td>
                                 <td valign="top" style="width: 40%;" align="center">' . $AsigAprob->getNombre() . '</td>
                                 <td valign="top" style="width: 10%;" align="center">' . $AsigAprob->getId() . '</td>
+                                <td valign="top" style="width: 40%;" align="center"> </td>
+                                <td valign="top" style="width: 10%;" align="center"> </td>
                         </tr>';
             }
         } else {
