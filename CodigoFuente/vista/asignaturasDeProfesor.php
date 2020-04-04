@@ -1,10 +1,43 @@
 <?php
-include_once '../controlSistema/ManejadorAsignatura.php';
+//include_once '../controlSistema/ManejadorAsignatura.php';
 include_once '../lib/ControlAcceso.Class.php';
+require_once '../modeloSistema/Profesor.Class.php';
+require_once '../modeloSistema/BDConexionSistema.Class.php';
 
 
-$ManejadorAsignatura = new ManejadorAsignatura();
-$Asignaturas = $ManejadorAsignatura->getColeccion();
+//$ManejadorAsignatura = new ManejadorAsignatura();
+//$Asignaturas = $ManejadorAsignatura->getColeccion();
+
+// Obtenemos el rol del usuario logueado en el sistema
+$usuario = $_SESSION['usuario'];
+$rol = $usuario->roles[0]->nombre;
+
+// Obtenemos el email del profesor
+$email = $usuario->email;
+//var_dump($usuario->email);
+
+// Preparamos la query para obtener todos los datos de Profesor segun el email
+$sql = "SELECT * "
+     . "FROM profesor "
+     . "WHERE email = '{$email}'";
+     
+$resultado = BDConexionSistema::getInstancia()->query($sql);
+
+$mostrarError = FALSE; // variable que utilizaremos para mostrar el Error (error Bd, no existe profesor)
+// validamos el resultado de la query (si retorna false -> Ocurrio un error en la BD) Lanzamos una Excepcion informando el Error
+if (!$resultado) {
+    $mensaje = "Ocurrio un Error al obtener los datos del Profesor con email: {$email}.";
+    $mostrarError = TRUE;
+} elseif ($resultado->num_rows == 1) { // los correos no se pueden repetir por lo que deberia deber 1 o 0 registro
+    $profesor = $resultado->fetch_object("Profesor"); // creamos objeto Profesor
+} else {
+    $mensaje = "No hay Profesor en el Sistema con email: <b>{$email}.</b>";
+    $mostrarError = TRUE;
+}
+
+if (!$mostrarError){ // No ocurrio un error, y existe el profesor, obtenemos las asignaturas
+    $asignaturas = $profesor->obtenerAsignaturas();
+}
 
 ?>
 
@@ -27,18 +60,31 @@ $Asignaturas = $ManejadorAsignatura->getColeccion();
             <div class="card">
                 <div class="card-header">
 
-                    <h3>Asignaturas del Profesor - NOMBRE PROFESOR </h3>
+                    <h3>Mis Asignaturas</h3>
                 </div>
                 <div class="card-body">
-                    
-                    <table class="table table-hover table-sm">
+                    <?php
+                    if ($mostrarError) { ?>
+                        <div class="alert alert-danger text-center" role="alert">
+                            <?= $mensaje;?>
+                        </div>
+                    <?php
+                    } else {
+                        //var_dump($asignaturas);
+                        if (is_null($asignaturas)){ ?>
+                            <div class="alert alert-warning text-center" role="alert">
+                                No hay asignaturas en la cual el profesor es responsable.
+                            </div>
+                        <?php    
+                        } else { ?>
+                            <table class="table table-hover table-sm">
                         <tr class="table-info">
                             <th>C&oacute;digo de Asignatura</th>
                             <th>Nombre</th>
                             <th>Gestionar Programa</th>
                         </tr>
                         <tr>
-                            <?php foreach ($Asignaturas as $Asignatura) { ?>
+                            <?php foreach ($asignaturas as $Asignatura) { ?>
                             <td><?= $Asignatura->getId(); ?></td>
                             <td><?= $Asignatura->getNombre(); ?></td>
 
@@ -64,6 +110,11 @@ $Asignaturas = $ManejadorAsignatura->getColeccion();
                             </tr>
                         <?php } ?>
                     </table>
+                    <?php    
+                        }
+                    }
+                    ?>
+                    
                 </div>
             </div>
         </div>

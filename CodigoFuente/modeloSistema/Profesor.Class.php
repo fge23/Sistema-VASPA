@@ -1,6 +1,5 @@
 <?php
 include_once 'BDConexionSistema.Class.php';
-//include_once '';
 
 /**
  * Description of Profesor
@@ -129,6 +128,41 @@ class Profesor {
         $this->preferencias = $preferencias;
     }
 
+    // Funcion que retorna en un array las asignaturas en las cuales el profesor
+    // es responsable. Si no es responsable de asignaturas devuelve NULL
+    /**
+     * 
+     * @return Asignatura[]
+     */
+    function obtenerAsignaturas(){
+        // importamos la clase Asignatura
+        include_once __DIR__.'/Asignatura.Class.php';
+        //La constante __DIR__ retorna la ruta absoluta del directorio donde se encuentra el fichero que la está utilizando. Y dirname() retorna el directorio padre, en combinación dirname(__DIR__) nos retornaría la ruta absoluta del directorio padre donde se encuentra el fichero que la está usando.
+        
+        // obtenemos las asignaturas en donde es responsable el profesor
+        $this->query = "SELECT * "
+                . "FROM asignatura "
+                . "WHERE idProfesor = '{$this->id}'";
+                
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        
+        // validamos el resultado de la query (si retorna false -> Ocurrio un error en la BD) Lanzamos una Excepcion informando el Error
+        if (!$this->datos) {
+            throw new Exception("Ocurrio un Error al obtener las Asignaturas del Profesor: {$this->apellido}, '{$this->nombre}'.");
+        }
+        
+        $asignaturas = NULL;
+        
+        if ($this->datos->num_rows > 0) {
+            for ($x = 0; $x < $this->datos->num_rows; $x++) {
+                $asignaturas[] = $this->datos->fetch_object("Asignatura"); // creamos objeto
+            }
+        }
 
+        unset($this->query);
+        unset($this->datos);
+
+        return $asignaturas;
+    }
     
 }

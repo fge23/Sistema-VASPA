@@ -46,9 +46,9 @@ INSERT INTO `profesor` (`id`, `dni`, `nombre`, `apellido`, `email`, `categoria`,
 (8, 24326223, 'Claudio', 'Saldivia', 'csaldiviaa@gmail.com', 'cat1', NULL, 2),
 (9, 18273367, 'Daniel', 'Laguia', 'dalaguia@gmail.com', 'cat1', 'pref1', 2),
 (10, 17262556, 'Walter', 'Altamirano', 'waaltamirano', 'cat1', 'p', 2),
-(11, 35106899, 'Héctor', 'Muñoz', 'mh@uarg.unpa.edu.ar', 'cat1', '', 1),
 (12, 30000000, 'Carlos Gustavo', 'Livacic', 'carlosgustavolivacic@gmail.com', 'cat1', NULL, 2),
-(13, 25123456, 'Diego', 'Rodriguez Herleing', 'diegorohe@gmail.com', 'cat2', NULL, 2);
+(13, 25123456, 'Diego', 'Rodriguez Herleing', 'diegorohe@gmail.com', 'cat2', NULL, 2),
+(14, 25252525, 'UARG', 'Profesor', 'profesor.uarg@gmail.com', 'cat1', NULL, 2);
 
 --
 -- Volcado de datos para la tabla `carrera`
@@ -82,11 +82,15 @@ INSERT INTO `asignatura` (`id`, `nombre`, `idDepartamento`, `contenidosMinimos`,
 ('0473', 'Ingeniería de Software', 2, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,', 4, 6),
 ('1649', 'Resolución de Problemas y Algoritmos', 2, 'Problemas. Algoritmos. Operadores aritméticos y lógicos. Estructuras de control. Noción de modularización. Estructuras de datos lineales: Arreglos. Pilas. Colas. Algoritmos fundamentales: recorrido, búsqueda, ordenamiento, actualización. Recursividad.', 5, 8),
 ('1654', 'Requerimientos de Software', 2, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,', 1, 6),
+('1655', 'Aspectos Profesionales', 2, 'Historia de computación. responsabilidad y ética profesional. Impacto económico del software. Computación y sociedad. Propiedad intelectual, licenciamiento del software y contratos informáticos. Aspectos legales laborales y específicos. Patentamiento. Software Libre.', 14, 2),
+('1657', 'Sistemas Operativos', 2, 'Servicios de Sistemas Operativos. Máquina Virtual. Planificación de CPU. Procesos Concurrentes. Concepto de Proceso. Planificación de Procesos. Interbloqueos. Administración de Memoria. Memoria Virtual. Sistema de Archivos. Protección.', 14, 5),
 ('1658', 'Análisis y Diseño de Software', 2, 'daasasdsad', 9, 6),
 ('1659', 'Bases de Datos', 2, 'asdasdasdasd', 10, 6),
 ('1661', 'Redes y Telecomunicaciones', 2, 'tecnica de transmisión de datos, modelos, topologías ...', 12, 6),
 ('1663', 'Validación y Verificación de Software', 2, 'asdasdasdsd', 9, 4),
+('1666', 'Sistemas Operativos Distribuidos', 2, 'Sistemas Operativos de tiempo real, embebidos, distribuidos. Comunicación. Sincronización. Manejo de recursos y Archivos de sistemas Distribuidos. Memoria compartida distribuida. Control de concurrencia en Sistemas Distribuidos. Transacciones Distribuidas. Seguiridad en Sistemas Distribuidos. Sistemas Colaborativos.', 14, 5),
 ('1668', 'Gestión de Proyectos de Software', 2, 'Conceptos de gestión, Planificación de proyectos. Métricas y estimación de costos, esfuerzo y tiempo. Riesgos. Organización y personal de proyecto. Control de proyecto. Gestión de configuraciones de software. Implantación y Evolución del software', 4, 6),
+('1671', 'Laboratorio de Redes', 2, 'Técnicas de transmisión de datos, modelos, topologías, protocolos de red y algoritmos de ruteo de datos. Sistemas operativos de red. Seguridad en redes. Administración de redes. Simulación de redes.', 12, 4),
 ('1673', 'Gestión de Calidad', 2, 'asdasdasdasd', 4, 4),
 ('2138', 'Laboratorio de Desarrollo de Software', 2, 'Herramientas de integración de desarrollo de software. Gestión de Configuraciones. Herramientas de Análisis y Diseño de software. Nociones de sistemas colaborativos.', 4, 6);
 
@@ -106,7 +110,17 @@ INSERT INTO `plan_asignatura` (`idPlan`, `idAsignatura`) VALUES
 ('016P4', '0473'),
 ('016P5', '1654'),
 ('072P2', '1654'),
-('072P2', '1661');
+('072P2', '1661'),
+('016P3', '0174'),
+('016P3', '0175'),
+('016P5', '1655'),
+('016P5', '1657'),
+('016P5', '1666'),
+('016P5', '1661'),
+('072P2', '1655'),
+('072P2', '1657'),
+('072P2', '1666'),
+('072P2', '1671');
 
 --
 -- Volcado de datos para la tabla `profesor_asignatura`
@@ -127,7 +141,13 @@ INSERT INTO `correlativa_de` (`id`, `requisito`, `idAsignatura`, `idAsignatura_C
 (1, 'Aprobada', '1668', '1658'),
 (2, 'Aprobada', '1668', '1659'),
 (3, 'Regular', '1668', '1663'),
-(4, 'Regular', '1673', '1668');
+(4, 'Regular', '1673', '1668'),
+(6, 'Aprobada', '1661', '1649'),
+(7, 'Regular', '1666', '1661'),
+(8, 'Regular', '1661', '1657'),
+(9, 'Regular', '1657', '1649'),
+(10, 'Aprobada', '1671', '1661'),
+(11, 'Regular', '1671', '1666');
 
 --
 -- Volcado de datos para la tabla `programa`
