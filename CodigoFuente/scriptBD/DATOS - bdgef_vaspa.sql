@@ -55,10 +55,25 @@ INSERT INTO `profesor` (`id`, `dni`, `nombre`, `apellido`, `email`, `categoria`,
 --
 
 INSERT INTO `carrera` (`id`, `nombre`) VALUES
+('001', 'Profesorado en Letras'),
+('003', 'Profesorado en Historia'),
+('004', 'Profesorado en Geografía'),
 ('016', 'Analista de Sistemas'),
+('023', 'Ingeniería en Recursos Naturales Renovables'),
+('045', 'Licenciatura en Psicopedagogía'),
 ('049', 'Profesorado en Matemática'),
+('060', 'Licenciatura en Letras'),
+('061', 'Licenciatura en Turismo'),
+('062', 'Tecnicatura Universitaria en Turismo'),
+('064', 'Licenciatura en Geografía'),
 ('069', 'Ingeniería Química'),
-('072', 'Licenciatura en Sistemas');
+('072', 'Licenciatura en Sistemas'),
+('074', 'Licenciatura en Trabajo Social'),
+('076', 'Tecnicatura Universitaria en Acompañamiento Terapéutico'),
+('912', 'Tecnicatura Universitaria en Gestión de Organizaciones'),
+('913', 'Licenciatura en Administración'),
+('914', 'Profesorado en Economía y Gestión de Organizaciones'),
+('918', 'Licenciatura en Comunicación Social');
 
 --
 -- Volcado de datos para la tabla `plan`
