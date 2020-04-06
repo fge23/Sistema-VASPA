@@ -4,6 +4,7 @@ include_once '../modeloSistema/Asignatura.Class.php';
 
 $idAsignatura = $_GET["id"];
 $Asignatura = new Asignatura($idAsignatura);
+$cantidadHorasSemanales = $Asignatura->getHorasSemanales();
 ?>
 <!DOCTYPE html>
 <!--Se deben agregar validaciones para evitar que vayan vacios los campos que deberían tener datos-->
@@ -57,7 +58,7 @@ $Asignatura = new Asignatura($idAsignatura);
                                 <div class="form-row">
                                     <div class="col-md-3 col-lg-4">
                                         <label for="inputAnio">A&ntilde;o del Programa</label>
-                                        <input type="number" name="anio" class="form-control" id="inputAnio" required="" value="<?= date("Y"); ?>">
+                                        <input type="number" name="anio" class="form-control" id="inputAnio" required readonly value="<?= date("Y"); ?>">
                                     </div>
 
                                     <div class="col-md-3 col-lg-4">
@@ -235,6 +236,12 @@ $Asignatura = new Asignatura($idAsignatura);
         </div>
         <?php include_once '../gui/footer.php'; ?>
     </body>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            sumar();
+        });
+    </script>
     <script type="text/javascript">
         /**
          * Suma los valores de los cuadros de texto y vaida que las horas semanales coincidan con el plan
@@ -258,13 +265,13 @@ $Asignatura = new Asignatura($idAsignatura);
             console.log("Cantidad de horas " + horasTotales);
 
             if (!isNaN(horasTotales)) {
-                document.getElementsByClassName('cantidadTotalHoras')[0].textContent = "La suma total de horas semanales es: " + Math.floor(hour);
-                if (<?= $Asignatura->getHorasSemanales() ?> != Math.floor(hour)) {
+                document.getElementsByClassName('cantidadTotalHoras')[0].textContent = "La suma total de horas semanales es: " + Math.floor(hour) + ". ";
+                if (<?= $cantidadHorasSemanales ?> != Math.floor(hour)) {
                     console.log("La cantidad de horas de cursada son DIFERENTES a las de la Asignatura");
-                    document.getElementsByClassName('cantidadTotalHoras')[0].textContent += "\nLa cantidad de horas semanales debe ser igual a las definidas en el Plan de la Carrera";
+                    document.getElementsByClassName('cantidadTotalHoras')[0].textContent += "\n\n La cantidad de horas semanales debe ser igual a las definidas en el Plan de la Carrera (<?= $cantidadHorasSemanales ?> horas).";
                     document.getElementById("btnSiguiente").disabled = true;
                 } else {
-                    document.getElementsByClassName('cantidadTotalHoras')[0].textContent += "\nLa cantidad de horas semanales es igual a las definidas en el Plan de la Carrera";
+                    document.getElementsByClassName('cantidadTotalHoras')[0].textContent += "\n\n La cantidad de horas semanales es igual a las definidas en el Plan de la Carrera.";
                     document.getElementById("btnSiguiente").disabled = false;
                 }
             }
@@ -316,7 +323,7 @@ $Asignatura = new Asignatura($idAsignatura);
         $('#regiration_form').on('submit', function (e) {
             var bandera = true;
             var camposFaltantes = "";
-                        
+
             //Año de programa
             if ($('#inputAnio').val().length == 0) {
                 //alert("El campo 'Fundamentación' no puede estar en blanco");

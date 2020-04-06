@@ -6,6 +6,7 @@ include_once '../controlSistema/ManejadorPrograma.php';
 $anioActual = date("Y");
 $idAsignatura = $_GET["id"];
 $Asignatura = new Asignatura($idAsignatura);
+$cantidadHorasSemanales = $Asignatura->getHorasSemanales();
 $ManejadorPrograma = new ManejadorPrograma();
 $idProgramaAnterior = $ManejadorPrograma->getUltimoPrograma($anioActual, $idAsignatura);
 if (!isset($idProgramaAnterior)) {
@@ -26,6 +27,9 @@ $Programa = new Programa($idProgramaAnterior);
         <link href="../lib/summernote-master/dist/summernote-bs4.css" rel="stylesheet">
         <script src="../lib/summernote-master/dist/summernote-bs4.js"></script>
         <script src="../lib/summernote-master/lang/summernote-es-ES.js"></script>
+        <!--         Librerias Bootbox-->
+        <script src="../lib/bootbox/bootbox.js"></script>
+        <script src="../lib/bootbox/bootbox.locales.js"></script>
 
         <style type="text/css">
             #regiration_form fieldset:not(:first-of-type) {
@@ -61,7 +65,7 @@ $Programa = new Programa($idProgramaAnterior);
                                 <div class="form-row">
                                     <div class="col-md-3 col-lg-4">
                                         <label for="inputAnio">A&ntilde;o del Programa</label>
-                                        <input type="number" name="anio" class="form-control" id="inputAnio" required="" value="<?= $anioActual; ?>">
+                                        <input type="number" name="anio" class="form-control" id="inputAnio" required readonly value="<?= $anioActual; ?>">
                                     </div>
 
                                     <div class="col-md-3 col-lg-4">
@@ -223,7 +227,7 @@ $Programa = new Programa($idProgramaAnterior);
 
                             <div class="form-group">
                                 <label for="textAreaObjetivosGenerales">Objetivos Generales</label>
-                                <textarea class="summernote" name="objetivosGenerales" required=""><?= $Programa->getObjetivosGenerales(); ?>  </textarea>
+                                <textarea class="summernote" name="objetivosGenerales"  id="textAreaObjetivosGenerales"  required=""><?= $Programa->getObjetivosGenerales(); ?>  </textarea>
                             </div>
 
                             <div class="form-group">
@@ -319,7 +323,6 @@ $Programa = new Programa($idProgramaAnterior);
                             <input type="hidden" name="idAsignatura" value="<?= $Asignatura->getId(); ?>">
                             <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
                             <input type="submit" name="submit" class="submit btn btn-info" value="Guardar" id="submit_data" />
-                            <input type="submit" name="submit2" class="submit btn btn-success" value="Guardar y Enviar" onclick=this.form.action = "prueba.php">
                         </fieldset>
                     </form>
                 </div>
@@ -327,9 +330,15 @@ $Programa = new Programa($idProgramaAnterior);
         </div>
         <?php include_once '../gui/footer.php'; ?>
     </body>
+  
+    <script type="text/javascript">
+        $(document).ready(function () {
+            sumar();
+        });
+    </script>
     <script type="text/javascript">
         /**
-         * Suma los valores de los cuadros de texto y valida que las horas semanales coincidan con el plan
+         * Suma los valores de los cuadros de texto y vaida que las horas semanales coincidan con el plan
          */
         function sumar()
         {
@@ -350,13 +359,13 @@ $Programa = new Programa($idProgramaAnterior);
             console.log("Cantidad de horas " + horasTotales);
 
             if (!isNaN(horasTotales)) {
-                document.getElementsByClassName('cantidadTotalHoras')[0].textContent = "La suma total de horas semanales es: " + Math.floor(hour);
-                if (<?= $Asignatura->getHorasSemanales() ?> != Math.floor(hour)) {
+                document.getElementsByClassName('cantidadTotalHoras')[0].textContent = "La suma total de horas semanales es: " + Math.floor(hour) + ". ";
+                if (<?= $cantidadHorasSemanales ?> != Math.floor(hour)) {
                     console.log("La cantidad de horas de cursada son DIFERENTES a las de la Asignatura");
-                    alert("La cantidad de horas semanales debe ser igual a las definidas en el Plan de la Carrera");
+                    document.getElementsByClassName('cantidadTotalHoras')[0].textContent += "\n\n La cantidad de horas semanales debe ser igual a las definidas en el Plan de la Carrera (<?= $cantidadHorasSemanales ?> horas).";
                     document.getElementById("btnSiguiente").disabled = true;
                 } else {
-                    console.log("La cantidad de horas de cursada son IGUALES a las de la Asignatura");
+                    document.getElementsByClassName('cantidadTotalHoras')[0].textContent += "\n\n La cantidad de horas semanales es igual a las definidas en el Plan de la Carrera.";
                     document.getElementById("btnSiguiente").disabled = false;
                 }
             }
@@ -403,6 +412,112 @@ $Programa = new Programa($idProgramaAnterior);
             });
         });
     </script>
+    <!--    Se debe desarrollar una funcionalidad que valide que no haya campos vacíos -->
+    <script>
+        $('#regiration_form').on('submit', function (e) {
+            var bandera = true;
+            var camposFaltantes = "";
+
+            //Año de programa
+            if ($('#inputAnio').val().length == 0) {
+                //alert("El campo 'Fundamentación' no puede estar en blanco");
+                camposFaltantes += "<br><li>Año de Programa";
+                bandera = false;
+            }
+
+            //Fundamentacion
+            if ($('#textAreaFundamentacion').summernote('isEmpty')) {
+                //alert("El campo 'Fundamentación' no puede estar en blanco");
+                camposFaltantes += "<br><li>Fundamentación";
+                bandera = false;
+            }
+
+            //Objetivos generales
+            if ($('#textAreaObjetivosGenerales').summernote('isEmpty')) {
+                //  alert("El campo 'Objetivos generales' no puede estar en blanco");
+                camposFaltantes += "<br><li>Objetivos generales";
+                bandera = false;
+            }
+
+            //Organizacion contenidos
+            if ($('#textAreaOrganizacionContenidos').summernote('isEmpty')) {
+                //alert("El campo 'Organización de Contenidos' no puede estar en blanco");
+                camposFaltantes += "<br><li>Organización de Contenidos";
+                bandera = false;
+            }
+
+            //Criterios de evaluacion
+            if ($('#textAreaCriteriosEvaluacion').summernote('isEmpty')) {
+                //  alert("El campo 'Criterios de evaluación' no puede estar en blanco");
+                camposFaltantes += "<br><li>Criterios de evaluación";
+                bandera = false;
+            }
+
+            //Metodologia presencial
+            if ($('#textAreaMetodologiaPresencial').summernote('isEmpty')) {
+                //  alert("El campo 'Metodología presencial' no puede estar en blanco");
+                camposFaltantes += "<br><li>Metodología presencial";
+                bandera = false;
+            }
+
+            //Regularizacion presencial
+            if ($('#textAreaRegularizacionPresencial').summernote('isEmpty')) {
+                //  alert("El campo 'Regularización presencial' no puede estar en blanco");
+                camposFaltantes += "<br><li>Regularización presencial";
+                bandera = false;
+            }
+
+            //Aprobación presencial
+            if ($('#textAreaAprobacionPresencial').summernote('isEmpty')) {
+                //alert("El campo 'Aprobación presencial' no puede estar en blanco");
+                camposFaltantes += "<br><li>Aprobación presencial";
+                bandera = false;
+            }
+
+            //Metodologia SATEP
+            if ($('#textAreaMetodologiaSATEP').summernote('isEmpty')) {
+                //  alert("El campo 'Metodología SATEP' no puede estar en blanco");
+                camposFaltantes += "<br><li>Metodología SATEP";
+                bandera = false;
+            }
+
+            //Regularizacion SATEP
+            if ($('#textAreaRegularizacionSATEP').summernote('isEmpty')) {
+                // alert("El campo 'Regularización SATEP' no puede estar en blanco");
+                camposFaltantes += "<br><li>Regularización SATEP";
+                bandera = false;
+            }
+
+            //Aprobación SATEP
+            if ($('#textAreaAprobacionSATEP').summernote('isEmpty')) {
+                //alert("El campo 'Aprobación SATEP' no puede estar en blanco");
+                camposFaltantes += "<br><li>Aprobación SATEP";
+                bandera = false;
+            }
+
+            //Metodologia libre
+            if ($('#textAreaMetodologiaLibre').summernote('isEmpty')) {
+                // alert("El campo 'Metodologia Libre' no puede estar en blanco");
+                camposFaltantes += "<br><li>Metodologia Libre";
+                bandera = false;
+            }
+
+            //Aprobacion libre
+            if ($('#textAreaAprobacionLibre').summernote('isEmpty')) {
+                // alert("El campo 'Aprobacion Libre' no puede estar en blanco");
+                camposFaltantes += "<br><li>Aprobación Libre";
+                bandera = false;
+            }
+
+
+            if (bandera === true) {
+                $("#regiration_form").submit();
+            } else {
+                e.preventDefault();
+                bootbox.alert("Faltan completar los siguientes campos: <br>" + camposFaltantes);
+                camposFaltantes = " ";
+            }
+
+        })
+    </script>
 </html>
-
-

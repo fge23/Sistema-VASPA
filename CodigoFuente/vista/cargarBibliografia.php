@@ -5,6 +5,8 @@ include_once '../modeloSistema/BDConexionSistema.Class.php';
 $idPrograma = $_GET["id"];
 //echo "El ID del programa es: " . $idPrograma;
 
+$bibliografiaProgramaAnterior = $_GET["bibiliografiaAnterior"];
+
 $cantidadLibrosObligatorios = getEstadoLibrosObligatorios($idPrograma);
 $cantidadLibrosComplementarios = getEstadoLibrosComplementarios($idPrograma);
 $cantidadRevistas = getEstado($idPrograma, "revista");
@@ -41,7 +43,7 @@ $cantidadOtros = getEstado($idPrograma, "otro_material");
                     .letragrande{font-size:17px;}
                 </style>
                 <a href="cargarBibliografiaProgramaAnterior.php?id=<?= $idPrograma; ?>">
-                    <button type="button" class="btn btn-primary" id="btnCargarProgramaAnterior">
+                    <button type="button" class="btn btn-primary" id="btnCargarProgramaAnterior" onclick="validarBibliografiaAnterior()">
                         <span class="oi oi-caret-bottom"></span> Cargar Bibliograf&iacute;a de Programa Anterior
                     </button>
                 </a>
@@ -117,6 +119,26 @@ $cantidadOtros = getEstado($idPrograma, "otro_material");
             }
 
         });
+    </script>
+
+    <script type="text/javascript">
+        function wait(ms)
+        {
+            var d = new Date();
+            var d2 = null;
+            do {
+                d2 = new Date();
+            } while (d2 - d < ms);
+        }
+        
+        function validarBibliografiaAnterior() {
+            wait(3000);
+            if (<?= $bibliografiaProgramaAnterior ?> === 0) {
+                alert("No se ha encontrado Bibliografía del Programa anterior");
+            } else {
+                console.log("Se ha cargado la bibliografía!");
+            }
+        }
     </script>
 </body>
 </html
