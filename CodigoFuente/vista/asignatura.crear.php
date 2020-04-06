@@ -67,7 +67,7 @@ $Profesores = $ManejadorProfesor->getColeccion();
                         
                         <div class="form-group">
                             <label for="inputHora">Horas Semanales</label>
-                            <input type="number" name="horasSemanales" class="form-control" id="inputHora" placeholder="Ingrese la cantidad de horas semanales" required="">
+                            <input type="number" name="horasSemanales" class="form-control" id="inputHora" placeholder="Ingrese la cantidad de horas semanales"  min="2" max="10" required="">
                         </div>
                         
                         <div class="form-group">
