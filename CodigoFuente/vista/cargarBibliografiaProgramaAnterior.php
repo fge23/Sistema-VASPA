@@ -19,12 +19,15 @@ $anioActual = date("Y");
 $ManejadorPrograma = new ManejadorPrograma();
 //Se obtiene el ID del Programa Anterior de la asignatura
 $idProgramaAnterior = $ManejadorPrograma->getUltimoPrograma($anioActual, $idAsignatura);
+
+$bibliografiaAnterior = 0;
 if (!isset($idProgramaAnterior)) {
     echo '<script language="javascript">alert("No hay Programa anterior");</script>';
+    header("location: cargarBibliografia.php?id={$idPrograma}&bibiliografiaAnterior={$bibliografiaAnterior}");
+    
 }
 //echo $idProgramaAnterior;
 
-$bibliografiaAnterior = 0;
 
 //Se copian todos los registros correspondientes de la tabla Libro, modificando su id y su idPrograma
 $queryLibro = "INSERT INTO libro (referencia, apellido, nombre, anioEdicion, titulo, capitulo, lugarEdicion, editorial, unidad, biblioteca, siunpa, otro, tipoLibro, idPrograma) "

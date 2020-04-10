@@ -5,7 +5,9 @@ include_once '../modeloSistema/BDConexionSistema.Class.php';
 $idPrograma = $_GET["id"];
 //echo "El ID del programa es: " . $idPrograma;
 
-$bibliografiaProgramaAnterior = $_GET["bibiliografiaAnterior"];
+if (isset($_GET["bibiliografiaAnterior"])) {
+    $bibliografiaProgramaAnterior = $_GET["bibiliografiaAnterior"];
+}
 
 $cantidadLibrosObligatorios = getEstadoLibrosObligatorios($idPrograma);
 $cantidadLibrosComplementarios = getEstadoLibrosComplementarios($idPrograma);
@@ -47,6 +49,7 @@ $cantidadOtros = getEstado($idPrograma, "otro_material");
                         <span class="oi oi-caret-bottom"></span> Cargar Bibliograf&iacute;a de Programa Anterior
                     </button>
                 </a>
+
                 <br><br>
                 <table class="table table-hover table-sm letragrande">
                     <tr class="table-info">
@@ -76,16 +79,22 @@ $cantidadOtros = getEstado($idPrograma, "otro_material");
                 </table>
             </div>
             <div class="card-footer">
-                <a href="cargarBibliografia.php?id=<?= $idPrograma; ?>">
-                    <button type="button" class="btn btn-primary" id="btnEnviarPrograma">
+                <form action="enviarProgramaRevision.php" method="POST">
+                    
+                    <input type="hidden" value="<?= $idPrograma ?>" name="idPrograma">
+                    <button type="submit" class="btn btn-primary" id="btnEnviarPrograma">
                         <span class="oi oi-document"></span> Enviar Programa a Revisi&oacute;n
                     </button>
-                </a>
-                <a href="asignaturasDeProfesor.php">
-                    <button type="button" class="btn btn-primary">
-                        <span class="oi oi-account-logout"></span> Continuar m&aacute;s tarde
-                    </button>
-                </a>
+                    <a href="asignaturasDeProfesor.php">
+                        <button type="button" class="btn btn-primary">
+                            <span class="oi oi-account-logout"></span> Continuar m&aacute;s tarde
+                        </button>
+                    </a>
+                </form>
+
+
+
+
             </div>
         </div>
     </div>
@@ -130,7 +139,7 @@ $cantidadOtros = getEstado($idPrograma, "otro_material");
                 d2 = new Date();
             } while (d2 - d < ms);
         }
-        
+
         function validarBibliografiaAnterior() {
             wait(3000);
             if (<?= $bibliografiaProgramaAnterior ?> === 0) {
