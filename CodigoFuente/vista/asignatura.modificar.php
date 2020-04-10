@@ -90,7 +90,7 @@ $Asignatura = new Asignatura($codAsignatura);
 
                         <div class="form-group">
                             <label for="inputHora">Horas Semanales</label>
-                            <input type="number" value="<?= $Asignatura->getHorasSemanales(); ?>" name="horasSemanales" class="form-control" id="inputHora" placeholder="Ingrese la cantidad de horas semanales" min="2" max="10" required="">
+                            <input type="number" value="<?= $Asignatura->getHorasSemanales(); ?>" name="horasSemanales" class="form-control" id="inputHora" placeholder="Ingrese la cantidad de horas semanales" min="2" max="12" required="">
                         </div>
                         
                         <div class="form-group">

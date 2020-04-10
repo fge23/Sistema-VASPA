@@ -53,9 +53,9 @@ $Carreras = $ManejadorCarrera->getColeccion();
                                     <td><?= $Carrera->getNombre(); ?></td>
 
                                     <td>
-                                        <a title="Ver detalle" href="carrera.verAsignaturas.php">
+                                        <a title="Ver Planes" href="carrera.verPlanes.php?id=<?= $Carrera->getId(); ?>">
                                             <button type="button" class="btn btn-outline-info">
-                                                <span class="oi oi-zoom-in"></span>
+                                                <span class="oi oi-list"></span>
                                             </button>
                                         </a>
                                         <a title="Modificar" href="carrera.modificar.php?id=<?= $Carrera->getId(); ?>">
