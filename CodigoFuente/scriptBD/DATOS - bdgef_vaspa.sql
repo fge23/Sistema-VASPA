@@ -38,17 +38,17 @@ INSERT INTO `departamento` (`id`, `nombre`) VALUES
 --
 
 INSERT INTO `profesor` (`id`, `dni`, `nombre`, `apellido`, `email`, `categoria`, `preferencias`, `idDepartamento`) VALUES
-(1, 31323782, 'Karim Omar', 'Hallar', 'fabriciowgonzalez@gmail.com', 'cat1', 'pref1', 2),
-(4, 20172723, 'Albert Anibal Osiris', 'Sofia', 'franciscoestrada2395@outlook.es', 'cat1', 'pref1', 2),
-(5, 18273827, 'Sandra', 'Casas', 'ns_2510_96@hotmail.com', 'cat1', 'pref1', 2),
-(6, 31382983, 'Jorge', 'Climis', 'jclimis@gmail.com', 'cat2', 'pref2', 2),
-(7, 18732763, 'Leonardo', 'González', 'lgonzalez@uarg.unpa.edu.ar', 'cat2', '', 2),
-(8, 24326223, 'Claudio', 'Saldivia', 'csaldiviaa@gmail.com', 'cat1', NULL, 2),
-(9, 18273367, 'Daniel', 'Laguia', 'dalaguia@gmail.com', 'cat1', 'pref1', 2),
-(10, 17262556, 'Walter', 'Altamirano', 'waaltamirano', 'cat1', 'p', 2),
-(12, 30000000, 'Carlos Gustavo', 'Livacic', 'carlosgustavolivacic@gmail.com', 'cat1', NULL, 2),
-(13, 25123456, 'Diego', 'Rodriguez Herleing', 'diegorohe@gmail.com', 'cat2', NULL, 2),
-(14, 25252525, 'UARG', 'Profesor', 'profesor.uarg@gmail.com', 'cat1', NULL, 2);
+(1, 0, 'Karim Omar', 'Hallar', 'fabriciowgonzalez@gmail.com', 'cat1', 'pref1', 2),
+(4, 0, 'Albert Anibal Osiris', 'Sofia', 'franciscoestrada2395@outlook.es', 'cat1', 'pref1', 2),
+(5, 0, 'Sandra', 'Casas', 'ns_2510_96@hotmail.com', 'cat1', 'pref1', 2),
+(6, 0, 'Jorge', 'Climis', 'jclimis@gmail.com', 'cat2', 'pref2', 2),
+(7, 0, 'Leonardo', 'González', 'lgonzalez@uarg.unpa.edu.ar', 'cat2', '', 2),
+(8, 0, 'Claudio', 'Saldivia', 'csaldiviaa@gmail.com', 'cat1', NULL, 2),
+(9, 0, 'Daniel', 'Laguia', 'dalaguia@gmail.com', 'cat1', 'pref1', 2),
+(10, 0, 'Walter', 'Altamirano', 'waaltamirano', 'cat1', 'p', 2),
+(12, 0, 'Carlos Gustavo', 'Livacic', 'carlosgustavolivacic@gmail.com', 'cat1', NULL, 2),
+(13, 0, 'Diego', 'Rodriguez Herleing', 'diegorohe@gmail.com', 'cat2', NULL, 2),
+(14, 0, 'UARG', 'Profesor', 'profesor.uarg@gmail.com', 'cat1', NULL, 2);
 
 --
 -- Volcado de datos para la tabla `carrera`

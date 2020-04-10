@@ -52,12 +52,7 @@ $Profesor = new Profesor($idProfesor, null);
                                   pattern="[A-Za-zñÑáéíóúáéíóúÁÉÍÓÚ']{2,}([A-Za-zñÑáéíóúáéíóúÁÉÍÓÚ']{2,}| [A-Za-zñÑáéíóúáéíóúÁÉÍÓÚ']{2,})*" 
                                   title="Escriba el nombre, en caso de tener más de uno, escribirlos separados mediante un espacio" onkeypress="return Solo_Texto(event);">
                         </div>
-                        
-                         <div class="form-group">
-                           <label for="inputDniProfesor">DNI</label>
-                           <input type="number" name="dni" class="form-control" id="inputDniProfesor" placeholder="Ingrese el DNI del Profesor" value="<?= $Profesor->getDni();?>" required="" min="5000000" max="40000000">
-                        </div>
-                        
+                                               
                         <div class="form-group">
                            <label for="inputEmailProfesor">Email</label>
                            <input type="email" name="email" class="form-control" id="inputEmailProfesor" placeholder="Ingrese el Email del Profesor" value="<?= $Profesor->getEmail();?>" pattern="^[a-z]+@uarg.unpa.edu.ar$" title="nombreusuario@uarg.unpa.edu.ar" required="">

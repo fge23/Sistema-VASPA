@@ -515,8 +515,7 @@ ALTER TABLE `plan_pdf`
 --
 ALTER TABLE `profesor`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `dni_UNIQUE` (`dni`),
-  ADD UNIQUE KEY `email_UNIQUE` (`email`),
+    ADD UNIQUE KEY `email_UNIQUE` (`email`),
   ADD KEY `fk_PROFESOR_DEPARTAMENTO_idx` (`idDepartamento`);
 
 --

@@ -43,6 +43,7 @@ class Programa {
     private $vigencia;
     private $comentarioSa;
     private $comentarioDepto;
+    private $enRevision;
     private $query;
 
     /**
@@ -346,6 +347,13 @@ class Programa {
         $this->comentarioDepto = $comentarioDepto;
     }
 
+    function getEnRevision() {
+        return $this->enRevision;
+    }
+
+    function setEnRevision($enRevision) {
+        $this->enRevision = $enRevision;
+    }   
     
     /*
      * 

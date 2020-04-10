@@ -56,10 +56,10 @@ class ManejadorProfesor {
         $Profesor = new Profesor(null, $datos);
         $apellido = mysqli_real_escape_string(BDConexionSistema::getInstancia(), $Profesor->getApellido());
         
-        if ($this->chequearDNI($Profesor->getDni())) {
+//        if ($this->chequearDNI($Profesor->getDni())) {
             if ($this->chequearEmail($Profesor->getEmail())) {
                 $this->query = "INSERT INTO PROFESOR "
-                        . "VALUES ('{$Profesor->getId()}', '{$Profesor->getDni()}', '{$Profesor->getNombre()}', '{$apellido}',"
+                        . "VALUES ('{$Profesor->getId()}', '0', '{$Profesor->getNombre()}', '{$apellido}',"
                         . "'{$Profesor->getEmail()}', '{$Profesor->getCategoria()}', '{$Profesor->getPreferencias()}', '{$Profesor->getIdDepartamento()}')";
 
                 $consulta = BDConexionSistema::getInstancia()->query($this->query);
@@ -72,9 +72,9 @@ class ManejadorProfesor {
             else {
                 throw new Exception("El email:  <b>" . $Profesor->getEmail() . "</b> ya corresponde a un profesor en la Base de Datos");
             }
-        } else {
-            throw new Exception("El DNI:  <b>" . $Profesor->getDni() . "</b> ya corresponde a un profesor en la Base de Datos");
-        }
+//        } else {
+//            throw new Exception("El DNI:  <b>" . $Profesor->getDni() . "</b> ya corresponde a un profesor en la Base de Datos");
+//        }
         
     }
 
@@ -94,12 +94,11 @@ class ManejadorProfesor {
         $profesorAntes = new Profesor ($id_, NULL);
         $apellido = mysqli_real_escape_string(BDConexionSistema::getInstancia(), $Profesor->getApellido());
         
-        //Chequeamos el dni y el email ingresado en el formulario comparandolo con el almacenado en la BD
-        if ($profesorAntes->getDni() != $Profesor->getDni() && $profesorAntes->getEmail() != $Profesor->getEmail()) {
-            if ($this->chequearDNI($Profesor->getDni())) {
+        if ($profesorAntes->getEmail() != $Profesor->getEmail()) {
+//            if ($this->chequearDNI($Profesor->getDni())) {
                 if ($this->chequearEmail($Profesor->getEmail())) {
                     $this->query = "UPDATE PROFESOR "
-                            . "SET dni = '{$Profesor->getDni()}', "
+                            . "SET dni = '0', "
                             . "nombre = '{$Profesor->getNombre()}', "
                             . "apellido = '{$apellido}' ,"
                             . "email = '{$Profesor->getEmail()}' ,"
@@ -108,41 +107,16 @@ class ManejadorProfesor {
                 } else {
                     throw new Exception("El email:  <b>" . $Profesor->getEmail() . "</b> ya corresponde a un profesor en la Base de Datos");
                 }
-            } else {
-                throw new Exception("El DNI:  <b>" . $Profesor->getDni() . "</b> ya corresponde a un profesor en la Base de Datos");
-            }
-        } elseif ($profesorAntes->getDni() == $Profesor->getDni() && $profesorAntes->getEmail() == $Profesor->getEmail()) {
+//            } else {
+//                throw new Exception("El DNI:  <b>" . $Profesor->getDni() . "</b> ya corresponde a un profesor en la Base de Datos");
+//            }
+        } else {
             $this->query = "UPDATE PROFESOR "
-                            . "SET dni = '{$Profesor->getDni()}', "
+                            . "SET dni = '0', "
                             . "nombre = '{$Profesor->getNombre()}', "
                             . "apellido = '{$apellido}' ,"
-                            . "email = '{$Profesor->getEmail()}' ,"
                             . "idDepartamento = '{$Profesor->getIdDepartamento()}'"
                             . "WHERE id = '{$id_}'";
-        } elseif ($profesorAntes->getDni() != $Profesor->getDni()) {
-            if ($this->chequearDNI($Profesor->getDni())) {
-                $this->query = "UPDATE PROFESOR "
-                        . "SET dni = '{$Profesor->getDni()}', "
-                        . "nombre = '{$Profesor->getNombre()}', "
-                        . "apellido = '{$apellido}' ,"
-                        . "email = '{$Profesor->getEmail()}' ,"
-                        . "idDepartamento = '{$Profesor->getIdDepartamento()}'"
-                        . "WHERE id = '{$id_}'";
-            } else {
-                throw new Exception("El DNI:  <b>" . $Profesor->getDni() . "</b> ya corresponde a un profesor en la Base de Datos");
-            }
-        } else {
-            if ($this->chequearEmail($Profesor->getEmail())) {
-                $this->query = "UPDATE PROFESOR "
-                        . "SET dni = '{$Profesor->getDni()}', "
-                        . "nombre = '{$Profesor->getNombre()}', "
-                        . "apellido = '{$apellido}' ,"
-                        . "email = '{$Profesor->getEmail()}' ,"
-                        . "idDepartamento = '{$Profesor->getIdDepartamento()}'"
-                        . "WHERE id = '{$id_}'";
-            } else {
-                throw new Exception("El email:  <b>" . $Profesor->getEmail() . "</b> ya corresponde a un profesor en la Base de Datos");
-            }
         }
        
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
@@ -154,16 +128,16 @@ class ManejadorProfesor {
         
     }
     
-    function chequearDNI($dni_) {
-        $this->resultado = BDConexionSistema::getInstancia()->query("SELECT 1 FROM PROFESOR WHERE dni = {$dni_} LIMIT 1");
-        if ($this->resultado->num_rows == 1) {
-            //El registro existe en la BD. No se puede insertar
-            return false;
-        } else {
-            //El registro no existe en la BD. Se puede insertar
-            return true;
-        }
-    }
+//    function chequearDNI($dni_) {
+//        $this->resultado = BDConexionSistema::getInstancia()->query("SELECT 1 FROM PROFESOR WHERE dni = {$dni_} LIMIT 1");
+//        if ($this->resultado->num_rows == 1) {
+//            //El registro existe en la BD. No se puede insertar
+//            return false;
+//        } else {
+//            //El registro no existe en la BD. Se puede insertar
+//            return true;
+//        }
+//    }
     
     function chequearEmail($email_) {
         //$email = mysqli_real_escape_string(BDConexionSistema::getInstancia(), $email_);

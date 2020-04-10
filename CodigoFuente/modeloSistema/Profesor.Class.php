@@ -30,7 +30,7 @@ class Profesor {
             //$this->setId($datos['id']);
             //id = NULL debido a que el id es autoincremental
             $this->setId(NULL);
-            $this->setDni($datos['dni']);
+            //$this->setDni($datos['dni']);
             $this->setNombre($datos['nombre']);
             $this->setApellido($datos['apellido']);
             $this->setEmail($datos['email']);

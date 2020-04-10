@@ -287,5 +287,51 @@ class Asignatura {
 
         return $Asignaturas;
     }
+    
+    /**
+     * La siguiente funcion obtiene el Programa de la asignatura siempre y cuando
+     * el anio actual se encuentre en la vigencia del Programa
+     * Por ejemplo el anio del Programa es 2019, tiene una vigencia por 3 anios
+     * es decir que es valido para los siguientes anios: 2019, 2020, 2021
+     * Si el anio actual es 2020, entonces debera devolver ese programa (objeto)
+     * Ahora bien si el actual no encuentra entre los valores de la vigencia 
+     * entonces la funcion devolvera NULL --> Esto significa que no hay programa 
+     * vigente para el anio actual, lo cual deberia habilitarse el boton "Crear Programa"
+     * en la pantalla principal del Profesor.
+     * @return Programa
+     */
+    function obtenerProgramaVigente(){
+        // importamos la clase Asignatura
+        include_once __DIR__.'/Programa.Class.php';
+        //La constante __DIR__ retorna la ruta absoluta del directorio donde se encuentra el fichero que la está utilizando. Y dirname() retorna el directorio padre, en combinación dirname(__DIR__) nos retornaría la ruta absoluta del directorio padre donde se encuentra el fichero que la está usando.
+        
+        $anioActual = date("Y"); //obtenemos el anio (4 digitos) del servidor (anio actual)
+        
+        // obtenemos el programa de asignatura que tenga vigencia para el anio actual
+        $this->query = "SELECT * "
+                . "FROM programa "
+                . "WHERE idAsignatura = '{$this->id}' AND "
+                . "anio <= {$anioActual} AND "
+                . "(anio+vigencia-1) >= {$anioActual}";
+        
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        
+        // validamos el resultado de la query (si retorna false -> Ocurrio un error en la BD) Lanzamos una Excepcion informando el Error
+        if (!$this->datos) {
+            throw new Exception("Ocurrio un Error al obtener el Programa de la Asignatura: {$this->id}, '{$this->nombre}'.");
+        }
+        
+        $programa = NULL;
+        
+        if ($this->datos->num_rows == 1) { // Deberia devolver solo un registro en caso de que haya
+            $programa = $this->datos->fetch_object("Programa"); // creamos objeto programa
+        }
+
+        unset($this->query);
+        unset($this->datos);
+
+        return $programa;
+                
+    }
 
 }
