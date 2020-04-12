@@ -49,7 +49,7 @@ if (!$mostrarError){ // No ocurrio un error, y existe el profesor, obtenemos las
         <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>        
-        <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Asignaturas</title>
+        <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Mis Asignaturas</title>
 
     </head>
     <body>
@@ -94,7 +94,7 @@ if (!$mostrarError){ // No ocurrio un error, y existe el profesor, obtenemos las
                                             <span class="oi oi-plus"></span>
                                         </button>
                                     </a>
-                                    <a title="Modificar Programa Actual" href="#">
+                                    <a title="Modificar Programa Actual" href="programa.modificar.php?id=<?= $Asignatura->getId(); ?>">
                                         <button type="button" class="btn btn-outline-warning">
                                             <span class="oi oi-pencil"></span>
                                         </button>

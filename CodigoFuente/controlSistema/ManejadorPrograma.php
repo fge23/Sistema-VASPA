@@ -55,10 +55,6 @@ class ManejadorPrograma {
         return $this->coleccion;
     }
 
-    /*
-     * TO DO: cambiar parametros de los SET y probar desde programa.crear
-     */
-
     function alta($datos) {
         $Programa = new Programa();
         $Programa->setAnio($datos['anio']);
@@ -95,7 +91,7 @@ class ManejadorPrograma {
 
         //aniocarrera 1,2,3,4,5
         //regimen A,1,2, O
-        /*Se debe considerar el tema de los comentatios de Depto y de SA y el tema de la ubicacion predefinida*/
+        /* Se debe considerar el tema de los comentatios de Depto y de SA y el tema de la ubicacion predefinida */
         $this->query = "INSERT INTO PROGRAMA "
                 . "VALUES (null,{$Programa->getAnio()}, '{$Programa->getAnioCarrera()}', "
                 . " '{$Programa->getHorasTeoria()}', '{$Programa->getHorasPractica()}', '{$Programa->getHorasOtros()}', "
@@ -107,9 +103,46 @@ class ManejadorPrograma {
                 . "  'SA','{$Programa->getIdAsignatura()}' , {$Programa->getAprobadoSa()},"
                 . " {$Programa->getAprobadoDepto()}, '{$Programa->getFechaCarga()}', {$Programa->getVigencia()},"
                 . "' ', ' ', 0)";
-       // var_dump($this->query);
+        // var_dump($this->query);
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
-        
+
+        if ($consulta) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //En este método se probará NO crear un objeto, sino directamente hacer el UPDATE con los datos que vienen del formulario
+    function modificacion($datos, $idPrograma_) {
+        $this->query = "UPDATE PROGRAMA "
+                . "SET  "
+                . "anio = {$datos['anio']}, "
+                . "anioCarrera = '{$datos['anioCarrera']}', "
+                . "horasTeoria = '{$datos['horasTeoria']}', "
+                . "horasPractica = '{$datos['horasPractica']}', "
+                . "horasOtros = '{$datos['horasOtros']}', "
+                . "regimenCursada = '{$datos['regimenCursada']}', "
+                . "observacionesHoras = '{$datos['observacionesHoras']}', "
+                . "observacionesCursada = '{$datos['observacionesCursada']}', "
+                . "fundamentacion = '{$datos['fundamentacion']}', "
+                . "objetivosGenerales = '{$datos['objetivosGenerales']}', "
+                . "organizacionContenidos = '{$datos['organizacionContenidos']}', "
+                . "criteriosEvaluacion = '{$datos['criteriosEvaluacion']}', "
+                . "metodologiaPresencial = '{$datos['metodologiaPresencial']}', "
+                . "regularizacionPresencial = '{$datos['regularizacionPresencial']}', "
+                . "aprobacionPresencial = '{$datos['aprobacionPresencial']}', "
+                . "metodologiaSATEP = '{$datos['metodologiaSATEP']}', "
+                . "regularizacionSATEP = '{$datos['regularizacionSATEP']}', "
+                . "aprobacionSATEP = '{$datos['aprobacionSATEP']}', "
+                . "metodologiaLibre = '{$datos['metodologiaLibre']}', "
+                . "aprobacionLibre = '{$datos['aprobacionLibre']}', "
+                . "fechaCarga = '{$datos['aprobacionLibre']}', "
+                . "vigencia = '{$datos['vigencia']}', "
+                . "enRevision = 0 "
+                . "WHERE id = {$idPrograma_}";
+        //var_dump($this->query);
+        $consulta = BDConexionSistema::getInstancia()->query($this->query);
         if ($consulta) {
             return true;
         } else {
@@ -132,15 +165,12 @@ class ManejadorPrograma {
         $this->datos = $this->datos->fetch_assoc();
         return $this->datos['id'];
     }
-    
-   
-
 
     function modificarUbicacion($ubicacion, $id) {
-     
+
         $this->query = "UPDATE PROGRAMA "
-                  . "SET ubicacion = '{$ubicacion}'"
-                  . "WHERE id = '{$id}'";
+                . "SET ubicacion = '{$ubicacion}'"
+                . "WHERE id = '{$id}'";
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
         if ($consulta) {
             return true;
@@ -149,23 +179,33 @@ class ManejadorPrograma {
         }
     }
 
-    function getUltimoID1($anio, $idAsignatura, $fechaCarga){
-        
+    function getUltimoID1($anio, $idAsignatura, $fechaCarga) {
+
         $this->query = "SELECT id "
-                     . "FROM PROGRAMA "
-                     . "WHERE idAsignatura = {$idAsignatura} "
-                     . "AND anio = {$anio} "
-                     . "AND fechaCarga = '{$fechaCarga}' "
-                     . "ORDER BY id desc "
-                     . "LIMIT 1";
+                . "FROM PROGRAMA "
+                . "WHERE idAsignatura = {$idAsignatura} "
+                . "AND anio = {$anio} "
+                . "AND fechaCarga = '{$fechaCarga}' "
+                . "ORDER BY id desc "
+                . "LIMIT 1";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
         $this->datos = $this->datos->fetch_assoc();
         return $this->datos['id'];
-        
     }
-    
-    function getUltimoID2(){
-       $this->query = "SELECT LAST_INSERT_ID() as id";
+
+    function getUltimoID2() {
+        $this->query = "SELECT LAST_INSERT_ID() as id";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        $this->datos = $this->datos->fetch_assoc();
+        return $this->datos['id'];
+    }
+
+    function getIDProgramaActual($anioActual, $idAsignatura) {
+        $this->query = "SELECT id "
+                . "FROM PROGRAMA "
+                . "WHERE anio = {$anioActual} AND idAsignatura LIKE '{$idAsignatura}' "
+                . "ORDER BY anio DESC "
+                . "LIMIT 1";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
         $this->datos = $this->datos->fetch_assoc();
         return $this->datos['id'];
