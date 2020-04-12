@@ -492,5 +492,37 @@ class Programa {
 
         return $OtroMateriales;
     }
+    
+    function obtenerEstadoDelPrograma(){
+        
+        // Observacion el estado "No Cargado" se debe validar a la hora de obtener 
+        // el programa vigente de la asignatura, si no tiene, Programa es NULO
+        
+        if ($this->aprobadoSa == "1" && $this->aprobadoDepto == "1"){ // Estado Aprobado
+            return "Aprobado";
+        } elseif (($this->aprobadoSa == "0" && $this->aprobadoDepto == "0") || ($this->aprobadoSa == "1" && $this->aprobadoDepto == "0") || ($this->aprobadoSa == "0" && $this->aprobadoDepto == "1")) { // Estado Desaprobado
+            return "Desaprobado";
+        } elseif ($this->enRevision == "1") { // Estado En Revision
+            return "En Revisi&oacute;n";
+        } elseif ($this->enRevision == "0") { // Estado Cargando
+            return "Cargando";
+        } else { // Estado En Vigencia
+            return "En Vigencia";
+        }
+       
+//        if ($this->aprobadoSa == 1 && $this->aprobadoDepto == 1){ // Estado Aprobado
+//            return "Aprobado";
+//        } elseif (!is_null($this->aprobadoSa) && !is_null($this->aprobadoDepto) && $this->aprobadoSa == 0 && $this->aprobadoDepto == 0) { // Estado Desaprobado
+//            return "Desaprobado";
+//        } elseif ($this->enRevision == 1) { // Estado En Revision
+//            return "En Revisi&oacute;n";
+//        } elseif ($this->enRevision == 0) { // Estado Cargando
+//            return "Cargando";
+//        } else { // Estado En Vigencia
+//            return "En Vigencia";
+//        } 
+    }
+    
+    
 
 }

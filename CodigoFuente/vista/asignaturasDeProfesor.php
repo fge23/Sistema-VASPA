@@ -3,6 +3,7 @@
 include_once '../lib/ControlAcceso.Class.php';
 require_once '../modeloSistema/Profesor.Class.php';
 require_once '../modeloSistema/BDConexionSistema.Class.php';
+require_once '../modeloSistema/Programa.Class.php';
 
 
 //$ManejadorAsignatura = new ManejadorAsignatura();
@@ -81,14 +82,38 @@ if (!$mostrarError){ // No ocurrio un error, y existe el profesor, obtenemos las
                         <tr class="table-info">
                             <th>C&oacute;digo de Asignatura</th>
                             <th>Nombre</th>
+                            <th>Estado del programa</th>
+                            <th>Vigencia</th>
                             <th>Gestionar Programa</th>
                         </tr>
                         <tr>
                             <?php foreach ($asignaturas as $Asignatura) { ?>
                             <td><?= $Asignatura->getId(); ?></td>
                             <td><?= $Asignatura->getNombre(); ?></td>
+                            <td><?php 
+                                 $programa = $Asignatura->obtenerProgramaVigente();
+                                 $vigencia = '-';
+                                 if (is_null($programa)){
+                                     echo 'No Cargado';
+                                 } else {
+                                     $estado = $programa->obtenerEstadoDelPrograma();
+                                     $anioPrograma = $programa->getAnio();
+                                     $vigencia = $programa->getVigencia();
+                                     if ($vigencia == 1){
+                                         $vigencia = "$anioPrograma";
+                                     } elseif ($vigencia == 2) {
+                                         $vigencia = "$anioPrograma - ".($anioPrograma+1);
+                                     } elseif ($vigencia == 3) {
+                                         $vigencia = "$anioPrograma - ".($anioPrograma+1)." - ".($anioPrograma+2);
+                                     }
+                                     echo $estado;
+                                 }
+                                ?>
+                            </td>
+                            <td><?= $vigencia;?></td>
 
                                 <td>
+
                                     <a title="Nuevo Programa" href="programa.crear.php?id=<?= $Asignatura->getId(); ?>">
                                         <button type="button" class="btn btn-outline-success">
                                             <span class="oi oi-plus"></span>
@@ -97,6 +122,11 @@ if (!$mostrarError){ // No ocurrio un error, y existe el profesor, obtenemos las
                                     <a title="Modificar Programa Actual" href="programa.modificar.php?id=<?= $Asignatura->getId(); ?>">
                                         <button type="button" class="btn btn-outline-warning">
                                             <span class="oi oi-pencil"></span>
+                                        </button>
+                                    </a>
+                                    <a title="Enviar a Revisi&oacute;n" href="#">
+                                        <button type="button" class="btn btn-outline-secondary">
+                                            <span class="oi oi-envelope-closed"></span>
                                         </button>
                                     </a>
                                     <!--if Programa.aprobadoSA == true AND Programa.aprobadoDepto == true 
