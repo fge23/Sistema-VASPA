@@ -198,4 +198,19 @@ class ManejadorAsignatura {
         return $idAsignatura;
     }
     
+    
+    
+    
+    function getAsignaturasSegunProfesor($idProfesor) {
+        $asignaturas = NULL;
+        if (!empty($this->coleccion)){
+            foreach ($this->coleccion as $asignatura) {
+                if ($asignatura->getIdProfesor() == $idProfesor){
+                    $asignaturas[] = $asignatura;
+                }
+            }
+        }
+        return $asignaturas;
+    }
+    
 }

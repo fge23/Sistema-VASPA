@@ -1,0 +1,1 @@
+Esperar a que se mejore el CU para sacarle captura de pantalla.

@@ -72,9 +72,9 @@ $Profesores = $ManejadorProfesor->getColeccion();
                                     <td><?= $Profesor->getEmail(); ?></td>
 
                                     <td>
-                                        <a title="Ver detalle" href="#">
+                                         <a title="Ver Asignaturas de Profesor" href="profesor.asignaturas.php?id=<?= $Profesor->getId(); ?>">
                                             <button type="button" class="btn btn-outline-info">
-                                                <span class="oi oi-zoom-in"></span>
+                                                <span class="oi oi-list"></span>
                                             </button>
                                         </a>
                                         <a title="Modificar" href="profesor.modificar.php?id=<?= $Profesor->getId(); ?>">
