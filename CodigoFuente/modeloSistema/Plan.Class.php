@@ -101,7 +101,11 @@ class Plan {
     function getAsignaturas(){
         $asignaturas = NULL;
         
-        $this->query = "SELECT B.* FROM PLAN_ASIGNATURA A JOIN ASIGNATURA B ON idAsignatura = id WHERE idPlan = '{$this->id}'";
+        $this->query = "SELECT B.* "
+                . "FROM PLAN_ASIGNATURA A JOIN "
+                . "ASIGNATURA B "
+                . "ON idAsignatura = id "
+                . "WHERE idPlan = '{$this->id}'";
         
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
        

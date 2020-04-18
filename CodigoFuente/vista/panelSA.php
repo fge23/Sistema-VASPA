@@ -45,64 +45,41 @@ $carreras = $manejadorCarrera->getColeccion();
     </head>
     <body>
         <?php include_once '../gui/navbar.php'; ?>
-        <div class="container">
+        <br>
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3>Panel Secretar&iacute;a Acad&eacute;mica</h3>
+                            <h3 class="text-center">Panel Secretar&iacute;a Acad&eacute;mica</h3>
                         </div>
                         <div class="card-body">
-                           
-                                <div class="row">
-                                    <div class="col-sm-6">
+                            <div id="codigoPlan"></div>
+                                <div class="row justify-content-center">
+                                    <div class="col-sm-5">
                                     <label for="carrera">Carrera</label>
-                                    <select id="carrera" name="carrera" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione una Carrera" data-none-results-text="No se encontraron resultados">
+                                    <select id="carrera" name="carrera" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione una Carrera" data-none-results-text="No se encontraron resultados" data-size="7">
                                         <?php if (!empty($carreras)){
-                                                    if (!empty($_GET['codCarrera']) && !empty($_GET['codPlan'])){
+                                                    
                                                         foreach ($carreras as $carrera) {
-                                                            if ($_GET['codCarrera'] == $carrera->getId()){
-                                                                echo '<option value="'.$carrera->getId().'" selected>'.$carrera->getNombre().'</option>';
-                                                            } else {
-                                                                echo '<option value="'.$carrera->getId().'">'.$carrera->getNombre().'</option>';
-                                                            }
-                                                        }
-                                                    } else {
-                                                        foreach ($carreras as $carrera) {
-                                                            echo '<option value="'.$carrera->getId().'">'.$carrera->getNombre().'</option>';
-                                                    }    
-                                                }
+                                                            echo '<option value="'.$carrera->getId().'">'.$carrera->getId().' - '.$carrera->getNombre().'</option>';
+                                                        }    
+                                                
                                         }
                                             ?>
                                     </select>
                                     </div>
                                     
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-3">
                                         <label for="plan">Plan de Estudio</label>
-                                        <select id="plan" name="plan" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione un Plan de Estudio" data-none-results-text="No se encontraron resultados" onchange="location = this.value">
-                                    <?php 
-                                                    if (!empty($_GET['codCarrera']) && !empty($_GET['codPlan'])){
-                                                        include_once '../controlSistema/ManejadorPlan.php';
-                                                        $manejadorPlan = new ManejadorPlan();
-                                                        $planes = $manejadorPlan->getPlanesSegunCarrera($_GET['codCarrera']);
-                                                        if (!empty($planes)){
-                                                            foreach ($planes as $plan) {
-                                                                if ($_GET['codPlan'] == $plan->getId()){
-                                                                    echo '<option value="panelSA.php?codCarrera='.$plan->getIdCarrera().'&codPlan='.$plan->getId().'" selected>'.$plan->getId().'    ('.$plan->getAnio_inicio().' - '.$plan->getAnio_fin().')</option>';
-                                                                } else {
-                                                                    echo '<option value="panelSA.php?codCarrera='.$plan->getIdCarrera().'&codPlan='.$plan->getId().'">'.$plan->getId().'    ('.$plan->getAnio_inicio().' - '.$plan->getAnio_fin().')</option>';
-                                                                }
-                                                            }
-                                                        }
-                                                        
-                                                    } 
-                                            ?>
+                                        <select id="plan" name="plan" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione un Plan de Estudio" data-none-results-text="No se encontraron resultados" data-size="7">
+
                                 </select>
                                     </div>
                                 
                                 </div>
-
-                        <?php imprimirTablaProgramasAsignaturas(); ?>
+                            <div id="msgEnviarNotificacion"></div>
+                            <div id="tablaVigenciaProgramas"></div>
 
                         </div>
                     </div>
@@ -132,11 +109,11 @@ $carreras = $manejadorCarrera->getColeccion();
             $(document).ready(function(){
             // Si selecciona una carrera se actualiza el select de los planes de estudio
             $('#carrera').change(function (e) {
-              var id = $("#carrera").val(); //obtenemos el codigo de la carrera seleccionada
+              var codCarrera = $("#carrera").val(); //obtenemos el codigo de la carrera seleccionada
               $.ajax({
                 type: 'POST',
-                url: '../lib/consultaAjax/cargarPlanes.php',
-                data: {'id': id}
+                url: '../lib/consultaAjax/revisarPrograma/planesDeCarrera.php',
+                data: {'codCarrera': codCarrera}
               })
               .done(function(planes){
                 $(".selectpicker").selectpicker(); 
@@ -146,6 +123,31 @@ $carreras = $manejadorCarrera->getColeccion();
                 alert('Hubo un error al cargar los Planes de Estudio');
               });
             });
+            
+            $('#plan').change(function (e) {
+              var codPlan = $("#plan").val(); //obtenemos el codigo del seleccionado
+              if (codPlan != -1){ // value = -1 significa que la carrera no tiene planes con lo cual no se podra obtener los programas
+                var input = '<input type="hidden" id="inputPlan" name="inputPlan" value="'+codPlan+'">';
+                $('#codigoPlan').html(input);
+                //console.log(input);
+                $.ajax({
+                  type: 'POST',
+                  url: '../lib/consultaAjax/vigenciaProgramas/tablaProgramaAsignaturas.php',
+                  data: {'codPlan': codPlan}
+                })
+                .done(function(tablaVigenciaProgramasAsignaturas){
+//                  $(".selectpicker").selectpicker(); 
+//                  $('#tablaVigenciaProgramas').html(tablaVigenciaProgramasAsignaturas).selectpicker('refresh');
+                  $('#tablaVigenciaProgramas').html(tablaVigenciaProgramasAsignaturas);
+                })
+                .fail(function(){
+                  alert('Hubo un error al cargar la Vigencia de los programas de asignaturas');
+                });
+              }
+            });
+            
+            
+            
           });
     </script>
     
@@ -162,115 +164,33 @@ $carreras = $manejadorCarrera->getColeccion();
           columns: 'oi-list'
         }
     </script>
+    
+    <script>
+            function enviarNotificacion(idAsignatura){
+                var codPlan = $("#inputPlan").val(); // obtenemos el id del Plan
+                //console.log(codPlan);
+                //console.log(idAsignatura);
+                $('#msgEnviarNotificacion').html('<br><div class="row justify-content-center"><img src="../lib/img/loader.gif"/>&nbsp;&nbsp;&nbsp;Espere por favor se esta enviando la notificaci&oacute;n...</div>');
+                $.ajax({
+                              type: 'POST',
+                              url: '../lib/notificacionesMail/notificarCargaProgramaActual.php',
+                              data: {'idAsignatura': idAsignatura}
+                            })
+                            .done(function(resultado){
+                              //$(".selectpicker").selectpicker(); 
+                              //$('#msgEnviarNotificacion').html(resultado);
+                              $('#msgEnviarNotificacion').fadeIn(1000).html(resultado);
+                              //alert(programas);
+                              $.post("../lib/consultaAjax/vigenciaProgramas/tablaProgramaAsignaturas.php", {'codPlan': codPlan}, function(tabla){
+                                    $('#tablaVigenciaProgramas').html(tabla);
+                              });
+                            })
+                            .fail(function(){
+                              alert('Ocurrio un error al enviar la notificación.');
+                            });
+                
+                
+            }
+    </script>
         
 </html>
-
-<?php 
-
-function imprimirTablaProgramasAsignaturas() {
-    if (!empty($_GET['codCarrera']) && !empty($_GET['codPlan'])){
-    include_once '../modeloSistema/BDConexionSistema.Class.php';
-    
-    $codPlan = $_GET['codPlan'];
-    $consulta = "SELECT asignatura.id AS codAsignatura, asignatura.nombre AS nombreAsignatura, profesor.apellido, profesor.nombre AS nombreProfesor, anioCarrera, anio, vigencia, regimenCursada "
-        . "FROM plan_asignatura JOIN asignatura ON "
-        . "plan_asignatura.idAsignatura = asignatura.id JOIN profesor ON asignatura.idProfesor = profesor.id "
-        . "JOIN programa ON asignatura.id = programa.idAsignatura "
-        . "WHERE idPlan = '{$codPlan}'";
-
-    $datos = BDConexionSistema::getInstancia()->query($consulta);
-    
-    $html = '';
-    
-    if ($datos->num_rows == 0){
-        $html = '<br><div class="alert alert-warning" role="alert">
-                    <b>No se encontraron Programas de Asignaturas</b> para el Plan de Estudio: <b>'.$codPlan.'
-                </b></div>';
-    }
-    
-    if ($datos->num_rows > 0) {
-        
-        $html = '<hr>
-                        <table id="table" 
-                           data-toggle="table"
-                           data-locale="es-ES"
-                           data-search="true"
-                           data-search-align="left"
-                           data-show-fullscreen="true"
-                           data-show-columns="true"
-                           data-filter-control="true" 
-                           data-show-export="true"
-                           data-export-types="[&#39;excel&#39;]"
-                           data-export-options=&#39;{}&#39;
-                           data-pagination="true"
-                           data-pagination-loop="false"
-                           data-pagination-pre-text="Anterior"
-                           data-pagination-next-text="Siguiente"
-                           data-click-to-select="true"
-                           data-icons-prefix="oi"
-                           data-icons="icons"
-                           data-buttons-class="outline-secondary"
-                           class="table table-hover table-sm">
-                        <thead class="thead-light">
-                            <tr>
-                                <th data-field="anio" data-filter-control="select" data-filter-control-placeholder="A&ntilde;o" data-sortable="true" data-halign="center" data-align="center" data-title-tooltip="A&ntilde;o de la Carrera">A&ntilde;o</th>
-                                <th data-field="cuatrimestre" data-filter-control="select" data-filter-control-placeholder="Cuatr." data-sortable="true" data-halign="center" data-align="center" data-title-tooltip="R&eacute;gimen de Cursado">Cuatr.</th>
-                                <th data-field="codigo" data-filter-control="select" data-filter-control-placeholder="Cod." data-sortable="true" data-halign="center" data-align="center" data-title-tooltip="C&oacute;digo de la Asignatura">C&oacute;digo</th>
-                                <th data-field="asignatura" data-filter-control="input" data-filter-control-placeholder="Buscar por Asignatura " data-sortable="true" data-halign="center" data-align="left">Asignatura</th>
-                                <th data-field="docenteResponsable" data-filter-control="input" data-filter-control-placeholder="Buscar por Docente" data-sortable="true" data-halign="center" data-align="center">Docente Responsable</th>
-                                <th data-field="vigencia" data-halign="center" data-align="center">Vigencia</th>
-                            </tr>
-                        </thead>
-                        <tbody>';
-        
-        while ($fila = $datos->fetch_assoc()) {
-
-            // Vigencias del programa
-            $vigencia = $fila['vigencia'];
-            $anio = $fila['anio'];
-            $vigencias = '';
-            if ($vigencia == 1){
-                $vigencias = $anio;
-            }
-            if ($vigencia == 2){
-                $vigencias = $anio.' - '.($anio+1);
-            }
-            if ($vigencia == 3){
-                $vigencias = $anio.' - '.($anio+1).' - '.($anio+2);
-            }
-            
-            $cursada = '';
-            switch ($fila['regimenCursada']) {
-                case 'A':
-                    $cursada = 'Anual';
-                    break;
-                case '1':
-                    $cursada = '1er';
-                    break;
-                case '2':
-                    $cursada = '2do';
-                    break;
-                case 'O':
-                    $cursada = 'Otro';
-                    break;
-                default:
-                    break;
-            }
-            
-            $html .= '<tr>'
-                    . '<td>'.$fila['anioCarrera'].'</td>'
-                    . '<td>'.$cursada.'</td>'
-                    . '<td>'.$fila['codAsignatura'].'</td>'
-                    . '<td>'.$fila['nombreAsignatura'].'</td>'
-                    . '<td>'.$fila['apellido'].' '. substr($fila['nombreProfesor'], 0, 1).'.</td>'
-                    . '<td>'.$vigencias.'</td>'
-                    . '</tr>';
-        }
-        $html .= '</tbody>'
-                . '</table>';
-    }
-    
-    echo $html;
-    }
-    
-}

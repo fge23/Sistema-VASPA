@@ -301,7 +301,7 @@ class Asignatura {
      * @return Programa
      */
     function obtenerProgramaVigente(){
-        // importamos la clase Asignatura
+        // importamos la clase Programa
         include_once __DIR__.'/Programa.Class.php';
         //La constante __DIR__ retorna la ruta absoluta del directorio donde se encuentra el fichero que la está utilizando. Y dirname() retorna el directorio padre, en combinación dirname(__DIR__) nos retornaría la ruta absoluta del directorio padre donde se encuentra el fichero que la está usando.
         
@@ -334,4 +334,35 @@ class Asignatura {
                 
     }
 
+    function obtenerCantidadNotificacionDelProgramaActual(){       
+        $anioActual = date("Y"); //obtenemos el anio (4 digitos) del servidor (anio actual)
+        
+        // obtenemos la cantidad de notificaciones enviadas al profesor solicitando
+        // el programa de asignatura del anio actual
+        $this->query = "SELECT COUNT(*) AS cantidad "
+                . "FROM `registro_notificacion` "
+                . "WHERE idProfesor = '{$this->idProfesor}' AND "
+                . "idAsignatura = '{$this->id}' AND "
+                . "YEAR(fecha) = {$anioActual}";
+        
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        
+        // validamos el resultado de la query (si retorna false -> Ocurrio un error en la BD) Lanzamos una Excepcion informando el Error
+        if (!$this->datos) {
+            throw new Exception("Ocurrio un Error al obtener la cantidad de notificaciones enviadas al profesor solicitando el Programa de la Asignatura");
+        }
+        
+        $cantidadNotificaciones = -1;
+        
+        if ($this->datos->num_rows == 1) { // Deberia devolver solo un registro en caso de que haya
+            $cantidadNotificaciones = $this->datos->fetch_assoc()['cantidad']; // 
+        }
+
+        unset($this->query);
+        unset($this->datos);
+
+        return $cantidadNotificaciones;
+                
+    }
+    
 }
