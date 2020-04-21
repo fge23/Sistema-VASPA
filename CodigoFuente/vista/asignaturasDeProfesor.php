@@ -51,6 +51,41 @@ if (!$mostrarError){ // No ocurrio un error, y existe el profesor, obtenemos las
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>        
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Mis Asignaturas</title>
+        <style type="text/css">
+            .btn-outline-purple {
+                color: #3a2166;
+                background-color: transparent;
+                background-image: none;
+                border-color: #3a2166;
+            }
+
+            .btn-outline-purple:hover {
+                color: #fff;
+                background-color: #3a2166;
+                border-color: #3a2166;
+            }
+
+            .btn-outline-purple:focus, .btn-outline-purple.focus {
+                box-shadow: 0 0 0 0.2rem rgba(145, 109, 208, 1);
+            }
+
+            .btn-outline-purple.disabled, .btn-outline-purple:disabled {
+                color: #3a2166;
+                background-color: transparent;
+            }
+
+            .btn-outline-purple:not(:disabled):not(.disabled):active, .btn-outline-purple:not(:disabled):not(.disabled).active,
+            .show > .btn-outline-purple.dropdown-toggle {
+                color: #fff;
+                background-color: #3a2166;
+                border-color: #3a2166;
+            }
+
+            .btn-outline-purple:not(:disabled):not(.disabled):active:focus, .btn-outline-purple:not(:disabled):not(.disabled).active:focus,
+            .show > .btn-outline-purple.dropdown-toggle:focus {
+                box-shadow: 0 0 0 0.2rem rgba(145, 109, 208, 1);
+            }
+        </style>
 
     </head>
     <body>
@@ -91,10 +126,16 @@ if (!$mostrarError){ // No ocurrio un error, y existe el profesor, obtenemos las
                             <td><?= $Asignatura->getId(); ?></td>
                             <td><?= $Asignatura->getNombre(); ?></td>
                             <td><?php 
+                                 // Recuperamos un objeto Programa, vigente (del anio actual) si es que lo tiene
                                  $programa = $Asignatura->obtenerProgramaVigente();
                                  $vigencia = '-';
+                                 $botones = ''; // varibale donde almacenaremos etiquetas HTML para los botones
                                  if (is_null($programa)){
                                      echo 'No Cargado';
+                                     $botones = '<a title="Nuevo Programa" class="btn btn-outline-success" href="programa.crear.php?id='.$Asignatura->getId().'" role="button"><span class="oi oi-plus"></span></a>&nbsp;'
+                                             . '<a title="Modificar Programa Actual" class="btn btn-outline-warning disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-pencil"></span></a>&nbsp;'
+                                             . '<a title="Enviar a Revisi&oacute;n" class="btn btn-outline-purple disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-share"></span></a>&nbsp;'
+                                             . '<a title="Generar PDF" class="btn btn-outline-info disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-document"></span></a>';
                                  } else {
                                      $estado = $programa->obtenerEstadoDelPrograma();
                                      $anioPrograma = $programa->getAnio();
@@ -107,35 +148,49 @@ if (!$mostrarError){ // No ocurrio un error, y existe el profesor, obtenemos las
                                          $vigencia = "$anioPrograma - ".($anioPrograma+1)." - ".($anioPrograma+2);
                                      }
                                      echo $estado;
+                                     
+                                     // segun estado habilitamos ciertos botones
+                                     switch ($estado) {
+                                         case "En Vigencia":
+                                             $botones = '<a title="Nuevo Programa" class="btn btn-outline-success" href="programa.crear.php?id='.$Asignatura->getId().'" role="button"><span class="oi oi-plus"></span></a>&nbsp;'
+                                             . '<a title="Modificar Programa Actual" class="btn btn-outline-warning disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-pencil"></span></a>&nbsp;'
+                                             . '<a title="Enviar a Revisi&oacute;n" class="btn btn-outline-purple" href="#" role="button"><span class="oi oi-share"></span></a>&nbsp;'
+                                             . '<a title="Generar PDF" class="btn btn-outline-info disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-document"></span></a>';									
+                                             break;
+                                         case "Cargando":
+                                             $botones = '<a title="Nuevo Programa" class="btn btn-outline-success disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-plus"></span></a>&nbsp;'
+                                             . '<a title="Modificar Programa Actual" class="btn btn-outline-warning" href="programa.modificar.php?id='.$Asignatura->getId().'" role="button"="true"><span class="oi oi-pencil"></span></a>&nbsp;'
+                                             . '<a title="Enviar a Revisi&oacute;n" class="btn btn-outline-purple disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-share"></span></a>&nbsp;'
+                                             . '<a title="Generar PDF" class="btn btn-outline-info disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-document"></span></a>';									
+                                             break;
+                                         case "En Revisi&oacute;n":
+                                             $botones = '<a title="Nuevo Programa" class="btn btn-outline-success disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-plus"></span></a>&nbsp;'
+                                             . '<a title="Modificar Programa Actual" class="btn btn-outline-warning disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-pencil"></span></a>&nbsp;'
+                                             . '<a title="Enviar a Revisi&oacute;n" class="btn btn-outline-purple disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-share"></span></a>&nbsp;'
+                                             . '<a title="Generar PDF" class="btn btn-outline-info disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-document"></span></a>';									
+                                             break;
+                                         case "Desaprobado":
+                                             $botones = '<a title="Nuevo Programa" class="btn btn-outline-success disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-plus"></span></a>&nbsp;'
+                                             . '<a title="Modificar Programa Actual" class="btn btn-outline-warning" href="programa.modificar.php?id='.$Asignatura->getId().'" role="button"><span class="oi oi-pencil"></span></a>&nbsp;'
+                                             . '<a title="Enviar a Revisi&oacute;n" class="btn btn-outline-purple disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-share"></span></a>&nbsp;'
+                                             . '<a title="Generar PDF" class="btn btn-outline-info disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-document"></span></a>';									
+                                             break;
+                                         case "Aprobado":
+                                             $botones = '<a title="Nuevo Programa" class="btn btn-outline-success disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-plus"></span></a>&nbsp;'
+                                             . '<a title="Modificar Programa Actual" class="btn btn-outline-warning disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-pencil"></span></a>&nbsp;'
+                                             . '<a title="Enviar a Revisi&oacute;n" class="btn btn-outline-purple disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-share"></span></a>&nbsp;'
+                                             . '<a title="Generar PDF" class="btn btn-outline-info" href="../controlSistema/programa.revisar.generarpdf.php?id='.$programa->getId().'" role="button" target="_blank"><span class="oi oi-document"></span></a>';									
+                                             break;
+                                         default:
+                                             break;
+                                     }
                                  }
                                 ?>
                             </td>
                             <td><?= $vigencia;?></td>
 
                                 <td>
-
-                                    <a title="Nuevo Programa" href="programa.crear.php?id=<?= $Asignatura->getId(); ?>">
-                                        <button type="button" class="btn btn-outline-success">
-                                            <span class="oi oi-plus"></span>
-                                        </button>
-                                    </a>
-                                    <a title="Modificar Programa Actual" href="programa.modificar.php?id=<?= $Asignatura->getId(); ?>">
-                                        <button type="button" class="btn btn-outline-warning">
-                                            <span class="oi oi-pencil"></span>
-                                        </button>
-                                    </a>
-                                    <a title="Enviar a Revisi&oacute;n" href="#">
-                                        <button type="button" class="btn btn-outline-secondary">
-                                            <span class="oi oi-envelope-closed"></span>
-                                        </button>
-                                    </a>
-                                    <!--if Programa.aprobadoSA == true AND Programa.aprobadoDepto == true 
-                                    and programa.fueradevigencia then habilitar boton GenerarPDF-->
-                                    <a title="Generar PDF" href="#">
-                                        <button type="button" class="btn btn-outline-info">
-                                            <span class="oi oi-document"></span>
-                                        </button>
-                                    </a>  
+                                    <?php echo $botones; ?>
                                 </td>
                             </tr>
                         <?php } ?>
