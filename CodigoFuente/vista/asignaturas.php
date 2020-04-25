@@ -54,6 +54,9 @@ $Asignaturas = $ManejadorAsignatura->getColeccion();
                                     <td><?= $Asignatura->getNombre(); ?></td>
 
                                     <td>
+                                        <a title="Ver Equipo de C&aacute;tedra" class="btn btn-outline-primary" href="asignatura.equipoCatedra.php?id=<?= $Asignatura->getId(); ?>" role="button">
+                                            <span class="oi oi-people"></span>
+                                        </a>
                                         <a title="Ver Asignaturas Correlativas" href="asignaturas.correlativas.php?id=<?= $Asignatura->getId(); ?>">
                                             <button type="button" class="btn btn-outline-info">
                                                 <span class="oi oi-list"></span>
