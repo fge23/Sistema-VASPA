@@ -50,7 +50,7 @@ $asignaturas = $ManejadorAsignatura->getAsignaturasSegunProfesor($idProfesor);
                                     echo '<tr>
                                             <td colspan="3">
                                                 <div class="alert alert-warning" role="alert">
-                                                    No hay asignaturas asociadas al profesor seleccionado.
+                                                    El profesor <b>NO</b> es responsable de ninguna asignatura.
                                                 </div>
                                             </td>
                                          </tr>';
