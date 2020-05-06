@@ -37,7 +37,7 @@ class Constantes {
     const HOME_DPTO = "http://localhost/vaspa/CodigoFuente/vista/revisar.programas.php";
     
     // constantes que almacenan el nombre de las BD que usa el Sistema
-    const BD_SCHEMA = "bdMesas_Programas";
+    const BD_SCHEMA = "bdgef_vaspa";
     const BD_USERS = "bdUsuarios";
     
 }

@@ -12,7 +12,10 @@ $ColeccionUsuarios = new ColeccionUsuarios();
         <link rel="stylesheet" href="../lib/bootstrap-4.1.1-dist/css/bootstrap.css" />
         <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
-        <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>        
+        <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="../lib/datatable/dataTables.bootstrap4.min.css" />
+        <script type="text/javascript" src="../lib/datatable/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="../lib/datatable/dataTables.bootstrap4.min.js"></script>
         <title><?= Constantes::NOMBRE_SISTEMA; ?> - Usuarios</title>
     </head>
     <body>
@@ -33,11 +36,14 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                         </button>
                     </a>
                     </p>
-                    <table class="table table-hover table-sm">
+                    <table class="table table-hover table-sm" id="tablaUsuarios">
+                        <thead>
                         <tr class="table-info">
                             <th>Usuario</th>
                             <th>Opciones</th>
                         </tr>
+                        </thead>
+                        <tbody>
                         <tr>
                             <?php foreach ($ColeccionUsuarios->getUsuarios() as $Usuario) {
                                 ?>
@@ -58,11 +64,21 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                                 </td>
                             </tr>
                         <?php } ?>
+                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
         <?php include_once '../gui/footer.php'; ?>
     </body>
+    <script type="text/javascript">
+            $(document).ready(function () {
+                $('#tablaUsuarios').DataTable({
+                    language: {
+                        url: '../lib/datatable/es-ar.json'
+                    }
+                });
+            });
+    </script>
 </html>
 

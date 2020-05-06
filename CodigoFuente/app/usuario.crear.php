@@ -34,15 +34,21 @@ $Roles = new ColeccionRoles();
                         </div>
                         <div class="form-group">
                             <label for="inputMail">Email</label>
-                            <input type="email" name="mail" class="form-control" id="inputMail" placeholder="Ingrese el email del Usuario" required="">
+                            <input type="email" name="mail" class="form-control" id="inputMail" placeholder="Ingrese el email del Usuario" required="" pattern="^[a-z]+@uarg.unpa.edu.ar$" title="nombreusuario@uarg.unpa.edu.ar">
                         </div>
                         <hr />
                         <h4>Roles</h4>
                         <?php foreach ($Roles->getRoles() as $Rol) { ?>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="<?= $Rol->getId(); ?>" id="rol[<?= $Rol->getId(); ?>]" name="rol[<?= $Rol->getId(); ?>]" />
-                                <label class="form-check-label" for="rol">
-                                    <?= $Rol->getNombre(); ?>
+                            <div class="custom-control custom-radio">
+                                <input class="custom-control-input" type="radio" value="<?= $Rol->getId(); ?>" id="<?= $Rol->getId(); ?>" name="rol" required="" />
+                                <label class="custom-control-label" for="<?= $Rol->getId(); ?>">
+                                    <?php 
+                                    if($Rol->getNombre() == "Profesor"){
+                                        echo 'Profesor Responsable';
+                                    } else {
+                                        echo $Rol->getNombre();
+                                    }
+                                    ?>
                                 </label>
                             </div>
                         <?php } ?>

@@ -2,7 +2,16 @@
 include_once '../controlSistema/ManejadorProfesor.php';
 include_once '../lib/Constantes.Class.php';
 
+if (!isset($_POST["esResponsable"])){
+    header("Location: profesores.php");
+    exit();
+}
+
+
 $DatosFormulario = $_POST;
+//echo '<pre>';
+//var_dump($_POST);
+//exit();
 $ManejadorProfesor = new ManejadorProfesor();
 
 
@@ -14,18 +23,35 @@ $mensaje = '';
 $error = "";
 $consulta = false;
 
-// Si cumple con la expresion regular realizamos la modificacion, caso contrario mostramos que ha ocurrido un error debido al email ingresado
+// Si cumple con la expresion regular realizamos la insercion, caso contrario mostramos que ha ocurrido un error debido al email ingresado
 if (preg_match("/^[a-z]+@uarg.unpa.edu.ar$/", $email)){
-    try {
-        $consulta = $ManejadorProfesor->alta($DatosFormulario);
-    } catch (Exception $e) {
-        $error = $e->getMessage();
+    // Chequeamos si el profesor que se esta por dar de alta es responsable o no de asignatura
+    if ($_POST["esResponsable"] == "SI"){
+        
+        // chequeamos si no esta seteado el nombre de usuario, ya que puede crear un profesor responsable desde la pantalla alta de profesor sin pasar por la pantalla alta de usuario
+        if (!isset($_POST["nombreUsuario"])){
+            // si no tiene un nombre de usuario, tomamos el nombre de usuario como la parte inicial del correo hasta el '@'
+            $DatosFormulario["nombreUsuario"] = explode("@", $_POST["email"])[0];
+        }
+        
+        try {
+            $consulta = $ManejadorProfesor->altaUsuarioProfesor($DatosFormulario);
+        } catch (Exception $e) {
+            $error = $e->getMessage();
+        }
+    } else {
+        try {
+            $consulta = $ManejadorProfesor->alta($DatosFormulario);
+        } catch (Exception $e) {
+            $error = $e->getMessage();
+        }
     }
+    
     
 }
 else{
     $consulta = false;
-    $mensaje .= 'El e-mail: <b>'.$email.'</b> no es valido, debe cumplir el siguiente formato: <b>nombreusuario@uarg.unpa.edu.ar</b>';
+    $mensaje .= 'El e-mail: <b>'.$email.'</b> no es v&aacute;lido, debe cumplir el siguiente formato: <b>nombreusuario@uarg.unpa.edu.ar</b>';
 }
 
 
