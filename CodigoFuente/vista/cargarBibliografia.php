@@ -141,6 +141,7 @@ $cantidadOtros = getEstado($idPrograma, "otro_material");
         }
 
         function validarBibliografiaAnterior() {
+            document.getElementById("btnCargarProgramaAnterior");
             wait(3000);
             if (<?= $bibliografiaProgramaAnterior ?> === 0) {
                 alert("No se ha encontrado Bibliografía del Programa anterior");

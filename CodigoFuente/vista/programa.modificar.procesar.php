@@ -8,7 +8,7 @@ $ManejadorPrograma = new ManejadorPrograma();
 $idAsignatura = $DatosFormulario['idAsignatura'];
 $anioActual = date("Y");
 
-$idProgramaActual = $ManejadorPrograma->getIDProgramaActual($anioActual, $idAsignatura);
+$idProgramaActual = $DatosFormulario['idPrograma'];
 //echo "ID PROGRAMA".$idProgramaActual;
 $consulta = $ManejadorPrograma->modificacion($DatosFormulario, $idProgramaActual);
 ?>
@@ -43,7 +43,7 @@ $consulta = $ManejadorPrograma->modificacion($DatosFormulario, $idProgramaActual
                     <?php } ?>
                     <hr />
                     <h5 class="card-text">Opciones</h5>
-                    <a href="cargarBibliografia.php?id=<?= $idPrograma; ?>">
+                    <a href="cargarBibliografia.php?id=<?= $idProgramaActual; ?>">
                         <button type="button" class="btn btn-primary">
                             <span class="oi oi-document"></span> Agregar Bibliograf&iacute;a
                         </button>

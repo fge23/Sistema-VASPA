@@ -84,8 +84,6 @@ class ManejadorPrograma {
         $Programa->setMetodologiaLibre($datos['metodologiaLibre']);
         $Programa->setAprobacionLibre($datos['aprobacionLibre']);
         $Programa->setIdAsignatura($datos['idAsignatura']);
-        $Programa->setAprobadoSa(0);
-        $Programa->setAprobadoDepto(0);
         $Programa->setFechaCarga($datos['fechaCarga']);
         $Programa->setVigencia($datos['vigencia']);
 
@@ -100,8 +98,8 @@ class ManejadorPrograma {
                 . "  '{$Programa->getCriteriosEvaluacion()}', '{$Programa->getMetodologiaPresencial()}', '{$Programa->getRegularizacionPresencial()}',"
                 . "  '{$Programa->getAprobacionPresencial()}','{$Programa->getMetodologiaSATEP()}', '{$Programa->getRegularizacionSATEP()}', "
                 . " '{$Programa->getAprobacionSATEP()}', '{$Programa->getMetodologiaLibre()}', '{$Programa->getAprobacionLibre()}',"
-                . "  'SA','{$Programa->getIdAsignatura()}' , {$Programa->getAprobadoSa()},"
-                . " {$Programa->getAprobadoDepto()}, '{$Programa->getFechaCarga()}', {$Programa->getVigencia()},"
+                . "  'SA','{$Programa->getIdAsignatura()}' , NULL, "
+                . " NULL, '{$Programa->getFechaCarga()}', {$Programa->getVigencia()},"
                 . "' ', ' ', 0)";
         // var_dump($this->query);
         $consulta = BDConexionSistema::getInstancia()->query($this->query);

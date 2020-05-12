@@ -201,8 +201,8 @@ $Programa = new Programa($idProgramaActual);
                                     </div>
                                 </div>
                             </div>
-
-                            <input type="button" name="data[password]" disabled id="btnSiguiente" class="next btn btn-info" value="Siguiente" />
+                             <a href="asignaturasDeProfesor.php"><button type="button" class="btn btn-outline-danger">Cancelar</button></a>
+                            <input type="button" name="data[password]" disabled id="btnSiguiente" class="next btn btn-outline-info" value="Siguiente" />
                         </fieldset>
 
                         <fieldset>
@@ -242,7 +242,7 @@ $Programa = new Programa($idProgramaActual);
                             </div>
 
                             <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
-                            <input type="button" name="next" class="next btn btn-info" value="Siguiente" />
+                            <input type="button" name="next" class="next btn btn-outline-info" value="Siguiente" />
                         </fieldset>
 
                         <fieldset>
@@ -270,7 +270,7 @@ $Programa = new Programa($idProgramaActual);
 
 
                             <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
-                            <input type="button" name="next" class="next btn btn-info" value="Siguiente" />
+                            <input type="button" name="next" class="next btn btn-outline-info" value="Siguiente" />
 
                         </fieldset>
 
@@ -298,7 +298,7 @@ $Programa = new Programa($idProgramaActual);
                                 </textarea>
                             </div>
                             <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
-                            <input type="button" name="next" class="next btn btn-info" value="Siguiente" />
+                            <input type="button" name="next" class="next btn btn-outline-info" value="Siguiente" />
                         </fieldset>
                         <fieldset>
                             <h2>Paso 5 - Metodolog&iacute;a y Aprobaci&oacute;n Libre</h2>
@@ -317,8 +317,9 @@ $Programa = new Programa($idProgramaActual);
                             </div>
                             <input type="hidden" name="fechaCarga" value="<?= getdate()['year'] . '-' . getdate()['mon'] . '-' . getdate()['mday']; ?>">
                             <input type="hidden" name="idAsignatura" value="<?= $Asignatura->getId(); ?>">
+                            <input type="hidden" name="idPrograma" value="<?= $idProgramaActual; ?>">
                             <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
-                            <input type="submit" name="submit" class="submit btn btn-info" value="Guardar" id="submit_data" />
+                            <input type="submit" name="submit" class="submit btn btn-outline-success" value="Guardar" id="submit_data"/>
                         </fieldset>
                     </form>
                 </div>

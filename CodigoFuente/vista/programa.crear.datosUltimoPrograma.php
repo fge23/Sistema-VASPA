@@ -10,7 +10,7 @@ $cantidadHorasSemanales = $Asignatura->getHorasSemanales();
 $ManejadorPrograma = new ManejadorPrograma();
 $idProgramaAnterior = $ManejadorPrograma->getUltimoPrograma($anioActual, $idAsignatura);
 if (!isset($idProgramaAnterior)) {
-    echo '<script language="javascript">alert("No hay Programa anterior");</script>';
+    echo '<script language="javascript">alert("No se ha encontrado un Programa anterior para esta asignatura");</script>';
 }
 
 $Programa = new Programa($idProgramaAnterior);
@@ -142,17 +142,34 @@ $Programa = new Programa($idProgramaAnterior);
                                 <div class="form-row">
                                     <div class="col-md-3 col-lg-4">
                                         <label for="inputHorasTeoria">Horas semanales de Teor&iacute;a</label>
-                                        <input onkeyup="sumar();"type="time" name="horasTeoria" class="form-control" id="inputHorasTeoria" required="" value="<?= substr($Programa->getHorasTeoria(), 0, 5); ?>">
+                                        <?php
+                                        if (!isset($idProgramaAnterior)) {
+                                            echo '<input onkeyup="sumar();"type="time" name="horasTeoria" class="form-control" id="inputHorasTeoria" required value="00:00">';
+                                        } else {
+                                            echo '<input onkeyup="sumar();"type="time" name="horasTeoria" class="form-control" id="inputHorasTeoria" required value="' . substr($Programa->getHorasTeoria(), 0, 5) . '">';
+                                        }
+                                        ?>
                                     </div>
-
                                     <div class="col-md-3 col-lg-4">
                                         <label for="inputHorasPractica">Horas semanales de Pr&aacute;ctica</label>
-                                        <input onkeyup="sumar();" type="time" name="horasPractica" class="form-control" id="inputHorasPractica" required="" value="<?= substr($Programa->getHorasPractica(), 0, 5); ?>">
-                                    </div>
+                                        <?php
+                                        if (!isset($idProgramaAnterior)) {
+                                            echo '<input onkeyup="sumar();"type="time" name="horasPractica" class="form-control" id="inputHorasPractica" required value="00:00">';
+                                        } else {
+                                            echo '<input onkeyup="sumar();"type="time" name="horasPractica" class="form-control" id="inputHorasPractica" required value="' . substr($Programa->getHorasPractica(), 0, 5) . '">';
+                                        }
+                                        ?>
 
+                                    </div>
                                     <div class="col-md-3 col-lg-4">
                                         <label for="inputHorasOtros">Otras horas semanales</label><small> - Opcional</small> 
-                                        <input type="time" name="horasOtros" class="form-control" id="inputHorasOtros" required="" value="<?= substr($Programa->getHorasOtros(), 0, 5); ?>">
+                                        <?php
+                                        if (!isset($idProgramaAnterior)) {
+                                            echo '<input type="time" name="horasOtros" class="form-control" id="inputHorasOtros" required value="00:00">';
+                                        } else {
+                                            echo '<input type="time" name="horasOtros" class="form-control" id="inputHorasOtros" required value="' . substr($Programa->getHorasOtros(), 0, 5) . '">';
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -177,14 +194,14 @@ $Programa = new Programa($idProgramaAnterior);
                                             ?>  
                                                 value="1">Primer Cuatrimestre</option>
                                             <option 
-                                              <?php
+                                            <?php
                                             if ($Programa->getRegimenCursada() == 2) {
                                                 echo "selected";
                                             }
                                             ?> 
                                                 value="2">Segundo Cuatrimestre</option>
                                             <option 
-                                                      <?php
+                                            <?php
                                             if ($Programa->getRegimenCursada() == 'A') {
                                                 echo "selected";
                                             }
@@ -206,7 +223,8 @@ $Programa = new Programa($idProgramaAnterior);
                                 </div>
                             </div>
 
-                            <input type="button" name="data[password]" disabled id="btnSiguiente" class="next btn btn-info" value="Siguiente" />
+                            <a href="asignaturasDeProfesor.php"><button type="button" class="btn btn-outline-danger">Cancelar</button></a>
+                            <input type="button" name="data[password]" disabled id="btnSiguiente" class="next btn btn-outline-info" value="Siguiente" />
                         </fieldset>
 
                         <fieldset>
@@ -246,7 +264,7 @@ $Programa = new Programa($idProgramaAnterior);
                             </div>
 
                             <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
-                            <input type="button" name="next" class="next btn btn-info" value="Siguiente" />
+                            <input type="button" name="next" class="next btn btn-outline-info" value="Siguiente" />
                         </fieldset>
 
                         <fieldset>
@@ -274,7 +292,7 @@ $Programa = new Programa($idProgramaAnterior);
 
 
                             <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
-                            <input type="button" name="next" class="next btn btn-info" value="Siguiente" />
+                            <input type="button" name="next" class="next btn btn-outline-info" value="Siguiente" />
 
                         </fieldset>
 
@@ -302,7 +320,7 @@ $Programa = new Programa($idProgramaAnterior);
                                 </textarea>
                             </div>
                             <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
-                            <input type="button" name="next" class="next btn btn-info" value="Siguiente" />
+                            <input type="button" name="next" class="next btn btn-outline-info" value="Siguiente" />
                         </fieldset>
                         <fieldset>
                             <h2>Paso 5 - Metodolog&iacute;a y Aprobaci&oacute;n Libre</h2>
@@ -322,7 +340,7 @@ $Programa = new Programa($idProgramaAnterior);
                             <input type="hidden" name="fechaCarga" value="<?= getdate()['year'] . '-' . getdate()['mon'] . '-' . getdate()['mday']; ?>">
                             <input type="hidden" name="idAsignatura" value="<?= $Asignatura->getId(); ?>">
                             <input type="button" name="previous" class="previous btn btn-default" value="Anterior" />
-                            <input type="submit" name="submit" class="submit btn btn-info" value="Guardar" id="submit_data" />
+                            <input type="submit" name="submit" class="submit btn btn-outline-success" value="Guardar" id="submit_data"/>
                         </fieldset>
                     </form>
                 </div>
@@ -330,7 +348,7 @@ $Programa = new Programa($idProgramaAnterior);
         </div>
         <?php include_once '../gui/footer.php'; ?>
     </body>
-  
+
     <script type="text/javascript">
         $(document).ready(function () {
             sumar();
