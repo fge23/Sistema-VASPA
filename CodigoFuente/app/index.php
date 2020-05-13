@@ -25,6 +25,7 @@ $Carreras = $ManejadorCarrera->getColeccion();
         <meta name="google-signin-client_id" content="356408280239-7airslbg59lt2nped9l4dtqm2rf25aii.apps.googleusercontent.com" />
         <script type="text/javascript" src="https://apis.google.com/js/platform.js" async defer></script>
         <script type="text/javascript" src="../lib/login.js"></script>
+        <script type="text/javascript" src="../lib/quicksearch/jquery.quicksearch.js"></script>
 
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Bienvenida</title>
     </head>
@@ -73,8 +74,7 @@ $Carreras = $ManejadorCarrera->getColeccion();
                                     <div class="card-header">
                                         <h5>Visualizar Programa de Asignatura</h5>
                                         <p>
-                                            Seleccione A&ntilde;o y Carrera. 
-                                            Luego, presione el bot&oacute;n <b>Confirmar</b>.
+                                            Seleccione A&ntilde;o y Carrera.
                                         </p>
                                     </div>
                                     
@@ -93,14 +93,15 @@ $Carreras = $ManejadorCarrera->getColeccion();
                                             <br>
                                             <select class="selectpicker show-tick" data-live-search="true" data-width="100%" name="idCarrera" id="selectCarrera" title="Seleccione una carrera" required="" data-size="7">
                                             </select>
-                                        </div>     
+                                        </div>
+                                        <div id="programasAsignaturas"></div>
                                     </div>
                                     
-                                    <div class="card-footer">
+<!--                                    <div class="card-footer">
                                         <button type="submit" class="btn btn-outline-success">
                                             <span class="oi oi-check"></span> Confirmar
                                         </button>
-                                    </div>
+                                    </div>-->
                                     </div>
                             </form>
                     </div>
@@ -116,7 +117,7 @@ $Carreras = $ManejadorCarrera->getColeccion();
 
                             <div class="card-body" id="datos">
                                 <div class="form-group">
-                                    <label for="selectCarrera">Carrera</label>
+                                    <label for="selectCarrera1">Carrera</label>
                                     <br>
                                     <select class="selectpicker show-tick" data-live-search="true" data-width="100%" name="selectCarrera" id="selectCarrera1" title="Seleccione una carrera" required="" data-size="7">
                                         <?php foreach ($Carreras as $Carrera) { ?>
@@ -159,6 +160,7 @@ $Carreras = $ManejadorCarrera->getColeccion();
                 
         <script>
             $(document).ready(function(){
+                // actualiza la lista carreras
                   $('#selectAnio').change(function () {
                     var anio = $('#selectAnio').val();
                     //alert(anio);
@@ -175,6 +177,27 @@ $Carreras = $ManejadorCarrera->getColeccion();
                       alert('Hubo un error al cargar las asignaturas')
                     });
                   });
+                  
+                  // Envia por ajax el año y la carrera para luego obtener una tabla con los programas de asignaturas para el año y carrera seleccionados
+                  $('#selectCarrera').change(function () {
+                    // Recuperamos el anio y la carrera
+                    var anio = $('#selectAnio').val();
+                    var idCarrera = $('#selectCarrera').val();
+                    //alert(anio+" "+idCarrera);
+                    $.ajax({
+                      type: 'POST',
+                      url: '../lib/consultaAjax/visualizarPrograma/tablaProgramasAsignaturas.php',
+                      data: {'anio': anio,
+                            'idCarrera': idCarrera}
+                    })
+                    .done(function(programas){
+                      $("#programasAsignaturas").html(programas);
+                    })
+                    .fail(function(){
+                      alert('Hubo un error al cargar los programas de asignaturas.')
+                    });
+                  });
+                  
               });
     </script>
     
