@@ -7,9 +7,11 @@
  * Esto quiere decir que si el usuario tiene el rol de Admin va a revisar los programas
  * como si fuese un usuario de SA. (preguntar a los chicos)
  */
+// 17/05/20 --> Se agrega funcionalidad que Envia Notificacion al Profesor infomando el resultado de la revision
 
 include_once '../lib/ControlAcceso.Class.php';
 include_once '../modeloSistema/BDConexionSistema.Class.php';
+include_once '../modeloSistema/Programa.Class.php';
 
 $idPrograma = $_POST["idPrograma"];
 
@@ -45,6 +47,14 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST"){
               <span aria-hidden="true">&times;</span>
             </button>
           </div>';
+        
+        // Chequeamos si fue revisado por ambas autoridades para enviar el email
+        $revisado = fueRevisadoPorSAyDpto($idPrograma);
+        if ($revisado){
+            include_once '../lib/notificacionesMail/notificacionProgramaAprobadoDesaprobado.php';
+            enviarNotificacionProfesor($idPrograma); // enviamos el mail
+        }
+        
         header("location: ../vista/revisar.programa.php?id=".$idPrograma);
     } else {
         // no se actualizo
@@ -99,6 +109,14 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST"){
               <span aria-hidden="true">&times;</span>
             </button>
           </div>';
+        
+        // Chequeamos si fue revisado por ambas autoridades para enviar el email
+        $revisado = fueRevisadoPorSAyDpto($idPrograma);
+        if ($revisado){
+            include_once '../lib/notificacionesMail/notificacionProgramaAprobadoDesaprobado.php';
+            enviarNotificacionProfesor($idPrograma); // enviamos el mail
+        }
+        
         header("location: ../vista/revisar.programa.php?id=".$idPrograma.'#comentarios');
     } else {
         // no se actualizo
@@ -119,5 +137,16 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST"){
 //            //echo '<br> no actualizado';
 //        }
     
+}
+
+// metodo que comprueba si el programa ya fue revisado por ambas autoridades tanto SA o como Dpto
+function fueRevisadoPorSAyDpto($idPrograma){
+    $programa = new Programa($idPrograma);
+    // comprobamos que los campos aprobados tanto en SA como en Dpto no sean nulos
+    if (!is_null($programa->getAprobadoSa()) && !is_null($programa->getAprobadoDepto())){
+        return TRUE;
+    } else {
+        return FALSE;
+    }
 }
 
