@@ -111,7 +111,6 @@ if (isset($_POST['codCarrera']) && isset($_POST['codPlan']) && isset($_POST['rol
                                 <th>C&oacute;digo</th>
                                 <th>Vigencia</th>
                                 <th>Fecha de Carga</th>
-                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>';
@@ -125,15 +124,12 @@ if (isset($_POST['codCarrera']) && isset($_POST['codPlan']) && isset($_POST['rol
                 $html .= '<td>'.$fila['id'].'</td>';
                 $html .= '<td>'.getVigencia($fila['anio'], $fila['vigencia']).'</td>';
                 $html .= '<td>'.$fechaCarga.'</td>';
-                $html .= '<td><a title="Revisar Programa" href="revisar.programa.php?id='.$fila['idPrograma'].'" target="_blank">
-                                        <button type="button" class="btn btn-outline-success">
-                                            <span class="oi oi-document"></span>
-                                        </button></a></td>';
+//                $html .= '<td><a title="Revisar Programa" href="revisar.programa.php?id='.$fila['idPrograma'].'" target="_blank">
+//                                        <button type="button" class="btn btn-outline-success">
+//                                            <span class="oi oi-document"></span>
+//                                        </button></a></td>';
                 $html .= '</tr>';
-                //$planes[] = $this->datos->fetch_object("Plan"); // creamos objeto
-//                echo '<br>'.$fila['id'];
-//                echo '<br>'.$fila['nombre'];
-//                echo '<br>';
+
             }
             // cerramos etiquetas de la tabla
             $html .= '</tbody>';

@@ -4,15 +4,6 @@ include_once '../lib/ControlAcceso.Class.php';
 include_once '../modeloSistema/Programa.Class.php';
 include_once '../modeloSistema/Asignatura.Class.php';
 
-
-// validamos que el id del programa este definido y sea un numero
-//if (isset($_GET['id']) && $_GET['id'] !== "" && is_numeric($_GET['id']) && $_GET['id'] >= 0){
-//    echo 'esta seteado';
-//    
-//} else {
-//    header("location: revisarProgramas.php");;
-//}
-
 $programa = new Programa($_GET['id']);
 
 // validamos que el id del programa este definido, sea un numero mayor o igual a 0, y que sea un programa existente en la BD
@@ -21,15 +12,10 @@ if (!isset($_GET['id']) || $_GET['id'] == "" || !is_numeric($_GET['id']) || $_GE
     
 }
 
-//validar que el id sea uno que se encuentre en la BD
 $enlace = "../controlSistema/programa.revisar.generarpdf.php?id=".$_GET['id']."#toolbar=0&navpanes=0&scrollbar=0";
-
 //$enlace = "generarPDFprograma.php?id=".$_GET['id']."#toolbar=0&navpanes=0&scrollbar=0";
 
 
-//if (empty($programa->getId())){
-//    var_dump($programa);
-//}
 $asignatura = new Asignatura($programa->getIdAsignatura());
 $carreras = $asignatura->getCarreras();
     
@@ -57,16 +43,6 @@ $carreras = $asignatura->getCarreras();
                             <h3>Revisar Programa de <span class="text-info"><?= $asignatura->getNombre().' - '.$asignatura->getId()?></span></h3>
                         </div>
                         <div class="card-body">
-                            <div>
-                                <?php 
-                                
-                                if (isset($_SESSION['mensajeRevisarPrograma'])){
-                                    echo $_SESSION['mensajeRevisarPrograma'];
-                                    unset($_SESSION['mensajeRevisarPrograma']); //
-                                }
-                                
-                                ?>
-                            </div>
 
                             <div class="text-center">
                                 <!-- Button trigger modal -->
@@ -147,7 +123,7 @@ $carreras = $asignatura->getCarreras();
                             <div class="text-center">
                                 <a href="revisar.programas.php">
                                     <button type="button" class="btn btn-secondary">
-                                        <span class="oi oi-arrow-circle-left"></span> Volver a Programas
+                                        <span class="oi oi-arrow-circle-left"></span> Volver a Revisar Programas
                                     </button>
                                 </a>
                             </div>

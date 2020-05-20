@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST"){
             enviarNotificacionProfesor($idPrograma); // enviamos el mail
         }
         
-        header("location: ../vista/revisar.programa.php?id=".$idPrograma);
+        header("location: ../vista/revisar.programas.php");
     } else {
         // no se actualizo
         $_SESSION['mensajeRevisarPrograma'] = '<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST"){
               <span aria-hidden="true">&times;</span>
             </button>
           </div>';
-        header("location: ../vista/revisar.programa.php?id=".$idPrograma);
+        header("location: ../vista/revisar.programas.php");
     }
 //        if ($resultado) {
 //            //echo '<br> actualizado ';
@@ -117,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST"){
             enviarNotificacionProfesor($idPrograma); // enviamos el mail
         }
         
-        header("location: ../vista/revisar.programa.php?id=".$idPrograma.'#comentarios');
+        header("location: ../vista/revisar.programas.php");
     } else {
         // no se actualizo
         $_SESSION['mensajeRevisarPrograma'] = '<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
@@ -126,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST"){
               <span aria-hidden="true">&times;</span>
             </button>
           </div>';
-        header("location: ../vista/revisar.programa.php?id=".$idPrograma);
+        header("location: ../vista/revisar.programas.php");
     }
     
     

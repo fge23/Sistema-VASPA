@@ -183,6 +183,13 @@ function obtenerProgramasAsignaturasRecientes($query) {
 
                     </div>
                     <br>
+                    <?php
+                        // Mostramos mensaje, resultado de la operacion de haber aprobado o no un programa.
+                        if (isset($_SESSION['mensajeRevisarPrograma'])) {
+                            echo $_SESSION['mensajeRevisarPrograma'];
+                            unset($_SESSION['mensajeRevisarPrograma']); //
+                        }
+                    ?>
                     <div id="tabProgramas">
                         <?php 
                             echo obtenerProgramasAsignaturasRecientes($query); // Mostramos tabla programas recientes o mensaje
