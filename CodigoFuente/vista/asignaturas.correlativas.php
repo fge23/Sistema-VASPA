@@ -211,8 +211,10 @@ $asignatura = new Asignatura($idAsignatura);
                       $('body').removeClass('modal-open'); 
                       $('.modal-backdrop').remove(); 
                     };
+
                     $('#tabla').load('../lib/consultaAjax/asignaturaCorrelativa/correlativasDeAsignatura.php?id='+idAsignatura);
-            
+                    
+                    $('#aviso').html(resultado);
                     //alert(resultado);
                     //$('#carrera').html(carreras).selectpicker('refresh');
                 })

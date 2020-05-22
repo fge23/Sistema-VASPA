@@ -22,7 +22,15 @@ if($tipoCorrelatividad == 'Precedente'){
    $query = "DELETE FROM correlativa_de WHERE  requisito = '{$requisito}' AND idAsignatura = '{$idAsignatura}' AND idAsignatura_Correlativa_Anterior = '{$codAsignatura}'";
     $consulta = BDConexionSistema::getInstancia()->query($query);
    	if ($consulta) {
-        echo "Eliminado exitosamente";
+
+            $alert1 =  '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    Asignatura correlativa precedente eliminada exitosamente.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>';
+
+            echo $alert1;
     } else {
         echo "Ocurrio un error al eliminar";
     }
@@ -31,7 +39,16 @@ if($tipoCorrelatividad == 'Precedente'){
     $query = "DELETE FROM correlativa_de WHERE  requisito = '{$requisito}' AND idAsignatura = '{$codAsignatura}' AND idAsignatura_Correlativa_Anterior = '{$idAsignatura}'";
     $consulta = BDConexionSistema::getInstancia()->query($query);
     if ($consulta) {
-        echo "Eliminado exitosamente";
+            
+            $alert2 =  '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    Asignatura correlativa subsiguiente eliminada exitosamente.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>';
+
+            echo $alert2;
+       
     } else {
         echo "Ocurrio un error al eliminar";
     }

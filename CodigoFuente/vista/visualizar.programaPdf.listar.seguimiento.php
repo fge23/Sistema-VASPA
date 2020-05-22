@@ -63,17 +63,25 @@ $asignaturas = BDConexionSistema::getInstancia()->query($consulta);
 
                             <tr>
                             <?php while ($asignatura=$asignaturas->fetch_assoc()){ ?>
-
+                                
                                 <td><?php echo $asignatura['id']; ?></td>
                                 <td><?php echo $asignatura['nombre']; ?></td>
-                                <td><?php echo $asignatura['ubicacion']; ?></td>
+
+                                <?php if( $asignatura['ubicacion'] == 'SA'){ ?>
+                                    <td><?php echo 'Secretar&iacute;a Acad&eacute;mica'; ?></td>
+                                <?php }elseif ($asignatura['ubicacion'] == 'DPTO') {?>
+                                        <td><?php echo 'Departamento'; ?></td>
+                                <?php }else{ ?>
+                                        <td></td>
+                                <?php }?>
                                 <td>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="visualizar.programaPdf.listar.ubicacion.php?idPrograma=<?php echo $asignatura['idPrograma'];?>">
+                                    <a href="visualizar.programaPdf.listar.ubicacion.php?idPrograma=<?php echo $asignatura['idPrograma'];?>&nombreAsignatura=<?php echo urlencode($asignatura['nombre']);?>&codAsignatura=<?php echo $asignatura['id'];?>&ubicacionActual=<?php echo $asignatura['ubicacion'];?>">
     
-                                        <button type="button" class="btn btn-outline-success" title="Actualizar ubicacion del programa">
+                                        <button type="button" class="btn btn-outline-success" title="Actualizar ubicaci&oacute;n del programa">
                                             <span class="oi oi-document"></span>
                                         </button>
+
                                     </a>
                                 </td>
                             </tr>
@@ -90,7 +98,7 @@ $asignaturas = BDConexionSistema::getInstancia()->query($consulta);
                     <div class="card-footer text-center">
                         <a href="programa.seguirPdf.php">
                         <button type="button" class="btn btn-primary">
-                            <span class="oi oi-account-logout"></span> Volver atras
+                            <span class="oi oi-account-logout"></span> Volver atr&aacute;s
                         </button>
                         </a>
                     </div>   
@@ -105,5 +113,5 @@ $asignaturas = BDConexionSistema::getInstancia()->query($consulta);
     <script>
             $('#buscador').quicksearch('table tbody tr', {noResults: "#noResultMessage"});
     </script>
-    
+
 </html>

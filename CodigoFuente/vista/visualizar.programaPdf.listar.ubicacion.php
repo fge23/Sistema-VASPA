@@ -1,6 +1,23 @@
 <?php
 include_once '../lib/ControlAcceso.Class.php';
 
+$nombreAsignatura = $_GET['nombreAsignatura'];
+
+$codAsignatura = $_GET['codAsignatura'];
+
+$ubicacionActual = $_GET['ubicacionActual'];
+
+if($ubicacionActual == "SA"){
+
+    $ubicacionActual = 'Secretar&iacute;a Acad&eacute;mica';
+
+    }elseif ($ubicacionActual == "DPTO") {
+        
+        $ubicacionActual = 'Departamento';
+    }else{
+        $ubicacionActual = "-";
+    }   
+
 ?>
 
 <html>
@@ -31,27 +48,28 @@ include_once '../lib/ControlAcceso.Class.php';
         
         <?php include_once '../gui/navbar.php';   ?>
         <div class="container">
-          
+
             <form action="programaPdf.procesar.php" method="post" id="formulario"> 
                 <div class="card">
                 
                     <div class="card-header">
-                        <h3>Seguir Programa - <i>Actualizar Ubicación</i> </h3>
+                        <h3>Asignatura: <i><?php echo $codAsignatura ?> - <?php echo $nombreAsignatura ?>.</i> </h3>
+                        <h3>Ubicaci&oacute;n actual del Programa: <i><?php echo $ubicacionActual ?>.</i> </h3>
                     </div>
                 
                 
                     <br/>
                     
                     <div class="form-group">
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;Estimado usuario, seleccione la ubicaci&oacute;n actual donde se encuentra el Programa y luego presione el bot&oacute;n <b>Confirmar</b>.</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;Estimado usuario, seleccione la ubicaci&oacute;n donde se encuentra el Programa y luego presione el bot&oacute;n <b>Confirmar</b> para actualizarla.</p>
                         <br/>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <input type="radio" name="ubicacion" value="SA" id="SA" checked>
-                        <label for="SA"><b>SA</b></label>
+                        <label for="SA"><b>Secretar&iacute;a Acad&eacute;mica</b></label>
                         <br/>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <input type="radio" name="ubicacion" value="DPTO" id="DPTO">
-                        <label for="DPTO"><b>DPTO</b></label>
+                        <label for="DPTO"><b>Departamento</b></label>
                     </div>
                 
                 
