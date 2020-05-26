@@ -44,6 +44,7 @@ class Programa {
     private $comentarioSa;
     private $comentarioDepto;
     private $enRevision;
+    private $fueDesaprobado;
     private $query;
 
     /**
@@ -353,7 +354,15 @@ class Programa {
 
     function setEnRevision($enRevision) {
         $this->enRevision = $enRevision;
-    }   
+    }
+    
+    function getFueDesaprobado() {
+        return $this->fueDesaprobado;
+    }
+
+    function setFueDesaprobado($fueDesaprobado) {
+        $this->fueDesaprobado = $fueDesaprobado;
+    }
     
     /*
      * 

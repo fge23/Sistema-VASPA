@@ -12,6 +12,10 @@ if (!isset($_GET['id']) || $_GET['id'] == "" || !is_numeric($_GET['id']) || $_GE
     
 }
 
+
+// validamos que no se intenta aprobar nuevamente dicho programa
+
+
 $enlace = "../controlSistema/programa.revisar.generarpdf.php?id=".$_GET['id']."#toolbar=0&navpanes=0&scrollbar=0";
 //$enlace = "generarPDFprograma.php?id=".$_GET['id']."#toolbar=0&navpanes=0&scrollbar=0";
 
@@ -43,7 +47,20 @@ $carreras = $asignatura->getCarreras();
                             <h3>Revisar Programa de <span class="text-info"><?= $asignatura->getNombre().' - '.$asignatura->getId()?></span></h3>
                         </div>
                         <div class="card-body">
-
+                            <?php 
+                            // verificamos si el atributo "fueDesaprobado" es igual a 1
+                            // si se cumple lo anterior significa que el programa fue desaprobado anteriormente con lo cual 
+                            // se le informara al usuario.
+                            if ($programa->getFueDesaprobado() == 1){
+                                echo '<div class="alert alert-primary alert-dismissible fade show text-center" role="alert">
+                                    El programa que est&aacute; revisando fue <strong>desaprobado </strong>anteriormente. El docente ha realizado los cambios en base a sus comentarios.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>';
+                            }
+                            
+                            ?>
                             <div class="text-center">
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" <?php if (is_null($carreras)){echo 'disabled=""';}?>>

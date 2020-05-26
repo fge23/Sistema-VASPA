@@ -301,7 +301,8 @@ CREATE TABLE `programa` (
   `vigencia` enum('1','2','3') NOT NULL,
   `comentarioSa` text,
   `comentarioDepto` text,
-  `enRevision` bit
+  `enRevision` bit,
+  `fueDesaprobado` bit NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

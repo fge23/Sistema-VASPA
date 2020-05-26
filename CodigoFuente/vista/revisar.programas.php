@@ -36,7 +36,9 @@ if ($rol == PermisosSistema::ROL_ADMIN || $rol == PermisosSistema::ROL_SECRETARI
     }  
 }
 
-// ARMAMOS LA CONSULTA EN DONDE SE OBTENDRAN LOS 20 PROGRAMAS DE ASIGNATURAS "NO REVISADOS" MAS RECIENTES
+// ARMAMOS LA CONSULTA EN DONDE SE OBTENDRAN LOS 20 PROGRAMAS DE ASIGNATURAS "NO REVISADOS" MAS RECIENTES TENIENDO EN CUENTA QUE LA VIGENCIA CONTENGA EL AÑO ACTUAL
+$anioActual = date("Y"); //obtenemos el anio (4 digitos) del servidor (anio actual)
+
 $query = "SELECT DISTINCT (p.id) as idPrograma, nombre, a.id, anio, vigencia, fechaCarga 
                 FROM plan pl
                 JOIN plan_asignatura pa 
@@ -45,7 +47,9 @@ $query = "SELECT DISTINCT (p.id) as idPrograma, nombre, a.id, anio, vigencia, fe
                 ON pa.idAsignatura = a.id 
                 JOIN programa p 
                 ON a.id = p.idAsignatura 
-                WHERE$filtro "
+                WHERE enRevision = 1 AND $filtro "
+                . "AND anio <= {$anioActual} "
+                . "AND (anio+vigencia-1) >= {$anioActual} "
                 . "ORDER BY fechaCarga DESC "
                 . "LIMIT 20";
 
@@ -113,7 +117,7 @@ function obtenerProgramasAsignaturasRecientes($query) {
             $html .= '</table>';
         } else { // No hay registros --> Mostramos mensaje 
             $html .= '<div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
-                    No hay programas de asignaturas.
+                    No hay programas de asignaturas para revisar.
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>

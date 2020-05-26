@@ -19,7 +19,7 @@ if (isset($_POST['codCarrera']) && isset($_POST['codPlan']) && isset($_POST['rol
     $rol = $_POST['rol'];
     
     // Tab a retornar en la pantalla Revisar Programas
-    $html = '<ul class="nav nav-tabs" id="myTab" role="tablist">
+    $html = '<ul class="nav nav-tabs nav-pills nav-fill" id="myTab" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" id="noRevisadas-tab" data-toggle="tab" href="#noRevisadas" role="tab" aria-controls="noRevisadas" aria-selected="true">No Revisados / No Calificados</a>
                             </li>
@@ -70,7 +70,7 @@ if (isset($_POST['codCarrera']) && isset($_POST['codPlan']) && isset($_POST['rol
                 $html .= '<td>'.$fila['id'].'</td>';
                 $html .= '<td>'.getVigencia($fila['anio'], $fila['vigencia']).'</td>';
                 $html .= '<td>'.$fechaCarga.'</td>';
-                $html .= '<td><a title="Revisar Programa" href="revisar.programa.php?id='.$fila['idPrograma'].'" target="_blank">
+                $html .= '<td><a title="Revisar Programa" href="revisar.programa.php?id='.$fila['idPrograma'].'">
                                         <button type="button" class="btn btn-outline-success">
                                             <span class="oi oi-document"></span>
                                         </button></a></td>';
@@ -162,7 +162,6 @@ if (isset($_POST['codCarrera']) && isset($_POST['codPlan']) && isset($_POST['rol
                                 <th>C&oacute;digo</th>
                                 <th>Vigencia</th>
                                 <th>Fecha de Carga</th>
-                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>';
@@ -176,10 +175,10 @@ if (isset($_POST['codCarrera']) && isset($_POST['codPlan']) && isset($_POST['rol
                 $html .= '<td>'.$fila['id'].'</td>';
                 $html .= '<td>'.getVigencia($fila['anio'], $fila['vigencia']).'</td>';
                 $html .= '<td>'.$fechaCarga.'</td>';
-                $html .= '<td><a title="Revisar Programa" href="revisar.programa.php?id='.$fila['idPrograma'].'" target="_blank">
-                                        <button type="button" class="btn btn-outline-success">
-                                            <span class="oi oi-document"></span>
-                                        </button></a></td>';
+//                $html .= '<td><a title="Revisar Programa" href="revisar.programa.php?id='.$fila['idPrograma'].'" target="_blank">
+//                                        <button type="button" class="btn btn-outline-success">
+//                                            <span class="oi oi-document"></span>
+//                                        </button></a></td>';
                 $html .= '</tr>';
                 //$planes[] = $this->datos->fetch_object("Plan"); // creamos objeto
 //                echo '<br>'.$fila['id'];
@@ -217,7 +216,11 @@ if (isset($_POST['codCarrera']) && isset($_POST['codPlan']) && isset($_POST['rol
 }
 
 // Esta funcion retorna la query a ejecutar para presentar los datos relacionados a los programas segun su estado y el rol del usuario
+// dicha query devuelve aquellos programas cuya vigencia incluya el año actual y se encuentren en el estado en "En Revision"
+// y que se correspondan a la carrera y plan seleccionado de la lista desplegable
 function getQuery($codCarrera, $codPlan, $rol, $estado) {
+    
+    $anioActual = date("Y"); //obtenemos el anio (4 digitos) del servidor (anio actual)
     $est = getEstadoSegunRol($estado, $rol);
     $query = "SELECT nombre, a.id, anio, vigencia, fechaCarga, p.id as idPrograma 
                 FROM plan pl
@@ -227,8 +230,19 @@ function getQuery($codCarrera, $codPlan, $rol, $estado) {
                 ON pa.idAsignatura = a.id 
                 JOIN programa p 
                 ON a.id = p.idAsignatura 
-                WHERE idCarrera = '{$codCarrera}' AND idPlan = '{$codPlan}'{$est}";
+                WHERE idCarrera = '{$codCarrera}' "
+                . "AND enRevision = 1 "
+                . "AND anio <= {$anioActual} "
+                . "AND (anio+vigencia-1) >= {$anioActual} "
+                . "AND idPlan = '{$codPlan}'{$est}";
     
+                /*
+                 * Si año actual es: 2020
+                 * año creacion del programa es: 2019
+                 * años de vigencia es 3 --> 2019, 2020, 2021
+                 * anio+vigencia-1 = 2021
+                 * 
+                 */
     return $query;
 }
 

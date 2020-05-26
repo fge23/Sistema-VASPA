@@ -79,6 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST"){
     $comentario = $_POST["comentario"];
     
     //procedemos a cambiar el estado del programa a "DESAPROBADO" y modificando el comentario
+    // Con que uno lo haya desaprobado al programa, este pasa al estado "Desaprobado" por lo cual tambien se modifica el campo "fueDesaprobado"
     
     // preparamos la sentencia SQL segun el rol del usuario (SA o Dpto)
     
@@ -88,11 +89,13 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST"){
     if ($rol == PermisosSistema::ROL_ADMIN || $rol == PermisosSistema::ROL_SECRETARIO_ACADEMICO){
         $query = "UPDATE PROGRAMA "
                         . "SET aprobadoSA = 0, "
+                        . "fueDesaprobado = 1, "
                         . "comentarioSa = '{$comentario}' "
                         . "WHERE id = '{$idPrograma}'";
     } elseif ($rol == PermisosSistema::ROL_DIRECTOR_DEPARTAMENTO) {
         $query = "UPDATE PROGRAMA "
                         . "SET aprobadoDepto = 0, "
+                        . "fueDesaprobado = 1, "
                         . "comentarioDepto = '{$comentario}' "
                         . "WHERE id = '{$idPrograma}'";
     }
