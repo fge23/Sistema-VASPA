@@ -89,7 +89,6 @@ class ManejadorPrograma {
 
         //aniocarrera 1,2,3,4,5
         //regimen A,1,2, O
-        /* Se debe considerar el tema de los comentatios de Depto y de SA y el tema de la ubicacion predefinida */
         $this->query = "INSERT INTO PROGRAMA "
                 . "VALUES (null,{$Programa->getAnio()}, '{$Programa->getAnioCarrera()}', "
                 . " '{$Programa->getHorasTeoria()}', '{$Programa->getHorasPractica()}', '{$Programa->getHorasOtros()}', "
@@ -98,9 +97,9 @@ class ManejadorPrograma {
                 . "  '{$Programa->getCriteriosEvaluacion()}', '{$Programa->getMetodologiaPresencial()}', '{$Programa->getRegularizacionPresencial()}',"
                 . "  '{$Programa->getAprobacionPresencial()}','{$Programa->getMetodologiaSATEP()}', '{$Programa->getRegularizacionSATEP()}', "
                 . " '{$Programa->getAprobacionSATEP()}', '{$Programa->getMetodologiaLibre()}', '{$Programa->getAprobacionLibre()}',"
-                . "  'SA','{$Programa->getIdAsignatura()}' , NULL, "
+                . " NULL,'{$Programa->getIdAsignatura()}' , NULL, "
                 . " NULL, '{$Programa->getFechaCarga()}', {$Programa->getVigencia()},"
-                . "' ', ' ', 0)";
+                . "NULL, NULL, 0, 0)";
         // var_dump($this->query);
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
 
@@ -137,6 +136,8 @@ class ManejadorPrograma {
                 . "aprobacionLibre = '{$datos['aprobacionLibre']}', "
                 . "fechaCarga = '{$datos['aprobacionLibre']}', "
                 . "vigencia = '{$datos['vigencia']}', "
+                . "aprobadoSA = NULL, "
+                . "aprobadoDepto = NULL, "
                 . "enRevision = 0 "
                 . "WHERE id = {$idPrograma_}";
         //var_dump($this->query);
