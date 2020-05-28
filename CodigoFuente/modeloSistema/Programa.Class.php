@@ -503,21 +503,45 @@ class Programa {
     }
     
     function obtenerEstadoDelPrograma(){
-        
         // Observacion el estado "No Cargado" se debe validar a la hora de obtener 
-        // el programa vigente de la asignatura, si no tiene, Programa es NULO
+        // el programa vigente de la asignatura, si no tiene, devuelve NULL
         
-        if ($this->aprobadoSa == "1" && $this->aprobadoDepto == "1"){ // Estado Aprobado
+        // V1.2
+        $anioActual = date("Y"); //obtenemos el anio (4 digitos) del servidor (anio actual)
+        $anioPrograma = $this->anio; // año de creacion del programa
+        $anioVigencia = $this->vigencia;  // años de vigencia del programa
+        
+        /*
+         * Un programa va a estar en vigencia si el año actual se encuentra en el segundo
+         * de la vigencia ó en el tercer año de vigencia, ademas el programa tiene que estar aprobado
+         */
+        if ($anioActual > $anioPrograma && $anioActual <= ($anioPrograma+$anioVigencia-1) 
+                && $this->aprobadoSa == "1" && $this->aprobadoDepto == "1"){
+            return "En Vigencia";
+        } elseif ($this->aprobadoSa == "1" && $this->aprobadoDepto == "1"){ // Estado Aprobado
             return "Aprobado";
-        } elseif (($this->aprobadoSa == "0" && $this->aprobadoDepto == "0") || ($this->aprobadoSa == "1" && $this->aprobadoDepto == "0") || ($this->aprobadoSa == "0" && $this->aprobadoDepto == "1")) { // Estado Desaprobado
+        } elseif (($this->aprobadoSa == "0" && $this->aprobadoDepto == "0") || 
+                ($this->aprobadoSa == "1" && $this->aprobadoDepto == "0") || 
+                ($this->aprobadoSa == "0" && $this->aprobadoDepto == "1")) { // Estado Desaprobado
             return "Desaprobado";
         } elseif ($this->enRevision == "1") { // Estado En Revision
             return "En Revisi&oacute;n";
         } elseif ($this->enRevision == "0") { // Estado Cargando
             return "Cargando";
-        } else { // Estado En Vigencia
-            return "En Vigencia";
-        }
+        } 
+        
+        // V1.1
+//        if ($this->aprobadoSa == "1" && $this->aprobadoDepto == "1"){ // Estado Aprobado
+//            return "Aprobado";
+//        } elseif (($this->aprobadoSa == "0" && $this->aprobadoDepto == "0") || ($this->aprobadoSa == "1" && $this->aprobadoDepto == "0") || ($this->aprobadoSa == "0" && $this->aprobadoDepto == "1")) { // Estado Desaprobado
+//            return "Desaprobado";
+//        } elseif ($this->enRevision == "1") { // Estado En Revision
+//            return "En Revisi&oacute;n";
+//        } elseif ($this->enRevision == "0") { // Estado Cargando
+//            return "Cargando";
+//        } else { // Estado En Vigencia
+//            return "En Vigencia";
+//        }
        
 //        if ($this->aprobadoSa == 1 && $this->aprobadoDepto == 1){ // Estado Aprobado
 //            return "Aprobado";

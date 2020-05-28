@@ -129,13 +129,27 @@ if (!$mostrarError){ // No ocurrio un error, y existe el profesor, obtenemos las
                                  // Recuperamos un objeto Programa, vigente (del anio actual) si es que lo tiene
                                  $programa = $Asignatura->obtenerProgramaVigente();
                                  $vigencia = '-';
+                                 
+                                 // botones
+                                 $btnNuevoProgramaHabilitado = '<a title="Nuevo Programa" class="btn btn-outline-success" href="programa.crear.php?id='.$Asignatura->getId().'" role="button"><span class="oi oi-plus"></span></a>&nbsp;';
+                                 $btnNuevoProgramaDeshablitado = '<button type="button" title="Nuevo Programa" class="btn btn-outline-success" disabled><span class="oi oi-plus"></span></button>&nbsp;';
+                                     
+                                 $btnModificarProgramaHabilitado = '<a title="Modificar Programa Actual" class="btn btn-outline-warning" href="programa.modificar.php?id='.$Asignatura->getId().'" role="button"="true"><span class="oi oi-pencil"></span></a>&nbsp;';
+                                 $btnModificarProgramaDeshabilitado = '<button type="button" title="Modificar Programa Actual" class="btn btn-outline-warning" disabled><span class="oi oi-pencil"></span></button>&nbsp;';
+                                     
+                                 //$btnEnviarRevisionHabilitado = '<a title="Enviar a Revisi&oacute;n" class="btn btn-outline-purple" href="#" role="button"><span class="oi oi-share"></span></a>&nbsp;';
+                                 $btnEnviarRevisionDeshabilitado = '<button type="button" title="Enviar a Revisi&oacute;n" class="btn btn-outline-purple" disabled><span class="oi oi-share"></span></button>&nbsp;';
+                                     
+                                 //$btnGenerarPDFHabilitado = '<a title="Generar PDF" class="btn btn-outline-info" href="../controlSistema/programa.revisar.generarpdf.php?id='.$programa->getId().'" role="button" target="_blank"><span class="oi oi-document"></span></a>';
+                                 $btnGenerarPDFDeshabilitado = '<button type="button" class="btn btn-outline-info" disabled title="Generar PDF"><span class="oi oi-document"></span></button>';
+                                 
                                  $botones = ''; // varibale donde almacenaremos etiquetas HTML para los botones
                                  if (is_null($programa)){
                                      echo 'No Cargado';
-                                     $botones = '<a title="Nuevo Programa" class="btn btn-outline-success" href="programa.crear.php?id='.$Asignatura->getId().'" role="button"><span class="oi oi-plus"></span></a>&nbsp;'
-                                             . '<a title="Modificar Programa Actual" class="btn btn-outline-warning disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-pencil"></span></a>&nbsp;'
-                                             . '<a title="Enviar a Revisi&oacute;n" class="btn btn-outline-purple disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-share"></span></a>&nbsp;'
-                                             . '<a title="Generar PDF" class="btn btn-outline-info disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-document"></span></a>';
+                                     $botones = $btnNuevoProgramaHabilitado
+                                             .$btnModificarProgramaDeshabilitado
+                                             .$btnEnviarRevisionDeshabilitado
+                                             .$btnGenerarPDFDeshabilitado;
                                  } else {
                                      $estado = $programa->obtenerEstadoDelPrograma();
                                      $anioPrograma = $programa->getAnio();
@@ -149,37 +163,53 @@ if (!$mostrarError){ // No ocurrio un error, y existe el profesor, obtenemos las
                                      }
                                      echo $estado;
                                      
+//                                    $btnNuevoProgramaHabilitado = '<a title="Nuevo Programa" class="btn btn-outline-success" href="programa.crear.php?id='.$Asignatura->getId().'" role="button"><span class="oi oi-plus"></span></a>&nbsp;';
+//                                    $btnNuevoProgramaDeshablitado = '<button type="button" title="Nuevo Programa" class="btn btn-outline-success" disabled><span class="oi oi-plus"></span></button>&nbsp;';
+//
+//                                    $btnModificarProgramaHabilitado = '<a title="Modificar Programa Actual" class="btn btn-outline-warning" href="programa.modificar.php?id='.$Asignatura->getId().'" role="button"="true"><span class="oi oi-pencil"></span></a>&nbsp;';
+//                                    $btnModificarProgramaDeshabilitado = '<button type="button" title="Modificar Programa Actual" class="btn btn-outline-warning" disabled><span class="oi oi-pencil"></span></button>&nbsp;';
+
+                                    $btnEnviarRevisionHabilitado = '<a title="Enviar a Revisi&oacute;n" class="btn btn-outline-purple" href="#" role="button"><span class="oi oi-share"></span></a>&nbsp;';
+                                    //$btnEnviarRevisionDeshabilitado = '<button type="button" title="Enviar a Revisi&oacute;n" class="btn btn-outline-purple" disabled><span class="oi oi-share"></span></button>&nbsp;';
+
+                                    $btnGenerarPDFHabilitado = '<a title="Generar PDF" class="btn btn-outline-info" href="../controlSistema/programa.revisar.generarpdf.php?id='.$programa->getId().'" role="button" target="_blank"><span class="oi oi-document"></span></a>';
+                                    //$btnGenerarPDFDeshabilitado = '<button type="button" class="btn btn-outline-info" disabled title="Generar PDF"><span class="oi oi-document"></span></button>';
+
                                      // segun estado habilitamos ciertos botones
                                      switch ($estado) {
                                          case "En Vigencia":
-                                             $botones = '<a title="Nuevo Programa" class="btn btn-outline-success" href="programa.crear.php?id='.$Asignatura->getId().'" role="button"><span class="oi oi-plus"></span></a>&nbsp;'
-                                             . '<a title="Modificar Programa Actual" class="btn btn-outline-warning disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-pencil"></span></a>&nbsp;'
-                                             . '<a title="Enviar a Revisi&oacute;n" class="btn btn-outline-purple" href="#" role="button"><span class="oi oi-share"></span></a>&nbsp;'
-                                             . '<a title="Generar PDF" class="btn btn-outline-info disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-document"></span></a>';									
+                                             $botones = $btnNuevoProgramaHabilitado
+                                                        .$btnModificarProgramaDeshabilitado
+                                                        .$btnEnviarRevisionHabilitado
+                                                        .$btnGenerarPDFDeshabilitado;
                                              break;
                                          case "Cargando":
-                                             $botones = '<a title="Nuevo Programa" class="btn btn-outline-success disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-plus"></span></a>&nbsp;'
-                                             . '<a title="Modificar Programa Actual" class="btn btn-outline-warning" href="programa.modificar.php?id='.$Asignatura->getId().'" role="button"="true"><span class="oi oi-pencil"></span></a>&nbsp;'
-                                             . '<a title="Enviar a Revisi&oacute;n" class="btn btn-outline-purple disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-share"></span></a>&nbsp;'
-                                             . '<a title="Generar PDF" class="btn btn-outline-info disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-document"></span></a>';									
+                                             $botones = $btnNuevoProgramaDeshablitado
+                                                        .$btnModificarProgramaHabilitado
+                                                        .$btnEnviarRevisionHabilitado
+                                                        .$btnGenerarPDFDeshabilitado;
+                                             
                                              break;
                                          case "En Revisi&oacute;n":
-                                             $botones = '<a title="Nuevo Programa" class="btn btn-outline-success disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-plus"></span></a>&nbsp;'
-                                             . '<a title="Modificar Programa Actual" class="btn btn-outline-warning disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-pencil"></span></a>&nbsp;'
-                                             . '<a title="Enviar a Revisi&oacute;n" class="btn btn-outline-purple disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-share"></span></a>&nbsp;'
-                                             . '<a title="Generar PDF" class="btn btn-outline-info disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-document"></span></a>';									
+                                             $botones = $btnNuevoProgramaDeshablitado
+                                                        .$btnModificarProgramaDeshabilitado
+                                                        .$btnEnviarRevisionDeshabilitado
+                                                        .$btnGenerarPDFDeshabilitado;
+                                             
                                              break;
                                          case "Desaprobado":
-                                             $botones = '<a title="Nuevo Programa" class="btn btn-outline-success disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-plus"></span></a>&nbsp;'
-                                             . '<a title="Modificar Programa Actual" class="btn btn-outline-warning" href="programa.modificar.php?id='.$Asignatura->getId().'" role="button"><span class="oi oi-pencil"></span></a>&nbsp;'
-                                             . '<a title="Enviar a Revisi&oacute;n" class="btn btn-outline-purple disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-share"></span></a>&nbsp;'
-                                             . '<a title="Generar PDF" class="btn btn-outline-info disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-document"></span></a>';									
+                                             $botones = $btnNuevoProgramaDeshablitado
+                                                        .$btnModificarProgramaHabilitado
+                                                        .$btnEnviarRevisionDeshabilitado
+                                                        .$btnGenerarPDFDeshabilitado;
+                                             
                                              break;
                                          case "Aprobado":
-                                             $botones = '<a title="Nuevo Programa" class="btn btn-outline-success disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-plus"></span></a>&nbsp;'
-                                             . '<a title="Modificar Programa Actual" class="btn btn-outline-warning disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-pencil"></span></a>&nbsp;'
-                                             . '<a title="Enviar a Revisi&oacute;n" class="btn btn-outline-purple disabled" href="#" role="button" aria-disabled="true"><span class="oi oi-share"></span></a>&nbsp;'
-                                             . '<a title="Generar PDF" class="btn btn-outline-info" href="../controlSistema/programa.revisar.generarpdf.php?id='.$programa->getId().'" role="button" target="_blank"><span class="oi oi-document"></span></a>';									
+                                             $botones = $btnNuevoProgramaDeshablitado
+                                                        .$btnModificarProgramaDeshabilitado
+                                                        .$btnEnviarRevisionDeshabilitado
+                                                        .$btnGenerarPDFHabilitado;
+
                                              break;
                                          default:
                                              break;
