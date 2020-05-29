@@ -50,7 +50,7 @@ $profesor = new Profesor($asignatura->getIdProfesor());
                         <input type="hidden" id="codAsignatura" name="codAsignatura" value="<?=$asignatura->getId();?>">
                         <div class="row justify-content-md-center">
                             <div class="col col-sm-4">
-                                <label for="profesor">Asignaturas</label>
+                                <label for="profesor">Profesores</label>
                                     <select id="profesor" name="idProfesor" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione un Profesor" data-none-results-text="No se encontraron resultados">
                                         <?php foreach ($profesores as $profe) { ?>
                                         <option value="<?= $profe->getId(); ?>"><?= $profe->getApellido().', '.$profe->getNombre(); ?></option>

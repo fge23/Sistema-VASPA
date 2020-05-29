@@ -365,4 +365,75 @@ class Asignatura {
                 
     }
     
+    /*
+     * Funcion que devuelve los planes de Estudio a los cuales pertenece la asignatura
+     * si no pertenece a ningun Plan de Estudio retorna NULL
+     */
+    function getPlanesDeEstudio(){
+        
+        // obtenemos el programa de asignatura que tenga vigencia para el anio actual
+        $this->query = "SELECT * "
+                . "FROM plan_asignatura "
+                . "WHERE idAsignatura = '{$this->id}'";
+        
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        
+        // validamos el resultado de la query (si retorna false -> Ocurrio un error en la BD) Lanzamos una Excepcion informando el Error
+        if (!$this->datos) {
+            throw new Exception("Ocurrio un Error al obtener los planes de Estudio en los cuales se encuentra la Asignatura: {$this->id}, '{$this->nombre}'.");
+        }
+        
+        $planes = NULL;
+        
+//        if ($this->datos->num_rows > 0) { // 
+//            $programa = $this->datos->fetch_object("Programa"); // creamos objeto programa
+//        }
+        if ($this->datos->num_rows > 0) {
+            for ($x = 0; $x < $this->datos->num_rows; $x++) {
+                $resultado = $this->datos->fetch_assoc();
+                $planes[] = $resultado['idPlan'];
+            }
+        }
+
+        unset($this->query);
+        unset($this->datos);
+
+        return $planes;
+                
+    }
+    
+    /*
+     * Funcion qeu retorna un boolean, 
+     * Verdadero si la asignatura tiene correlativas o es correlativa
+     * Falso si no cumple anterior
+     */
+    function tieneCorrelativas(){
+        
+        // obtenemos el programa de asignatura que tenga vigencia para el anio actual
+        $this->query = "SELECT * "
+                . "FROM correlativa_de "
+                . "WHERE idAsignatura = '{$this->id}' OR idAsignatura_Correlativa_Anterior = '{$this->id}'";
+        
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        
+        // validamos el resultado de la query (si retorna false -> Ocurrio un error en la BD) Lanzamos una Excepcion informando el Error
+        if (!$this->datos) {
+            throw new Exception("Ocurrio un Error al obtener las asignaturas correlativas de la Asignatura: {$this->id}, '{$this->nombre}'.");
+        }
+        
+        
+        if ($this->datos->num_rows > 0) {
+            unset($this->query);
+            unset($this->datos);
+            
+            return TRUE;
+        } else {
+            unset($this->query);
+            unset($this->datos);
+            
+            return FALSE;
+        }
+                
+    }
+    
 }

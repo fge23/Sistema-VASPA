@@ -4,7 +4,15 @@ include_once '../controlSistema/ManejadorAsignatura.php';
 
 $DatosFormulario = $_POST;
 $ManejadorAsignatura = new ManejadorAsignatura();
-$consulta = $ManejadorAsignatura->baja($DatosFormulario['id']);
+//$consulta = $ManejadorAsignatura->baja($DatosFormulario['id']);
+
+$mensaje = "";
+try {
+    $consulta = $ManejadorAsignatura->baja($DatosFormulario['id']);
+} catch (Exception $e) {
+    $consulta = false;
+    $mensaje = $e->getMessage();
+}
 
 
 
@@ -34,7 +42,7 @@ $consulta = $ManejadorAsignatura->baja($DatosFormulario['id']);
                     <?php } ?>   
                     <?php if (!$consulta) { ?>
                         <div class="alert alert-danger" role="alert">
-                            Ha ocurrido un error.
+                            Ha ocurrido un error. <?= $mensaje; ?>
                         </div>
                     <?php } ?>
                     <hr />

@@ -76,6 +76,21 @@ class ManejadorAsignatura {
     }
 
     function baja($id_) {
+        
+        $asignatura = new Asignatura($id_);
+        
+        if (!is_null($asignatura->getPlanesDeEstudio())){
+            // pertenece a planes de estudio lanzamos un excepcion
+            throw new Exception("No se pudo llevar a cabo la operaci&oacute;n dado que la asignatura <b>{$id_} - {$asignatura->getNombre()}</b> "
+            . "se encuentra vinculado a Planes de Estudio.");
+        }
+        
+        if ($asignatura->tieneCorrelativas()){
+            // tiene correlativas lanzamos un excepcion
+            throw new Exception("No se pudo llevar a cabo la operaci&oacute;n dado que la asignatura <b>{$id_} - {$asignatura->getNombre()}</b> "
+            . "tiene asignaturas correlativas.");
+        }
+        
         $this->query = "DELETE FROM ASIGNATURA WHERE id = '{$id_}'";
         $consulta = BDConexionSistema::getInstancia()->query($this->query);
         if ($consulta) {

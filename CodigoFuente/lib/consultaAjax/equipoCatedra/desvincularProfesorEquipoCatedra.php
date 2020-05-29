@@ -22,7 +22,7 @@ if (isset($_POST['idAsignatura']) && isset($_POST['idProfesor']) && isset($_POST
     if (BDConexionSistema::getInstancia()->affected_rows == 1) {
         //echo "Eliminado exitosamente";
         $mensaje = '<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-                        Se desvincul&oacute; el Profesor <strong>'.$profesor->getApellido().'</strong>, <b>'.$profesor->getApellido().'</b> del Equipo de C&aacute;tedra.
+                        Se desvincul&oacute; el Profesor <strong>'.$profesor->getApellido().'</strong>, <b>'.$profesor->getNombre().'</b> del Equipo de C&aacute;tedra.
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
@@ -30,7 +30,7 @@ if (isset($_POST['idAsignatura']) && isset($_POST['idProfesor']) && isset($_POST
     } else {
         //echo "Ocurrio un error al eliminar";
         $mensaje = '<div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
-                        Ocurrio un error al desvincular el Profesor <strong>'.$profesor->getApellido().'</strong>, <b>'.$profesor->getApellido().'</b> del Equipo de C&aacute;tedra.
+                        Ocurrio un error al desvincular el Profesor <strong>'.$profesor->getApellido().'</strong>, <b>'.$profesor->getNombre().'</b> del Equipo de C&aacute;tedra.
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
