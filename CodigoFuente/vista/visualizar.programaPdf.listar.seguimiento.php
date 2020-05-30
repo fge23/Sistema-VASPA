@@ -72,7 +72,7 @@ $asignaturas = BDConexionSistema::getInstancia()->query($consulta);
                                 <?php }elseif ($asignatura['ubicacion'] == 'DPTO') {?>
                                         <td><?php echo 'Departamento'; ?></td>
                                 <?php }else{ ?>
-                                        <td></td>
+                                        <td><?php echo 'Todav&iacute;a no se imprimi&oacute; el documento PDF'; ?></td>
                                 <?php }?>
                                 <td>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

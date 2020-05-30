@@ -15,7 +15,7 @@ if($ubicacionActual == "SA"){
         
         $ubicacionActual = 'Departamento';
     }else{
-        $ubicacionActual = "-";
+        $ubicacionActual = 'Todav&iacute;a no se imprimi&oacute; el documento PDF';
     }   
 
 ?>

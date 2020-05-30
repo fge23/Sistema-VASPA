@@ -1,6 +1,5 @@
 <?php
 
-
 include_once '../../../modeloSistema/BDConexionSistema.Class.php';
 include_once '../../../modeloSistema/Plan.Class.php';
 include_once '../../../modeloSistema/Asignatura.Class.php';
@@ -64,7 +63,7 @@ if (isset($_POST['codPlan'])){
                         
             if (!is_null($programa)){
                 // Vigencias del programa
-                $botonEnviarNotificacion = '';
+                $boton = '';
                 $vigencia = $programa->getVigencia();
                 $anio = $programa->getAnio();
                 $anioCarrera = $programa->getAnioCarrera();
@@ -97,6 +96,14 @@ if (isset($_POST['codPlan'])){
                     default:
                         break;
                 }
+
+            //Si el estado del programa es Aprobado, se debe visualizar el boton Generar PDF en la tabla.
+                if($estado == 'Aprobado'){
+            
+                    $boton = '<a title="Generar PDF" class="btn btn-outline-info" href="../controlSistema/programa.revisar.generarpdf.php?id='.$programa->getId().'" role="button" target="_blank"><span class="oi oi-document"></span></a>';
+
+                }
+
             } else {
                 $cantidadNotificaciones = '';
                 try {
@@ -117,9 +124,9 @@ if (isset($_POST['codPlan'])){
                 $anio = '-';
                 $anioCarrera = '-';
                 $estado = 'No Cargado';
-                $botonEnviarNotificacion = '<a class="btn btn-outline-success" href="javascript:enviarNotificacion('.$asignatura->getId().')" role="button" title="Enviar Notificaci&oacute;n">'
+                $boton = '<a class="btn btn-outline-success" href="javascript:enviarNotificacion('.$asignatura->getId().')" role="button" title="Enviar Notificaci&oacute;n">'
                         . '<span class="oi oi-envelope-closed"></span></a>';
-                $botonEnviarNotificacion = '<button type="button" class="btn btn-outline-success" onclick="enviarNotificacion('.$asignatura->getId().')">'
+                $boton = '<button type="button" class="btn btn-outline-success" onclick="enviarNotificacion('.$asignatura->getId().')">'
                         . '<span class="oi oi-envelope-closed"></span></button>';
             }
             
@@ -130,8 +137,8 @@ if (isset($_POST['codPlan'])){
                     . '<td>'.$asignatura->getNombre().'</td>'
                     . '<td>'.$profesor->getApellido().' '. substr($profesor->getNombre(), 0, 1).'.</td>'
                     . '<td>'.$vigencias.'</td>'
-                    . '<td>'.$estado.''.$mensajeCantidadNoti.'</td>'
-                    . '<td class="text-center">'.$botonEnviarNotificacion.'</td>'
+                    . '<td>'.$estado.''.$mensajeCantidadNoti.'</td>'   
+                    . '<td class="text-center">'.$boton.'</td>'
                     . '</tr>';
         
         }
