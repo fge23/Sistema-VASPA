@@ -28,6 +28,7 @@ $mensaje = '';
 
 if (!$resultado){
     $mensaje = 'Error al realizar petici&oacute;n a la Base de Datos';
+    $consulta = FALSE;
 } else {
     
     if ($resultado->num_rows == 1) { // Si hay un registro esto puede significar que ya existe el nombre de usuario o correo
@@ -49,7 +50,7 @@ if (!$resultado){
     } elseif ($resultado->num_rows == 2) {
         // si hay dos registros esto quiere decir que se repiten tanto el nombre como el correo.
         $consulta = FALSE;
-        $mensaje = "El nombre de usuario: <b>$nombre</b> y el email: <b>$email</b> ya existen, por favor ingrese otro nombre de usuario y otro email.";
+        $mensaje = "El nombre de usuario: <b>{$DatosFormulario["nombre"]}</b> y el email: <b>{$DatosFormulario["mail"]}</b> ya existen, por favor ingrese otro nombre de usuario y otro email.";
     } elseif ($resultado->num_rows == 0) { // no se encontraron coincidencias en la BD, por lo tanto se debe proceder con la insercion
 
         // Comprobamos si el Rol seleccionado es de Profesor, de serlo redireccionamos

@@ -238,6 +238,77 @@ class ManejadorProfesor {
         
     }
     
+    //Funcion para Modificación de Profesores que son usuarios del sistema
+    function modificacionUsuarioProfesor($datos, $id_, $idUsuario) {
+        $Profesor = new Profesor(null, $datos);
+        $profesorAntes = new Profesor ($id_, NULL);
+        $apellido = mysqli_real_escape_string(BDConexionSistema::getInstancia(), $Profesor->getApellido());
+        
+        if ($profesorAntes->getEmail() != $Profesor->getEmail()) {
+//            if ($this->chequearDNI($Profesor->getDni())) {
+                if ($this->chequearEmail($Profesor->getEmail())) {
+                    
+                    // iniciamos transaccion
+                    BDConexionSistema::getInstancia()->autocommit(false);
+                    BDConexionSistema::getInstancia()->begin_transaction();
+                    
+                    // actualizmos datos del profesor
+                    $query = "UPDATE PROFESOR "
+                            . "SET dni = '0', "
+                            . "nombre = '{$Profesor->getNombre()}', "
+                            . "apellido = '{$apellido}' ,"
+                            . "email = '{$Profesor->getEmail()}' ,"
+                            . "idDepartamento = '{$Profesor->getIdDepartamento()}'"
+                            . "WHERE id = '{$id_}'";
+                            
+                    $consulta = BDConexionSistema::getInstancia()->query($query);
+                    if (!$consulta){
+                        BDConexionSistema::getInstancia()->rollback();
+                        //arrojar una excepcion
+                        throw new Exception("No se pudo modificar los datos del profesor (Error en la Base de Datos).");
+                    }
+                    
+                    // actualizamos datos del usuario del profesor
+                    $query = "UPDATE ".Constantes::BD_USERS.".usuario "
+                            . "SET email = '{$Profesor->getEmail()}'"
+                    . "WHERE id = {$idUsuario}";
+                    $consulta = BDConexionSistema::getInstancia()->query($query);
+                    if (!$consulta) {
+                        BDConexionSistema::getInstancia()->rollback();
+                        //arrojar una excepcion
+                        throw new Exception("No se pudo modificar los datos del profesor (Error en la Base de Datos).");
+                    }
+                    
+                    BDConexionSistema::getInstancia()->commit();
+                    BDConexionSistema::getInstancia()->autocommit(true);
+
+                    // si no se produjeron excepciones OK modificacion, retornamos VERDADERO
+                    return TRUE;
+                    
+                } else {
+                    throw new Exception("El email:  <b>" . $Profesor->getEmail() . "</b> ya corresponde a un profesor en la Base de Datos");
+                }
+//            } else {
+//                throw new Exception("El DNI:  <b>" . $Profesor->getDni() . "</b> ya corresponde a un profesor en la Base de Datos");
+//            }
+        } else {
+            $this->query = "UPDATE PROFESOR "
+                            . "SET dni = '0', "
+                            . "nombre = '{$Profesor->getNombre()}', "
+                            . "apellido = '{$apellido}' ,"
+                            . "idDepartamento = '{$Profesor->getIdDepartamento()}'"
+                            . "WHERE id = '{$id_}'";
+                            
+            $consulta = BDConexionSistema::getInstancia()->query($this->query);
+            if ($consulta) {
+                return true;
+            } else {
+                return false;
+            }                
+        }
+
+    }
+    
 //    function chequearDNI($dni_) {
 //        $this->resultado = BDConexionSistema::getInstancia()->query("SELECT 1 FROM PROFESOR WHERE dni = {$dni_} LIMIT 1");
 //        if ($this->resultado->num_rows == 1) {

@@ -1,11 +1,30 @@
 <?php
+
+/*
+ * Nota: Solo se permitira modificar el rol en el caso de que el usuario a modificarle
+ * los datos no sea un profesor.
+ */
+
 include_once '../lib/ControlAcceso.Class.php';
 ControlAcceso::requierePermiso(PermisosSistema::PERMISO_USUARIOS);
 include_once '../modelo/Usuario.Class.php';
 include_once '../modelo/ColeccionRoles.php';
 $id = $_GET["id"];
 $Usuario = new Usuario($id);
-$RolesSistema = new ColeccionRoles();
+
+// obtenemos el rol del Usuario
+$rolUsuario = $Usuario->getRoles()[0]->getNombre();
+
+//var_dump($rolUsuario[0]->getNombre());
+//var_dump($rolUsuario);
+$habilitarRoles; // boolean para mostrar o no los roles (Si es profesor no se permitira cambiar roles)
+if ($rolUsuario == "Profesor"){
+    $habilitarRoles = FALSE;
+} else {
+    $habilitarRoles = TRUE;
+    $RolesSistema = new ColeccionRoles();
+}
+
 ?>
 <html>
     <head>
@@ -36,27 +55,26 @@ $RolesSistema = new ColeccionRoles();
                         </div>
                         <div class="form-group">
                             <label for="inputEmail">Email</label>
-                            <input type="email" name="email" class="form-control" id="inputEmail" value="<?= $Usuario->getEmail() ?>" placeholder="Ingrese el email del usuario" required="">
+                            <input type="email" name="email" class="form-control" id="inputEmail" value="<?= $Usuario->getEmail() ?>" placeholder="Ingrese el email del usuario" required="" pattern="^[a-z]+@uarg.unpa.edu.ar$" title="nombreusuario@uarg.unpa.edu.ar">
                         </div>
 
                         <input type="hidden" name="id" class="form-control" id="id" value="<?= $Usuario->getId(); ?>" >
+                        
+                        <?php if ($habilitarRoles){?>
+                        
                         <hr />
                         <h3>Roles</h3>
                         <?php foreach ($RolesSistema->getRoles() as $RolSistema) {
-                            ?>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" 
-                                       id="rol[<?= $RolSistema->getId(); ?>]" name="rol[<?= $RolSistema->getId(); ?>]"
-                                       value="<?= $RolSistema->getId(); ?>" 
-                                       <?php echo $Usuario->buscarRolPorId($RolSistema->getId()) ? "checked" : ""; ?> 
-                                       />
-                                <label class="form-check-label" for="rol">
-
-                                    <?= $RolSistema->getNombre(); ?>
-
-                                </label>
-                            </div>
-                        <?php } ?>
+                                if ($RolSistema->getNombre() != "Profesor"){?>
+                                    <div class="custom-control custom-radio">
+                                    <input class="custom-control-input" type="radio" value="<?= $RolSistema->getId(); ?>" id="<?= $RolSistema->getId(); ?>" name="rol" required="" 
+                                          <?php echo $Usuario->buscarRolPorId($RolSistema->getId()) ? "checked" : ""; ?> />
+                                    <label class="custom-control-label" for="<?= $RolSistema->getId(); ?>"><?= $RolSistema->getNombre();?></label>
+                                    </div>
+                        <?php } // fin if
+                        } // fin foreach
+                        ?>
+                        <?php } // fin if ?>
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-outline-success">

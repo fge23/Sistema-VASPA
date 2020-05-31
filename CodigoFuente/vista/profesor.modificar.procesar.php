@@ -1,11 +1,14 @@
 <?php
 include_once '../controlSistema/ManejadorProfesor.php';
 include_once '../lib/Constantes.Class.php';
+include_once '../modeloSistema/Profesor.Class.php';
+include_once '../modeloSistema/BDConexionSistema.Class.php';
 
 $DatosFormulario = $_POST;
 //var_dump($DatosFormulario);
 $ManejadorProfesor = new ManejadorProfesor();
 $idProfesor = $_POST["idProfesor"];
+$profesor = new Profesor($idProfesor);
 
 /*
  * Validamos el email, debe cumplir la siguiente estructura: nombreusuario@uarg.unpa.edu.ar
@@ -17,11 +20,50 @@ $consulta = false;
 
 // Si cumple con la expresion regular realizamos la modificacion, caso contrario mostramos que ha ocurrido un error debido al email ingresado
 if (preg_match("/^[a-z]+@uarg.unpa.edu.ar$/", $email)){
-    try {
-        $consulta = $ManejadorProfesor->modificacion($DatosFormulario, $idProfesor);
-    } catch (Exception $e) {
-        $error = $e->getMessage();
+    
+    // Chequeamos si el profesor es un usuario del sistema
+    $sql = "SELECT id FROM ".Constantes::BD_USERS.".usuario "
+            . "WHERE email LIKE '{$profesor->getEmail()}'";
+            
+    $consulta = BDConexionSistema::getInstancia()->query($sql);
+    if (!$consulta){
+        $error = 'Error al realizar petici&oacute;n a la Base de Datos';
+    } else {
+        
+        $cantidadRegistros = $consulta->num_rows;
+        
+        if ($cantidadRegistros == 0){
+            // como devolvio cero registros la peticion a la BD, el profesor no es usuario del sistema con lo cual se lo deberia eliminar de la tabla profesor
+//            echo "No es usuario";
+            try {
+                $consulta = $ManejadorProfesor->modificacion($DatosFormulario, $idProfesor);
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
+             
+        } elseif ($cantidadRegistros == 1) {
+            // devolvio un registro es un usuario del sistema, modificar USUARIO y PROFESOR
+            // obtenemos el id del usuario del profesor
+//            echo "Es usuario";
+            
+            $registro = $consulta->fetch_assoc();
+            $idUsuario = $registro["id"];
+
+            try {
+                $consulta = $ManejadorProfesor->modificacionUsuarioProfesor($DatosFormulario, $idProfesor, $idUsuario);
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+                $consulta = FALSE;
+            }
+        } else {
+            // no devolvio ni 0 ni un registro
+            $error = 'Error al verificar si el profesor es un usuario del sistema';
+            $consulta = FALSE;
+            //exit;
+        }
+        
     }
+    
 }
 else{
     $consulta = false;

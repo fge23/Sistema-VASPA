@@ -103,7 +103,7 @@ if (isset($_SESSION["usuarioNombre"]) && isset($_SESSION["usuarioEmail"]) && iss
                         <div class="form-group">
                             <label>¿Es Responsable de Asignatura?</label>
                             <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" id="esResponsableSI" value="SI" name="esResponsable" required="">
+                                <input type="radio" class="custom-control-input" id="esResponsableSI" value="SI" name="esResponsable" required="" <?php if ($seteado){echo "checked";}?>>
                                 <label class="custom-control-label" for="esResponsableSI">Si</label>
                             </div>
                             <div class="custom-control custom-radio">
