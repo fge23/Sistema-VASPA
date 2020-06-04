@@ -34,6 +34,8 @@ $idPrograma = $_GET["id"];
             <!-- Container donde se carga la tabla -->
             <div class="table-responsive" id="divDatos">
             </div>
+            <hr>
+            <a href="../vista/cargarBibliografia.php?id=<?= $idPrograma; ?>"><button class="btn btn-danger">Regresar</button></a>
         </div>
 
         <!-- Modal - Nuevo recurso -->

@@ -9,7 +9,7 @@ $manejadorProfesor = new ManejadorProfesor();
 // Obtenemos todos los profesores de la BD
 $profesores = $manejadorProfesor->getColeccion();
 
-// Falta validar el GET ¿Pero para que tanta validaciones? No es la parte mas importante del sistema
+// Falta validar el GET 
 $idAsignatura = $_GET['id'];
 $asignatura = new Asignatura($idAsignatura);
 
