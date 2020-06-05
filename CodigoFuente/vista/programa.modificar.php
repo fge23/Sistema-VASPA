@@ -409,7 +409,7 @@ $Programa = new Programa($idProgramaActual);
             });
         });
     </script>
-    <!--    Se debe desarrollar una funcionalidad que valide que no haya campos vacíos -->
+ 
     <script>
         $('#regiration_form').on('submit', function (e) {
             var bandera = true;

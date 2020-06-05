@@ -13,15 +13,14 @@ $datos;
 $data = '<table class="table table-hover table-sm">
 						<tr class="table-info">
 							<th>Referencia</th>
-							<th>Nombre</th>
+							<th>Autor/es</th>
 							<th>A&ntildeo</th>
 							<th>T&iacute;tulo</th>
-                                                        <th>Cap&iacute;tulo</th>
-                                                        <th>Unidad</th>
-                                                        <th>Biblioteca</th>
-                                                        <th>SIUNPA</th>
+                                                        <th>Cap&iacute;tulo/Tomo/P&aacute;gina</th>
+                                                        <th>Lugar de Edici&oacute;n</th>
+                                                        <th>Editoral</th>
                                                         <th>Tipo</th>
-                                                        <th>Otro</th>
+                                                      
 							<th>Opciones</th>
 						</tr>';
 
@@ -40,15 +39,14 @@ for ($x = 0; $x < $datos->num_rows; $x++) {
 
     $data .= '<tr>
 				<td>' . $libros[$x]['referencia'] . '</td>
-                                <td>' . $libros[$x]['apellido'] . ', '. $libros[$x]['nombre'] . '</td>
+                                <td>' . $libros[$x]['apellido'] . ' '. $libros[$x]['nombre'] . '</td>
 				<td>' . $libros[$x]['anioEdicion'] . '</td>
                                 <td>' . $libros[$x]['titulo'] . '</td>
                                 <td>' . $libros[$x]['capitulo'] . '</td>
-                                <td>' . $libros[$x]['unidad'] . '</td>
-                                <td>' . $libros[$x]['biblioteca'] . '</td>
-                                <td>' . $libros[$x]['siunpa'] . '</td>
+                                <td>' . $libros[$x]['lugarEdicion'] . '</td>
+                                <td>' . $libros[$x]['editorial'] . '</td>
                                 <td>' . $tipoLibro.'</td>
-                                <td>' . $libros[$x]['otro'] . '</td>
+                             
 				<td>
                                 <a title="Modificar">
                                             <button type="button" class="btn btn-outline-warning" onclick="ReadRecordDetails(' . $libros[$x]['id'] . ')">
