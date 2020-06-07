@@ -49,8 +49,8 @@ class MYPDF extends TCPDF {
         $tbl ='';
         $tbl .= '<table cellspacing="0" cellpadding="2" border="1" style="font-family:Arial;font-size:10pt;">
                     <tr>
-                        <td colspan="1" align="center"><img src="../lib/img/logo-UNPA-programa.jpg"/></td>
-                        <td colspan="1" align="center"><b><br><br><br>UNIVERSIDAD NACIONAL <br> DE LA PATAGONIA <br> AUSTRAL <br> Unidad Académica <br> Río Gallegos</b></td>
+                        <td colspan="1" align="center" style="width: 37.1%;"><img src="../lib/img/logo-UNPA-programa.jpg" width="50" height="77"></td>
+                        <td colspan="1" align="center" style="width: 62.9%;"><b><br>UNIVERSIDAD NACIONAL DE LA PATAGONIA AUSTRAL <br><br> Unidad Académica Río Gallegos</b></td>
                     </tr>
                 </table>
                 <table cellspacing="0" cellpadding="2" border="1">
@@ -142,19 +142,18 @@ class MYPDF extends TCPDF {
 
         // Seteo los cortes automaticos de las paginas 
         //$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-        parent::SetAutoPageBreak(TRUE, 19);
+        parent::SetAutoPageBreak(TRUE, 19.5);
 
         // Seteo la escala de la imagen 
         parent::setImageScale(PDF_IMAGE_SCALE_RATIO);
 
         // Seteo el margen superior
-        //poner a 65 si se trata de una carrera + 4 por carrera
-        //IMPORTANTE HACER UN SWITCH EN DONDE SE TIENE EN CUENTA LAS 23 O 22 CARRERAS OFRECIDAS POR LA UNPA-UARG, y un poco mas porque no ?
         //69 si headermargin es de 5, si es de 10 sumarle 5
         
-        $topMargin = 64 + (5 * $this->getCantidadCarreras());
-        //74 si es que si la asignatura corresponde a dos carreras
-        //parent::setTopMargin(74);
+        //$topMargin = 63 + (5.5 * $this->getCantidadCarreras()); // funciona con el encabezado anterior
+        $topMargin = 43.5 + (5.5 * $this->getCantidadCarreras()); // funciona con el encabezado anterior
+
+        //parent::setTopMargin(49); // 1 carrera para el encabezado nuevo
         parent::setTopMargin($topMargin);
     }
     
@@ -1149,11 +1148,10 @@ class MYPDF extends TCPDF {
                 <td valign="top" style="width: 5.3%;"><p align="center">Capítulo/ Tomo </p></td>
                 <td valign="top" style="width: 6.7%;"><p align="center">Lugar de Edición</p></td>
                 <td valign="top" style="width: 9.3%;"><p align="center">Editorial</p></td>
-                <td valign="top" style="width: 5.3%;"><p align="center">Unidad
-                <br>opcional</p></td>
-                <td valign="top" align="center" style="width: 6.7%;"><p>Bibliotec<br>UA</p></td>
-                <td valign="top" align="center" style="width: 4.7%;"><p>SIUNPA</p></td>
-                <td valign="top" align="center" style="width: 6.9%;"><p>Otro</p></td>
+                <td valign="top" style="width: 5.3%;"><p align="center">Unidad</p></td>
+                <td valign="top" align="center" style="width: 6.5%;"><p>Bibliotec<br>UA</p></td>
+                <td valign="top" align="center" style="width: 5.2%;"><p>SIUNPA</p></td>
+                <td valign="top" align="center" style="width: 6.6%;"><p>Otro</p></td>
         </tr>
 
         </thead> 
@@ -1171,9 +1169,9 @@ class MYPDF extends TCPDF {
                         <td valign="top" style="width: 6.7%;">'.$Libro->getLugarEdicion().'</td>
                         <td valign="top" style="width: 9.3%;">'.$Libro->getEditorial().'</td>
                         <td valign="top" style="width: 5.3%;">'.$Libro->getUnidad().'</td>
-                        <td valign="top" style="width: 6.7%;">'.$Libro->getBiblioteca().'</td>
-                        <td valign="top" style="width: 4.7%;">'.$Libro->getSiunpa().'</td>
-                        <td valign="top" style="width: 6.9%;">'.$Libro->getOtro().'</td>
+                        <td valign="top" style="width: 6.5%;">'.$Libro->getBiblioteca().'</td>
+                        <td valign="top" style="width: 5.2%;">'.$Libro->getSiunpa().'</td>
+                        <td valign="top" style="width: 6.6%;">'.$Libro->getOtro().'</td>
                     </tr>';
             }
         }
@@ -1188,9 +1186,9 @@ class MYPDF extends TCPDF {
                 <td valign="top" style="width: 6.7%;"> </td>
                 <td valign="top" style="width: 9.3%;"> </td>
                 <td valign="top" style="width: 5.3%;"> </td>
-                <td valign="top" style="width: 6.7%;"> </td>
-                <td valign="top" style="width: 4.7%;"> </td>
-                <td valign="top" style="width: 6.9%;"> </td>
+                <td valign="top" style="width: 6.5%;"> </td>
+                <td valign="top" style="width: 5.2%;"> </td>
+                <td valign="top" style="width: 6.6%;"> </td>
             </tr>
 
             <tr>
@@ -1203,9 +1201,9 @@ class MYPDF extends TCPDF {
                 <td valign="top" style="width: 6.7%;"> </td>
                 <td valign="top" style="width: 9.3%;"> </td>
                 <td valign="top" style="width: 5.3%;"> </td>
-                <td valign="top" style="width: 6.7%;"> </td>
-                <td valign="top" style="width: 4.7%;"> </td>
-                <td valign="top" style="width: 6.9%;"> </td>
+                <td valign="top" style="width: 6.5%;"> </td>
+                <td valign="top" style="width: 5.2%;"> </td>
+                <td valign="top" style="width: 6.6%;"> </td>
             </tr>';
         }
 
@@ -1230,10 +1228,10 @@ class MYPDF extends TCPDF {
                 <td valign="top" style="width: 5.3%;"><p align="center">Capítulo/ Tomo </p></td>
                 <td valign="top" style="width: 6.7%;"><p align="center">Lugar de Edición</p></td>
                 <td valign="top" style="width: 9.3%;"><p align="center">Editorial</p></td>
-                <td valign="top" style="width: 5.3%;"><p align="center">Unidad opcional</p></td>
-                <td valign="top" style="width: 6.7%;"><p align="center">Bibliotec UA</p></td>
-                <td valign="top" style="width: 4.7%;"><p align="center">SIUNPA</p></td>
-                <td valign="top" style="width: 6.9%;"><p align="center">Otro</p></td>
+                <td valign="top" style="width: 5.3%;"><p align="center">Unidad</p></td>
+                <td valign="top" style="width: 6.5%;"><p align="center">Bibliotec UA</p></td>
+                <td valign="top" style="width: 5.2%;"><p align="center">SIUNPA</p></td>
+                <td valign="top" style="width: 6.6%;"><p align="center">Otro</p></td>
         </tr>
 
         </thead> 
@@ -1251,9 +1249,9 @@ class MYPDF extends TCPDF {
                     <td valign="top" style="width: 6.7%;">'.$Libro->getLugarEdicion().'</td>
                     <td valign="top" style="width: 9.3%;">'.$Libro->getEditorial().'</td>
                     <td valign="top" style="width: 5.3%;">'.$Libro->getUnidad().'</td>
-                    <td valign="top" style="width: 6.7%;">'.$Libro->getBiblioteca().'</td>
-                    <td valign="top" style="width: 4.7%;">'.$Libro->getSiunpa().'</td>
-                    <td valign="top" style="width: 6.9%;">'.$Libro->getOtro().'</td>
+                    <td valign="top" style="width: 6.5%;">'.$Libro->getBiblioteca().'</td>
+                    <td valign="top" style="width: 5.2%;">'.$Libro->getSiunpa().'</td>
+                    <td valign="top" style="width: 6.6%;">'.$Libro->getOtro().'</td>
                     </tr>';
             }
         }
@@ -1268,9 +1266,9 @@ class MYPDF extends TCPDF {
                 <td valign="top" style="width: 6.7%;"> </td>
                 <td valign="top" style="width: 9.3%;"> </td>
                 <td valign="top" style="width: 5.3%;"> </td>
-                <td valign="top" style="width: 6.7%;"> </td>
-                <td valign="top" style="width: 4.7%;"> </td>
-                <td valign="top" style="width: 6.9%;"> </td>
+                <td valign="top" style="width: 6.5%;"> </td>
+                <td valign="top" style="width: 5.2%;"> </td>
+                <td valign="top" style="width: 6.6%;"> </td>
             </tr>
 
             <tr>
@@ -1283,9 +1281,9 @@ class MYPDF extends TCPDF {
                 <td valign="top" style="width: 6.7%;"> </td>
                 <td valign="top" style="width: 9.3%;"> </td>
                 <td valign="top" style="width: 5.3%;"> </td>
-                <td valign="top" style="width: 6.7%;"> </td>
-                <td valign="top" style="width: 4.7%;"> </td>
-                <td valign="top" style="width: 6.9%;"> </td>
+                <td valign="top" style="width: 6.5%;"> </td>
+                <td valign="top" style="width: 5.2%;"> </td>
+                <td valign="top" style="width: 6.6%;"> </td>
             </tr>';
         }
     }
@@ -1568,6 +1566,44 @@ class MYPDF extends TCPDF {
 
         </tbody>
         </table>';
+        $this->html .= '</body></html>';
+    }
+    
+    private function cargarVisado2() {
+        $this->html = '<html><head><meta charset="utf-8">
+                <style type="text/css">
+                    table {
+                    font-family: Arial;
+                    font-size: 9pt;
+                    }</style>
+                </head><body><br/>
+            <table border="1" cellspacing="0" cellpadding="2" > 
+        <tbody>
+        <tr>
+                <td colspan="3" height="40"><p align="center">&nbsp;<br><b>VISADO</b></p></td>
+        </tr>
+
+        <tr>
+                <td valign="top" height="40"><p align="center">&nbsp;<br><b>División</b></p></td>
+                <td valign="top" height="40"><p align="center">&nbsp;<br><b>Departamento</b></p></td>
+                <td valign="top" height="40"><p align="center">&nbsp;<br><b>Secretaria Académica</b></p></td>
+        </tr>
+
+        <tr>
+                <td valign="top" height="60"> </td>
+                <td valign="top" height="60"> </td>
+                <td valign="top" height="60"> </td>
+        </tr>
+
+        <tr>
+                <td valign="top" height="40"><p>&nbsp;<br>Fecha:</p></td>
+                <td valign="top" height="40"><p>&nbsp;<br>Fecha:</p></td>
+                <td valign="top" height="40"><p>&nbsp;<br>Fecha:</p></td>
+        </tr>
+
+        </tbody>
+        </table>';
+        $this->html .= '</body></html>';
     }
     
     private function cargarDatosPrograma() {
@@ -1610,10 +1646,26 @@ class MYPDF extends TCPDF {
         
         $this->cargarVigencia();
         $this->cargarObservaciones();
-        $this->cargarVisado();
         
-        //Se pasa el html al PDF
-        parent::writeHTML($this->html, true, false, true, false, '');
+        // chequeamos la cantidad de carreras si es mayor a 12
+        // agregamos una nueva pagina en donde se agregara la tabla "VISADO"
+        if ($this->getCantidadCarreras() > 12){
+            //Se pasa el html al PDF
+            parent::writeHTML($this->html, true, false, true, false, '');
+            
+            //Se inserta pagina con orientación vertical
+            parent::Addpage("P");
+            $this->cargarVisado2();
+            //Se pasa el html al PDF
+            parent::writeHTML($this->html, true, false, true, false, '');
+        } else {
+            
+            // como no tiene mas de 12 asignaturas lo agregamos en la misma pagina
+            $this->cargarVisado();
+        
+            //Se pasa el html al PDF
+            parent::writeHTML($this->html, true, false, true, false, '');
+        }
         
     }
     
