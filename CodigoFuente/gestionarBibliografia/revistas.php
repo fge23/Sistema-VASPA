@@ -12,6 +12,9 @@ $idPrograma = $_GET["id"];
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.min.js"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../lib/js/gestionarBibliografia/formularioRevista.js"></script>
+               <!--         Librerias Bootbox-->
+        <script src="../lib/bootbox/bootbox.js"></script>
+        <script src="../lib/bootbox/bootbox.locales.js"></script>
     </head>
     <body>
         <style type="text/css">
@@ -82,7 +85,7 @@ $idPrograma = $_GET["id"];
                         </div>
 
                         <div class="form-group">
-                            <label for="nuevo_pagina">P&aacute;gina</label>
+                            <label for="nuevo_pagina">Tomo/Volumen/P&aacute;gina</label>
                             <input type="text" id="nuevo_pagina" class="form-control"/>
                         </div>
 
@@ -95,10 +98,6 @@ $idPrograma = $_GET["id"];
                             <label for="nuevo_unidad">Unidad</label>
                             <input type="text" id="nuevo_unidad" class="form-control"/>
                         </div>
-
-
-
-
 
                         <div class="row no-margin">
                             <div class="col-xs-3">
@@ -157,7 +156,7 @@ $idPrograma = $_GET["id"];
                         </div>
 
                         <div class="form-group">
-                            <label for="pagina">P&aacute;gina</label>
+                            <label for="pagina">Tomo/Volumen/P&aacute;gina</label>
                             <input type="text" id="pagina" class="form-control"/>
                         </div>
 

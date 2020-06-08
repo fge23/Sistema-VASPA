@@ -12,6 +12,9 @@ $idPrograma = $_GET["id"];
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.min.js"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../lib/js/gestionarBibliografia/formularioLibro.js"></script>
+          <!--         Librerias Bootbox-->
+        <script src="../lib/bootbox/bootbox.js"></script>
+        <script src="../lib/bootbox/bootbox.locales.js"></script>
     </head>
     <body>
         <style type="text/css">

@@ -24,9 +24,7 @@ if (isset($_POST['nuevo_apellido']) && isset($_POST['nuevo_nombre'])) {
     $nuevo_siunpa = $_POST['nuevo_siunpa'];
     $nuevo_otro = $_POST['nuevo_otro'];
 
-    /*
-     * @ToDo: integrar con CU de Programa y pasar el idPrograma correspondiente
-     */
+
     $query = "INSERT INTO REVISTA "
             . "VALUES ("
             . " null,"
@@ -34,9 +32,13 @@ if (isset($_POST['nuevo_apellido']) && isset($_POST['nuevo_nombre'])) {
             . "'{$nuevo_nombre}' , "
             . "'{$nuevo_tituloArticulo}' , "
             . "'{$nuevo_tituloRevista}' , "
-            . "'{$nuevo_pagina}' , "
-            . "'{$nuevo_fecha}' , "
-            . "'{$nuevo_unidad}' , "
+            . "'{$nuevo_pagina}' , ";
+    if ($nuevo_fecha == "NULL") {
+        $query .= " NULL, ";
+    } else {
+        $query .= "'{$nuevo_fecha}' , ";
+    }
+    $query .= "'{$nuevo_unidad}' , "
             . "'{$nuevo_biblioteca}' , "
             . "'{$nuevo_siunpa}' , "
             . "'{$nuevo_otro}' ,"

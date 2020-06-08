@@ -26,7 +26,7 @@ function addRecord() {
 
     console.log("Bibliografia: " + nuevo_tipoBibliografia)
 
-    if (nuevo_titulo.trim() == '' | nuevo_nombre == '' | nuevo_apellido == '' | nuevo_editorial == ''
+    if (nuevo_titulo.trim() == '' | nuevo_nombre.trim() == '' | nuevo_apellido.trim() == '' | nuevo_editorial.trim() == ''
             | nuevo_anioEdicion == '') {
         console.log("Campos inválidos");
         alert("Hay datos sin completar en el formulario, completelos e intente nuevamente");
@@ -35,10 +35,9 @@ function addRecord() {
         if (typeof nuevo_tipoBibliografia === 'undefined') {
             alert("Debe elegir si la bibliografía es Obligatoria o Complementaria ");
         } else {
-              if ((!isNaN(nuevo_anioEdicion)) &&(nuevo_anioEdicion < 1901 || nuevo_anioEdicion > 2055)) {
+            if ((!isNaN(nuevo_anioEdicion)) && (nuevo_anioEdicion < 1901 || nuevo_anioEdicion > 2055)) {
                 var anioActual = new Date().getFullYear();
-                alert("Ingrese un año de edición entre 1901 y "+anioActual);
-           
+                alert("Ingrese un año de edición entre 1901 y " + anioActual);
             } else {
                 console.log(nuevo_anioEdicion);
                 // se llama a la API addRecord para agregar nuevo registro
@@ -81,112 +80,128 @@ function addRecord() {
             }
         }
     }
-    }
+}
 
 
-    function readRecords(idPrograma_) {
-        $.get("../gestionarBibliografia/ajaxLibros/readRecords.php?id=" + idPrograma_, {}, function (data, status) {
-            $("#divDatos").html(data);
-        });
-        idPrograma = idPrograma_;
-        console.log("Datos leídos");
-    }
+function readRecords(idPrograma_) {
+    $.get("../gestionarBibliografia/ajaxLibros/readRecords.php?id=" + idPrograma_, {}, function (data, status) {
+        $("#divDatos").html(data);
+    });
+    idPrograma = idPrograma_;
+    console.log("Datos leídos");
+}
 
-
-    function DeleteRecord(id) {
-        var conf = confirm("¿Está seguro que desea eliminar este Libro?");
-        if (conf === true) {
-            $.post("../gestionarBibliografia/ajaxLibros/deleteRecord.php", {
-                id: id
+function DeleteRecord(id) {
+    bootbox.confirm({
+        message: "¿Está seguro que desea eliminar este Libro?",
+        buttons: {
+            confirm: {
+                label: '<i class="oi oi-trash"> </i> Sí',
+                className: 'btn-danger'
             },
-                    function (data, status) {
-                        console.log("Datos enviados: " + data);
-                        // actualiza tabla de registros mostrados
-                        readRecords(idPrograma);
-                    }
-            );
-        }
-    }
-
-    function ReadRecordDetails(id) {
-        // recupera ID
-        $("#hidden_id").val(id);
-        $.post("../gestionarBibliografia/ajaxLibros/readRecordDetails.php", {
-            id: id
+            cancel: {
+                label: '<i class="oi oi-circle-x"></i> No',
+                className: 'btn-info'
+            }
         },
-                function (data) {
-                    // Se utiliza un JSON para manejar los datos
-                    var libro = JSON.parse(data);
-                    //Carga campos del Modal con los datos del objeto
-                    $("#apellido").val(libro[0].apellido);
-                    $("#nombre").val(libro[0].nombre);
-                    $("#referencia").val(libro[0].referencia);
-                    $("#anioEdicion").val(libro[0].anioEdicion);
-                    $("#titulo").val(libro[0].titulo);
-                    $("#capitulo").val(libro[0].capitulo);
-                    $("#lugarEdicion").val(libro[0].lugarEdicion);
-                    $("#editorial").val(libro[0].editorial);
-                    $("#pagina").val(libro[0].pagina);
-                    $("#fecha").val(libro[0].fecha);
-                    $("#unidad").val(libro[0].unidad);
-                    $("#biblioteca").val(libro[0].biblioteca);
-                    $("#siunpa").val(libro[0].siunpa);
-                    $("#otro").val(libro[0].otro);
-                    if (libro[0].tipoLibro === 'O') {
-                        $("#obligatoria").prop("checked", true)
-                    } else {
-                        $("#complementaria").prop("checked", true)
-                    }
-
-
-                    //Hay que ver como se hace este 
-                    //$("#tipoBibliografia").prop("checked", false)
-
-                }
-        );
-        // se muestra Modal
-        $("#update_record_modal").modal("show");
-    }
-
-    function selectedRadio() {
-        var selValue = document.querySelector('input[name="tipoBibliografia"]:checked').value;
-        alert(selValue);
-        return selValue;
-    }
-
-    function UpdateRecordDetails() {
-        // recupera valores modificados
-        var referencia = $("#referencia").val();
-        var apellido = $("#apellido").val();
-        var nombre = $("#nombre").val();
-        var anioEdicion = $("#anioEdicion").val();
-        var titulo = $("#titulo").val();
-        var capitulo = $("#capitulo").val();
-        var lugarEdicion = $("#lugarEdicion").val();
-        var editorial = $("#editorial").val();
-        var unidad = $("#unidad").val();
-        var biblioteca = $("#biblioteca").val();
-        var siunpa = $("#siunpa").val();
-        var otro = $("#otro").val();
-
-        var elem = document.getElementsByName('tipoBibliografia');
-        var tipoBibliografia;
-
-        for (i = 0; i < elem.length; i++) {
-            if (elem[i].checked)
-                tipoBibliografia = elem[i].value;
+        callback: function (result) {
+            console.log('El usuario eligio eliminar? ' + result);
+            if (result) {
+                $.post("../gestionarBibliografia/ajaxLibros/deleteRecord.php", {
+                    id: id
+                },
+                        function (data, status) {
+                            console.log("Datos enviados: " + data);
+                            // actualiza tabla de registros mostrados
+                            readRecords(idPrograma);
+                        }
+                );
+            }
         }
-        //se setea el ID obtenido anteriormente 
-        var id = $("#hidden_id").val();
+    });
+}
 
 
-        if (titulo == '' | nombre == '' | apellido == '' | editorial == ''
-                | anioEdicion == '') {
-            console.log("Campos inválidos");
-            alert("Hay datos sin completar en el formulario, completelos e intente nuevamente");
+
+function ReadRecordDetails(id) {
+    // recupera ID
+    $("#hidden_id").val(id);
+    $.post("../gestionarBibliografia/ajaxLibros/readRecordDetails.php", {
+        id: id
+    },
+            function (data) {
+                // Se utiliza un JSON para manejar los datos
+                var libro = JSON.parse(data);
+                //Carga campos del Modal con los datos del objeto
+                $("#apellido").val(libro[0].apellido);
+                $("#nombre").val(libro[0].nombre);
+                $("#referencia").val(libro[0].referencia);
+                $("#anioEdicion").val(libro[0].anioEdicion);
+                $("#titulo").val(libro[0].titulo);
+                $("#capitulo").val(libro[0].capitulo);
+                $("#lugarEdicion").val(libro[0].lugarEdicion);
+                $("#editorial").val(libro[0].editorial);
+                $("#pagina").val(libro[0].pagina);
+                $("#fecha").val(libro[0].fecha);
+                $("#unidad").val(libro[0].unidad);
+                $("#biblioteca").val(libro[0].biblioteca);
+                $("#siunpa").val(libro[0].siunpa);
+                $("#otro").val(libro[0].otro);
+                if (libro[0].tipoLibro === 'O') {
+                    $("#obligatoria").prop("checked", true)
+                } else {
+                    $("#complementaria").prop("checked", true)
+                }
+
+
+                //Hay que ver como se hace este 
+                //$("#tipoBibliografia").prop("checked", false)
+
+            }
+    );
+    // se muestra Modal
+    $("#update_record_modal").modal("show");
+}
+
+function selectedRadio() {
+    var selValue = document.querySelector('input[name="tipoBibliografia"]:checked').value;
+    alert(selValue);
+    return selValue;
+}
+
+function UpdateRecordDetails() {
+    // recupera valores modificados
+    var referencia = $("#referencia").val();
+    var apellido = $("#apellido").val();
+    var nombre = $("#nombre").val();
+    var anioEdicion = $("#anioEdicion").val();
+    var titulo = $("#titulo").val();
+    var capitulo = $("#capitulo").val();
+    var lugarEdicion = $("#lugarEdicion").val();
+    var editorial = $("#editorial").val();
+    var unidad = $("#unidad").val();
+    var biblioteca = $("#biblioteca").val();
+    var siunpa = $("#siunpa").val();
+    var otro = $("#otro").val();
+    var elem = document.getElementsByName('tipoBibliografia');
+    var tipoBibliografia;
+    for (i = 0; i < elem.length; i++) {
+        if (elem[i].checked)
+            tipoBibliografia = elem[i].value;
+    }
+    //se setea el ID obtenido anteriormente 
+    var id = $("#hidden_id").val();
+    if (titulo.trim() == '' | nombre.trim() == '' | apellido.trim() == '' | editorial.trim() == ''
+            | anioEdicion == '') {
+        console.log("Campos inválidos");
+        alert("Hay datos sin completar en el formulario, completelos e intente nuevamente");
+    } else {
+        if (typeof tipoBibliografia === 'undefined') {
+            alert("Debe elegir si la bibliografía es Obligatoria o Complementaria ");
         } else {
-            if (typeof tipoBibliografia === 'undefined') {
-                alert("Debe elegir si la bibliografía es Obligatoria o Complementaria ");
+            if ((!isNaN(anioEdicion)) && (anioEdicion < 1901 || anioEdicion > 2055)) {
+                var anioActual = new Date().getFullYear();
+                alert("Ingrese un año de edición entre 1901 y " + anioActual);
             } else {
                 // Actualiza datos
                 $.post("../gestionarBibliografia/ajaxLibros/updateRecordDetails.php", {
@@ -214,4 +229,5 @@ function addRecord() {
                 );
             }
         }
+    }
 }

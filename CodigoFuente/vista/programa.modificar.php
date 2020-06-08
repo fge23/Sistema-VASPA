@@ -432,7 +432,7 @@ $Programa = new Programa($idProgramaActual);
                 //  alert("El campo 'Objetivos generales' no puede estar en blanco");
                 camposFaltantes += "<br><li>Objetivos generales";
                 bandera = false;
-            
+            }
             //Organizacion contenidos
             if ($('#textAreaOrganizacionContenidos').summernote('isEmpty')) {
                 //alert("El campo 'Organización de Contenidos' no puede estar en blanco");
@@ -502,7 +502,6 @@ $Programa = new Programa($idProgramaActual);
                 bootbox.alert("Faltan completar los siguientes campos: <br>" + camposFaltantes);
                 camposFaltantes = " ";
             }
-
-        })
+        });
     </script>
 </html>

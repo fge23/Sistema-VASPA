@@ -13,14 +13,17 @@ function addRecord() {
     var nuevo_siunpa = $("#nuevo_siunpa").val();
     var nuevo_otro = $("#nuevo_otro").val();
 
+
+
     // se llama a la API addRecord para agregar nuevo registro
-    if (nuevo_tituloArticulo == '' | nuevo_tituloRevista == '' | nuevo_apellido == ''
-            | nuevo_nombre == '') {
+    if (nuevo_tituloArticulo.trim() == '' | nuevo_tituloRevista.trim() == '' | nuevo_apellido.trim() == ''
+            | nuevo_nombre.trim() == '') {
         console.log("Campos inválidos");
         alert("Hay datos sin completar en el formulario, completelos e intente nuevamente");
-
     } else {
-
+        if (nuevo_fecha === '') {
+            nuevo_fecha = "NULL";
+        }
 
         $.post("../gestionarBibliografia/ajaxRevistas/addRecord.php?id=" + idPrograma, {
             nuevo_apellido: nuevo_apellido,
@@ -56,7 +59,7 @@ function addRecord() {
 
 
 function readRecords(idPrograma_) {
-    $.get("../gestionarBibliografia/ajaxRevistas/readRecords.php?id="+idPrograma_, {}, function (data, status) {
+    $.get("../gestionarBibliografia/ajaxRevistas/readRecords.php?id=" + idPrograma_, {}, function (data, status) {
         $("#divDatos").html(data);
     });
     idPrograma = idPrograma_;
@@ -65,18 +68,33 @@ function readRecords(idPrograma_) {
 
 
 function DeleteRecord(id) {
-    var conf = confirm("¿Está seguro que desea eliminar este Artículo de Revista?");
-    if (conf === true) {
-        $.post("../gestionarBibliografia/ajaxRevistas/deleteRecord.php", {
-            id: id
+    bootbox.confirm({
+        message: "¿Está seguro que desea eliminar este Artículo de Revista?",
+        buttons: {
+            confirm: {
+                label: '<i class="oi oi-trash"> </i> Sí',
+                className: 'btn-danger'
+            },
+            cancel: {
+                label: '<i class="oi oi-circle-x"></i> No',
+                className: 'btn-seccondary'
+            }
         },
-                function (data, status) {
-                    console.log("Datos enviados: " + data);
-                    // actualiza tabla de registros mostrados
-                    readRecords(idPrograma);
-                }
-        );
-    }
+        callback: function (result) {
+            console.log('El usuario eligio eliminar? ' + result);
+            if (result) {
+                 $.post("../gestionarBibliografia/ajaxRevistas/deleteRecord.php", {
+                    id: id
+                },
+                        function (data, status) {
+                            console.log("Datos enviados: " + data);
+                            // actualiza tabla de registros mostrados
+                            readRecords(idPrograma);
+                        }
+                );
+            }
+        }
+    });   
 }
 
 function ReadRecordDetails(id) {
@@ -123,8 +141,8 @@ function UpdateRecordDetails() {
     var id = $("#hidden_id").val();
 
 
-    if (tituloArticulo == '' | tituloRevista == '' | apellido == ''
-            | nombre == '') {
+    if (tituloArticulo.trim() == '' | tituloRevista.trim() == '' | apellido.trim() == ''
+            | nombre.trim() == '') {
         console.log("Campos inválidos");
         alert("Hay datos sin completar en el formulario, completelos e intente nuevamente");
 
@@ -153,9 +171,3 @@ function UpdateRecordDetails() {
         );
     }
 }
-/*
-$(document).ready(function () {
-    // actualiza tabla de registros mostrados
-    readRecords();
-});
-*/

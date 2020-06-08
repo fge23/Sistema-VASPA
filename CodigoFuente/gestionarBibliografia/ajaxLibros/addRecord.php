@@ -25,9 +25,6 @@ if (isset($_POST['nuevo_apellido']) && isset($_POST['nuevo_nombre'])) {
     $nuevo_otro = $_POST['nuevo_otro'];
     $nuevo_tipoBibliografia = $_POST['nuevo_tipoBibliografia'];
 
-    /*
-     * @ToDo: integrar con CU de Programa y pasar el idPrograma correspondiente
-     */
     $query = "INSERT INTO LIBRO "
             . "VALUES ("
             . " null,"
