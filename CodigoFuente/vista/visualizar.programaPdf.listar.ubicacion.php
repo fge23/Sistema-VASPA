@@ -1,11 +1,19 @@
 <?php
 include_once '../lib/ControlAcceso.Class.php';
+include_once '../modeloSistema/Programa.Class.php';
+include_once '../modeloSistema/Asignatura.Class.php';
 
-$nombreAsignatura = $_GET['nombreAsignatura'];
+$idPrograma = $_GET['idPrograma'];
 
-$codAsignatura = $_GET['codAsignatura'];
+$Programa = new Programa($idPrograma);
 
-$ubicacionActual = $_GET['ubicacionActual'];
+$codAsignatura = $Programa->getIdAsignatura();
+
+$Asignatura = new Asignatura($codAsignatura);
+
+$nombreAsignatura = $Asignatura->getNombre();
+
+$ubicacionActual = $Programa->getUbicacion();
 
 if($ubicacionActual == "SA"){
 

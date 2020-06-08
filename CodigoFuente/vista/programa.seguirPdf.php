@@ -5,8 +5,6 @@ include_once '../controlSistema/ManejadorCarrera.php';
 $ManejadorCarrera = new ManejadorCarrera();
 $Carreras = $ManejadorCarrera->getColeccion();
 
-header('Content-Type: text/html; charset=ISO-8859-1');
-
 ?>
 
 <html>

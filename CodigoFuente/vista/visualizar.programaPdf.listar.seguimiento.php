@@ -76,7 +76,7 @@ $asignaturas = BDConexionSistema::getInstancia()->query($consulta);
                                 <?php }?>
                                 <td>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="visualizar.programaPdf.listar.ubicacion.php?idPrograma=<?php echo $asignatura['idPrograma'];?>&nombreAsignatura=<?php echo urlencode($asignatura['nombre']);?>&codAsignatura=<?php echo $asignatura['id'];?>&ubicacionActual=<?php echo $asignatura['ubicacion'];?>">
+                                    <a href="visualizar.programaPdf.listar.ubicacion.php?idPrograma=<?php echo $asignatura['idPrograma'];?>">
     
                                         <button type="button" class="btn btn-outline-success" title="Actualizar ubicaci&oacute;n del programa">
                                             <span class="oi oi-document"></span>
