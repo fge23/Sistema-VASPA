@@ -49,7 +49,7 @@ $idPrograma = $_GET["id"];
             <div class="table-responsive" id="divDatos">
             </div>
             <hr>
-            <a href="../vista/cargarBibliografia.php?id=<?= $idPrograma; ?>"><button class="btn btn-danger">Regresar</button></a>
+            <a href="../vista/cargarBibliografia.php?id=<?= $idPrograma; ?>"><button class="btn btn-danger"><span class="oi oi-account-logout"></span> Regresar</button></a>
         </div>
 
         <!-- Modal - Nueva revista -->
@@ -62,8 +62,6 @@ $idPrograma = $_GET["id"];
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
-
-
                         <div class="form-group">
                             <label for="nuevo_apellido">Apellido/s Autor/es</label>
                             <input type="text" id="nuevo_apellido" class="form-control"/>
@@ -114,7 +112,6 @@ $idPrograma = $_GET["id"];
                             <label for="nuevo_otro">Otro</label>
                             <input type="text" id="nuevo_otro" class="form-control"/>
                         </div>
-
 
                     </div>
                     <div class="modal-footer">

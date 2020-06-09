@@ -20,19 +20,25 @@ if (isset($_POST)) {
     $otro = $_POST['otro'];
 
 
+
+
     // Consulta a la BD para actualizar
     $query = "UPDATE REVISTA SET"
             . " apellido = '$apellido',"
             . " nombre = '$nombre',"
             . " tituloArticulo = '$tituloArticulo',"
             . " tituloRevista = '$tituloRevista',"
-            . " pagina = '$pagina',"
-            . " fecha = '$fecha', "
-            . " unidad = '$unidad', "
+            . " pagina = '$pagina',";
+
+    if ($fecha == "NULL") {
+        $query .= "fecha = NULL, ";
+    } else {
+        $query .= "fecha = '{$fecha}' , ";
+    }
+    $query.=  " unidad = '$unidad', "
             . " biblioteca = '$biblioteca', "
             . " siunpa = '$siunpa',"
             . " otro = '$otro' "
             . " WHERE id = $id";
-
     $consulta = BDConexionSistema::getInstancia()->query($query);
 }

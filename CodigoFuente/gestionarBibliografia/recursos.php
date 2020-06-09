@@ -12,6 +12,9 @@ $idPrograma = $_GET["id"];
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.min.js"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../lib/js/gestionarBibliografia/formularioRecurso.js"></script>
+           <!--         Librerias Bootbox-->
+        <script src="../lib/bootbox/bootbox.js"></script>
+        <script src="../lib/bootbox/bootbox.locales.js"></script>
     </head>
     <body>
         <?php include_once '../gui/navbar.php'; ?>
@@ -35,7 +38,7 @@ $idPrograma = $_GET["id"];
             <div class="table-responsive" id="divDatos">
             </div>
             <hr>
-            <a href="../vista/cargarBibliografia.php?id=<?= $idPrograma; ?>"><button class="btn btn-danger">Regresar</button></a>
+            <a href="../vista/cargarBibliografia.php?id=<?= $idPrograma; ?>"><button class="btn btn-danger"><span class="oi oi-account-logout"></span> Regresar</button></a>
         </div>
 
         <!-- Modal - Nuevo recurso -->
@@ -69,7 +72,7 @@ $idPrograma = $_GET["id"];
                         </div>
 
                         <div class="form-group">
-                            <label for="nuevo_disponibilidad">Disponibilidad</label>
+                            <label for="nuevo_disponibilidad">Disponibilidad/Direcci&oacute;n electr&oacute;nica</label>
                             <input type="text" id="nuevo_disponibilidad" class="form-control"/>
                         </div>
                     </div>
@@ -112,7 +115,7 @@ $idPrograma = $_GET["id"];
                         </div>
 
                         <div class="form-group">
-                            <label for="disponibilidad">Disponibilidad</label>
+                            <label for="disponibilidad">Disponibilidad/Direcci&oacute;n electr&oacute;nica</label>
                             <input type="text" id="disponibilidad" class="form-control"/>
                         </div>
 

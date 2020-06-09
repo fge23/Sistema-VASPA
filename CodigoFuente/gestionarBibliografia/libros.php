@@ -50,7 +50,7 @@ $idPrograma = $_GET["id"];
             <div class="table-responsive" id="divDatos">
             </div>
             <hr>
-            <a href="../vista/cargarBibliografia.php?id=<?= $idPrograma; ?>"><button class="btn btn-danger">Regresar</button></a>
+            <a href="../vista/cargarBibliografia.php?id=<?= $idPrograma; ?>"><button class="btn btn-danger"><span class="oi oi-account-logout"></span> Regresar</button></a>
         </div>
         <!-- Modal - Nuevo libro -->
         <div class="modal fade" id="add_new_record_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

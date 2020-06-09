@@ -9,9 +9,6 @@ $query;
  * @var mysqli_result
  */
 $consulta;
-/*
- * Definir IDs para cada tipo de bibliogafia. 
- */
 if (isset($_POST['nuevo_apellido']) && isset($_POST['nuevo_nombre'])) {
     $nuevo_apellido = $_POST['nuevo_apellido'];
     $nuevo_nombre = $_POST['nuevo_nombre'];

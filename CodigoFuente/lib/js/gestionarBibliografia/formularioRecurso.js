@@ -8,7 +8,7 @@ function addRecord() {
     var nuevo_datos_adicionales = $("#nuevo_datos_adicionales").val();
     var nuevo_disponibilidad = $("#nuevo_disponibilidad").val();
 
-    if (nuevo_titulo == '' | nuevo_disponibilidad == '') {
+    if (nuevo_titulo.trim() == '' | nuevo_disponibilidad.trim() == '') {
         console.log("Campos inválidos");
         alert("Hay datos sin completar en el formulario, completelos e intente nuevamente");
 
@@ -48,19 +48,34 @@ function readRecords(idPrograma_) {
 }
 
 
-function DeleteRecord(id) {
-    var conf = confirm("¿Está seguro que desea eliminar este Recurso?");
-    if (conf === true) {
-        $.post("../gestionarBibliografia/ajaxRecursos/deleteRecord.php", {
-            id: id
+function DeleteRecord(id) { 
+     bootbox.confirm({
+        message: "¿Está seguro que desea eliminar este Recurso?",
+        buttons: {
+            confirm: {
+                label: '<i class="oi oi-trash"> </i> Sí',
+                className: 'btn-danger'
+            },
+            cancel: {
+                label: '<i class="oi oi-circle-x"></i> No',
+                className: 'btn-info'
+            }
         },
-                function (data, status) {
-                    console.log("Datos enviados: " + data);
-                    // actualiza tabla de registros mostrados
-                    readRecords(idPrograma);
-                }
-        );
-    }
+        callback: function (result) {
+            console.log('El usuario eligio eliminar? ' + result);
+            if (result) {
+                 $.post("../gestionarBibliografia/ajaxRecursos/deleteRecord.php", {
+                    id: id
+                },
+                        function (data, status) {
+                            console.log("Datos enviados: " + data);
+                            // actualiza tabla de registros mostrados
+                            readRecords(idPrograma);
+                        }
+                );
+            }
+        }
+    });
 }
 
 function ReadRecordDetails(id) {
@@ -97,7 +112,7 @@ function UpdateRecordDetails() {
     console.log(titulo);
     console.log(id);
 
-    if (titulo == '' | disponibilidad == '') {
+    if (titulo.trim() == '' | disponibilidad.trim() == '') {
         console.log("Campos inválidos");
         alert("Hay datos sin completar en el formulario, completelos e intente nuevamente");
 
