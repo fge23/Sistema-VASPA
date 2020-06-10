@@ -5,13 +5,13 @@ function addRecord() {
     var nuevo_descripcion = $("#nuevo_descripcion").val();
 
 
-    if (nuevo_descripcion == '') {
+    if (nuevo_descripcion.trim() == '') {
         console.log("Campos inválidos");
         alert("El campo no tiene datos, complételo e intente nuevamente");
 
     } else {
         // se llama a la API addRecord para agregar nuevo registro
-        $.post("../gestionarBibliografia/ajaxOtrosMateriales/addRecord.php?id="+idPrograma, {
+        $.post("../gestionarBibliografia/ajaxOtrosMateriales/addRecord.php?id=" + idPrograma, {
             nuevo_descripcion: nuevo_descripcion,
         }, function (data, status) {
             // oculta el Modal
@@ -27,7 +27,7 @@ function addRecord() {
 }
 
 function readRecords(idPrograma_) {
-    $.get("../gestionarBibliografia/ajaxOtrosMateriales/readRecords.php?id="+idPrograma_, {}, function (data, status) {
+    $.get("../gestionarBibliografia/ajaxOtrosMateriales/readRecords.php?id=" + idPrograma_, {}, function (data, status) {
         $("#divDatos").html(data);
     });
     idPrograma = idPrograma_;
@@ -36,18 +36,33 @@ function readRecords(idPrograma_) {
 
 
 function DeleteRecord(id) {
-    var conf = confirm("¿Está seguro que desea eliminar este Material?");
-    if (conf === true) {
-        $.post("../gestionarBibliografia/ajaxOtrosMateriales/deleteRecord.php", {
-            id: id
+    bootbox.confirm({
+        message: "¿Está seguro que desea eliminar este Material?",
+        buttons: {
+            confirm: {
+                label: '<i class="oi oi-trash"> </i> Sí',
+                className: 'btn-danger'
+            },
+            cancel: {
+                label: '<i class="oi oi-circle-x"></i> No',
+                className: 'btn-info'
+            }
         },
-                function (data, status) {
-                    console.log("Datos enviados: " + data);
-                    // actualiza tabla de registros mostrados
-                    readRecords(idPrograma);
-                }
-        );
-    }
+        callback: function (result) {
+            console.log('El usuario eligio eliminar? ' + result);
+            if (result) {
+                $.post("../gestionarBibliografia/ajaxOtrosMateriales/deleteRecord.php", {
+                    id: id
+                },
+                        function (data, status) {
+                            console.log("Datos enviados: " + data);
+                            // actualiza tabla de registros mostrados
+                            readRecords(idPrograma);
+                        }
+                );
+            }
+        }
+    });
 }
 
 function ReadRecordDetails(id) {
@@ -78,10 +93,9 @@ function UpdateRecordDetails() {
     console.log(id);
     console.log(descripcion);
 
-    if (descripcion == '') {
+    if (descripcion.trim() == '') {
         console.log("Campos inválidos");
         alert("El campo no tiene datos, complételo e intente nuevamente");
-
     } else {
         // Actualiza datos
         $.post("../gestionarBibliografia/ajaxOtrosMateriales/updateRecordDetails.php", {
@@ -97,10 +111,3 @@ function UpdateRecordDetails() {
         );
     }
 }
-
-/*
-$(document).ready(function () {
-    // actualiza tabla de registros mostrados
-    readRecords(idPrograma);
-});
-*/

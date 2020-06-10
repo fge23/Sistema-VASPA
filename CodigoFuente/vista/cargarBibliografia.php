@@ -114,15 +114,15 @@ $cantidadOtros = getEstado($idPrograma, "otro_material");
                     </tr>
                     <tr>
                         <td><a href="../gestionarBibliografia/revistas.php?id=<?= $idPrograma; ?>">Art&iacute;culos de Revistas</a></td>
-                        <td id="estadoRevistas"> Se han cargado <?= $cantidadRevistas ?> Art&iacute;culos de Revistas </td>
+                        <td id="estadoRevistas"> Se han cargado <?= $cantidadRevistas ?> art&iacute;culos de revistas </td>
                     </tr>
                     <tr>
                         <td><a href="../gestionarBibliografia/recursos.php?id=<?= $idPrograma; ?>">Recursos de Internet</a></td>
-                        <td id="estadoRecursos"> Se han cargado <?= $cantidadRecursos ?> Recursos en Internet </td>
+                        <td id="estadoRecursos"> Se han cargado <?= $cantidadRecursos ?> recursos de Internet </td>
                     </tr>
                     <tr>
                         <td><a href="../gestionarBibliografia/otrosMateriales.php?id=<?= $idPrograma; ?>">Otros</a></td>
-                        <td id="estadoOtros"> Se han cargado <?= $cantidadOtros ?> Otros materiales</td>
+                        <td id="estadoOtros"> Se han cargado <?= $cantidadOtros ?> recursos bibliogr&aacute;ficos de tipo 'otros materiales'</td>
                     </tr>
                 </table>
             </div>
