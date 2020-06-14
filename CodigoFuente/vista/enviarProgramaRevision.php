@@ -2,6 +2,10 @@
 include_once '../lib/Constantes.Class.php';
 include_once '../modeloSistema/BDConexionSistema.Class.php';
 
+include_once '../lib/ControlAcceso.Class.php';
+// Importar el siguiente script donde se encuentran los metodos para enviar el email
+include_once '../lib/notificacionesMail/notificacionNuevoPrograma.php';
+
 $DatosFormulario = $_POST;
 
 
@@ -36,7 +40,8 @@ if (empty($DatosFormulario)) {
                         <h3>Enviar Programa a revisi&oacute;n</h3>
                     </div>
                     <div class="card-body">
-                        <?php if ($consulta) { ?>
+                        <?php if ($consulta) {
+                            notificarNuevoPrograma($idPrograma); ?>
                             <div class="alert alert-success" role="alert">
                                 Se ha enviado el Programa a revisi&oacute;n con &eacute;xito.
                             </div>
