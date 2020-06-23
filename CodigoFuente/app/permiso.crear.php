@@ -44,7 +44,6 @@ ControlAcceso::requierePermiso(PermisosSistema::PERMISO_PERMISOS);
                     </div>
                 </div>
             </form>
-
         </div>
         <?php include_once '../gui/footer.php'; ?>
     </body>
