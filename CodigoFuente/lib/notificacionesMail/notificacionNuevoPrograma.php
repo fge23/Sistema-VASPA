@@ -14,8 +14,9 @@ require '../lib/notificacionesMail/constantesMail.php';
 //Author URL: http://obedalvarado.pw
 //License: Creative Commons Attribution 3.0 Unported
 //License URL: http://creativecommons.org/licenses/by/3.0/ 
-//La siguiente funcion se encarga de realizar el envio del mail en base a los parametros    
-function sendemail($mail_username, $mail_userpassword, $mail_addAddress, $mail_subject, $template, $codAsignatura, $nombreAsignatura, $nombreProfesor, $idPrograma){
+//La siguiente funcion se encarga de realizar el envio del mail en base a los parametros  
+//28/06 --> Se agrega parametro destinatario para mejorar mensajes de exito y error. Destinatario = 0 --> Sa. Destinatario = 1 --> Depto
+function sendemail($mail_username, $mail_userpassword, $mail_addAddress, $mail_subject, $template, $codAsignatura, $nombreAsignatura, $nombreProfesor, $idPrograma,$destinatario){
 //	require '../lib/PHPMailer/PHPMailerAutoload.php';
 	$mail = new PHPMailer;
 	$mail->isSMTP();                            // Establecer el correo electrónico para utilizar SMTP
@@ -42,14 +43,22 @@ function sendemail($mail_username, $mail_userpassword, $mail_addAddress, $mail_s
         $mail->Subject = utf8_decode($mail->Subject); 
                 
 	$mail->msgHTML($message);
+        
+        if($destinatario == 0){
+            $destinatario = "Secretaría Académica";
+        } else {
+             $asignatura = new Asignatura($codAsignatura);
+             $departamento = new Departamento($asignatura->getIdDepartamento());
+             $destinatario = "Departamento de ".$departamento->getNombre();
+        }
 	if(!$mail->send()) {
 		//echo '<p style="color:red">No se pudo enviar el mensaje..';
 		//echo 'Error de correo: ' . $mail->ErrorInfo."</p>";
-            echo '<div class="alert alert-danger" role="alert">Ha ocurrido un error al enviar el correo.<b>('.$mail->ErrorInfo.')</b></div>';
+            echo '<div class="alert alert-danger" role="alert">Ha ocurrido un error al enviar la notificaci&oacute;n por correo a '.$destinatario.'.<b>('.$mail->ErrorInfo.')</b></div>';
 	} 
         else {
 		//echo '<p style="color:green">Tu mensaje ha sido enviado!</p>';
-                echo '<div class="alert alert-success" role="alert">Correo enviado con &eacute;xito.</div>';
+                echo '<div class="alert alert-success" role="alert">Notificaci&oacute;n enviada con &eacute;xito a '.$destinatario.'.</div>';
 	}
 }
 
@@ -79,8 +88,8 @@ function enviarMailNuevoProgramaSA($idPrograma) {
         
         $template = "../lib/notificacionesMail/plantillaMail/mail_Secretaria_Academica_Nuevo_Programa.html"; //Ruta de la plantilla HTML para enviar nuestro mensaje
         $mail_subject = "Nuevo Programa de $nombreAsignatura para revisar";
-
-        sendemail($mail_username, $mail_userpassword, $mail_addAddress, $mail_subject, $template, $asignatura->getId(), $nombreAsignatura, $nombreProfesor, $idPrograma); //Enviar el mensaje
+        $destinatario = 0;
+        sendemail($mail_username, $mail_userpassword, $mail_addAddress, $mail_subject, $template, $asignatura->getId(), $nombreAsignatura, $nombreProfesor, $idPrograma, $destinatario); //Enviar el mensaje
     //}
 }
 
@@ -114,7 +123,8 @@ function enviarMailNuevoProgramaDepartamento($idPrograma) {
 
         $template = "../lib/notificacionesMail/plantillaMail/mail_Departamento_Nuevo_Programa.html"; //Ruta de la plantilla HTML para enviar nuestro mensaje
         $mail_subject = "Nuevo Programa de $nombreAsignatura para revisar";
-        sendemail($mail_username, $mail_userpassword, $mail_addAddress, $mail_subject, $template, $asignatura->getId(), $nombreAsignatura, $nombreProfesor, $idPrograma); //Enviar el mensaje
+        $destinatario = 1;
+        sendemail($mail_username, $mail_userpassword, $mail_addAddress, $mail_subject, $template, $asignatura->getId(), $nombreAsignatura, $nombreProfesor, $idPrograma, $destinatario); //Enviar el mensaje
     //}
 }
 

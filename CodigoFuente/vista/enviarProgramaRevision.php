@@ -9,12 +9,20 @@ include_once '../lib/notificacionesMail/notificacionNuevoPrograma.php';
 $DatosFormulario = $_POST;
 
 
-if (empty($DatosFormulario)) {
+if (empty($DatosFormulario) && isset($_GET['idPrograma'])) {
     header("location: asignaturasDeProfesor.php");
 } else {
     $error = "";
     $consulta = false;
-    $idPrograma = $DatosFormulario['idPrograma'];
+    if (!empty($DatosFormulario)) {
+        $idPrograma = $DatosFormulario['idPrograma'];
+        echo $idPrograma;
+    } else {
+        if (isset($_GET['idPrograma'])) {
+            $idPrograma = $_GET['idPrograma'];
+            echo $idPrograma;
+        }
+    }
     try {
         $queryProgramaRevision = "UPDATE PROGRAMA SET enRevision = 1 WHERE id = {$idPrograma}";
         $consulta = BDConexionSistema::getInstancia()->query($queryProgramaRevision);
@@ -40,17 +48,19 @@ if (empty($DatosFormulario)) {
                         <h3>Enviar Programa a revisi&oacute;n</h3>
                     </div>
                     <div class="card-body">
-                        <?php if ($consulta) {
-                            notificarNuevoPrograma($idPrograma); ?>
+                        <?php
+                        if ($consulta) {
+                            notificarNuevoPrograma($idPrograma);
+                            ?>
                             <div class="alert alert-success" role="alert">
                                 Se ha enviado el Programa a revisi&oacute;n con &eacute;xito.
                             </div>
                         <?php } ?>   
-                        <?php if (!$consulta) { ?>
+    <?php if (!$consulta) { ?>
                             <div class="alert alert-danger" role="alert">
                                 Ha ocurrido un error al enviar el Programa a revisi&oacute;n: <?= $error; ?>
                             </div>
-                        <?php } ?>
+    <?php } ?>
                         <hr />
                         <h5 class="card-text">Opciones</h5>
                         <a href="asignaturasDeProfesor.php">
