@@ -170,6 +170,7 @@ if (!$mostrarError){ // No ocurrio un error, y existe el profesor, obtenemos las
 //                                    $btnModificarProgramaDeshabilitado = '<button type="button" title="Modificar Programa Actual" class="btn btn-outline-warning" disabled><span class="oi oi-pencil"></span></button>&nbsp;';
 
                                     $btnEnviarRevisionHabilitado = '<a title="Enviar a Revisi&oacute;n" class="btn btn-outline-purple" href="enviarProgramaRevision.php?=idPrograma='.$programa->getId().'" role="button"><span class="oi oi-share"></span></a>&nbsp;';
+                                    
                                     //$btnEnviarRevisionDeshabilitado = '<button type="button" title="Enviar a Revisi&oacute;n" class="btn btn-outline-purple" disabled><span class="oi oi-share"></span></button>&nbsp;';
 
                                     $btnGenerarPDFHabilitado = '<a title="Generar PDF" class="btn btn-outline-info" href="../controlSistema/programa.revisar.generarpdf.php?id='.$programa->getId().'" role="button" target="_blank"><span class="oi oi-document"></span></a>';

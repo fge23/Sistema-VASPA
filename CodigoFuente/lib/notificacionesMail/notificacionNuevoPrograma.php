@@ -50,6 +50,7 @@ function sendemail($mail_username, $mail_userpassword, $mail_addAddress, $mail_s
              $asignatura = new Asignatura($codAsignatura);
              $departamento = new Departamento($asignatura->getIdDepartamento());
              $destinatario = "Departamento de ".$departamento->getNombre();
+             
         }
 	if(!$mail->send()) {
 		//echo '<p style="color:red">No se pudo enviar el mensaje..';
