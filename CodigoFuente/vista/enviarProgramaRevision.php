@@ -7,7 +7,7 @@ include_once '../lib/ControlAcceso.Class.php';
 include_once '../lib/notificacionesMail/notificacionNuevoPrograma.php';
 
 $DatosFormulario = $_POST;
-if (empty($DatosFormulario) && isset($_GET['idPrograma'])) {
+if (empty($DatosFormulario) && !isset($_GET['idPrograma'])) {
     header("location: asignaturasDeProfesor.php");
 } else {
     $error = "";
@@ -18,7 +18,6 @@ if (empty($DatosFormulario) && isset($_GET['idPrograma'])) {
     } else {
         if (isset($_GET['idPrograma'])) {
             $idPrograma = $_GET['idPrograma'];
-            echo $idPrograma;
         }
     }
     try {

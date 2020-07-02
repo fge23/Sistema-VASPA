@@ -169,7 +169,7 @@ if (!$mostrarError){ // No ocurrio un error, y existe el profesor, obtenemos las
 //                                    $btnModificarProgramaHabilitado = '<a title="Modificar Programa Actual" class="btn btn-outline-warning" href="programa.modificar.php?id='.$Asignatura->getId().'" role="button"="true"><span class="oi oi-pencil"></span></a>&nbsp;';
 //                                    $btnModificarProgramaDeshabilitado = '<button type="button" title="Modificar Programa Actual" class="btn btn-outline-warning" disabled><span class="oi oi-pencil"></span></button>&nbsp;';
 
-                                    $btnEnviarRevisionHabilitado = '<a title="Enviar a Revisi&oacute;n" class="btn btn-outline-purple" href="enviarProgramaRevision.php?=idPrograma='.$programa->getId().'" role="button"><span class="oi oi-share"></span></a>&nbsp;';
+                                    $btnEnviarRevisionHabilitado = '<a title="Enviar a Revisi&oacute;n" class="btn btn-outline-purple" href="enviarProgramaRevision.php?idPrograma='.$programa->getId().'" role="button"><span class="oi oi-share"></span></a>&nbsp;';
                                     
                                     //$btnEnviarRevisionDeshabilitado = '<button type="button" title="Enviar a Revisi&oacute;n" class="btn btn-outline-purple" disabled><span class="oi oi-share"></span></button>&nbsp;';
 
