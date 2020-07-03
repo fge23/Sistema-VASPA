@@ -133,6 +133,10 @@ if (!$mostrarError){ // No ocurrio un error, y existe el profesor, obtenemos las
                                  // botones
                                  $btnNuevoProgramaHabilitado = '<a title="Nuevo Programa" class="btn btn-outline-success" href="programa.crear.php?id='.$Asignatura->getId().'" role="button"><span class="oi oi-plus"></span></a>&nbsp;';
                                  $btnNuevoProgramaDeshablitado = '<button type="button" title="Nuevo Programa" class="btn btn-outline-success" disabled><span class="oi oi-plus"></span></button>&nbsp;';
+                                 
+                                 
+                                 $btnBibliografiaHabilitado = '<a title="Gestionar Bibliograf&iacute;a" class="btn btn-outline-primary" href="../lib/funcionesUtiles/getProgramaVigenteDeAsignatura.php?id='.$Asignatura->getId().'" role="button"><span class="oi oi-book"></span></a>&nbsp;';
+                                 $btnBibliografiaDeshabilitado= '<button type="button" title="Gestionar Bibliograf&iacute;a" class="btn btn-outline-primary" disabled><span class="oi oi-book"></span></button>&nbsp;';
                                      
                                  $btnModificarProgramaHabilitado = '<a title="Modificar Programa Actual" class="btn btn-outline-warning" href="programa.modificar.php?id='.$Asignatura->getId().'" role="button"="true"><span class="oi oi-pencil"></span></a>&nbsp;';
                                  $btnModificarProgramaDeshabilitado = '<button type="button" title="Modificar Programa Actual" class="btn btn-outline-warning" disabled><span class="oi oi-pencil"></span></button>&nbsp;';
@@ -181,12 +185,14 @@ if (!$mostrarError){ // No ocurrio un error, y existe el profesor, obtenemos las
                                          case "En Vigencia":
                                              $botones = $btnNuevoProgramaHabilitado
                                                         .$btnModificarProgramaDeshabilitado
+                                                        .$btnBibliografiaDeshabilitado
                                                         .$btnEnviarRevisionHabilitado
                                                         .$btnGenerarPDFDeshabilitado;
                                              break;
                                          case "Cargando":
                                              $botones = $btnNuevoProgramaDeshablitado
                                                         .$btnModificarProgramaHabilitado
+                                                        .$btnBibliografiaHabilitado
                                                         .$btnEnviarRevisionHabilitado
                                                         .$btnGenerarPDFDeshabilitado;
                                              
@@ -194,6 +200,7 @@ if (!$mostrarError){ // No ocurrio un error, y existe el profesor, obtenemos las
                                          case "En Revisi&oacute;n":
                                              $botones = $btnNuevoProgramaDeshablitado
                                                         .$btnModificarProgramaDeshabilitado
+                                                        .$btnBibliografiaDeshabilitado
                                                         .$btnEnviarRevisionDeshabilitado
                                                         .$btnGenerarPDFDeshabilitado;
                                              
@@ -201,6 +208,7 @@ if (!$mostrarError){ // No ocurrio un error, y existe el profesor, obtenemos las
                                          case "Desaprobado":
                                              $botones = $btnNuevoProgramaDeshablitado
                                                         .$btnModificarProgramaHabilitado
+                                                        .$btnBibliografiaHabilitado
                                                         .$btnEnviarRevisionDeshabilitado
                                                         .$btnGenerarPDFDeshabilitado;
                                              
@@ -208,6 +216,7 @@ if (!$mostrarError){ // No ocurrio un error, y existe el profesor, obtenemos las
                                          case "Aprobado":
                                              $botones = $btnNuevoProgramaDeshablitado
                                                         .$btnModificarProgramaDeshabilitado
+                                                        .$btnBibliografiaDeshabilitado
                                                         .$btnEnviarRevisionDeshabilitado
                                                         .$btnGenerarPDFHabilitado;
 
