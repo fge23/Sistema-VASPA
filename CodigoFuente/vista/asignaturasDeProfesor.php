@@ -152,6 +152,7 @@ if (!$mostrarError){ // No ocurrio un error, y existe el profesor, obtenemos las
                                      echo 'No Cargado';
                                      $botones = $btnNuevoProgramaHabilitado
                                              .$btnModificarProgramaDeshabilitado
+                                             .$btnBibliografiaDeshabilitado
                                              .$btnEnviarRevisionDeshabilitado
                                              .$btnGenerarPDFDeshabilitado;
                                  } else {

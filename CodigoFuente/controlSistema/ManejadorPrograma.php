@@ -2,6 +2,7 @@
 
 include_once '../modeloSistema/BDConexionSistema.Class.php';
 include_once '../modeloSistema/Programa.Class.php';
+include_once '../lib/funcionesUtiles/sanearStringHTML.php';
 
 /**
  * Description of ManejadorPrograma
@@ -68,24 +69,42 @@ class ManejadorPrograma {
             $Programa->setHorasOtros("null");
         }
 
+        
+        $observacionesHoras = sanearStringHTML($datos['observacionesHoras']);
+        $observacionesCursada = sanearStringHTML($datos['observacionesCursada']);
+        $fundamentacion = sanearStringHTML($datos['fundamentacion']);
+        $objetivosGenerales = sanearStringHTML($datos['objetivosGenerales']);
+        $organizacionContenidos = sanearStringHTML($datos['organizacionContenidos']);
+        $criteriosEvaluacion = sanearStringHTML($datos['criteriosEvaluacion']);
+        $metodologiaPresencial = sanearStringHTML($datos['metodologiaPresencial']);
+        $regularizacionPresencial = sanearStringHTML($datos['regularizacionPresencial']);
+        $aprobacionPresencial = sanearStringHTML($datos['aprobacionPresencial']);
+        $metodologiaSATEP = sanearStringHTML($datos['metodologiaSATEP']);
+        $regularizacionSATEP = sanearStringHTML($datos['regularizacionSATEP']);
+        $aprobacionSATEP = sanearStringHTML($datos['aprobacionSATEP']);
+        $metodologiaLibre = sanearStringHTML($datos['metodologiaLibre']);
+        $aprobacionLibre = sanearStringHTML($datos['aprobacionLibre']);
+        
+        
         $Programa->setRegimenCursada($datos['regimenCursada']);
-        $Programa->setObservacionesHoras($datos['observacionesHoras']);
-        $Programa->setObservacionesCursada($datos['observacionesCursada']);
-        $Programa->setFundamentacion($datos['fundamentacion']);
-        $Programa->setObjetivosGenerales($datos['objetivosGenerales']);
-        $Programa->setOrganizacionContenidos($datos['organizacionContenidos']);
-        $Programa->setCriteriosEvaluacion($datos['criteriosEvaluacion']);
-        $Programa->setMetodologiaPresencial($datos['metodologiaPresencial']);
-        $Programa->setRegularizacionPresencial($datos['regularizacionPresencial']);
-        $Programa->setAprobacionPresencial($datos['aprobacionPresencial']);
-        $Programa->setMetodologiaSATEP($datos['metodologiaSATEP']);
-        $Programa->setRegularizacionSATEP($datos['regularizacionSATEP']);
-        $Programa->setAprobacionSATEP($datos['aprobacionSATEP']);
-        $Programa->setMetodologiaLibre($datos['metodologiaLibre']);
-        $Programa->setAprobacionLibre($datos['aprobacionLibre']);
+        $Programa->setObservacionesHoras($observacionesHoras);
+        $Programa->setObservacionesCursada($observacionesCursada);
+        $Programa->setFundamentacion($fundamentacion);
+        $Programa->setObjetivosGenerales($objetivosGenerales);
+        $Programa->setOrganizacionContenidos($organizacionContenidos);
+        $Programa->setCriteriosEvaluacion($criteriosEvaluacion);
+        $Programa->setMetodologiaPresencial($metodologiaPresencial);
+        $Programa->setRegularizacionPresencial($regularizacionPresencial);
+        $Programa->setAprobacionPresencial($aprobacionPresencial);
+        $Programa->setMetodologiaSATEP($metodologiaSATEP);
+        $Programa->setRegularizacionSATEP($regularizacionSATEP);
+        $Programa->setAprobacionSATEP($aprobacionSATEP);
+        $Programa->setMetodologiaLibre($metodologiaLibre);
+        $Programa->setAprobacionLibre($aprobacionLibre);
         $Programa->setIdAsignatura($datos['idAsignatura']);
         $Programa->setFechaCarga($datos['fechaCarga']);
         $Programa->setVigencia($datos['vigencia']);
+        
 
         //aniocarrera 1,2,3,4,5
         //regimen A,1,2, O
@@ -112,6 +131,23 @@ class ManejadorPrograma {
 
     //En este método se probará NO crear un objeto, sino directamente hacer el UPDATE con los datos que vienen del formulario
     function modificacion($datos, $idPrograma_) {
+        
+        $observacionesHoras = sanearStringHTML($datos['observacionesHoras']);
+        $observacionesCursada = sanearStringHTML($datos['observacionesCursada']);
+        $fundamentacion = sanearStringHTML($datos['fundamentacion']);
+        $objetivosGenerales = sanearStringHTML($datos['objetivosGenerales']);
+        $organizacionContenidos = sanearStringHTML($datos['organizacionContenidos']);
+        $criteriosEvaluacion = sanearStringHTML($datos['criteriosEvaluacion']);
+        $metodologiaPresencial = sanearStringHTML($datos['metodologiaPresencial']);
+        $regularizacionPresencial = sanearStringHTML($datos['regularizacionPresencial']);
+        $aprobacionPresencial = sanearStringHTML($datos['aprobacionPresencial']);
+        $metodologiaSATEP = sanearStringHTML($datos['metodologiaSATEP']);
+        $regularizacionSATEP = sanearStringHTML($datos['regularizacionSATEP']);
+        $aprobacionSATEP = sanearStringHTML($datos['aprobacionSATEP']);
+        $metodologiaLibre = sanearStringHTML($datos['metodologiaLibre']);
+        $aprobacionLibre = sanearStringHTML($datos['aprobacionLibre']);
+        
+        
         $this->query = "UPDATE PROGRAMA "
                 . "SET  "
                 . "anio = {$datos['anio']}, "
@@ -120,21 +156,21 @@ class ManejadorPrograma {
                 . "horasPractica = '{$datos['horasPractica']}', "
                 . "horasOtros = '{$datos['horasOtros']}', "
                 . "regimenCursada = '{$datos['regimenCursada']}', "
-                . "observacionesHoras = '{$datos['observacionesHoras']}', "
-                . "observacionesCursada = '{$datos['observacionesCursada']}', "
-                . "fundamentacion = '{$datos['fundamentacion']}', "
-                . "objetivosGenerales = '{$datos['objetivosGenerales']}', "
-                . "organizacionContenidos = '{$datos['organizacionContenidos']}', "
-                . "criteriosEvaluacion = '{$datos['criteriosEvaluacion']}', "
-                . "metodologiaPresencial = '{$datos['metodologiaPresencial']}', "
-                . "regularizacionPresencial = '{$datos['regularizacionPresencial']}', "
-                . "aprobacionPresencial = '{$datos['aprobacionPresencial']}', "
-                . "metodologiaSATEP = '{$datos['metodologiaSATEP']}', "
-                . "regularizacionSATEP = '{$datos['regularizacionSATEP']}', "
-                . "aprobacionSATEP = '{$datos['aprobacionSATEP']}', "
-                . "metodologiaLibre = '{$datos['metodologiaLibre']}', "
-                . "aprobacionLibre = '{$datos['aprobacionLibre']}', "
-                . "fechaCarga = '{$datos['aprobacionLibre']}', "
+                . "observacionesHoras = '{$observacionesHoras}', "
+                . "observacionesCursada = '{$observacionesCursada}', "
+                . "fundamentacion = '{$fundamentacion}', "
+                . "objetivosGenerales = '{$objetivosGenerales}', "
+                . "organizacionContenidos = '{$organizacionContenidos}', "
+                . "criteriosEvaluacion = '{$criteriosEvaluacion}', "
+                . "metodologiaPresencial = '{$metodologiaPresencial}', "
+                . "regularizacionPresencial = '{$regularizacionPresencial}', "
+                . "aprobacionPresencial = '{$aprobacionPresencial}', "
+                . "metodologiaSATEP = '{$metodologiaSATEP}', "
+                . "regularizacionSATEP = '{$regularizacionSATEP}', "
+                . "aprobacionSATEP = '{$aprobacionSATEP}', "
+                . "metodologiaLibre = '{$metodologiaLibre}', "
+                . "aprobacionLibre = '{$aprobacionLibre}', "
+                . "fechaCarga = '{$datos['fechaCarga']}', "
                 . "vigencia = '{$datos['vigencia']}', "
                 . "aprobadoSA = NULL, "
                 . "aprobadoDepto = NULL, "

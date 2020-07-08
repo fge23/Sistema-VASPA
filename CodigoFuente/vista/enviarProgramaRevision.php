@@ -14,7 +14,7 @@ if (empty($DatosFormulario) && !isset($_GET['idPrograma'])) {
     $consulta = false;
     if (!empty($DatosFormulario)) {
         $idPrograma = $DatosFormulario['idPrograma'];
-        echo $idPrograma;
+        
     } else {
         if (isset($_GET['idPrograma'])) {
             $idPrograma = $_GET['idPrograma'];
