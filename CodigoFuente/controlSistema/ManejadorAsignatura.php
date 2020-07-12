@@ -2,6 +2,7 @@
 
 include_once '../modeloSistema/BDConexionSistema.Class.php';
 include_once '../modeloSistema/Asignatura.Class.php';
+include_once '../modeloSistema/Profesor.Class.php';
 
 /**
  * Description of ManejadorAsignatura
@@ -228,4 +229,16 @@ class ManejadorAsignatura {
         return $asignaturas;
     }
     
+    function getIDsProfesoresResponsables(){
+        $profesores = [];
+        $this->query = "SELECT DISTINCT idProfesor FROM ASIGNATURA";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+
+        for ($x = 0; $x < $this->datos->num_rows; $x++) {
+            $result = $this->datos->fetch_array();
+            $profesor = new Profesor($result['idProfesor']);
+            array_push($profesores, $profesor);
+        }
+        return $profesores;
+    }
 }

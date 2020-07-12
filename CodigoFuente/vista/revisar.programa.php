@@ -80,8 +80,8 @@ $carreras = $asignatura->getCarreras();
                                             <form action="../controlSistema/programa.revisar.actualizar.estado.php" method="POST">
                                                 <div class="modal-footer">
                                                     <input type="hidden" name="idPrograma" value="<?= $programa->getId();?>">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No estoy seguro</button>
-                                                    <button type="submit" class="btn btn-primary" name="aprobarPrograma">Si aprobar programa</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                                    <button type="submit" class="btn btn-primary" name="aprobarPrograma">S&iacute;, aprobar programa</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -109,14 +109,14 @@ $carreras = $asignatura->getCarreras();
                                                         <!--<p>Agregue a modo de comentario porque desaprobo el programa</p>-->
                                                         <div class="form-group">
                                                             <input type="hidden" name="idPrograma" value="<?= $programa->getId();?>">
-                                                            <label for="comentario" class="col-form-label">Deja un Comentario:</label>
+                                                            <label for="comentario" class="col-form-label">Comentario:</label>
                                                             <textarea class="form-control" id="comentario" rows="5" name="comentario" required=""></textarea>
                                                         </div>
 
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No estoy seguro</button>
-                                                    <button type="submit" class="btn btn-primary" name="desaprobarPrograma">Si y Enviar Comentario</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                                    <button type="submit" class="btn btn-primary" name="desaprobarPrograma">S&iacute;, desaprobar y enviar Comentario</button>
                                                 </div>
                                             </form>
                                         </div>

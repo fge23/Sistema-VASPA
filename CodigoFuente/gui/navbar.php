@@ -100,6 +100,13 @@
                             Revisar Programa
                         </a>
                     <?php } ?>
+                    
+                    <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_GENERAR_INFORME_GERENCIAL)) { ?>
+                    <a class = "nav-link" href = "../vista/informeGerencial.programas.php">
+                            <span class = "oi oi-bar-chart" />
+                            Informe Gerencial de Programas
+                        </a>
+                    <?php } ?>
                 </div>
             </div>
             <?php } ?>
