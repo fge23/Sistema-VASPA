@@ -2,6 +2,7 @@
 
 include_once '../modeloSistema/BDConexionSistema.Class.php';
 include_once '../modeloSistema/Plan.Class.php';
+include_once '../modeloSistema/Carrera.Class.php';
 
 /**
  * Description of ManejadorPlan
@@ -57,15 +58,28 @@ class ManejadorPlan {
 
         //Creo objeto sin enviar ID y enviando todos los datos del formulario
         $Plan = new Plan(null, $datos);
-        //validamos existencia la existencia del plan
+        //validamos si ya existe un plan con el mismo ID
         if ($this->chequearExistencia($Plan->getId())){
             //Si el año fin no está definido, la query cambia
             if (!empty($Plan->getAnio_fin())) {
                 $this->query = "INSERT INTO PLAN "
                         . "VALUES ('{$Plan->getId()}',{$Plan->getAnio_inicio()},'{$Plan->getIdCarrera()}',{$Plan->getAnio_fin()} )";
             } else {
-                $this->query = "INSERT INTO PLAN "
+                // se esta por insertar un plan vigente, por lo tanto verificamos
+                // que no haya otra revision del plan que este vigente
+                if ($this->tienePlanVigenteCarrera($Plan->getIdCarrera())){
+                    // tiene plan vigente, lanzamos excepcion informando al usuario
+                    $carrera = new Carrera($Plan->getIdCarrera());
+                    $nombreCarrera = $carrera->getId().' - '.$carrera->getNombre();
+                    $planVigente = $carrera->getPlanVigente();
+                    throw new Exception("Ya hay un Plan de Estudio vigente <b>(".$planVigente->getId().")</b> "
+                            . "para la carrera: <b>" .$nombreCarrera. "</b>.");
+                } else {
+                    // no tiene plan vigente, se puede insertar
+                    $this->query = "INSERT INTO PLAN "
                         . "VALUES ('{$Plan->getId()}',{$Plan->getAnio_inicio()},'{$Plan->getIdCarrera()}', null )";
+                }
+                
             }
             $consulta = BDConexionSistema::getInstancia()->query($this->query);
             if ($consulta) {
@@ -84,7 +98,7 @@ class ManejadorPlan {
         $plan = new Plan($id_);
         if (!is_null($plan->getAsignaturas())){
             // tiene Asignaturas lanzamos un excepcion
-            throw new Exception("No se pudo llevar a cabo la operaci&oacute;n dado que <b>el plan {$id_} tiene asociados asignaturas</b>.");
+            throw new Exception("No se pudo llevar a cabo la operaci&oacute;n dado que <b>el plan {$id_} se encuentra vinculado con asignaturas</b>.");
             //return "";
         }
         
@@ -110,12 +124,25 @@ class ManejadorPlan {
                         . "anio_fin = {$Plan->getAnio_fin()} "
                         . "WHERE id = '{$id_}'";
             } else {
-                $this->query = "UPDATE PLAN "
+                // se esta poniendo como vigente el plan, por lo tanto verificamos
+                // que no haya otra revision del plan que este vigente
+                if ($this->tienePlanVigenteCarrera($Plan->getIdCarrera())){
+                    // tiene plan vigente, lanzamos excepcion informando al usuario
+                    $carrera = new Carrera($Plan->getIdCarrera());
+                    $nombreCarrera = $carrera->getId().' - '.$carrera->getNombre();
+                    $planVigente = $carrera->getPlanVigente();
+                    throw new Exception("Ya hay un Plan de Estudio vigente <b>(".$planVigente->getId().")</b> "
+                            . "para la carrera: <b>" .$nombreCarrera. "</b>.");
+                } else {
+                    // no tiene plan vigente, se puede puede poner el anio_fin como null
+                    $this->query = "UPDATE PLAN "
                         . "SET id = '{$Plan->getId()}' ,"
                         . " anio_inicio = {$Plan->getAnio_inicio()}, "
                         . " anio_fin = NULL, "
                         . "idCarrera = '{$Plan->getIdCarrera()}' "
                         . "WHERE id = '{$id_}'";
+                }
+                
             }
         } else {
             if ($this->chequearExistencia($Plan->getId())) {
@@ -127,12 +154,24 @@ class ManejadorPlan {
                             . "anio_fin = {$Plan->getAnio_fin()} "
                             . "WHERE id = '{$id_}'";
                 } else {
-                    $this->query = "UPDATE PLAN "
-                            . "SET id = '{$Plan->getId()}' ,"
-                            . " anio_inicio = {$Plan->getAnio_inicio()}, "
-                            . " anio_fin = NULL, "
-                            . "idCarrera = '{$Plan->getIdCarrera()}' "
-                            . "WHERE id = '{$id_}'";
+                    // se esta poniendo como vigente el plan, por lo tanto verificamos
+                    // que no haya otra revision del plan que este vigente
+                    if ($this->tienePlanVigenteCarrera($Plan->getIdCarrera())){
+                        // tiene plan vigente, lanzamos excepcion informando al usuario
+                        $carrera = new Carrera($Plan->getIdCarrera());
+                        $nombreCarrera = $carrera->getId().' - '.$carrera->getNombre();
+                        $planVigente = $carrera->getPlanVigente();
+                        throw new Exception("Ya hay un Plan de Estudio vigente <b>(".$planVigente->getId().")</b> "
+                                . "para la carrera: <b>" .$nombreCarrera. "</b>.");
+                    } else {
+                        // no tiene plan vigente, se puede puede poner el anio_fin como null
+                        $this->query = "UPDATE PLAN "
+                                . "SET id = '{$Plan->getId()}' ,"
+                                . " anio_inicio = {$Plan->getAnio_inicio()}, "
+                                . " anio_fin = NULL, "
+                                . "idCarrera = '{$Plan->getIdCarrera()}' "
+                                . "WHERE id = '{$id_}'";
+                    }  
                 }
             } else {
                 throw new Exception("El c&oacute;digo  <b>" . $Plan->getId() . "</b> ya corresponde a un Plan de Estudio en la Base de Datos");
@@ -187,6 +226,26 @@ class ManejadorPlan {
             }
         }
         return $planes;
+    }
+    
+    // La siguiente funcion verifica si una determinada carrera
+    // tiene un plan vigente
+    // retorna un boolean
+    function tienePlanVigenteCarrera($codCarrera){
+        // obtenemos los planes de la carrera mandada por parametro cuyo anio de
+        // de fin no esta seteado, --> esto nos inidica que el plan esta vigente
+        // si esta seteado es porque el plan ya no se encuentra vigente
+        $this->query = "SELECT * FROM PLAN WHERE idCarrera = '{$codCarrera}' AND "
+        . "anio_fin IS NULL";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        // verificamos la cantidad de registros devueltos
+        if ($this->datos->num_rows >= 1) {
+            //hay plan/es vigentes de la carrera
+            return true;
+        } else {
+            //no hay plan vigente de la carrera
+            return false;
+        }
     }
     
 }

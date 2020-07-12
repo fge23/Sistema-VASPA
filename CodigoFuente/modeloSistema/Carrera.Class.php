@@ -105,5 +105,39 @@ class Carrera {
 
         return $planes;
     }
+    
+    /*
+     * Funcion que retorna el plan vigente (revision del plan) de la carrera
+     * @return Plan
+     */
+    function getPlanVigente(){
+        // importamos la clase Plan
+        include_once __DIR__.'/Plan.Class.php';
+        //La constante __DIR__ retorna la ruta absoluta del directorio donde se encuentra el fichero que la está utilizando. Y dirname() retorna el directorio padre, en combinación dirname(__DIR__) nos retornaría la ruta absoluta del directorio padre donde se encuentra el fichero que la está usando.
+        
+        // obtenemos el plan vigente de la carrera
+        // un plan vigente es aquel que no tiene seteado el campo anio_fin
+        $this->query = "SELECT id, anio_inicio, idCarrera, anio_fin "
+                . "FROM plan "
+                . "WHERE idCarrera = '{$this->id}' AND anio_fin IS NULL";
+                
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        
+        // validamos el resultado de la query (si retorna false -> Ocurrio un error en la BD) Lanzamos una Excepcion informando el Error
+        if (!$this->datos) {
+            throw new Exception("Ocurrio un Error al obtener el Plan de Estudio de la Carrera: '{$this->id}' - '{$this->nombre}'.");
+        }
+        
+        $plan = NULL;
+        
+        if ($this->datos->num_rows > 0) {
+            $plan = $this->datos->fetch_object("Plan"); // creamos objeto
+        }
+
+        unset($this->query);
+        unset($this->datos);
+
+        return $plan;
+    }
 
 }
