@@ -1,5 +1,6 @@
 <?php
 include_once '../lib/ControlAcceso.Class.php';
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_SEGUIR_PROGRAMA);
 include_once '../modeloSistema/Carrera.Class.php';
 include_once '../modeloSistema/BDConexionSistema.Class.php';
 

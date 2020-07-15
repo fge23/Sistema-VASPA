@@ -6,6 +6,7 @@
  */
 
 include_once '../lib/ControlAcceso.Class.php';
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_SUBIR_PROGRAMA_FIRMADO);
 include_once '../controlSistema/ManejadorCarrera.php';
 
 $ManejadorCarrera = new ManejadorCarrera();
@@ -45,7 +46,7 @@ $Carreras = $ManejadorCarrera->getColeccion();
                         <div class="form-group">
                             <label for="selectCarrera">Carrera</label>
                             <br>
-                            <select class="selectpicker show-tick" data-live-search="true" data-width="100%" name="selectCarrera" id="selectCarrera" title="Seleccione una carrera" required="" autofocus="">
+                            <select class="selectpicker show-tick" data-live-search="true" data-width="100%" name="selectCarrera" id="selectCarrera" title="Seleccione una carrera" required="" autofocus="" data-size="5">
                                 <?php 
                                 foreach($Carreras as $Carrera){ ?>
                                     <option value="<?= $Carrera->getId(); ?>"><?= $Carrera->getId() ?>&nbsp;-&nbsp;<?= $Carrera->getNombre(); ?> </option>
@@ -56,7 +57,7 @@ $Carreras = $ManejadorCarrera->getColeccion();
                         <div class="form-group">
                             <label for="selectPlan">C&oacute;digo del Plan</label>
                             <br>
-                            <select class="selectpicker show-tick" data-width="100%" name="selectPlan" id="selectPlan" title="Seleccione el c&oacute;digo del plan" required="">
+                            <select class="selectpicker show-tick" data-width="100%" name="selectPlan" id="selectPlan" title="Seleccione el c&oacute;digo del plan" required="" data-size="5">
                             </select>
                         
                         </div>

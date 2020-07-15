@@ -1,12 +1,12 @@
 <?php
+include_once '../lib/ControlAcceso.Class.php';
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CARRERAS);
 include_once '../lib/Constantes.Class.php';
 include_once '../controlSistema/ManejadorCarrera.php';
 
 $DatosFormulario = $_POST;
 $ManejadorCarrera = new ManejadorCarrera();
 $consulta = $ManejadorCarrera->baja($DatosFormulario['id']);
-
-
 
 ?>
 <html>

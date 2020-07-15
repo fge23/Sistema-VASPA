@@ -1,5 +1,6 @@
 <?php
 include_once '../lib/ControlAcceso.Class.php';
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_PROFESORES);
 include_once '../modeloSistema/Profesor.Class.php';
 
 $id = $_GET["id"];

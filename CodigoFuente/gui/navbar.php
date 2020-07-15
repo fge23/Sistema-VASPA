@@ -72,7 +72,7 @@
             </div>
             <?php } ?>
             
-            <!--                MENU "GESTIONAR PROGRAMA"             -->
+            <!--                MENU "GESTIONAR PROGRAMAS"             -->
             <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_SEGUIR_PROGRAMA)) { ?>
             <div class="dropdown">
                 <li class="nav-item">
@@ -82,10 +82,6 @@
                     </a>
                 </li>
                 <div class="dropdown-content">
-                    <a class="nav-link" href="../vista/programas.pendientes.php">
-                        <span class="oi oi-document" />
-                        Programas Pendientes
-                    </a>
 
                     <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_SEGUIR_PROGRAMA)) { ?>
                     <a class = "nav-link" href = "../vista/programa.seguirPdf.php">

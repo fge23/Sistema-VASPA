@@ -60,7 +60,7 @@ INSERT INTO `permiso` (`id`, `nombre`) VALUES
 (24, 'Revisar Programa'),
 (25, 'Carga Masiva Programas'),
 (26, 'Generar Informe Gerencial'),
-(27, 'Ver Informacion Asignatura');
+(27, 'Ver Vigencia de Programas');
 
 -- --------------------------------------------------------
 
@@ -81,7 +81,7 @@ INSERT INTO `rol` (`id`, `nombre`) VALUES
 (8, 'Administrador'),
 (9, 'Profesor'),
 (10, 'Director de Departamento'),
-(11, 'Secretario Académico');
+(11, 'Secretaría Académica');
 
 -- --------------------------------------------------------
 
@@ -124,7 +124,6 @@ INSERT INTO `rol_permiso` (`id_rol`, `id_permiso`) VALUES
 (9, 21),
 (10, 11),
 (10, 24),
-(11, 7),
 (11, 11),
 (11, 13),
 (11, 14),

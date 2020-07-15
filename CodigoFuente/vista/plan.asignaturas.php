@@ -1,5 +1,6 @@
 <?php
 include_once '../lib/ControlAcceso.Class.php';
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_PLANES);
 include_once '../controlSistema/ManejadorAsignatura.php';
 include_once '../modeloSistema/Plan.Class.php';
 
@@ -54,7 +55,7 @@ if (is_null($plan->getAnio_fin())){
                         <div class="row justify-content-md-center">
                             <div class="col col-sm-5">
                                 <label for="asignatura">Asignaturas</label>
-                                    <select id="asignatura" name="codAsignatura" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione una asignatura" data-none-results-text="No se encontraron resultados">
+                                    <select id="asignatura" name="codAsignatura" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione una asignatura" data-none-results-text="No se encontraron resultados" data-size="7">
                                         <?php foreach ($asignaturas as $asignatura) { ?>
                                         <option value="<?= $asignatura->getId(); ?>"><?= $asignatura->getId().' - '.$asignatura->getNombre(); ?></option>
                                     <?php } ?>

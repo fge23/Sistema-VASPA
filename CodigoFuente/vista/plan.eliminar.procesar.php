@@ -1,4 +1,6 @@
 <?php
+include_once '../lib/ControlAcceso.Class.php';
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_PLANES);
 include_once '../lib/Constantes.Class.php';
 include_once '../controlSistema/ManejadorPlan.php';
 

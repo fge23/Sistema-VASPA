@@ -1,5 +1,6 @@
 <?php
 include_once '../lib/ControlAcceso.Class.php';
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_SEGUIR_PROGRAMA);
 include_once '../controlSistema/ManejadorCarrera.php';
 
 $ManejadorCarrera = new ManejadorCarrera();
@@ -37,7 +38,7 @@ $Carreras = $ManejadorCarrera->getColeccion();
                         <div class="form-group">
                             <label for="selectAnio">A&ntilde;o</label>
                             <br>
-                            <select class="selectpicker show-tick" data-live-search="true" data-width="100%" name="anio" id="selectAnio" title="Seleccione un a&ntilde;o" required="">
+                            <select class="selectpicker show-tick" data-live-search="true" data-width="100%" name="anio" id="selectAnio" title="Seleccione un a&ntilde;o" required="" data-size="5">
                                  <?php for ($i=date('Y'); $i>=2011; $i--) { ?>
                                     <option value="<?= $i; ?>"><?= $i; ?></option>
                                 <?php } ?>
@@ -46,7 +47,7 @@ $Carreras = $ManejadorCarrera->getColeccion();
                         <div class="form-group">
                             <label for="selectCarrera">Carrera</label>
                             <br>
-                            <select class="selectpicker show-tick" data-live-search="true" data-width="100%" name="idCarrera" id="selectCarrera" title="Seleccione una carrera" required="">
+                            <select class="selectpicker show-tick" data-live-search="true" data-width="100%" name="idCarrera" id="selectCarrera" title="Seleccione una carrera" required="" data-size="5">
                             </select>
                         
                         </div>

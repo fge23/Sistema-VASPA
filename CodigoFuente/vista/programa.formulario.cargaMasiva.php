@@ -6,6 +6,7 @@
 // al igual que el tamaño individual de los archivos no debe superar los 2 MB
 
 include_once '../lib/ControlAcceso.Class.php';
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CARGA_MASIVA_PROGRAMAS);
 include_once '../modeloSistema/BDConexionSistema.Class.php';
 
 ?>

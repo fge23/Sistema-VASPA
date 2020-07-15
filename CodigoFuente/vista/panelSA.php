@@ -1,5 +1,6 @@
 <?php 
 include_once '../lib/ControlAcceso.Class.php'; 
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_VER_VIGENCIA_PROGRAMAS);
 include_once '../controlSistema/ManejadorCarrera.php';
 
 $manejadorCarrera = new ManejadorCarrera();

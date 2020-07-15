@@ -1,5 +1,6 @@
 <?php
 include_once '../lib/ControlAcceso.Class.php';
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_PROFESORES);
 include_once '../controlSistema/ManejadorDepartamento.php';
 $ManejadorDepartamento= new ManejadorDepartamento();
 $Departamentos = $ManejadorDepartamento->getColeccion();

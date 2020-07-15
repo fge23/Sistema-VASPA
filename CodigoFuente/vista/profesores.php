@@ -1,6 +1,7 @@
 <?php
 include_once '../controlSistema/ManejadorProfesor.php';
 include_once '../lib/ControlAcceso.Class.php';
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_PROFESORES);
 include_once '../modeloSistema/Profesor.Class.php';
 
 $ManejadorProfesor = new ManejadorProfesor();

@@ -1,5 +1,6 @@
 <?php
 include_once '../lib/ControlAcceso.Class.php';
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_ASIGNATURAS);
 include_once '../controlSistema/ManejadorDepartamento.php';
 include_once '../controlSistema/ManejadorProfesor.php';
 include_once '../controlSistema/ManejadorAsignatura.php';

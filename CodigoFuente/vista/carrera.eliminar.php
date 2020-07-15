@@ -1,5 +1,6 @@
 <?php
 include_once '../lib/ControlAcceso.Class.php';
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CARRERAS);
 
 include_once '../modeloSistema/Carrera.Class.php';
 $id = $_GET["id"];

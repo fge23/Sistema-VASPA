@@ -1,6 +1,8 @@
 <?php
 include_once '../controlSistema/ManejadorCarrera.php';
 include_once '../lib/Constantes.Class.php';
+include_once '../lib/ControlAcceso.Class.php';
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CARRERAS);
 
 $DatosFormulario = $_POST;
 $ManejadorCarrera = new ManejadorCarrera();

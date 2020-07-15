@@ -1,9 +1,9 @@
 <?php
 /*
  * Procesamiento del subir programa escaneado en pdf
- * falta mejorar el codigo usando OO
  */
 include_once '../lib/ControlAcceso.Class.php';
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_SUBIR_PROGRAMA_FIRMADO);
 include_once '../modeloSistema/BDconexionSistema.Class.php';
 
 //Obtenemos los datos del archivo a traves del array global _FILES y del Formulario

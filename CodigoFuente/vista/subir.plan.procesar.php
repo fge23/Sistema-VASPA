@@ -3,6 +3,7 @@
  * Procesamiento del subir plan de estudio escaneado en pdf
  */
 include_once '../lib/ControlAcceso.Class.php';
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_SUBIR_PROGRAMA_FIRMADO);
 include_once '../modeloSistema/BDconexionSistema.Class.php';
 include_once '../modeloSistema/Carrera.Class.php';
 

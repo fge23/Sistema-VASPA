@@ -1,6 +1,6 @@
 <?php
 include_once '../lib/ControlAcceso.Class.php';
-
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_ASIGNATURAS);
 include_once '../modeloSistema/Asignatura.Class.php';
 $id = $_GET["id"];
 $Asignatura = new Asignatura($id, null);

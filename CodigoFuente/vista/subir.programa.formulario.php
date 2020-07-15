@@ -2,13 +2,12 @@
 
 // Aqui comienza la ejecución del CU SUBIR PROGRAMA FIRMADO
 
-//NOTA: El boton cancelar no hace "nada", deberia redirigir a la pagina principal o al panel de Secretaria Academica 
-
 include_once '../lib/ControlAcceso.Class.php';
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_SUBIR_PROGRAMA_FIRMADO);
 include_once '../modeloSistema/BDConexionSistema.Class.php';
 
 /*
- * Comprobamos que si la carpeta del anio actual este creada
+ * Comprobamos que la carpeta del anio actual este creada
  * de no ser asi, se procede a crearla y registrar en la BD.
  */
 //obtenemos el anio actual
@@ -17,8 +16,6 @@ $anio = date("Y");
 $ruta = '../programas/';
 $directorio = $ruta.$anio;
 
-
-//Lo siguiente podria ser una funcion
 if (!is_dir($directorio)){
     $creado = mkdir($directorio);
     if ($creado){
@@ -65,7 +62,7 @@ if (!is_dir($directorio)){
             <form enctype="multipart/form-data" action="subir.programa.procesar.php" method="post" id="form">
                 <div class="card">
                     <div class="card-header">
-                        <h3>Subir programa al Sistema</h3>
+                        <h3>Subir Programa al Sistema</h3>
                         <p>
                             Complete los campos a continuaci&oacute;n. 
                             Luego, presione el bot&oacute;n <b>Subir Programa</b>.<br/>
@@ -77,7 +74,7 @@ if (!is_dir($directorio)){
                         <div class="row">
                             <div class="col-md-3">
                                 <p><label for="selectAnio">A&ntilde;o</label>
-                                    <select class="selectpicker" data-live-search="true" data-width="100%" name="anio" id="selectAnio" title="Seleccione un a&ntilde;o" required="" liveSearchStyle='contains' data-none-results-text="No se encontraron resultados" autofocus="">
+                                    <select class="selectpicker" data-live-search="true" data-width="100%" name="anio" id="selectAnio" title="Seleccione un a&ntilde;o" required="" liveSearchStyle='contains' data-none-results-text="No se encontraron resultados" autofocus="" data-size="7">
                                      <?php for ($i=date('Y'); $i>=2011; $i--) { ?>
                                         <option value="<?= $i; ?>"><?= $i; ?></option>
                                     <?php } ?>
@@ -87,14 +84,14 @@ if (!is_dir($directorio)){
 
                             <div class="col-md-4">
                                 <p><label for="carrera">Carrera</label>
-                                    <select id="carrera" name="carrera" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione una carrera" data-none-results-text="No se encontraron resultados">
+                                    <select id="carrera" name="carrera" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione una carrera" data-none-results-text="No se encontraron resultados" data-size="7">
                                     </select>
                                 </p>
                             </div>
 
                             <div class="col-md-5">
                                 <p><label for="asignatura">Asignatura</label>
-                                    <select id="asignatura" name="asignatura" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione una asignatura" data-none-results-text="No se encontraron resultados">
+                                    <select id="asignatura" name="asignatura" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione una asignatura" data-none-results-text="No se encontraron resultados" data-size="7">
                                     </select></p>
                             </div>
                         </div>

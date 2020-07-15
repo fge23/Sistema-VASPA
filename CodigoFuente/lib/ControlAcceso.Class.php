@@ -54,7 +54,7 @@ class PermisosSistema {
     const PERMISO_ENVIAR_NOTIFICACION = "Enviar Notificacion";
     const PERMISO_CARGA_MASIVA_PROGRAMAS = "Carga Masiva Programas";
     const PERMISO_GENERAR_INFORME_GERENCIAL = "Generar Informe Gerencial";
-    const PERMISO_VER_INFORMACION_ASIGNATURA = "Ver Informacion Asignatura";
+    const PERMISO_VER_VIGENCIA_PROGRAMAS = "Ver Vigencia de Programas";
     
     // Permisos para el Rol "Profesor"
     const PERMISO_GENERAR_PDF = "Generar Programa PDF"; // tambien lo puede relizar "Secretario Academico"
@@ -71,7 +71,7 @@ class PermisosSistema {
      */
     //const ROL_ESTANDAR = 'Usuario Comun'; // Eliminar este ROL
     const ROL_ADMIN = "Administrador";
-    const ROL_SECRETARIO_ACADEMICO = "Secretario Académico";
+    const ROL_SECRETARIO_ACADEMICO = "Secretaría Académica";
     const ROL_DIRECTOR_DEPARTAMENTO = "Director de Departamento";
     const ROL_PROFESOR = "Profesor";
     //const ROL_INVITADO = "Invitado";

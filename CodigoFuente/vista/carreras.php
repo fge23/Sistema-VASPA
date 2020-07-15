@@ -1,7 +1,7 @@
 <?php
 include_once '../controlSistema/ManejadorCarrera.php';
 include_once '../lib/ControlAcceso.Class.php';
-
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CARRERAS);
 
 $ManejadorCarrera = new ManejadorCarrera();
 $Carreras = $ManejadorCarrera->getColeccion();

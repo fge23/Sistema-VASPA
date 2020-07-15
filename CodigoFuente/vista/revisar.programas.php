@@ -8,6 +8,7 @@ header ('Content-Type: text/html; charset=ISO-8859-1');
  * 
  */
 include_once '../lib/ControlAcceso.Class.php';
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_REVISAR_PROGRAMA);
 include_once '../modeloSistema/BDConexionSistema.Class.php';
 require_once '../controlSistema/ManejadorCarrera.php';
 
@@ -166,7 +167,7 @@ function obtenerProgramasAsignaturasRecientes($query) {
                     <div class="row justify-content-md-center">
                         <div class="col-sm-5">
                             <label for="carrera">Carrera</label>
-                            <select id="carrera" name="carrera" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione Carrera" data-none-results-text="No se encontraron resultados">
+                            <select id="carrera" name="carrera" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione Carrera" data-none-results-text="No se encontraron resultados" data-size="5">
                                 <?php
                                 if (!empty($carreras)) {
                                     
@@ -181,7 +182,7 @@ function obtenerProgramasAsignaturasRecientes($query) {
 
                         <div class="col-sm-3">
                             <label for="plan">Plan de Estudio</label>
-                            <select id="plan" name="plan" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione Plan de Estudio" data-none-results-text="No se encontraron resultados">
+                            <select id="plan" name="plan" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione Plan de Estudio" data-none-results-text="No se encontraron resultados" data-size="5">
                             </select>
                         </div>
 

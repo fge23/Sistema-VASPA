@@ -1,7 +1,7 @@
 <?php
 include_once '../controlSistema/ManejadorAsignatura.php';
 include_once '../lib/ControlAcceso.Class.php';
-
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_ASIGNATURAS);
 
 $ManejadorAsignatura = new ManejadorAsignatura();
 $Asignaturas = $ManejadorAsignatura->getColeccion();
