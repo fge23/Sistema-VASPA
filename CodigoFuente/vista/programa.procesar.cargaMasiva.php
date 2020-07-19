@@ -5,7 +5,8 @@ include_once '../modeloSistema/BDConexionSistema.Class.php';
 //include_once '../modeloSistema/BDConexionSistema.Class.php';
 
 //constante para el tamaño maximo permitido del archivo a subir
-define("TAMANIO_MAXIMO", 2097152); // expresada en bytes --> MB 2
+//define("TAMANIO_MAXIMO", 2097152); // expresada en bytes --> MB 2
+define("TAMANIO_MAXIMO", 4194304); // expresada en bytes --> MB 4
 
 //obtenemos los codigos de todas las carreras y lo guardamos en un array
 $query = "SELECT * FROM CARRERA ORDER BY id ASC";
