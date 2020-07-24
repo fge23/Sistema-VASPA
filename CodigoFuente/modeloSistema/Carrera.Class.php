@@ -139,5 +139,86 @@ class Carrera {
 
         return $plan;
     }
+    
+    
+    /* funcion que devuelve un boolean indicando si el anio del Plan es valido 
+     * se utiliza para las operaciones de crear y modificar
+     * Tiene 4 parametros, dos obligatorios, dos opcionales
+     * los obligatorios son los anios que se quieren validar
+     * los anios opcionales se utilizan para la operacion de modificar
+     */
+    function esValidoAniodelPlan($anioInicio, $anioFin, $anioI = NULL , $anioF = NULL) {       
+        // obtenemos planes de la carrera
+        //$planes = $this->getPlanesSegunCarrera($codCarrera);
+        $planes = $this->getPlanesDeEstudio();
+        
+        if (is_null($planes)){
+            return TRUE; // no hay planes de estudio de la carrera por lo que el plan es valido
+        } else {
+            
+            $anioActual = date("Y");
+            $anios = array();
+            for ($i = 1995; $i <= ($anioActual+1); $i++) {
+                $anios[$i] = "Disponible";
+            }
+            
+            foreach ($planes as $plan) {
+                
+//                if (is_null($plan->getAnio_fin())){
+//                    $anios[$anioActual] = "No disponible"; // seteamos como no disponible el anio siguiente al anio actual
+//                } else {
+                    
+                    if (is_null($plan->getAnio_fin())){
+                        for ($index = $plan->getAnio_inicio(); $index <= ($anioActual+1); $index++) {
+                            $anios[$index] = "No Disponible";
+                        }
+                    } else {
+                        for ($index = $plan->getAnio_inicio(); $index <= $plan->getAnio_fin(); $index++) {
+                            $anios[$index] = "No Disponible";
+                        }
+                    }
+                    
+                    
+                    
+                //}
+                
+            }
+            
+            
+        }
+        
+        // validamos si no es NULL las variables anioI y anioF --> se utiliza para la modificacion de un plan
+        if (!is_null($anioI)) {
+            if (is_null($anioF)) {
+                for ($index = $anioI; $index <= ($anioActual + 1); $index++) {
+                    $anios[$index] = "Disponible";
+                }
+            } else {
+                for ($index = $anioI; $index <= $anioF; $index++) {
+                    $anios[$index] = "Disponible";
+                }
+            }
+        }
+
+
+        //procedemos a validar los anios enviados por parametros
+        
+        if (is_null($anioFin)){
+            for ($index1 = $anioInicio; $index1 <= ($anioActual+1); $index1++) {
+                if ($anios[$index1] == "No Disponible"){
+                    return FALSE;
+                }
+            }
+        }else {
+            for ($index1 = $anioInicio; $index1 <= $anioFin; $index1++) {
+                if ($anios[$index1] == "No Disponible"){
+                    return FALSE;
+                }
+            }
+        }
+        
+        return TRUE;
+
+    }
 
 }
