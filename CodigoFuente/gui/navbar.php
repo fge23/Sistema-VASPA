@@ -32,114 +32,122 @@
 
 <!-- Los estilos de navbar son definidos en la libreria css de Bootstrap -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-
-    <a class="navbar-brand" href="#">
-        <img src="../lib/img/VASPA_isotipo.png" width="40" height="30" class="d-inline-block align-top" alt="">
-        VASPA
-    </a>
+    <!-- Se utiliza el permiso de carga masiva de programas para validar pero debería ser el de panelSA si es que planea crearse este permiso -->
+    <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_CARGA_MASIVA_PROGRAMAS)) { ?>
+        <a class="navbar-brand" href="../vista/panelSA.php">
+            <img src="../lib/img/VASPA_isotipo.png" width="40" height="30" class="d-inline-block align-top" alt="">
+            VASPA
+        </a>
+    <?php } else {
+        ?>
+        <a class="navbar-brand" href="#">
+            <img src="../lib/img/VASPA_isotipo.png" width="40" height="30" class="d-inline-block align-top" alt="">
+            VASPA
+        </a> 
+    <?php } ?>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="toggle navigation">
         <span class="navbar-toggler-icon"></span>   
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_USUARIOS)) { ?>
-            <div class="dropdown">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <span class="oi oi-person" />
-                        Adm. Usuarios
-                    </a>
-                </li>
-                <div class="dropdown-content">
-                    <a class="nav-link" href="../app/usuarios.php">
-                        <span class="oi oi-person" />
-                        Usuarios
-                    </a>
+                <div class="dropdown">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span class="oi oi-person" />
+                            Adm. Usuarios
+                        </a>
+                    </li>
+                    <div class="dropdown-content">
+                        <a class="nav-link" href="../app/usuarios.php">
+                            <span class="oi oi-person" />
+                            Usuarios
+                        </a>
 
-                    <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_ROLES)) { ?>
-                        <a class = "nav-link" href = "../app/roles.php">
-                            <span class = "oi oi-graph" />
-                            Roles
-                        </a>
-                    <?php } ?>
-                    <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_PERMISOS)) { ?>
-                        <a class="nav-link" href="../app/permisos.php">
-                            <span class="oi oi-lock-locked" />
-                            Permisos
-                        </a>
-                    <?php } ?>
+                        <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_ROLES)) { ?>
+                            <a class = "nav-link" href = "../app/roles.php">
+                                <span class = "oi oi-graph" />
+                                Roles
+                            </a>
+                        <?php } ?>
+                        <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_PERMISOS)) { ?>
+                            <a class="nav-link" href="../app/permisos.php">
+                                <span class="oi oi-lock-locked" />
+                                Permisos
+                            </a>
+                        <?php } ?>
+                    </div>
                 </div>
-            </div>
             <?php } ?>
-            
+
             <!--                MENU "GESTIONAR PROGRAMAS"             -->
             <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_SEGUIR_PROGRAMA)) { ?>
-            <div class="dropdown">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <span class="oi oi-document" />
-                        Gestionar Programas
-                    </a>
-                </li>
-                <div class="dropdown-content">
+                <div class="dropdown">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span class="oi oi-document" />
+                            Gestionar Programas
+                        </a>
+                    </li>
+                    <div class="dropdown-content">
 
-                    <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_SEGUIR_PROGRAMA)) { ?>
-                    <a class = "nav-link" href = "../vista/programa.seguirPdf.php">
-                            <span class = "oi oi-document" />
-                            Seguimiento de Programas
-                        </a>
-                    <?php } ?>
-                    
-                    <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_REVISAR_PROGRAMA)) { ?>
-                    <a class = "nav-link" href = "../vista/revisar.programas.php">
-                            <span class = "oi oi-document" />
-                            Revisar Programa
-                        </a>
-                    <?php } ?>
-                    
-                    <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_GENERAR_INFORME_GERENCIAL)) { ?>
-                    <a class = "nav-link" href = "../vista/informeGerencial.programas.php">
-                            <span class = "oi oi-bar-chart" />
-                            Informe Gerencial de Programas
-                        </a>
-                    <?php } ?>
+                        <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_SEGUIR_PROGRAMA)) { ?>
+                            <a class = "nav-link" href = "../vista/programa.seguirPdf.php">
+                                <span class = "oi oi-document" />
+                                Seguimiento de Programas
+                            </a>
+                        <?php } ?>
+
+                        <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_REVISAR_PROGRAMA)) { ?>
+                            <a class = "nav-link" href = "../vista/revisar.programas.php">
+                                <span class = "oi oi-document" />
+                                Revisar Programa
+                            </a>
+                        <?php } ?>
+
+                        <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_GENERAR_INFORME_GERENCIAL)) { ?>
+                            <a class = "nav-link" href = "../vista/informeGerencial.programas.php">
+                                <span class = "oi oi-bar-chart" />
+                                Informe Gerencial de Programas
+                            </a>
+                        <?php } ?>
+                    </div>
                 </div>
-            </div>
             <?php } ?>
-            
+
             <!--                MENU "CARGA DE ARCHIVOS"             -->
             <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_SUBIR_PROGRAMA_FIRMADO)) { ?>
-            <div class="dropdown">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <span class="oi oi-cloud-upload" />
-                        Carga de Archivos
-                    </a>
-                </li>
-                <div class="dropdown-content">
-                    <a class="nav-link" href="../vista/subir.programa.formulario.php">
-                        <span class="oi oi-document" />
-                        Subir Programa
-                    </a>
-                    
-                    <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_CARGA_MASIVA_PROGRAMAS)) { ?>
-                    <a class = "nav-link" href = "../vista/programa.formulario.cargaMasiva.php">
-                            <span class = "oi oi-document" />
-                            Carga Masiva de Programas
+                <div class="dropdown">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span class="oi oi-cloud-upload" />
+                            Carga de Archivos
                         </a>
-                    <?php } ?>
+                    </li>
+                    <div class="dropdown-content">
+                        <a class="nav-link" href="../vista/subir.programa.formulario.php">
+                            <span class="oi oi-document" />
+                            Subir Programa
+                        </a>
 
-                    <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_SUBIR_PLAN)) { ?>
-                    <a class = "nav-link" href = "../vista/subir.plan.formulario.php">
-                            <span class = "oi oi-document" />
-                            Subir Plan
-                        </a>
-                    <?php } ?>
-                    
+                        <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_CARGA_MASIVA_PROGRAMAS)) { ?>
+                            <a class = "nav-link" href = "../vista/programa.formulario.cargaMasiva.php">
+                                <span class = "oi oi-document" />
+                                Carga Masiva de Programas
+                            </a>
+                        <?php } ?>
+
+                        <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_SUBIR_PLAN)) { ?>
+                            <a class = "nav-link" href = "../vista/subir.plan.formulario.php">
+                                <span class = "oi oi-document" />
+                                Subir Plan
+                            </a>
+                        <?php } ?>
+
+                    </div>
                 </div>
-            </div>
             <?php } ?>
-            
+
             <!--                CREAR EL PERMISO CORRESPONDIENTE EN CONTASNTES Y BD-->
             <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_CARRERAS)) { ?>
                 <li class="nav-item">
