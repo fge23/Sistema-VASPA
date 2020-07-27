@@ -71,12 +71,12 @@ $carreras = $manejadorCarrera->getColeccion();
                                     </select>
                                     </div>
                                     
-                                    <div class="col-sm-3">
+<!--                                    <div class="col-sm-3">
                                         <label for="plan">Plan de Estudio</label>
                                         <select id="plan" name="plan" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione un Plan de Estudio" data-none-results-text="No se encontraron resultados" data-size="7">
 
                                 </select>
-                                    </div>
+                                    </div>-->
                                 
                                 </div>
                             <div id="msgEnviarNotificacion"></div>
@@ -86,21 +86,6 @@ $carreras = $manejadorCarrera->getColeccion();
                     </div>
                 </div>
 
-                <!-- Sidebar Column -->
-<!--                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <h5 class="card-title">Accesos r&aacute;pidos   </h5>
-                                <hr>
-                                <a href="programas.pendientes.php" class="btn btn-outline-secondary btn-block">Programas pendientes</a>
-                                <a href="programa.seguirPdf.php" class="btn btn-outline-secondary btn-block">Seguimiento de Programa</a>
-                                <a href="subir.programa.formulario.php" class="btn btn-outline-secondary btn-block">Subir Programa</a>
-                                <a href="subir.plan.formulario.php" class="btn btn-outline-secondary btn-block">Subir Plan</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
             </div>
         </div>
         <?php include_once '../gui/footer.php'; ?>
@@ -108,47 +93,24 @@ $carreras = $manejadorCarrera->getColeccion();
     
     <script>
             $(document).ready(function(){
-            // Si selecciona una carrera se actualiza el select de los planes de estudio
+            // Si selecciona una carrera se actualiza la tabla que contiene la vigencia de los programas
+            // segun la carrera seleccionada, se mostrara solamente las asignaturas del plan vigente de la carrera
             $('#carrera').change(function (e) {
               var codCarrera = $("#carrera").val(); //obtenemos el codigo de la carrera seleccionada
               $.ajax({
                 type: 'POST',
-                url: '../lib/consultaAjax/revisarPrograma/planesDeCarrera.php',
+                url: '../lib/consultaAjax/vigenciaProgramas/tablaProgramaAsignaturas.php',
+                //url: '../lib/consultaAjax/revisarPrograma/planesDeCarrera.php',
                 data: {'codCarrera': codCarrera}
               })
-              .done(function(planes){
-                $(".selectpicker").selectpicker(); 
-                $('#plan').html(planes).selectpicker('refresh');
+              .done(function(tablaVigenciaProgramasAsignaturas){
+                $('#tablaVigenciaProgramas').html(tablaVigenciaProgramasAsignaturas);
               })
               .fail(function(){
-                alert('Hubo un error al cargar los Planes de Estudio');
+                alert('Hubo un error al cargar la Vigencia de los programas de asignaturas');
               });
             });
-            
-            $('#plan').change(function (e) {
-              var codPlan = $("#plan").val(); //obtenemos el codigo del seleccionado
-              if (codPlan != -1){ // value = -1 significa que la carrera no tiene planes con lo cual no se podra obtener los programas
-                var input = '<input type="hidden" id="inputPlan" name="inputPlan" value="'+codPlan+'">';
-                $('#codigoPlan').html(input);
-                //console.log(input);
-                $.ajax({
-                  type: 'POST',
-                  url: '../lib/consultaAjax/vigenciaProgramas/tablaProgramaAsignaturas.php',
-                  data: {'codPlan': codPlan}
-                })
-                .done(function(tablaVigenciaProgramasAsignaturas){
-//                  $(".selectpicker").selectpicker(); 
-//                  $('#tablaVigenciaProgramas').html(tablaVigenciaProgramasAsignaturas).selectpicker('refresh');
-                  $('#tablaVigenciaProgramas').html(tablaVigenciaProgramasAsignaturas);
-                })
-                .fail(function(){
-                  alert('Hubo un error al cargar la Vigencia de los programas de asignaturas');
-                });
-              }
-            });
-            
-            
-            
+                    
           });
     </script>
     
@@ -168,7 +130,7 @@ $carreras = $manejadorCarrera->getColeccion();
     
     <script>
             function enviarNotificacion(idAsignatura){
-                var codPlan = $("#inputPlan").val(); // obtenemos el id del Plan
+                var codCarrera = $("#carrera").val(); //obtenemos el codigo de la carrera seleccionada
                 //console.log(codPlan);
                 //console.log(idAsignatura);
                 $('#msgEnviarNotificacion').html('<br><div class="row justify-content-center"><img src="../lib/img/loader.gif"/>&nbsp;&nbsp;&nbsp;Espere por favor se esta enviando la notificaci&oacute;n...</div>');
@@ -182,7 +144,7 @@ $carreras = $manejadorCarrera->getColeccion();
                               //$('#msgEnviarNotificacion').html(resultado);
                               $('#msgEnviarNotificacion').fadeIn(1000).html(resultado);
                               //alert(programas);
-                              $.post("../lib/consultaAjax/vigenciaProgramas/tablaProgramaAsignaturas.php", {'codPlan': codPlan}, function(tabla){
+                              $.post("../lib/consultaAjax/vigenciaProgramas/tablaProgramaAsignaturas.php", {'codCarrera': codCarrera}, function(tabla){
                                     $('#tablaVigenciaProgramas').html(tabla);
                               });
                             })
