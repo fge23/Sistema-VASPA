@@ -73,7 +73,8 @@ CREATE TABLE `correlativa_de` (
   `id` int(11) NOT NULL,
   `requisito` enum('Regular','Aprobada') DEFAULT NULL,
   `idAsignatura` char(4) NOT NULL,
-  `idAsignatura_Correlativa_Anterior` char(4) NOT NULL
+  `idAsignatura_Correlativa_Anterior` char(4) NOT NULL,
+  `idPlan` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -427,7 +428,8 @@ ALTER TABLE `carrera`
 ALTER TABLE `correlativa_de`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_CORRELATIVA_DE_ASIGNATURA1_idx` (`idAsignatura`),
-  ADD KEY `fk_CORRELATIVA_DE_ASIGNATURA2_idx` (`idAsignatura_Correlativa_Anterior`);
+  ADD KEY `fk_CORRELATIVA_DE_ASIGNATURA2_idx` (`idAsignatura_Correlativa_Anterior`),
+  ADD KEY `fk_CORRELATIVA_DE_ASIGNATURA3_idx` (`idPlan`);
 
 --
 -- Indices de la tabla `departamento`
@@ -694,7 +696,9 @@ ALTER TABLE `cargo`
 --
 ALTER TABLE `correlativa_de`
   ADD CONSTRAINT `fk_CORRELATIVA_DE_ASIGNATURA1` FOREIGN KEY (`idAsignatura`) REFERENCES `asignatura` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_CORRELATIVA_DE_ASIGNATURA2` FOREIGN KEY (`idAsignatura_Correlativa_Anterior`) REFERENCES `asignatura` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_CORRELATIVA_DE_ASIGNATURA2` FOREIGN KEY (`idAsignatura_Correlativa_Anterior`) REFERENCES `asignatura` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_CORRELATIVA_DE_ASIGNATURA3` FOREIGN KEY (`idPlan`) REFERENCES `plan` (`id`) ON UPDATE CASCADE;
+  
 
 --
 -- Filtros para la tabla `fecha`
