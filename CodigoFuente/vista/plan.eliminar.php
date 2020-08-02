@@ -5,6 +5,7 @@ include_once '../modeloSistema/Plan.Class.php';
 $id = $_GET["id"];
 $Plan = new Plan($id, null);
 header('Content-Type: text/html; charset=UTF-8');
+$idCarrera = "?id=".$Plan->getIdCarrera();
 
 ?>
 <html>
@@ -14,7 +15,7 @@ header('Content-Type: text/html; charset=UTF-8');
         <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
-        <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Eliminar Plan</title>
+        <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Eliminar Revisi&oacute;n de Plan</title>
     </head>
     <body>
         <?php include_once '../gui/navbar.php'; ?>
@@ -22,20 +23,20 @@ header('Content-Type: text/html; charset=UTF-8');
             <form action="plan.eliminar.procesar.php" method="post">
                 <div class="card">
                     <div class="card-header">
-                        <h3>Eliminar Plan</h3>
+                        <h3>Eliminar Revisi&oacute;n de Plan</h3>
                     </div>
                     <div class="card-body">
                         <p class="alert alert-warning ">
                             <span class="oi oi-warning"></span> ATENCI&Oacute;N. Esta operaci&oacute;n no puede deshacerse.
                         </p>
-                        <p>¿Est&aacute; seguro que desea eliminar el Plan <b><?= $Plan->getId(); echo " del año ".$Plan->getAnio_inicio(); ?></b>?</p>
+                        <p>¿Est&aacute; seguro que desea eliminar la revisi&oacute;n <b><?= $Plan->getId(); echo " del año ".$Plan->getAnio_inicio(); ?></b>?</p>
                     </div>
                     <div class="card-footer">
                         <input type="hidden" name="id" class="form-control" id="id" value="<?= $Plan->getId(); ?>" >
                         <button type="submit" class="btn btn-outline-success">
                             <span class="oi oi-check"></span> S&iacute;, deseo eliminar
                         </button>
-                        <a href="planes.php">
+                        <a href="plan.revisiones.php<?= $idCarrera; ?>">
                             <button type="button" class="btn btn-outline-danger">
                                 <span class="oi oi-x"></span> NO (Salir de esta pantalla)
                             </button>

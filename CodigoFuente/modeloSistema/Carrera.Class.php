@@ -41,12 +41,19 @@ class Carrera {
         $this->query = "SELECT * FROM CARRERA WHERE id = '{$this->id}'";
 
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        
+        // comprobamos si luego de ejecutar la consulta a la BD esta devuelve un registro
+        // si devuelve seteamos los valores devuelto de la BD, caso contrario seteamos a NULL el id del objeto
+        if ($this->datos->num_rows == 1){
+            $this->datos = $this->datos->fetch_assoc();
 
-        $this->datos = $this->datos->fetch_assoc();
-
-        foreach ($this->datos as $atributo => $valor) {
-            $this->{$atributo} = $valor;
-        }
+            foreach ($this->datos as $atributo => $valor) {
+                $this->{$atributo} = $valor;
+            }
+        } else {
+            // no exite una carrera con el id enviado, seteamos a NULL el atributo ID de la clase
+            $this->setId(NULL);
+        }    
         unset($this->query);
         unset($this->datos);
     }

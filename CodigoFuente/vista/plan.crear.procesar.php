@@ -5,6 +5,7 @@ include_once '../controlSistema/ManejadorPlan.php';
 include_once '../lib/Constantes.Class.php';
 
 $DatosFormulario = $_POST;
+
 $ManejadorPlan = new ManejadorPlan();
 
 if (empty($DatosFormulario)) {
@@ -13,6 +14,12 @@ if (empty($DatosFormulario)) {
     
     $error = "";
     $consulta = false;
+    
+    // armamos el ID del Plan: CodCarrera + "P" + Nro revision
+    $DatosFormulario["id"] = $DatosFormulario["idCarrera"]."P".$DatosFormulario["id"];
+    // usado para volver a las revisiones del plan
+    $idCarrera = "?id=".$DatosFormulario["idCarrera"];
+    
     try {
         $consulta = $ManejadorPlan->alta($DatosFormulario);
     } catch (Exception $e) {
@@ -27,7 +34,7 @@ if (empty($DatosFormulario)) {
             <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
             <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
             <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
-            <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Crear Plan</title>
+            <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Crear nueva revisi&oacute;n de Plan</title>
         </head>
         <body>
     <?php include_once '../gui/navbar.php'; ?>
@@ -36,7 +43,7 @@ if (empty($DatosFormulario)) {
                 <p></p>
                 <div class="card">
                     <div class="card-header">
-                        <h3>Crear Plan</h3>
+                        <h3>Crear Nueva Revisi&oacute;n de Plan</h3>
                     </div>
                     <div class="card-body">
     <?php if ($consulta) { ?>
@@ -51,9 +58,14 @@ if (empty($DatosFormulario)) {
     <?php } ?>
                         <hr />
                         <h5 class="card-text">Opciones</h5>
-                        <a href="planes.php">
+                        <a href="plan.revisiones.php<?= $idCarrera; ?>">
                             <button type="button" class="btn btn-primary">
-                                <span class="oi oi-account-logout"></span> Salir
+                                <span class="oi oi-arrow-thick-left"></span> Volver a Revisiones del Plan
+                            </button>
+                        </a>
+                        <a href="planes.php">
+                            <button type="button" class="btn btn-info">
+                                <span class="oi oi-justify-center"></span> Volver a Planes
                             </button>
                         </a>
                     </div>
