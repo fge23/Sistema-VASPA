@@ -221,7 +221,8 @@ CREATE TABLE `plan` (
 
 CREATE TABLE `plan_asignatura` (
   `idPlan` varchar(10) NOT NULL,
-  `idAsignatura` char(4) NOT NULL
+  `idAsignatura` char(4) NOT NULL,
+  `tieneCorrelativa` bit NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
