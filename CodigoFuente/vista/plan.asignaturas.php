@@ -1,22 +1,35 @@
 <?php
-include_once '../lib/ControlAcceso.Class.php';
-ControlAcceso::requierePermiso(PermisosSistema::PERMISO_PLANES);
-include_once '../controlSistema/ManejadorAsignatura.php';
-include_once '../modeloSistema/Plan.Class.php';
 
-$manejadorAsignatura = new ManejadorAsignatura();
+    include_once '../lib/ControlAcceso.Class.php';
+    ControlAcceso::requierePermiso(PermisosSistema::PERMISO_PLANES);
+    include_once '../modeloSistema/Plan.Class.php';
 
-// Obtenemos todas las asignaturas de la BD
-$asignaturas = $manejadorAsignatura->getColeccion();
 
-// Falta validar el GET ¿Pero para que tanta validaciones? No es la parte mas importante del sistema
-$idPlan = $_GET['id'];
-$plan = new Plan($idPlan);
-if (is_null($plan->getAnio_fin())){
-    $periodo = ' ('.$plan->getAnio_inicio().' - Presente)';
-} else {
-    $periodo = ' ('.$plan->getAnio_inicio().' - '.$plan->getAnio_fin().')';
-}
+    $idPlan = $_GET['id'];
+
+    $plan = new Plan($idPlan);
+
+    if (is_null($plan->getAnio_fin())){
+        $periodo = ' ('.$plan->getAnio_inicio().' - Presente)';
+    } else {
+        $periodo = ' ('.$plan->getAnio_inicio().' - '.$plan->getAnio_fin().')';
+    }
+
+
+
+    function obtener_asignaturas_bd(){
+
+       $output = '';
+       $query = "SELECT id, nombre FROM asignatura ORDER BY id";
+       $asig = BDConexionSistema::getInstancia()->query($query);
+
+       while ($asignatura=$asig->fetch_assoc()){
+
+        $output .= '<option value="'.$asignatura['id'].'">'.$asignatura['id'].' - '.$asignatura['nombre'].'</option>';
+       }
+
+        return $output;
+    }
 
 ?>
 
@@ -35,7 +48,19 @@ if (is_null($plan->getAnio_fin())){
         <link rel="stylesheet" href="../lib/datatable/dataTables.bootstrap4.min.css" />
         <script type="text/javascript" src="../lib/datatable/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="../lib/datatable/dataTables.bootstrap4.min.js"></script>
+        <script src="../lib/consultaAjax/planAsignatura/main.js" type="text/javascript"></script>
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Planes</title>
+
+
+        <style type="text/css" media="screen">
+            
+            .botonera {
+                    display: flex;
+                    justify-content: space-between;
+                    width: 25%;
+            }
+            
+        </style>
 
     </head>
     <body>
@@ -46,109 +71,147 @@ if (is_null($plan->getAnio_fin())){
             <div class="card">
                 <div class="card-header">
 
-                    <h3>Asignaturas del Plan: <span class="text-info"><?= $plan->getId().$periodo;?></span></h3>
+                    <h3>Asignaturas de la revisi&oacute;n del Plan: <span class="text-info"><?= $plan->getId().$periodo;?></span></h3>
                 </div>
                 <div class="card-body">
-                    <div id="mensajeResultado"></div>
-                    <p> <form id="form">
-                        <input type="hidden" id="codPlan" name="codPlan" value="<?=$plan->getId();?>">
-                        <div class="row justify-content-md-center">
-                            <div class="col col-sm-5">
-                                <label for="asignatura">Asignaturas</label>
-                                    <select id="asignatura" name="codAsignatura" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione una asignatura" data-none-results-text="No se encontraron resultados" data-size="7">
-                                        <?php foreach ($asignaturas as $asignatura) { ?>
-                                        <option value="<?= $asignatura->getId(); ?>"><?= $asignatura->getId().' - '.$asignatura->getNombre(); ?></option>
-                                    <?php } ?>
-                                    </select>
+
+                    <p>
+
+                        <?php
+
+                        //Verificamos si la revision del plan tiene asignaturas cargadas
+                            
+                        $asignaturas = $plan->getAsignaturas();
+                                                    
+                        //Si es nulo quiere decir que todavia no se han insertado asignaturas, asique el mensaje al usuario debe estar visible.
+
+                        if (is_null($asignaturas)){ ?>
+
+                            <div>
+                                <p>
+                                    Estimado usuario, presione el bot&oacute;n <b>Nueva Asignatura</b>
+                                    para agregar las asignaturas que desee a la revisi&oacute;n del plan en cuesti&oacute;n.<br /> 
+                                    Luego, presione el bot&oacute;n <b>Confirmar</b> para guardar los cambios de manera
+                                    permanente.<br />
+                                </p>
                             </div>
-                            <div class="col col-sm-2">
-                                <button type="submit" class="btn btn-success">
-                                    <span class="oi oi-plus"></span> Agregar Asignatura
-                                </button>
+                            <br />
+
+                        <?php } ?>
+
+                        <form id="form" method="POST" action="">
+                            
+                            <input type="hidden" id="codPlan" name="codPlan" value="<?=$plan->getId();?>">
+                            <div class="row justify-content-md-center">
+                                <div class="col col-sm-8" id="campos"> 
+                                    <!--Acá van cada uno de los select que se insertan mediante js -->
+                                </div>
                             </div>
 
-                        </div>
-                    </form>
+                            <br />
+                            <br />
+
+                            <?php
+
+                            //Verificamos si la revision del plan tiene asignaturas cargadas
+                            
+                            $asignaturas = $plan->getAsignaturas();
+
+                                                    
+                            //Si es nulo quiere decir que todavia no se han insertado asignaturas, asique los botones deben estar visibles para permitir al usuario guardar un conjunto de asignaturas.
+
+                            if (is_null($asignaturas)){ ?>
+
+                                <div class="botonera">
+                                    <button id="add_field" type="button" class="btn btn-primary" value="adicionar">
+                                        <span class=""></span> Nueva Asignatura
+                                    </button>
+
+                                    <button id="boton" type="submit" class="btn btn-success">
+                                        <span class=""></span> Confirmar
+                                    </button>
+                                </div>
+
+                            <?php }?>
+
+                        </form>
+
                     </p>
                     <div id="tabla"></div>
                 </div>
                 <div class="card-footer text-center">
-                        <a href="planes.php">
+                    <a href="planes.php">
                         <button type="button" class="btn btn-primary">
                             <span class="oi oi-account-logout"></span> Volver A Planes
                         </button>
-                        </a>
-                    </div>    
+                    </a>
+                </div>    
             </div>
         </div>
         <?php include_once '../gui/footer.php'; ?>
 
+
+
+        <!--Script que me permite insertar campos dinamicamente, esta asociado al boton nuevo -->
+
         <script type="text/javascript">
+
             $(document).ready(function(){
-                var codPlan = $("#codPlan").val();
-		$('#tabla').load('../lib/consultaAjax/planAsignatura/asignaturasDelPlan.php?id='+codPlan);
-            });
-        </script>
-        
-        <script type="text/javascript">
-            // detenemos el envio del formulario (para que valide los campos requeridos)
-            $('#form').on('submit', function (event) {
-                event.preventDefault(); // se previene la acción por defecto
-                //console.log($(this).serialize()); // serializa los datos del formulario (name->valor)
-                // realizar petición AJAX
-                var codAsignatura = $("#asignatura").val();
-                var codPlan = $("#codPlan").val();
-                //console.log(codAsignatura);
-                //console.log(codPlan);
-                $.ajax({
-                    type: 'POST',
-                    url: '../lib/consultaAjax/planAsignatura/asociarAsignaturaPlan.php',
-                    data: {codAsignatura: codAsignatura,
-                            codPlan: codPlan}
+                $(document).on("click",".btn-primary", function(){
+
+                    var html = '';
+
+                    html += '<div>'+
+                                '<div class="float-left col col-sm-10">'+
+                                    '<label for="asignatura">Asignaturas</label>'+
+                                    '<br />'+
+                                    '<select class="selectpicker show-tick" id="asignatura" name="cod_asignatura[]" data-width="100%" data-live-search="true" required="" title="Seleccione una asignatura" data-none-results-text="No se encontraron resultados" data-size="7">'+
+                                        '<option value=""></option>'+
+                                        '<?php echo obtener_asignaturas_bd(); ?>'+                                 
+                                    '</select>'+
+                                '</div>'+
+                                '<div class="float-right">'+
+                                    '<button type="button" class="btn btn-danger">'+
+                                        '<span class="oi oi-trash"></span> Eliminar'+
+                                    '</button>'+
+                                '</div>'+
+                            '</div>';
+                    
+                    $('#campos').append(html);
+                    $(".selectpicker").selectpicker(); 
+                    $('#asignatura').selectpicker('refresh');
+                    
                 })
-                .done(function(resultado){
-                    $('#mensajeResultado').html(resultado);
-                    $('#tabla').load('../lib/consultaAjax/planAsignatura/asignaturasDelPlan.php?id='+codPlan);
-                    //alert(resultado);
-                    //$('#carrera').html(carreras).selectpicker('refresh');
-                })
-                .fail(function(){
-                    alert('Error en el servidor');
-                });
+
             });
 
         </script>
+
+
+
+        <!--Script que me permite eliminar elementos, esta asociado al boton eliminar -->
+
         <script type="text/javascript">
-            function eliminar(codAsignatura){
-                //console.log(codAsignatura);
-                //var codAsignatura = $("#asignatura").val();
-                var codPlan = $("#codPlan").val();
-                //console.log(codAsignatura);
-                //console.log(codPlan);
-                $.ajax({
-                    type: 'POST',
-                    url: '../lib/consultaAjax/planAsignatura/eliminarAsignaturaPlan.php',
-                    data: {codAsignatura: codAsignatura,
-                            codPlan: codPlan}
-                })
-                .done(function(resultado){
-                    //$('#modalEliminar'+codAsignatura).modal('hide');
-                    // El siguiente codigo oculta el modal backdrop que queda
-                    $('#modalEliminar'+codAsignatura).modal('hide');
-                    if ($('.modal-backdrop').is(':visible')) {
-                      $('body').removeClass('modal-open'); 
-                      $('.modal-backdrop').remove(); 
-                    };
-                    $('#mensajeResultado').html(resultado);
-                    $('#tabla').load('../lib/consultaAjax/planAsignatura/asignaturasDelPlan.php?id='+codPlan);
-            
-                    //alert(resultado);
-                    //$('#carrera').html(carreras).selectpicker('refresh');
-                })
-                .fail(function(){
-                    alert('Error en el servidor');
+
+            $('#campos').on("click",".btn-danger",function(e) {
+                    e.preventDefault();
+                    $(this).parent().parent().remove();
                 });
-            }
+
         </script>
+
+
+
+
+        <script type="text/javascript">
+
+            $(document).ready(function(){
+                var codPlan = $("#codPlan").val();
+            $('#tabla').load('../lib/consultaAjax/planAsignatura/asignaturasDelPlan.php?id='+codPlan);
+            });
+
+        </script>
+
+
     </body>
 </html>
