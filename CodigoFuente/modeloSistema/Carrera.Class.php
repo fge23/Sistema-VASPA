@@ -227,5 +227,58 @@ class Carrera {
         return TRUE;
 
     }
+    
+    /*
+     * Funcion que retorna un array con todos los anios de todos los planes de la carrera
+     */
+    function obtenerAniosPlanes(){
+        $planes = $this->getPlanesDeEstudio();
+        $anios = NULL;
+        
+        if (!is_null($planes)){
+            foreach ($planes as $plan) {
+                // verificamos si el anio de fin es nulo para agregar 
+                if (is_null($plan->getAnio_fin())){
+                    $anioActual = date("Y"); // obtenemos anio actual del server
+                    for ($index = $plan->getAnio_inicio(); $index <= $anioActual; $index++) {
+                        $anios[] = $index;
+                    }
+                } else {
+                    for ($index = $plan->getAnio_inicio(); $index <= $plan->getAnio_fin(); $index++) {
+                        $anios[] = $index;
+                    }
+                }
+                
+            }
+            
+            // odenamos el array con los anios
+            arsort($anios);
+        }
+        
+        return $anios;
+    }
+    
+    /*
+     * Funcion que nos devuelve el plan de la carrera a partir del anio indicado por parametro
+     * si no encuentra plan devuelve NULL
+     */
+    function getPlan($anio){
+        $planes = $this->getPlanesDeEstudio();
+        
+        foreach ($planes as $plan) {
+            if (is_null($plan->getAnio_fin())){
+                $anioFin = date("Y"); // obtenemos anio actual del server
+                
+            } else {
+                $anioFin = $plan->getAnio_fin();
+            }
+            
+            if ($anio >= $plan->getAnio_inicio() && $anio <= $anioFin){
+                return $plan;
+            }
+            
+        }
+        return NULL;
+    }
 
 }

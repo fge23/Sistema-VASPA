@@ -127,6 +127,10 @@ class Profesor {
     function setPreferencias($preferencias) {
         $this->preferencias = $preferencias;
     }
+    
+    function getNombreCompleto(){
+        return $this->apellido.', '.$this->nombre;
+    }
 
     // Funcion que retorna en un array las asignaturas en las cuales el profesor
     // es responsable. Si no es responsable de asignaturas devuelve NULL

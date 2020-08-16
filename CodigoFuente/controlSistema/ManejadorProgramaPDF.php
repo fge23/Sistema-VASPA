@@ -31,7 +31,7 @@ class ManejadorProgramaPDF {
     }
     
     function setColeccion($codCarrera, $anio) {
-        $this->query = "SELECT * FROM PROGRAMA_PDF WHERE anio = '{$anio}' AND nombre LIKE '%".$codCarrera."%'";
+        $this->query = "SELECT * FROM PROGRAMA_PDF WHERE anio = '{$anio}' AND nombre LIKE '_________".$codCarrera."%'";
         $this->datos = BDConexionSistema::getInstancia()->query($this->query);
 
         for ($x = 0; $x < $this->datos->num_rows; $x++) {
