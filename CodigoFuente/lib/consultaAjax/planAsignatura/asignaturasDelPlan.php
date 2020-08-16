@@ -44,7 +44,7 @@ $html = '<table class="table table-hover table-sm" id="tablaAsignaturas">
                                     $html .= '<td>'.$departamento->getNombre().'</td>';
                                     $html .= '<td>'.$profesor->getApellido().'</td>';
                                     $html .= '<td>
-                                         <a title="Ver Asignaturas correlativas" href="../vista/asignaturas.correlativas.php?id='.$asignatura->getId().'">
+                                         <a title="Ver Asignaturas correlativas" href="../vista/asignaturas.correlativas.php?idAsignatura='.$asignatura->getId().'&idPlan='.$plan->getId().'">
                                             <button type="button" class="btn btn-outline-info">
                                                 <span class="oi oi-list"></span>
                                             </button>

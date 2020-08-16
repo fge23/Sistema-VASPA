@@ -1,20 +1,20 @@
 <?php
 //  EN ESTE SCRIPT SE MUESTRA UNA TABLA EN LA CUAL SE PRESENTA LAS ASIGNATURAS CORRELATIVAS DE LA CORRESPONDIENTE ASIGNATURA
-//  Y EL BOTON DE ELIMINAR ASIGNATURA
 //include_once '../../modeloSistema/BDConexionSistema.Class.php';
 include_once '../../../modeloSistema/Asignatura.Class.php';
 
-// Falta validar el GET ¿Pero para que tanta validaciones? No es la parte mas importante del sistema
-$idAsignatura = $_GET['id'];
-//var_dump($idAsignatura);
 
+$idAsignatura = $_GET['idAsignatura'];
+//var_dump($idAsignatura);
+$idPlan = $_GET['idPlan'];
+//var_dump($idPlan);
 $asignatura = new Asignatura($idAsignatura);
 
 
-$asignaturaPrecedenteAprobada = $asignatura->getAsigCorrelativaPrecedenteAprobada();
-$asignaturaPrecedenteCursada = $asignatura->getAsigCorrelativaPrecedenteCursada();
-$asignaturaSubsiguienteAprobada = $asignatura->getAsigCorrelativaSubsiguienteAprobada();
-$asignaturaSubsiguienteCursada = $asignatura->getAsigCorrelativaSubsiguienteCursada();
+$asignaturaPrecedenteAprobada = $asignatura->getAsigCorrelativaPrecedenteAprobada($idPlan);
+$asignaturaPrecedenteCursada = $asignatura->getAsigCorrelativaPrecedenteCursada($idPlan);
+$asignaturaSubsiguienteAprobada = $asignatura->getAsigCorrelativaSubsiguienteAprobada($idPlan);
+$asignaturaSubsiguienteCursada = $asignatura->getAsigCorrelativaSubsiguienteCursada($idPlan);
 
 
 
@@ -25,7 +25,6 @@ if (is_null($asignaturaPrecedenteAprobada) && is_null($asignaturaPrecedenteCursa
 } else {
     
 
-
 $html = '<table class="table table-hover table-sm" id="tablaAsignaturas">
                         <thead>
                             <tr class="table-info">
@@ -33,7 +32,6 @@ $html = '<table class="table table-hover table-sm" id="tablaAsignaturas">
                                 <th>Asignatura</th>
                                 <th>Requisito</th>
                                 <th>Tipo de Correlatividad</th>
-                                <th>Opciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -47,38 +45,8 @@ $html = '<table class="table table-hover table-sm" id="tablaAsignaturas">
                                     $html .= '<td>'.$asignaturas->getNombre().'</td>';
                                     
                                    $html .= '<td>'."Aprobada".'</td>';
-                                   $html .= '<td>'."Precedente".'</td>';
-
-                                    $html .= '<td>
-                                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalEliminar'.$asignaturas->getId().'">
-                                        Eliminar
-                                      </button>
-
-                                      <div class="modal fade" id="modalEliminar'.$asignaturas->getId().'" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <h5 class="modal-title" id="exampleModalLongTitle">Eliminar</h5>
-                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                              </button>
-                                            </div>
-                                              <form id="eliminar'.$asignaturas->getId().'">
-                                            <div class="modal-body">
-                                                <input type="hidden" id="codAsigEliminar'.$asignaturas->getId().'" name="codAsigEliminar" value="'.$asignaturas->getId().'">
-                                                <p>¿Esta seguro de eliminar la asignatura: <b>'.$asignaturas->getId().'</b> - <b>'.$asignaturas->getNombre().'</b></p>     
-
-                                            </div>
-                                            <div class="modal-footer">
-                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                              <button type="submit" class="btn btn-danger" data-dismiss="modal" onclick="eliminar(&quot;'.$asignaturas->getId().'&quot;,&quot;'."Aprobada".'&quot;,&quot;'."Precedente".'&quot;)">Confirmar</button>
-                                            </div>
-                                           </form>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </td>
-                                </tr>';
+                                   $html .= '<td>'."Precedente".'</td>
+                                            </tr>';
                             }
 
                 }
@@ -93,43 +61,12 @@ $html = '<table class="table table-hover table-sm" id="tablaAsignaturas">
                                     $html .= '<td>'.$asignaturas->getNombre().'</td>';
                                     
                                    $html .= '<td>'."Regular".'</td>';
-                                   $html .= '<td>'."Precedente".'</td>';
-
-                                    $html .= '<td>
-                                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalEliminar'.$asignaturas->getId().'">
-                                        Eliminar
-                                      </button>
-
-                                      <div class="modal fade" id="modalEliminar'.$asignaturas->getId().'" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <h5 class="modal-title" id="exampleModalLongTitle">Eliminar</h5>
-                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                              </button>
-                                            </div>
-                                              <form id="eliminar'.$asignaturas->getId().'">
-                                            <div class="modal-body">
-                                                <input type="hidden" id="codAsigEliminar'.$asignaturas->getId().'" name="codAsigEliminar" value="'.$asignaturas->getId().'">
-                                                <p>¿Esta seguro de eliminar la asignatura: <b>'.$asignaturas->getId().'</b> - <b>'.$asignaturas->getNombre().'</b></p>     
-
-                                            </div>
-                                            <div class="modal-footer">
-                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                              <button type="submit" class="btn btn-danger" data-dismiss="modal" onclick="eliminar(&quot;'.$asignaturas->getId().'&quot;,&quot;'."Regular".'&quot;,&quot;'."Precedente".'&quot;)">Confirmar</button>
-                                            </div>
-                                           </form>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </td>
-                                </tr>';
+                                   $html .= '<td>'."Precedente".'</td>
+                                            </tr>';
                             }
 
                 }
             
-
 
                 if (!is_null($asignaturaSubsiguienteAprobada)){
 
@@ -140,43 +77,12 @@ $html = '<table class="table table-hover table-sm" id="tablaAsignaturas">
                                     $html .= '<td>'.$asignaturas->getNombre().'</td>';
                                     
                                    $html .= '<td>'."Aprobada".'</td>';
-                                   $html .= '<td>'."Subsiguiente".'</td>';
-
-                                    $html .= '<td>
-                                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalEliminar'.$asignaturas->getId().'">
-                                        Eliminar
-                                      </button>
-
-                                      <div class="modal fade" id="modalEliminar'.$asignaturas->getId().'" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <h5 class="modal-title" id="exampleModalLongTitle">Eliminar</h5>
-                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                              </button>
-                                            </div>
-                                              <form id="eliminar'.$asignaturas->getId().'">
-                                            <div class="modal-body">
-                                                <input type="hidden" id="codAsigEliminar'.$asignaturas->getId().'" name="codAsigEliminar" value="'.$asignaturas->getId().'">
-                                                <p>¿Esta seguro de eliminar la asignatura: <b>'.$asignaturas->getId().'</b> - <b>'.$asignaturas->getNombre().'</b></p>     
-
-                                            </div>
-                                            <div class="modal-footer">
-                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                              <button type="submit" class="btn btn-danger" data-dismiss="modal" onclick="eliminar(&quot;'.$asignaturas->getId().'&quot;,&quot;'."Aprobada".'&quot;,&quot;'."Subsiguiente".'&quot;)">Confirmar</button>
-                                            </div>
-                                           </form>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </td>
-                                </tr>';
+                                   $html .= '<td>'."Subsiguiente".'</td>
+                                            </tr>';
                             }
 
 
                 }
-
 
 
                 if (!is_null($asignaturaSubsiguienteCursada) ){
@@ -188,41 +94,9 @@ $html = '<table class="table table-hover table-sm" id="tablaAsignaturas">
                                     $html .= '<td>'.$asignaturas->getNombre().'</td>';
                                     
                                    $html .= '<td>'."Regular".'</td>';
-                                   $html .= '<td>'."Subsiguiente".'</td>';
-
-                                    $html .= '<td>
-                                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalEliminar'.$asignaturas->getId().'">
-                                        Eliminar
-                                      </button>
-
-                                      <div class="modal fade" id="modalEliminar'.$asignaturas->getId().'" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <h5 class="modal-title" id="exampleModalLongTitle">Eliminar</h5>
-                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                              </button>
-                                            </div>
-                                              <form id="eliminar'.$asignaturas->getId().'">
-                                            <div class="modal-body">
-                                                <input type="hidden" id="codAsigEliminar'.$asignaturas->getId().'" name="codAsigEliminar" value="'.$asignaturas->getId().'">
-                                                <p>¿Esta seguro de eliminar la asignatura: <b>'.$asignaturas->getId().'</b> - <b>'.$asignaturas->getNombre().'</b></p>     
-
-                                            </div>
-                                            <div class="modal-footer">
-                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                              <button type="submit" class="btn btn-danger" data-dismiss="modal" onclick="eliminar(&quot;'.$asignaturas->getId().'&quot;,&quot;'."Regular".'&quot;,&quot;'."Subsiguiente".'&quot;)">Confirmar</button>
-                                            </div>
-                                           </form>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </td>
-                                </tr>';
+                                   $html .= '<td>'."Subsiguiente".'</td>
+                                            </tr>';
                             }
-
-
 
                 }         
                         $html .= '</tbody>

@@ -57,11 +57,6 @@ $Asignaturas = $ManejadorAsignatura->getColeccion();
                                         <a title="Ver Equipo de C&aacute;tedra" class="btn btn-outline-primary" href="asignatura.equipoCatedra.php?id=<?= $Asignatura->getId(); ?>" role="button">
                                             <span class="oi oi-people"></span>
                                         </a>
-                                        <a title="Ver Asignaturas Correlativas" href="asignaturas.correlativas.php?id=<?= $Asignatura->getId(); ?>">
-                                            <button type="button" class="btn btn-outline-info">
-                                                <span class="oi oi-list"></span>
-                                            </button>
-                                        </a>
                                         <a title="Modificar" href="asignatura.modificar.php?id=<?= $Asignatura->getId(); ?>">
                                             <button type="button" class="btn btn-outline-warning">
                                                 <span class="oi oi-pencil"></span>
