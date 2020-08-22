@@ -204,6 +204,72 @@ $profesores = $manejadorProfesor->getProfesoresResponsables();
                   
               });
     </script>
+    
+    <script>
+            $(document).ready(function(){
+                  $('#profesor').change(function () {
+                    var idProfesor = $('#profesor').val();
+                    //alert(codCarrera);
+                    $.ajax({
+                      type: 'POST',
+                      url: '../lib/consultaAjax/informeGerencial/cargaAniosProf.php',
+                      data: {'idProfesor': idProfesor}
+                    })
+                    .done(function(anios){
+                      $(".selectpicker").selectpicker(); 
+                      $('#anioProf').html(anios).selectpicker('refresh');
+                    })
+                    .fail(function(){
+                      alert('Hubo un error al cargar los anios.')
+                    });
+                  });
+                  
+                  $('#anioProf').change(function () {
+                      var anio = $('#anioProf').val();
+                      if (anio != -1){ // value = -1 significa que la carrera no tiene planes con lo cual no se podra obtener los programas
+                            var idProfesor = $('#profesor').val();
+                            //alert(codCarrera+codPlan);
+                            $.ajax({
+                              type: 'POST',
+                              url: '../lib/consultaAjax/informeGerencial/tablaProgramasPDFporProfesor.php',
+                              data: {'idProfesor': idProfesor,
+                                    'anio': anio}
+                            })
+                            .done(function(programas){
+                              //$(".selectpicker").selectpicker(); 
+                              $('#tablaProgramasAsignaturasProf').html(programas);
+                              var carrera = $('select[name="profesor"] option:selected').text();
+                              var nombreArchivo = "Informe Estado de Programas del profesor "+carrera+" - año "+anio;
+                              $('.table').DataTable({
+                                    dom: 'Bfrtip',
+                                    language: {
+                                        url: '../lib/datatable/es-ar.json'
+                                    },
+//                                    buttons: [
+//                                        'copy', 'csv', 'excel', 'pdf', 'print'
+//                                    ]
+                                    buttons: [
+                                        {
+                                            extend: 'excelHtml5',
+                                            title: nombreArchivo
+                                        },
+                                        {
+                                            extend: 'pdfHtml5',
+                                            title: nombreArchivo
+                                        }
+                                    ]
+                                });
+                              //alert(programas);
+                            })
+                            .fail(function(){
+                              alert('Hubo un error al cargar los Programas de Asignaturas.')
+                            });
+                      }
+                    
+                  });
+                  
+              });
+    </script>
     </body>
 </html>
 
