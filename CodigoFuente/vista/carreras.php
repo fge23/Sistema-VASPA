@@ -53,7 +53,7 @@ $Carreras = $ManejadorCarrera->getColeccion();
                                     <td><?= $Carrera->getNombre(); ?></td>
 
                                     <td>
-                                        <a title="Ver Planes" href="carrera.verPlanes.php?id=<?= $Carrera->getId(); ?>">
+                                        <a title="Ver Revisiones del Plan" href="carrera.verPlanes.php?id=<?= $Carrera->getId(); ?>">
                                             <button type="button" class="btn btn-outline-info">
                                                 <span class="oi oi-list"></span>
                                             </button>

@@ -32,7 +32,7 @@ $planes = $ManejadorPlan->getPlanesSegunCarrera($codigoCarrera);
             <p></p>
             <div class="card">
                 <div class="card-header">
-                    <h3>Planes de la Carrera: <span class="text-info"><?= $carrera->getId();?> - <?= $carrera->getNombre();?></span> </h3>
+                    <h3>Revisiones del Plan de Estudios de <span class="text-info"><?= $carrera->getId();?> - <?= $carrera->getNombre();?></span> </h3>
                 </div>
                 <div class="card-body">
                     
@@ -66,7 +66,7 @@ $planes = $ManejadorPlan->getPlanesSegunCarrera($codigoCarrera);
                                             <td><?= $plan->getAnio_inicio(); ?></td>
                                             <td><?= $plan->getAnio_fin(); ?></td>
                                             <td>
-                                                <a title="Ver Asignaturas del Plan" href="plan.asignaturas.php?id=<?= $plan->getId(); ?>">
+                                                <a title="Ver Asignaturas" href="plan.asignaturas.php?id=<?= $plan->getId(); ?>">
                                                     <button type="button" class="btn btn-outline-info">
                                                         <span class="oi oi-list"></span>
                                                     </button>

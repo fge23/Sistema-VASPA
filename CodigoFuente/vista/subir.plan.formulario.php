@@ -39,7 +39,7 @@ $Carreras = $ManejadorCarrera->getColeccion();
                         <p>
                             Complete los campos a continuaci&oacute;n. 
                             Luego, presione el bot&oacute;n <b>Subir Plan</b>.<br />
-                            Si desea cancelar, presione el bot&oacute;n <b>Cancelar</b>.
+                            Si desea cancelar, presione el bot&oacute;n <b>Volver a Inicio</b>.
                         </p>
                     </div>
                     <div class="card-body">

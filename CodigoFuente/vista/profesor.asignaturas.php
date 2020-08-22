@@ -5,7 +5,6 @@ include_once '../lib/Constantes.Class.php';
 include_once '../modeloSistema/Profesor.Class.php';
 include_once '../controlSistema/ManejadorAsignatura.php';
 
-
 $idProfesor = $_GET['id'];
 
 $profesor = new Profesor($idProfesor);
@@ -34,8 +33,7 @@ $asignaturas = $ManejadorAsignatura->getAsignaturasSegunProfesor($idProfesor);
                     <h3>Asignaturas del Profesor: <span class="text-info"><?= $profesor->getApellido();?> <?= $profesor->getNombre();?></span> </h3>
                 </div>
                 <div class="card-body">
-                    
-                  
+                
                     <table class="table table-hover table-sm text-center" id="tablaPlanes">
                         <thead>
                             <tr class="table-info">
@@ -70,7 +68,6 @@ $asignaturas = $ManejadorAsignatura->getAsignaturasSegunProfesor($idProfesor);
                         </tbody>
                     </table>
                     
-
                     <div class="card-footer text-center">
                         <a href="profesores.php">
                         <button type="button" class="btn btn-primary">

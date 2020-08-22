@@ -61,7 +61,7 @@ include_once '../modeloSistema/BDConexionSistema.Class.php';
                             Presione el bot&oacute;n <b>Examinar</b>.
                             A continuación, seleccione los programas que desea cargar en el sistema.
                             <br/>Luego, presione el bot&oacute;n <b>Subir Programas</b>. 
-<!--                            Si desea cancelar, presione el bot&oacute;n <b>Cancelar</b>.-->
+                            <br/>Si desea cancelar, presione el bot&oacute;n <b>Volver a Inicio</b>.
                         </p>
                         <div class="alert alert-warning text-center" role="alert">
                             Estimado usuario, los programas a subir deben cumplir el 
