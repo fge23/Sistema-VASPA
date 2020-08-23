@@ -32,8 +32,8 @@
 
 <!-- Los estilos de navbar son definidos en la libreria css de Bootstrap -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <!-- Se utiliza el permiso de carga masiva de programas para validar pero debería ser el de panelSA si es que planea crearse este permiso -->
-    <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_CARGA_MASIVA_PROGRAMAS)) { ?>
+    
+    <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_VER_VIGENCIA_PROGRAMAS)) { ?>
         <a class="navbar-brand" href="../vista/panelSA.php">
             <img src="../lib/img/VASPA_isotipo.png" width="40" height="30" class="d-inline-block align-top" alt="">
             VASPA
