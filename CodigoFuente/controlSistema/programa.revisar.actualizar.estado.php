@@ -45,12 +45,26 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST"){
     $rol = $Usuario->roles[0]->nombre;
     $query = '';
     if ($rol == PermisosSistema::ROL_ADMIN || $rol == PermisosSistema::ROL_SECRETARIO_ACADEMICO){
+        // comprobamos si fue desaprobado por Dpto para setear a 1 el campo  fueDesaprobado
+        if ($programa->getAprobadoDepto() === '0'){
+            $desa = ", fueDesaprobado = 1 ";
+        }else {
+            $desa = "";
+        }
         $query = "UPDATE PROGRAMA "
                         . "SET aprobadoSA = 1 "
+                        . $desa 
                         . "WHERE id = '{$idPrograma}'";
     } elseif ($rol == PermisosSistema::ROL_DIRECTOR_DEPARTAMENTO) {
+        // comprobamos si fue desaprobado por SA para setear a 1 el campo  fueDesaprobado
+        if ($programa->getAprobadoSa() === '0'){
+            $desa = ", fueDesaprobado = 1 ";
+        }else {
+            $desa = "";
+        }
         $query = "UPDATE PROGRAMA "
                         . "SET aprobadoDepto = 1 "
+                        . $desa 
                         . "WHERE id = '{$idPrograma}'";
     }
     
@@ -85,14 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST"){
             </button>
           </div>';
         header("location: ../vista/revisar.programas.php");
-    }
-//        if ($resultado) {
-//            //echo '<br> actualizado ';
-//            header("location: ../vista/revisar.programa.php?id=".$idPrograma);
-//        } else {
-//            //echo '<br> no actualizado';
-//        }
-    
+    }   
     
 } elseif (isset ($_POST["desaprobarPrograma"])){
 
@@ -107,22 +114,33 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST"){
     $rol = $Usuario->roles[0]->nombre;
     $query = '';
     if ($rol == PermisosSistema::ROL_ADMIN || $rol == PermisosSistema::ROL_SECRETARIO_ACADEMICO){
+        // comprobamos si depto todavia no califico el programa, en ese caso el campo fueDesaprobado se setea a 0 ya que sino se muestra el mensaje que el programa ya fue desaprobado con anterioridad
+        if (is_null($programa->getAprobadoDepto())){
+            $desa = 0;
+        } else {
+            $desa = 1;
+        }
         $query = "UPDATE PROGRAMA "
                         . "SET aprobadoSA = 0, "
-                        . "fueDesaprobado = 1, "
+                        . "fueDesaprobado = {$desa}, "
                         . "comentarioSa = '{$comentario}' "
                         . "WHERE id = '{$idPrograma}'";
     } elseif ($rol == PermisosSistema::ROL_DIRECTOR_DEPARTAMENTO) {
+        // comprobamos si depto todavia no califico el programa, en ese caso el campo fueDesaprobado se setea a 0 ya que sino se muestra el mensaje que el programa ya fue desaprobado con anterioridad
+        if (is_null($programa->getAprobadoSa())){
+            $desa = 0;
+        } else {
+            $desa = 1;
+        }
         $query = "UPDATE PROGRAMA "
                         . "SET aprobadoDepto = 0, "
-                        . "fueDesaprobado = 1, "
+                        . "fueDesaprobado = {$desa}, "
                         . "comentarioDepto = '{$comentario}' "
                         . "WHERE id = '{$idPrograma}'";
     }
     
     $resultado = BDConexionSistema::getInstancia()->query($query);
-//    var_dump($query);
-//    exit;
+
     // chqueamos que se haya realizado correctamente el update
     if (BDConexionSistema::getInstancia()->affected_rows == 1) {
         // se actualizo
@@ -133,7 +151,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST"){
             </button>
           </div>';
         
-        // Chequeamos si fue revisado por ambas autoridades para enviar el email
+        // Chequeamos si fue revisado por ambas autoridades para enviar el email notificando al profesor el resultado de la evaluacion del programa
         $revisado = fueRevisadoPorSAyDpto($idPrograma);
         if ($revisado){
             include_once '../lib/notificacionesMail/notificacionProgramaAprobadoDesaprobado.php';
@@ -151,15 +169,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST"){
           </div>';
         header("location: ../vista/revisar.programas.php");
     }
-    
-    
-//        if ($resultado) {
-//            //echo '<br> actualizado ';
-//            header("location: ../vista/revisar.programa.php?id=".$idPrograma.'#comentarios');
-//        } else {
-//            //echo '<br> no actualizado';
-//        }
-    
+        
 }
 
 // metodo que comprueba si el programa ya fue revisado por ambas autoridades tanto SA o como Dpto

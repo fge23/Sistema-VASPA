@@ -1,21 +1,21 @@
 <?php
-/* EN ESTE SCRIPT SE CONSTRUYE EL TAB CON SUS RESPECTIVAS PESTANIAS SEGUN EL 
+/* EN ESTE SCRIPT CONSTRUYE EL TAB CON SUS RESPECTIVAS PESTANIAS SEGUN EL 
  * ESTADO DEL PROGRAMA (NR: NO REVISADO, A: APROBADO, D: DESAPROBADO) Y EL ROL 
  * DEL USUARIO (SA: ADMIN Y SA, DCNE: DPTO CIENCIAS NATURALES Y EXACTAS, 
  * DCS: DPTO CIENCIAS SOCIALES)
  * 
- * OBSERVACIONES:
- * - Posiblemente habria que agregar un ORDER BY en la consulta segun la fecha 
- * de carga, para que muestre los programas mas reciente.
- * - 
  */
 
 include_once '../../../modeloSistema/BDConexionSistema.Class.php';
+include '../../../modeloSistema/Carrera.Class.php';
 
 // RECUPERAMOS codCarrera, CodPlan y el rol del usuario.
-if (isset($_POST['codCarrera']) && isset($_POST['codPlan']) && isset($_POST['rol'])){
+if (isset($_POST['codCarrera']) && isset($_POST['rol'])){
     $codCarrera = $_POST['codCarrera'];
-    $codPlan = $_POST['codPlan'];
+    $carrera = new Carrera($codCarrera);
+    //$codPlan = $_POST['codPlan'];
+    $plan = $carrera->getPlanVigente();
+    $codPlan = $plan->getId();
     $rol = $_POST['rol'];
     
     // Tab a retornar en la pantalla Revisar Programas

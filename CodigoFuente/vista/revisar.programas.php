@@ -180,11 +180,11 @@ function obtenerProgramasAsignaturasRecientes($query) {
                             </select>
                         </div>
 
-                        <div class="col-sm-3">
+<!--                        <div class="col-sm-3">
                             <label for="plan">Plan de Estudio</label>
                             <select id="plan" name="plan" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione Plan de Estudio" data-none-results-text="No se encontraron resultados" data-size="5">
                             </select>
-                        </div>
+                        </div>-->
 
                     </div>
                     <br>
@@ -213,49 +213,24 @@ function obtenerProgramasAsignaturasRecientes($query) {
             $(document).ready(function(){
                   $('#carrera').change(function () {
                     var codCarrera = $('#carrera').val();
+                    // constante que almacena el rol del usuario logueado en el sistema
+                    //const rol = "";
+                    const rol = "<?php echo $rol; ?>";
                     //alert(codCarrera);
                     $.ajax({
                       type: 'POST',
-                      url: '../lib/consultaAjax/revisarPrograma/planesDeCarrera.php',
-                      data: {'codCarrera': codCarrera}
+                      url: '../lib/consultaAjax/revisarPrograma/tablaProgramasAsignaturas.php',
+                      data: {'codCarrera': codCarrera,
+                            'rol': rol}
                     })
-                    .done(function(planes){
-                      $(".selectpicker").selectpicker(); 
-                      $('#plan').html(planes).selectpicker('refresh');
+                    .done(function(programas){
+                      $('#tabProgramas').html(programas);
                     })
                     .fail(function(){
-                      alert('Hubo un error al cargar los Planes de Estudio.')
+                      alert('Hubo un error al cargar los Programas de Asignaturas.')
                     });
                   });
-                  
-                  $('#plan').change(function () {
-                      var codPlan = $('#plan').val();
-                      if (codPlan != -1){ // value = -1 significa que la carrera no tiene planes con lo cual no se podra obtener los programas
-                            var codCarrera = $('#carrera').val();
-                            // constante que almacena el rol del usuario logueado en el sistema
-                            //const rol = "";
-                            const rol = "<?php echo $rol; ?>";
-                            //alert(rol);
-                            //alert(codCarrera+codPlan);
-                            $.ajax({
-                              type: 'POST',
-                              url: '../lib/consultaAjax/revisarPrograma/tablaProgramasAsignaturas.php',
-                              data: {'codCarrera': codCarrera,
-                                    'codPlan': codPlan,
-                                    'rol': rol}
-                            })
-                            .done(function(programas){
-                              //$(".selectpicker").selectpicker(); 
-                              $('#tabProgramas').html(programas);
-                              //alert(programas);
-                            })
-                            .fail(function(){
-                              alert('Hubo un error al cargar los Programas de Asignaturas.')
-                            });
-                      }
-                    
-                  });
-                  
+                                    
               });
     </script>
     
