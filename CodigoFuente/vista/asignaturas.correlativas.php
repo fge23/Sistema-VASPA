@@ -141,9 +141,9 @@ $tieneCorrelativa = BDConexionSistema::getInstancia()->query($consulta);
 
                 </div>
                 <div class="card-footer text-center">
-                    <a href="asignaturas.php">
+                    <a href="planes.php">
                     <button type="button" class="btn btn-primary">
-                        <span class="oi oi-account-logout"></span> Volver a Asignaturas
+                        <span class="oi oi-account-logout"></span> Volver a Planes
                     </button>
                     </a>
                 </div>    
