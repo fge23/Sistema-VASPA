@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Seleccionar Carrera-Plan</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar placeholder="Buscar" (ionInput)="getItems($event)"></ion-searchbar>
+  <h4 class="ion-margin-horizontal">Seleccione una Carrera</h4>
+  <hr>
+  <div>
+    <ion-list *ngFor="let carrera of carreras" (click)="asignaturas(carrera.id)" >
+      <ion-item>
+        {{ carrera.nombre }} 
+        <!-- - {{carrera.id}}  -->
+        ({{carrera.anio_inicio}} - {{carrera.anio_fin}})
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

@@ -16,7 +16,8 @@ try {
 	}
 	$query = $con->prepare("SELECT anio, nombre
 		FROM programa_pdf
-		WHERE SUBSTRING(nombre, 5,4) LIKE '{$idAsignatura}' ");
+		WHERE SUBSTRING(nombre, 5,4) LIKE '{$idAsignatura}'
+		ORDER BY anio DESC");
 
 		$query->execute();
 

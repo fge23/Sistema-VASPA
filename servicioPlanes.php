@@ -1,6 +1,7 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header('content-type: application/json; charset=utf-8');
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 
 
 $dns = "mysql:host=127.0.0.1;dbname=bdGEF_VASPA";

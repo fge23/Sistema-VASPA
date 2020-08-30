@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Seleccionar Año de Programa</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Este boton abre un PDF local. No será de utilidad a menos que se planeen almacenar los PDF en el directorio de la app -->
+  <!-- <ion-button expand="full" (click)="openLocalPdf()">Abrir PDF local</ion-button> -->
+  <!-- <ion-searchbar placeholder="Buscar" (ionInput)="getItems($event)"></ion-searchbar> -->
+  <br>
+  <h4 class="ion-margin-horizontal">Seleccione un año para visualizar el Programa PDF correspondiente al mismo:</h4>
+  <hr>
+  <div>
+   <!-- Cada item de la lista envía un año distinto y se abre el PDF correspondiente
+  IDEA: que el msj que se muestra venga de una función. Asi no dice que seleccione año y no haya años -->
+    <ion-list *ngFor="let anio of anios" (click)="downloadAndOpenPdf(anio.anio)" >
+      <ion-item>
+        <ion-icon name='document' item-end color="primary"></ion-icon>
+        &nbsp; {{ anio.anio }} 
+      </ion-item>
+    </ion-list>
+  </div>
+  <p style="font-size:12px" style="color:grey;  " class="ion-margin-horizontal">
+    Si el año buscado no se encuentra en el listado es porque el Programa aún no está disponible. Contáctese con Secretaría Académica
+  </p>
+</ion-content>

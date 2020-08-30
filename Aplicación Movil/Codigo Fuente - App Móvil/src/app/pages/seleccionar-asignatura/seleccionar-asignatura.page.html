@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Seleccionar Asignatura</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-searchbar placeholder="Buscar" (ionInput)="getItems($event)"></ion-searchbar>
+  <h4 class="ion-margin-horizontal">Seleccione una Asignatura</h4>
+  <hr>
+  <div>
+    <ion-list *ngFor="let asignatura of asignaturas" (click)="programas(asignatura.id)" >
+      <ion-item>
+        {{ asignatura.nombre }} 
+        <!-- - {{carrera.id}}  -->
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

@@ -14,7 +14,7 @@ try {
 	if(!$con){
 		echo "No se puede conectar a la base de datos";
 	}
-	$query = $con->prepare("SELECT asignatura.nombre, plan.anio_inicio 
+	$query = $con->prepare("SELECT asignatura.id, asignatura.nombre, plan.anio_inicio 
 		FROM plan_asignatura plan_asignatura
 		INNER JOIN asignatura asignatura
 		ON plan_asignatura.idAsignatura =  asignatura.id
@@ -32,6 +32,7 @@ try {
 				$registros .= ",";
 			}
 			$registros .= '{"nombre": "'.$result["nombre"].'",';
+			$registros .= '"id": "'.$result["id"].'",';
 			$registros .= '"anio_inicio": "'.$result["anio_inicio"].'"}';
 			
 		}
