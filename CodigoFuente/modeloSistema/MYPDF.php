@@ -42,7 +42,7 @@ class MYPDF extends TCPDF {
     
     public function Header() {
     	
-        $Carreras = $this->asignatura->getCarreras();
+        $Carreras = $this->asignatura->getCarrerasProgramaPDF($this->programa->getAnio());
         //var_dump($Carreras);
               
         //Concatenamos el html
@@ -161,7 +161,7 @@ class MYPDF extends TCPDF {
      * @ return int
      */
     private function getCantidadCarreras() {
-        $Carreras = $this->asignatura->getCarreras();
+        $Carreras = $this->asignatura->getCarrerasProgramaPDF($this->programa->getAnio());
         if (is_null($Carreras)){
             return 0;
         }
@@ -667,9 +667,10 @@ class MYPDF extends TCPDF {
                                 <td valign="top" style="width: 40%;"><p align="center">Cursada/s</p></td>
                                 <td valign="top" style="width: 10%;"><p align="center">Cod. Asig.</p></td>
                         </tr>';
-
-        $aprobadas = $this->asignatura->getAsigCorrelativaPrecedenteAprobada();
-        $cursadas = $this->asignatura->getAsigCorrelativaPrecedenteCursada();
+        
+        $anioPrograma = $this->programa->getAnio(); 
+        $aprobadas = $this->asignatura->getAsigCorrelativaPrecedenteAprobadaPrograma($anioPrograma);
+        $cursadas = $this->asignatura->getAsigCorrelativaPrecedenteCursadaPrograma($anioPrograma);
 
         if ($aprobadas != NULL && $cursadas != NULL){
             $cantAprobadas = sizeof($aprobadas);
@@ -795,9 +796,10 @@ class MYPDF extends TCPDF {
                                 <td valign="top" style="width: 40%;" align="center"><p align="center">Cursada/s</p></td>
                                 <td valign="top" style="width: 10%;" align="center"><p align="center">Cod. Asig.</p></td>
                         </tr>';
-
-        $aprobadas = $this->asignatura->getAsigCorrelativaSubsiguienteAprobada();
-        $cursadas = $this->asignatura->getAsigCorrelativaSubsiguienteCursada();
+        
+        $anioPrograma = $this->programa->getAnio(); 
+        $aprobadas = $this->asignatura->getAsigCorrelativaSubsiguienteAprobadaPrograma($anioPrograma);
+        $cursadas = $this->asignatura->getAsigCorrelativaSubsiguienteCursadaPrograma($anioPrograma);
 
         if ($aprobadas != NULL && $cursadas != NULL){
             $cantAprobadas = sizeof($aprobadas);

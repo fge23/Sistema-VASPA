@@ -371,7 +371,7 @@ class Asignatura {
      */
     function getPlanesDeEstudio(){
         
-        // obtenemos el programa de asignatura que tenga vigencia para el anio actual
+        // obtenemos los planes de estudio en donde se dicta la asignatura
         $this->query = "SELECT * "
                 . "FROM plan_asignatura "
                 . "WHERE idAsignatura = '{$this->id}'";
@@ -435,5 +435,194 @@ class Asignatura {
         }
                 
     }
+    
+    /******** FUNCIONES UTILIZADAS POR EL GENERAR PDF *********
+    /*
+     * Funcion que devuelve los planes de Estudio a los cuales pertenece la asignatura segun el anio del plan
+     * si no pertenece a ningun Plan de Estudio retorna NULL
+     */
+    function getPlanesDeEstudioSegunAnio($anio){
+        $anioActual = date("Y"); // anio actual tomado del servidor
+        
+        // query para obtener todos los planes de estudio de la asignatura segun el anio (utilizado para el generar PDF)
+        $this->query = "SELECT DISTINCT(idPlan) idPlan "
+                . "FROM plan_asignatura INNER JOIN plan ON id = idPlan "
+                . "WHERE idAsignatura = '{$this->id}' "
+                . "AND ((anio_inicio <= {$anio} AND {$anio} <= anio_fin) OR "
+                . "(anio_inicio <= {$anio} AND {$anio} <= {$anioActual} AND anio_fin IS NULL))";
+        
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        
+        // validamos el resultado de la query (si retorna false -> Ocurrio un error en la BD) Lanzamos una Excepcion informando el Error
+        if (!$this->datos) {
+            throw new Exception("Ocurrio un Error al obtener los planes de Estudio en los cuales se encuentra la Asignatura: {$this->id}, '{$this->nombre}', para {$anio}.");
+        }
+        
+        $planes = NULL;
+        
+        if ($this->datos->num_rows > 0) {
+            for ($x = 0; $x < $this->datos->num_rows; $x++) {
+                $resultado = $this->datos->fetch_assoc();
+                $planes[] = $resultado['idPlan'];
+            }
+        }
+
+        unset($this->query);
+        unset($this->datos);
+
+        return $planes;
+                
+    }
+    
+    private function getCodPlanesQuery($anio) {
+        $arrayCodPlanes = $this->getPlanesDeEstudioSegunAnio($anio);
+        $planes = "(";
+        if (!empty($arrayCodPlanes)){
+            for ($i = 0; $i < count($arrayCodPlanes); $i++) {
+                if ($i == 0){
+                    $planes .= "'".$arrayCodPlanes[$i]."'";
+                } else {
+                    $planes .= ", '".$arrayCodPlanes[$i]."'";
+                }
+            }
+        } else {
+            return NULL; //si no hay planes devolvemos NULL
+        }
+        $planes .= ")";
+        return $planes;
+    }
+    
+    function getAsigCorrelativaPrecedenteAprobadaPrograma($anio) {
+        $codigoPlanes = $this->getCodPlanesQuery($anio);
+        if (is_null($codigoPlanes)){
+            return NULL;
+        }
+        $this->query = "SELECT DISTINCT(idAsignatura_Correlativa_Anterior) AS codAsignatura "
+                . "FROM asignatura JOIN correlativa_de "
+                . "WHERE idAsignatura = asignatura.id AND requisito LIKE 'Aprobada' AND asignatura.id LIKE '{$this->id}' AND idPlan IN {$codigoPlanes}";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        $Asignaturas = NULL;
+        if ($this->datos->num_rows > 0) {
+            for ($x = 0; $x < $this->datos->num_rows; $x++) {
+                $resultado = $this->datos->fetch_assoc();
+                $Asignaturas[] = new Asignatura($resultado['codAsignatura']);
+            }
+        }
+
+
+        unset($this->query);
+        unset($this->datos);
+
+        return $Asignaturas;
+    }
+
+    function getAsigCorrelativaPrecedenteCursadaPrograma($anio) {
+        $codigoPlanes = $this->getCodPlanesQuery($anio);
+        if (is_null($codigoPlanes)){
+            return NULL;
+        }
+        $this->query = "SELECT DISTINCT(idAsignatura_Correlativa_Anterior) AS codAsignatura "
+                . "FROM asignatura JOIN correlativa_de "
+                . "WHERE idAsignatura = asignatura.id AND requisito LIKE 'Regular' AND asignatura.id LIKE '{$this->id}' AND idPlan IN {$codigoPlanes}";
+                     
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        $Asignaturas = NULL;
+        if ($this->datos->num_rows > 0) {
+            for ($x = 0; $x < $this->datos->num_rows; $x++) {
+                $resultado = $this->datos->fetch_assoc();
+                $Asignaturas[] = new Asignatura($resultado['codAsignatura']);
+            }
+        }
+
+
+        unset($this->query);
+        unset($this->datos);
+
+        return $Asignaturas;
+    }
+    
+    /**
+     * 
+     * @return Asignatura[]
+     */
+    function getAsigCorrelativaSubsiguienteAprobadaPrograma($anio) {
+        $codigoPlanes = $this->getCodPlanesQuery($anio);
+        if (is_null($codigoPlanes)){
+            return NULL;
+        }
+        $this->query = "SELECT DISTINCT(idAsignatura) AS codAsignatura "
+                . "FROM asignatura JOIN correlativa_de "
+                . "WHERE idAsignatura_Correlativa_Anterior = asignatura.id AND requisito LIKE 'Aprobada' AND asignatura.id LIKE '{$this->id}' AND idPlan IN {$codigoPlanes}";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        $Asignaturas = NULL;
+        if ($this->datos->num_rows > 0) {
+            for ($x = 0; $x < $this->datos->num_rows; $x++) {
+                $resultado = $this->datos->fetch_assoc();
+                $Asignaturas[] = new Asignatura($resultado['codAsignatura'], null);
+            }
+        }
+
+
+        unset($this->query);
+        unset($this->datos);
+
+        return $Asignaturas;
+    }
+
+    function getAsigCorrelativaSubsiguienteCursadaPrograma($anio) {
+        $codigoPlanes = $this->getCodPlanesQuery($anio);
+        if (is_null($codigoPlanes)){
+            return NULL;
+        }
+        $this->query = "SELECT DISTINCT(idAsignatura) AS codAsignatura "
+                . "FROM asignatura JOIN correlativa_de "
+                . "WHERE idAsignatura_Correlativa_Anterior = asignatura.id AND requisito LIKE 'Regular' AND asignatura.id LIKE '{$this->id}' AND idPlan IN {$codigoPlanes}";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+        $Asignaturas = NULL;
+        if ($this->datos->num_rows > 0) {
+            for ($x = 0; $x < $this->datos->num_rows; $x++) {
+                $resultado = $this->datos->fetch_assoc();
+                $Asignaturas[] = new Asignatura($resultado['codAsignatura'], null);
+            }
+        }
+
+
+        unset($this->query);
+        unset($this->datos);
+
+        return $Asignaturas;
+    }
+    
+    /**
+     * Funcion para obtener solamente las carreras en las cuales el plan se corresponda al anio del programa
+     * Usado para el generar el PDF
+     * @return Carrera[]
+     */
+    function getCarrerasProgramaPDF($anio) {
+        $anioActual = date("Y"); // anio actual tomado del servidor
+                
+        $this->query = "SELECT carrera.id, carrera.nombre "
+                . "FROM asignatura JOIN plan_asignatura JOIN plan JOIN carrera "
+                . "WHERE asignatura.id = plan_asignatura.idAsignatura AND "
+                . "plan_asignatura.idPlan = plan.id AND "
+                . "plan.idCarrera = carrera.id AND asignatura.id = '{$this->id}' "
+                . "AND ((anio_inicio <= {$anio} AND {$anio} <= anio_fin) OR "
+                . "(anio_inicio <= {$anio} AND {$anio} <= {$anioActual} AND anio_fin IS NULL))";
+        $this->datos = BDConexionSistema::getInstancia()->query($this->query);
+
+        $Carreras = NULL;
+
+        for ($x = 0; $x < $this->datos->num_rows; $x++) {
+            $Carreras[] = $this->datos->fetch_object("Carrera");
+            //$this->addElemento($this->datos->fetch_object("Carrera"));
+        }
+
+        unset($this->query);
+        unset($this->datos);
+        //echo $Carreras;
+        return $Carreras;
+    }
+    
+    /******** FIN FUNCIONES UTILIZADAS POR EL GENERAR PDF *********/
     
 }
