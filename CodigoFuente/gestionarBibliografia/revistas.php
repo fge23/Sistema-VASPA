@@ -84,32 +84,38 @@ $idPrograma = $_GET["id"];
 
                         <div class="form-group">
                             <label for="nuevo_pagina">Tomo/Volumen/P&aacute;gina</label>
+                            <small>(opcional)</small>
                             <input type="text" id="nuevo_pagina" class="form-control"/>
                         </div>
 
                         <div class="form-group">
                             <label for="nuevo_fecha">Fecha</label>
+                            <small>(opcional)</small>
                             <input type="date" id="nuevo_fecha" class="form-control"/>
                         </div>
 
                         <div class="form-group">
                             <label for="nuevo_unidad">Unidad</label>
+                            <small>(opcional)</small>
                             <input type="text" id="nuevo_unidad" class="form-control"/>
                         </div>
 
                         <div class="row no-margin">
                             <div class="col-xs-3">
                                 <label for="nuevo_bibilioteca">Biblioteca</label>
+                                <small>(opcional)</small>
                                 <input type="text" id="nuevo_biblioteca"  class="form-control"/>
                             </div>
                             <div class="col-xs-3">
                                 <label for="nuevo_siunpa">SIUNPA</label>
+                                <small>(opcional)</small>
                                 <input type="text" id="nuevo_siunpa" class="form-control"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="nuevo_otro">Otro</label>
+                            <small>(opcional)</small>
                             <input type="text" id="nuevo_otro" class="form-control"/>
                         </div>
 
@@ -154,16 +160,19 @@ $idPrograma = $_GET["id"];
 
                         <div class="form-group">
                             <label for="pagina">Tomo/Volumen/P&aacute;gina</label>
+                            <small>(opcional)</small>
                             <input type="text" id="pagina" class="form-control"/>
                         </div>
 
                         <div class="form-group">
                             <label for="fecha">Fecha</label>
+                            <small>(opcional)</small>
                             <input type="date" id="fecha" class="form-control"/>
                         </div>
 
                         <div class="form-group">
                             <label for="unidad">Unidad</label>
+                            <small>(opcional)</small>
                             <input type="text" id="unidad" class="form-control"/>
                         </div>
 
@@ -171,10 +180,12 @@ $idPrograma = $_GET["id"];
                         <div class="row no-margin">
                             <div class="col-xs-3">
                                 <label for="bibilioteca">Biblioteca</label>
+                                <small>(opcional)</small>
                                 <input type="text" id="biblioteca"  class="form-control"/>
                             </div>
                             <div class="col-xs-3">
                                 <label for="siunpa">SIUNPA</label>
+                                <small>(opcional)</small>
                                 <input type="text" id="siunpa" class="form-control"/>
                             </div>
                         </div>
@@ -182,6 +193,7 @@ $idPrograma = $_GET["id"];
 
                         <div class="form-group">
                             <label for="otro">Otro</label>
+                            <small>(opcional)</small>
                             <input type="text" id="otro" class="form-control"/>
                         </div>
 

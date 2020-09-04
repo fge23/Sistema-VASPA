@@ -64,6 +64,7 @@ $idPrograma = $_GET["id"];
                         <div class="row no-margin">
                             <div class="col-xs-3">
                                 <label for="nuevo_referencia" >Referencia</label>
+                                <small>(opcional)</small>
                                 <input type="text"  id="nuevo_referencia" name="nuevo_referencia" class="form-control required">
                             </div>
 
@@ -100,11 +101,13 @@ $idPrograma = $_GET["id"];
 
                         <div class="form-group">
                             <label for="nuevo_capitulo">Cap&iacute;tulo/Tomo/P&aacute;gina</label>
+                            <small>(opcional)</small>
                             <input type="text" id="nuevo_capitulo" class="form-control"/>
                         </div>
 
                         <div class="form-group">
                             <label for="nuevo_lugarEdicion">Lugar de Edici&oacute;n</label>
+                            <small>(opcional)</small>
                             <input type="text" id="nuevo_lugarEdicion" class="form-control"/>
                         </div>
 
@@ -116,10 +119,12 @@ $idPrograma = $_GET["id"];
                         <div class="row no-margin">
                             <div class="col-xs-3">
                                 <label for="nuevo_bibilioteca">Biblioteca</label>
+                                <small>(opcional)</small>
                                 <input type="text" id="nuevo_biblioteca"  class="form-control"/>
                             </div>
                             <div class="col-xs-3">
                                 <label for="nuevo_siunpa">SIUNPA</label>
+                                <small>(opcional)</small>
                                 <input type="text" id="nuevo_siunpa" class="form-control"/>
                             </div>
                         </div>
@@ -127,10 +132,12 @@ $idPrograma = $_GET["id"];
                         <div class="row no-margin">
                             <div class="col-xs-3">
                                 <label for="nuevo_unidad">Unidad</label>
+                                <small>(opcional)</small>
                                 <input type="text" id="nuevo_unidad" class="form-control"/>
                             </div>
                             <div class="col-xs-3">
                                 <label for="nuevo_otro">Otro</label>
+                                <small>(opcional)</small>
                                 <input type="text" id="nuevo_otro" class="form-control"/>
                             </div>
                         </div>
@@ -155,6 +162,7 @@ $idPrograma = $_GET["id"];
                         <div class="row no-margin">
                             <div class="col-xs-3">
                                 <label for="referencia" >Referencia</label>
+                                <small>(opcional)</small>
                                 <input type="text"  id="referencia" class="form-control">
                             </div>
                             <div class="col-xs-3">
@@ -190,11 +198,13 @@ $idPrograma = $_GET["id"];
 
                         <div class="form-group">
                             <label for="capitulo">Cap&iacute;tulo/Tomo/P&aacute;gina</label>
+                            <small>(opcional)</small>
                             <input type="text" id="capitulo" class="form-control"/>
                         </div>
 
                         <div class="form-group">
                             <label for="lugarEdicion">Lugar de Edici&oacute;n</label>
+                            <small>(opcional)</small>
                             <input type="text" id="lugarEdicion" class="form-control"/>
                         </div>
 
@@ -206,10 +216,12 @@ $idPrograma = $_GET["id"];
                         <div class="row no-margin">
                             <div class="col-xs-3">
                                 <label for="bibilioteca">Biblioteca</label>
+                                <small>(opcional)</small>
                                 <input type="text" id="biblioteca"  class="form-control"/>
                             </div>
                             <div class="col-xs-3">
                                 <label for="siunpa">SIUNPA</label>
+                                <small>(opcional)</small>
                                 <input type="text" id="siunpa" class="form-control"/>
                             </div>
                         </div>
@@ -217,10 +229,12 @@ $idPrograma = $_GET["id"];
                         <div class="row no-margin">
                             <div class="col-xs-3">
                                 <label for="unidad">Unidad</label>
+                                <small>(opcional)</small>
                                 <input type="text" id="unidad" class="form-control"/>
                             </div>
                             <div class="col-xs-3">
                                 <label for="otro">Otro</label>
+                                <small>(opcional)</small>
                                 <input type="text" id="otro" class="form-control"/>
                             </div>
                         </div>

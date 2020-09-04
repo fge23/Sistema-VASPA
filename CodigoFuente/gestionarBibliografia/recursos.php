@@ -53,11 +53,13 @@ $idPrograma = $_GET["id"];
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="nuevo_apellido">Apellido/s de Autor/es</label>
+                            <small>(opcional)</small>
                             <input type="text" id="nuevo_apellido" class="form-control"/>
                         </div>
 
                         <div class="form-group">
                             <label for="nuevo_nombre">Nombre/s de Autor/es</label>
+                            <small>(opcional)</small>
                             <input type="text" id="nuevo_nombre" class="form-control"/>
                         </div>
 
@@ -68,6 +70,7 @@ $idPrograma = $_GET["id"];
 
                         <div class="form-group">
                             <label for="nuevo_datos_adicionales">Datos Adicionales</label>
+                            <small>(opcional)</small>
                             <input type="text" id="nuevo_datos_adicionales" class="form-control"/>
                         </div>
 
@@ -96,11 +99,13 @@ $idPrograma = $_GET["id"];
 
                         <div class="form-group">
                             <label for="apellido">Apellido/s de Autor/es</label>
+                            <small>(opcional)</small>
                             <input type="text" id="apellido" class="form-control"/>
                         </div>
 
                         <div class="form-group">
                             <label for="nombre">Nombre/s de Autor/es</label>
+                            <small>(opcional)</small>
                             <input type="text" id="nombre" class="form-control"/>
                         </div>
 
@@ -111,6 +116,7 @@ $idPrograma = $_GET["id"];
 
                         <div class="form-group">
                             <label for="datosAdicionales">Datos Adicionales</label>
+                            <small>(opcional)</small>
                             <input type="text" id="datosAdicionales"  class="form-control"/>
                         </div>
 
