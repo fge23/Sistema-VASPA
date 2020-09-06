@@ -1,13 +1,9 @@
 <?php
-//include_once '../controlSistema/ManejadorAsignatura.php';
+
 include_once '../lib/ControlAcceso.Class.php';
 require_once '../modeloSistema/Profesor.Class.php';
 require_once '../modeloSistema/BDConexionSistema.Class.php';
 require_once '../modeloSistema/Programa.Class.php';
-
-
-//$ManejadorAsignatura = new ManejadorAsignatura();
-//$Asignaturas = $ManejadorAsignatura->getColeccion();
 
 // Obtenemos el rol del usuario logueado en el sistema
 $usuario = $_SESSION['usuario'];
@@ -178,7 +174,7 @@ if (!$mostrarError){ // No ocurrio un error, y existe el profesor, obtenemos las
                                     
                                     //$btnEnviarRevisionDeshabilitado = '<button type="button" title="Enviar a Revisi&oacute;n" class="btn btn-outline-purple" disabled><span class="oi oi-share"></span></button>&nbsp;';
 
-                                    $btnGenerarPDFHabilitado = '<a title="Generar PDF" class="btn btn-outline-info" href="../controlSistema/programa.revisar.generarpdf.php?id='.$programa->getId().'" role="button" target="_blank"><span class="oi oi-document"></span></a>';
+                                    $btnGenerarPDFHabilitado = '<a title="Generar PDF" class="btn btn-outline-info" href="../vista/programa.generarPDF.php?id='.$programa->getId().'" role="button" target="_blank"><span class="oi oi-document"></span></a>';
                                     //$btnGenerarPDFDeshabilitado = '<button type="button" class="btn btn-outline-info" disabled title="Generar PDF"><span class="oi oi-document"></span></button>';
 
                                      // segun estado habilitamos ciertos botones

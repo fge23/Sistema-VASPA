@@ -113,7 +113,7 @@ if (isset($_POST['codCarrera'])){
                 //Si el estado del programa es Aprobado, se debe visualizar el boton Generar PDF en la tabla.
                     if($estado == 'Aprobado'){
 
-                        $boton = '<a title="Generar PDF" class="btn btn-outline-info" href="../controlSistema/programa.revisar.generarpdf.php?id='.$programa->getId().'" role="button" target="_blank"><span class="oi oi-document"></span></a>';
+                        $boton = '<a title="Generar PDF" class="btn btn-outline-info" href="../vista/programa.generarPDF.php?id='.$programa->getId().'" role="button" target="_blank"><span class="oi oi-document"></span></a>';
 
                     }
 
