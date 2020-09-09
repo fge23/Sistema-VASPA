@@ -4,6 +4,7 @@
     ControlAcceso::requierePermiso(PermisosSistema::PERMISO_PLANES);
     include_once '../modeloSistema/Plan.Class.php';
 
+    $idCarrera = $_GET['idCarrera'];
 
     $idPlan = $_GET['id'];
 
@@ -16,20 +17,8 @@
     }
 
 
-
-    function obtener_asignaturas_bd(){
-
-       $output = '';
-       $query = "SELECT id, nombre FROM asignatura ORDER BY id";
-       $asig = BDConexionSistema::getInstancia()->query($query);
-
-       while ($asignatura=$asig->fetch_assoc()){
-
-        $output .= '<option value="'.$asignatura['id'].'">'.$asignatura['id'].' - '.$asignatura['nombre'].'</option>';
-       }
-
-        return $output;
-    }
+    $query = "SELECT id, nombre FROM asignatura ORDER BY id";
+    $asig = BDConexionSistema::getInstancia()->query($query);
 
 ?>
 
@@ -48,19 +37,8 @@
         <link rel="stylesheet" href="../lib/datatable/dataTables.bootstrap4.min.css" />
         <script type="text/javascript" src="../lib/datatable/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="../lib/datatable/dataTables.bootstrap4.min.js"></script>
-        <script src="../lib/consultaAjax/planAsignatura/main.js" type="text/javascript"></script>
+       
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Planes</title>
-
-
-        <style type="text/css" media="screen">
-            
-            .botonera {
-                    display: flex;
-                    justify-content: space-between;
-                    width: 25%;
-            }
-            
-        </style>
 
     </head>
     <body>
@@ -70,7 +48,6 @@
         <div class="container">
             <div class="card">
                 <div class="card-header">
-
                     <h3>Asignaturas de la revisi&oacute;n del Plan: <span class="text-info"><?= $plan->getId().$periodo;?></span></h3>
                 </div>
                 <div class="card-body">
@@ -81,61 +58,113 @@
 
                         //Verificamos si la revision del plan tiene asignaturas cargadas
                             
-                        $asignaturas = $plan->getAsignaturas();
+                        $asignaturas_plan = $plan->getAsignaturas();
                                                     
-                        //Si es nulo quiere decir que todavia no se han insertado asignaturas, asique el mensaje al usuario debe estar visible.
+                        //Si es nulo quiere decir que todavia no se han insertado asignaturas.
 
-                        if (is_null($asignaturas)){ ?>
+                        if (is_null($asignaturas_plan)){ ?>
 
-                            <div>
+                            <div class="alert alert-warning" role="alert">
                                 <p>
-                                    Estimado usuario, presione el bot&oacute;n <b>Nueva Asignatura</b>
-                                    para agregar las asignaturas que desee a la revisi&oacute;n del plan en cuesti&oacute;n.<br /> 
-                                    Luego, presione el bot&oacute;n <b>Confirmar</b> para guardar los cambios de manera
-                                    permanente.<br />
+                                    Estimado usuario, seleccione una asignatura de la lista y pulse el bot&oacute;n <b>AGREGAR</b> para agregarla a la lista de asignaturas provisorias de la revisi&oacute;n del plan en cuesti&oacute;n.<br /> 
+                                    Luego, presione el bot&oacute;n <b>Guardar y Procesar</b> para guardar los cambios de manera permanente.<br />
+                                </p>
+                            </div>
+                            <br />
+
+                        <?php } else{ ?>
+
+                            <div class="alert alert-info" role="alert">
+                                <p>
+                                    Estimado usuario, <b>NO</b> se pueden modificar las asignaturas vinculadas a esta revisi&oacute;n del plan ya que al hacerlo seria una nueva revisi&oacute;n.<br />
+                                    Para crear una nueva revisi&oacute;n haga click en <a href="plan.revisiones.php?id=<?= $idCarrera ?>">Nueva Revisi&oacute;n del Plan </a>.
                                 </p>
                             </div>
                             <br />
 
                         <?php } ?>
 
-                        <form id="form" method="POST" action="">
-                            
-                            <input type="hidden" id="codPlan" name="codPlan" value="<?=$plan->getId();?>">
-                            <div class="row justify-content-md-center">
-                                <div class="col col-sm-8" id="campos"> 
-                                    <!--Acá van cada uno de los select que se insertan mediante js -->
+                   
+                        <form id="form" method="POST" action="plan.asignaturas.procesar.php">
+                
+                           <input type="hidden" id="codPlan" name="codPlan" value="<?=$plan->getId();?>">
+
+                           <div class="col-6">
+                                <div class="form-group">   
+                                    <div class="row justify-content-md-center">
+
+                                        <?php if (!is_null($asignaturas_plan)){ ?>
+
+                                        <div class="col col-sm-10">
+                                            <label for="asignatura">Asignaturas</label>
+                                            <select id="asignatura" name="asignatura" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione una Asignatura" data-none-results-text="No se encontraron resultados" disabled="">
+                                                <?php while ($asignatura=$asig->fetch_assoc()){?>
+                                                <option value="<?= $asignatura['id'] ?>"><?= $asignatura['id'].' - '.$asignatura['nombre'] ?>
+                                                </option>
+                                            <?php } ?>
+                                            </select>
+                                        </div>
+
+                                        <?php } else{ ?>
+
+                                        <div class="col col-sm-10">
+                                            <label for="asignatura">Asignaturas</label>
+                                            <select id="asignatura" name="asignatura" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione una Asignatura" data-none-results-text="No se encontraron resultados">
+                                                <?php while ($asignatura=$asig->fetch_assoc()){?>
+                                                <option value="<?= $asignatura['id'] ?>"><?= $asignatura['id'].' - '.$asignatura['nombre'] ?>
+                                                </option>
+                                            <?php } ?>
+                                            </select>
+                                        </div>
+
+                                        <?php } ?>
+
+                                        <?php if (!is_null($asignaturas_plan)){ ?>
+
+                                        <div class="col col-sm-2">
+                                            <br />
+                                            <button class="btn btn-info" type="button" onclick="return add_li()" disabled="">AGREGAR</button>
+                                        </div>
+
+                                        <?php } else { ?>
+
+                                            <div class="col col-sm-2">
+                                                <br />
+                                                <button class="btn btn-info" type="button" onclick="return add_li()">AGREGAR</button>
+                                            </div>
+
+                                        <?php } ?>
+
+                                    </div>
+
+                                    <br>
+
+                                    <?php if (is_null($asignaturas_plan)){ ?>
+
+                                    <label for="listaDesordenada">Listado de asignaturas provisorias:</label>
+                                    
+                                    <ul id="listaDesordenada" class="list-group">
+                    
+                                    </ul> 
+
+                                    <?php } ?>
+
                                 </div>
                             </div>
 
-                            <br />
-                            <br />
 
-                            <?php
+                            <?php if (!is_null($asignaturas_plan)){ ?>
 
-                            //Verificamos si la revision del plan tiene asignaturas cargadas
+                            <button class="btn btn-primary" id= "submit-btn" type="submit" disabled="">Guardar y Procesar</button>
                             
-                            $asignaturas = $plan->getAsignaturas();
+                            <?php } else { ?>
 
-                                                    
-                            //Si es nulo quiere decir que todavia no se han insertado asignaturas, asique los botones deben estar visibles para permitir al usuario guardar un conjunto de asignaturas.
+                            <button class="btn btn-primary" id= "submit-btn" type="submit">Guardar y Procesar</button>
 
-                            if (is_null($asignaturas)){ ?>
+                         <?php } ?>
 
-                                <div class="botonera">
-                                    <button id="add_field" type="button" class="btn btn-primary" value="adicionar">
-                                        <span class=""></span> Nueva Asignatura
-                                    </button>
-
-                                    <button id="boton" type="submit" class="btn btn-success">
-                                        <span class=""></span> Confirmar
-                                    </button>
-                                </div>
-
-                            <?php }?>
-
-                        </form>
-
+                        </form> 
+                
                     </p>
                     <div id="tabla"></div>
                 </div>
@@ -152,51 +181,106 @@
 
 
 
-        <!--Script que me permite insertar campos dinamicamente, esta asociado al boton nuevo -->
+        <script>
 
-        <script type="text/javascript">
+            /**
+             * Funcion que añade un <li> dentro del <ul>
+             */
+            function add_li(){
 
-            $(document).ready(function(){
-                $(document).on("click",".btn-primary", function(){
+                var nuevoLi = document.getElementById("asignatura").value;
 
-                    var html = '';
+                var elemento = document.getElementById("asignatura");
 
-                    html += '<div>'+
-                                '<div class="float-left col col-sm-10">'+
-                                    '<label for="asignatura">Asignaturas</label>'+
-                                    '<br />'+
-                                    '<select class="selectpicker show-tick" id="asignatura" name="cod_asignatura[]" data-width="100%" data-live-search="true" required="" title="Seleccione una asignatura" data-none-results-text="No se encontraron resultados" data-size="7">'+
-                                        '<option value=""></option>'+
-                                        '<?php echo obtener_asignaturas_bd(); ?>'+                                 
-                                    '</select>'+
-                                '</div>'+
-                                '<div class="float-right">'+
-                                    '<button type="button" class="btn btn-danger">'+
-                                        '<span class="oi oi-trash"></span> Eliminar'+
-                                    '</button>'+
-                                '</div>'+
-                            '</div>';
-                    
-                    $('#campos').append(html);
-                    $(".selectpicker").selectpicker(); 
-                    $('#asignatura').selectpicker('refresh');
-                    
-                })
+                var elemento_seleccionado = elemento.options[elemento.selectedIndex].text;
 
-            });
+
+                if (nuevoLi === "") {
+
+                    alert("No se ha seleccionado ninguna asignatura de la lista");
+
+                } else{
+
+                    if (nuevoLi.length > 0){
+
+                        if (find_li(nuevoLi)){
+
+                            var li = document.createElement('li');
+                            li.id = nuevoLi;
+                            li.value = nuevoLi;
+                            li.className = "list-group-item";
+                            li.innerHTML = "<button id='" + nuevoLi + "' type='button' class='btn btn-danger' \n\
+                        title='Eliminar'  onClick='eliminar(id)'><span class = 'oi oi-trash'></span></button>&nbsp;&nbsp;" + elemento_seleccionado;
+                            document.getElementById("listaDesordenada").appendChild(li);
+                            elementosLista();
+                        }
+                    }
+                }
+                return false;
+            }
+
+
+            /**
+             * Funcion que busca si existe ya el <li> dentrol del <ul>
+             * Devuelve true si no existe.
+             */
+            function find_li(contenido){
+
+                var el = document.getElementById("listaDesordenada").getElementsByTagName("li");
+
+                for (var i = 0; i < el.length; i++){
+
+                    if (el[i].id == contenido) {
+                        alert("La asignatura con el codigo " + contenido + " ya existe en la lista de asignaturas a agregar");
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+
+            /**
+             * Funcion para eliminar los elementos
+             * Tiene que recibir el elemento pulsado
+             */
+            function eliminar(id_){
+
+                var id = id_;
+                node = document.getElementById(id);
+                node.parentNode.removeChild(node);
+                elementosLista();
+
+            }
 
         </script>
 
 
 
-        <!--Script que me permite eliminar elementos, esta asociado al boton eliminar -->
 
-        <script type="text/javascript">
 
-            $('#campos').on("click",".btn-danger",function(e) {
-                    e.preventDefault();
-                    $(this).parent().parent().remove();
+        <script>
+
+            function elementosLista() {
+
+                var lis = document.getElementById("listaDesordenada").getElementsByTagName("li");
+
+                //Se utiliza spread operator para convertir en array los elementos de la lista
+                let arr = [...lis];
+                
+                var vectorElementos = new Array();
+              
+                for (var i = 0; i < arr.length; i++) {
+                    vectorElementos.push(arr[i]['id']);
+                }
+
+                
+               $.ajax({
+                    type: "POST",
+                    url: "lista.asignaturas.php",
+                    data: {'vectorElementos': JSON.stringify(vectorElementos)
+                    },
                 });
+            }
 
         </script>
 

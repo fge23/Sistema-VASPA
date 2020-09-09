@@ -76,7 +76,7 @@ $planes = $carrera->getPlanesDeEstudio();
                                     <td><?= $plan->getAnio_fin(); ?></td>
 
                                     <td>
-                                        <a title="Ver Asignaturas" href="plan.asignaturas.php?id=<?= urlencode($plan->getId()); ?>">
+                                        <a title="Ver Asignaturas" href="plan.asignaturas.php?id=<?= urlencode($plan->getId());?>&idCarrera=<?= urlencode($carrera->getId());?>">
                                             <button type="button" class="btn btn-outline-info">
                                                 <span class="oi oi-list"></span>
                                             </button>
