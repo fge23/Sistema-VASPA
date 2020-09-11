@@ -1,4 +1,5 @@
 <?php
+
 include_once '../lib/ControlAcceso.Class.php';
 ControlAcceso::requierePermiso(PermisosSistema::PERMISO_ASIGNATURAS);
 include_once '../controlSistema/ManejadorAsignatura.php';
@@ -18,20 +19,8 @@ $idPlan = $_GET['idPlan'];
 $plan = new Plan($idPlan);
 
 
-function obtener_asignaturas_bd(){
-
-       $output = '';
-       $query = "SELECT id, nombre FROM asignatura ORDER BY id";
-       $asig = BDConexionSistema::getInstancia()->query($query);
-
-       while ($asignatura=$asig->fetch_assoc()){
-
-        $output .= '<option value="'.$asignatura['id'].'">'.$asignatura['id'].' - '.$asignatura['nombre'].'</option>';
-       }
-
-        return $output;
-    }
-
+$query = "SELECT id, nombre FROM asignatura ORDER BY id";
+$asig = BDConexionSistema::getInstancia()->query($query);
 
 //Esta query obtiene si una asignatura tiene o no correlativas asociadas. Esto me va a permitir mostrar/ ocultar los botones y el mensaje al usuario, del formulario.
 
@@ -43,6 +32,7 @@ $tieneCorrelativa = BDConexionSistema::getInstancia()->query($consulta);
 
 <html>
     <head>
+
         <meta charset="UTF-8">
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -56,18 +46,8 @@ $tieneCorrelativa = BDConexionSistema::getInstancia()->query($consulta);
         <link rel="stylesheet" href="../lib/datatable/dataTables.bootstrap4.min.css" />
         <script type="text/javascript" src="../lib/datatable/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="../lib/datatable/dataTables.bootstrap4.min.js"></script>
-        <script src="../lib/consultaAjax/asignaturaCorrelativa/main.js" type="text/javascript"></script>
+        
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Asignaturas Correlativas</title>
-
-        <style type="text/css" media="screen">
-            
-            .botonera {
-                    display: flex;
-                    justify-content: space-between;
-                    width: 25%;
-            }
-            
-        </style>
 
     </head>
     <body>
@@ -79,23 +59,33 @@ $tieneCorrelativa = BDConexionSistema::getInstancia()->query($consulta);
                 <div class="card-header">
 
                     <h3>Asignaturas correlativas de: <span class="text-info"><?= $asignatura->getId();?> - <?= $asignatura->getNombre();?> </span></h3>
+
                 </div>
+
                 <div class="card-body">
                     <p> 
 
                         <?php 
                         
-                        //Validamos si la asignatura actual No tiene asignaturas correlativas, asi de esta manera mostramos los botones y el mensaje al usuario.
+                        //Validamos si la asignatura actual No tiene asignaturas correlativas asociadas previamente.
                             
                         $correlativa = $tieneCorrelativa->fetch_assoc();
 
                         if($correlativa['tieneCorrelativa'] == 0){ ?>
 
-                            <div>
+                            <div class="alert alert-warning" role="alert">
                                 <p>
-                                    Estimado usuario, presione el bot&oacute;n <b>Nueva Correlativa</b>
-                                    para agregar las asignaturas correlativas que desee.<br /> 
-                                    Luego, presione el bot&oacute;n <b>Confirmar</b> para guardar los cambios de manera permanente.<br />
+                                    Estimado usuario, seleccione una asignatura de la lista, el requisito y tipo de correlatividad y pulse el bot&oacute;n <b>AGREGAR</b> para agregarla a la lista de asignaturas correlativas provisorias.<br /> 
+                                    Luego, presione el bot&oacute;n <b>Guardar y Procesar</b> para guardar los cambios de manera permanente.<br />
+                                </p>
+                            </div>
+                            <br />
+
+                        <?php } else{ ?>
+
+                            <div class="alert alert-info" role="alert">
+                                <p>
+                                    Estimado usuario, <b>NO</b> se pueden modificar las asignaturas correlativas vinculadas a esta asignatura de la revisi&oacute;n del plan.<br />
                                 </p>
                             </div>
                             <br />
@@ -103,38 +93,122 @@ $tieneCorrelativa = BDConexionSistema::getInstancia()->query($consulta);
                         <?php } ?>
 
 
-                        <form id="form" method="POST" action="">
-                            <!--Enviamos el codigo del plan al otro archivo para realizar la insercion en la BD-->
-                            <input type="hidden" id="idPlan" name="idPlan" value="<?=$plan->getId();?>">
-                            <!--Enviamos el codigo de la asignatura al otro archivo para realizar la insercion en la BD-->
-                            <input type="hidden" id="idAsignatura" name="idAsignatura" value="<?=$asignatura->getId();?>">
-                            <div class="row justify-content-md-center">
-                                <div class="col col-sm-8" id="campos">
-                                    <!--Acá van cada uno de los select que se insertan mediante js -->
+                        <form id="form" method="POST" action="asignaturas.correlativas.procesar.php">
+                
+                           <!--Enviamos el codigo del plan al otro archivo para realizar la insercion en la BD-->
+                           <input type="hidden" id="idPlan" name="idPlan" value="<?=$plan->getId();?>">
+                           <!--Enviamos el codigo de la asignatura al otro archivo para realizar la insercion en la BD-->
+                           <input type="hidden" id="idAsignatura" name="idAsignatura" value="<?=$asignatura->getId();?>">
+
+                           <div class="col-6">
+                                <div class="form-group">   
+                                    <div class="row justify-content-md-center">
+
+                                        <?php if($correlativa['tieneCorrelativa'] == 1){ ?>
+
+                                        <div class="col col-sm-10">
+                                            <label for="asignatura">Asignaturas</label>
+                                            <select id="asignatura" name="asignatura" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione una Asignatura" data-none-results-text="No se encontraron resultados" disabled="">
+                                                <?php while ($asignatura=$asig->fetch_assoc()){?>
+                                                <option value="<?= $asignatura['id'] ?>"><?= $asignatura['id'].' - '.$asignatura['nombre'] ?>
+                                                </option>
+                                            <?php } ?>
+                                            </select>
+                                        </div>
+
+                                        <div class="col col-sm-10">
+                                            <label for="requisito">Requisito</label>
+                                            <select id="requisito" name="requisito" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione un requisito" data-none-results-text="No se encontraron resultados" disabled="">
+                                                <option value="Aprobada">Aprobada</option>
+                                                <option value="Regular">Regular</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col col-sm-10">
+                                            <label for="tipo">Tipo de Correlatividad</label>
+                                            <select id="tipo" name="tipo_correlatividad" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione el tipo de correlatividad" data-none-results-text="No se encontraron resultados" disabled="">
+                                                <option value="Precedente">Precedente</option>
+                                                <option value="Subsiguiente">Subsiguiente</option>
+                                            </select>
+                                        </div>
+
+                                        <?php } else{ ?>
+
+                                        <div class="col col-sm-10">
+                                            <label for="asignatura">Asignaturas</label>
+                                            <select id="asignatura" name="asignatura" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione una Asignatura" data-none-results-text="No se encontraron resultados">
+                                                <?php while ($asignatura=$asig->fetch_assoc()){?>
+                                                <option value="<?= $asignatura['id'] ?>"><?= $asignatura['id'].' - '.$asignatura['nombre'] ?>
+                                                </option>
+                                            <?php } ?>
+                                            </select>
+                                        </div>
+
+                                        <div class="col col-sm-10">
+                                            <label for="requisito">Requisito</label>
+                                            <select id="requisito" name="requisito" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione un requisito" data-none-results-text="No se encontraron resultados">
+                                                <option value="Aprobada">Aprobada</option>
+                                                <option value="Regular">Regular</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col col-sm-10">
+                                            <label for="tipo">Tipo de Correlatividad</label>
+                                            <select id="tipo" name="tipo_correlatividad" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione el tipo de correlatividad" data-none-results-text="No se encontraron resultados">
+                                                <option value="Precedente">Precedente</option>
+                                                <option value="Subsiguiente">Subsiguiente</option>
+                                            </select>
+                                        </div>
+
+                                        <?php } ?>
+
+
+                                        <?php if($correlativa['tieneCorrelativa'] == 1){ ?>
+
+                                        <div class="col col-sm-4">
+                                            <br />
+                                            <button class="btn btn-info" type="button" onclick="return add_li()" disabled="">AGREGAR</button>
+                                        </div>
+
+                                        <?php } else { ?>
+
+                                        <div class="col col-sm-4">
+                                            <br />
+                                            <button class="btn btn-info" type="button" onclick="return add_li()">AGREGAR</button>
+                                        </div>
+
+                                        <?php } ?>
+
+                                    </div>
+
+                                    <br />
+
+                                    <?php if($correlativa['tieneCorrelativa'] == 0){ ?>
+
+                                    <label for="listaDesordenada">Listado de asignaturas correlativas provisorias:</label>
+                                    
+                                    <ul id="listaDesordenada" class="list-group">
+                    
+                                    </ul> 
+
+                                    <?php } ?>
+
                                 </div>
                             </div>
-                            <br />
-                            <br />
 
-                            <?php 
+
+                            <?php if($correlativa['tieneCorrelativa'] == 1){ ?>
+
+                            <button class="btn btn-primary" id="submit-btn" type="submit" disabled="">Guardar y Procesar</button>
                             
-                            //Validamos si la asignatura actual No tiene asignaturas correlativas, asi de esta manera mostramos los botones y el mensaje al usuario.
-                            
-                            if($correlativa['tieneCorrelativa'] == 0){ ?>
+                            <?php } else { ?>
 
-                                <div class="botonera">
-                                    <button id="add_field" type="button" class="btn btn-primary" value="adicionar">
-                                        <span class=""></span> Nueva Correlativa
-                                    </button>
-
-                                    <button id="boton" type="submit" class="btn btn-success">
-                                        <span class=""></span> Confirmar
-                                    </button>
-                                </div>
+                            <button class="btn btn-primary" id="submit-btn" type="submit">Guardar y Procesar</button>
 
                             <?php } ?>
-                            
-                        </form>
+
+                        </form> 
+
                     </p>
 
                     <div id="tabla"></div>
@@ -149,89 +223,197 @@ $tieneCorrelativa = BDConexionSistema::getInstancia()->query($consulta);
                 </div>    
             </div>
         </div>
+
         <?php include_once '../gui/footer.php'; ?>
 
 
 
 
-<!--Script que me permite insertar campos dinamicamente, esta asociado al boton nuevo -->
+        <script>
 
-        <script type="text/javascript">
+            /**
+             * Funcion que añade un <li> dentro del <ul>
+             */
+            
+            function add_li(){
 
-            $(document).ready(function(){
-                $(document).on("click",".btn-primary", function(){
+                var nuevoLi = document.getElementById("asignatura").value;
 
-                    var html = '';
+                var elemento = document.getElementById("asignatura");
 
-                    html += '<div>'+
-                                '<div class="float-left col col-sm-10">'+
-                                    '<label for="asignatura">Asignaturas</label>'+
-                                    '<br />'+
-                                    '<select class="selectpicker show-tick" id="asignatura" name="cod_asignatura[]" data-width="100%" data-live-search="true" required="" title="Seleccione una asignatura" data-none-results-text="No se encontraron resultados" data-size="7">'+
-                                        '<option value=""></option>'+
-                                        '<?php echo obtener_asignaturas_bd(); ?>'+                                 
-                                    '</select>'+
+                var elemento_seleccionado = elemento.options[elemento.selectedIndex].text;
 
-                                    '<label for="requisito">Requisito</label>'+
-                                    '<select id="requisito" name="requisito[]" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione un requisito" data-none-results-text="No se encontraron resultados">'+
-                                        '<option value="Aprobada">Aprobada</option>'+
-                                        '<option value="Regular">Regular</option>'+
-                                    '</select>'+
+           
+                var requisito = document.getElementById("requisito").value;
 
+                var tipo = document.getElementById("tipo").value;
 
-                                    '<label for="tipo">Tipo de Correlatividad</label>'+
-                                    '<select id="tipo" name="tipo_correlatividad[]" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione el tipo de correlatividad" data-none-results-text="No se encontraron resultados">'+
-                                        '<option value="Precedente">Precedente</option>'+
-                                        '<option value="Subsiguiente">Subsiguiente</option>'+
-                                    '</select>'+
+                //Obtenemos el codigo de la asignatura actual, donde queremos agregar las correlativas
+                
+                var cod = '<?php echo $idAsignatura;?>'
 
-                                '</div>'+ 
-                                '<div class="float-right">'+
-                                    '<button type="button" class="btn btn-danger">'+
-                                        '<span class="oi oi-trash"></span> Eliminar'+
-                                    '</button>'+
-                                '</div>'+
-                            '</div>';
+                //Primero validamos que todos los campos sean seleccionados
+
+                if (nuevoLi === "" || requisito === "" || tipo === "") {
+
+                    alert("No se han seleccionado todos los campos.");
+
+                } else{
+
+                    //Validamos que el codigo de la asignatura a asociar no sea el mismo de la asignatura actual
                     
-                    $('#campos').append(html);
-                    $(".selectpicker").selectpicker(); 
-                    $('#asignatura').selectpicker('refresh');
-                    
-                })
+                    if (nuevoLi == cod){
 
-            });
+                        alert("No se puede agregar la asignatura como correlativa de si misma.");
+
+                    }else{
+
+                        if (nuevoLi.length > 0){
+
+                            if (find_li(nuevoLi)){
+
+                                var li = document.createElement('li');
+                                li.id = nuevoLi;
+                                li.value = nuevoLi;
+                                li.className = "list-group-item";
+                                li.innerHTML = "<button id='" + nuevoLi + "' type='button' class='btn btn-danger' \n\
+                            title='Eliminar'  onClick='eliminar(id); eliminar_array(id);'><span class = 'oi oi-trash'></span></button>&nbsp;&nbsp;" + elemento_seleccionado+" - "+requisito+" - "+ tipo;
+
+                                document.getElementById("listaDesordenada").appendChild(li);
+                                
+                                agregarElementos();
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
+
+
+
+
+            /**
+             * Funcion que busca si existe ya el <li> dentrol del <ul>
+             * Devuelve true si no existe.
+             */
+            
+            function find_li(contenido){
+
+                var el = document.getElementById("listaDesordenada").getElementsByTagName("li");
+
+                for (var i = 0; i < el.length; i++){
+
+                    if (el[i].id == contenido) {
+
+                        alert("La asignatura con el codigo " + contenido + " ya existe en la lista de asignaturas correlativas a agregar.");
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+
+
+
+            /**
+             * Funcion para eliminar los elementos de la lista
+             * Tiene que recibir el elemento pulsado
+             */
+            
+            function eliminar(id_){
+
+                var id = id_;
+                node = document.getElementById(id);
+                node.parentNode.removeChild(node);
+                
+            }
 
         </script>
 
 
 
 
-<!--Script que me permite eliminar elementos, esta asociado al boton eliminar -->
+        <script>
 
-        <script type="text/javascript">
+            var vectorAsignaturas = new Array();
+            var vectorRequisitos = new Array();
+            var vectorTipos = new Array();
 
-            $('#campos').on("click",".btn-danger",function(e) {
-                    e.preventDefault();
-                    $(this).parent().parent().remove();
+
+            /**
+             * Funcion para agregar los elementos a cada uno de los array
+             */
+            
+            function agregarElementos(){
+                
+                var asignatura = document.getElementById("asignatura").value;
+                var requisito = document.getElementById("requisito").value;
+                var tipo = document.getElementById("tipo").value;
+                
+                vectorAsignaturas.push(asignatura);
+                vectorRequisitos.push(requisito);
+                vectorTipos.push(tipo);
+
+            }
+
+
+
+
+            /**
+             * Funcion para eliminar los elementos de los array
+             * Tiene que recibir el elemento pulsado
+             */
+            
+            function eliminar_array(id_){
+
+                //Obtenemos el id del elemento (codigo asignatura)
+                var id = id_;
+
+                //Obtenemos la posicion de ese elemento del vector principal donde se almacena
+                var indice = vectorAsignaturas.indexOf(id);
+
+                //En base a esa posicion, lo eliminamos del array, junto a su requisito y tipo
+                vectorAsignaturas.splice(indice, 1);
+                vectorRequisitos.splice(indice, 1);
+                vectorTipos.splice(indice, 1);
+
+            }
+
+
+            //Enviamos los arrays al clickear el boton "GUARDAR Y PROCESAR"
+
+            $("#submit-btn").click(function(e){
+
+                $.ajax({
+                    type: "POST",
+                    url: "lista.asignaturas.correlativas.php",
+                    data: {'vectorAsignaturas': JSON.stringify(vectorAsignaturas),
+                    'vectorRequisitos': JSON.stringify(vectorRequisitos),
+                    'vectorTipos': JSON.stringify(vectorTipos)
+                    },
                 });
 
+            })
+
         </script>
 
 
 
+
         <script type="text/javascript">
-            //$(document).ready(function () {
+           
                 $('#tablaAsignaturas').DataTable({
                     language: {
                         url: '../lib/datatable/es-ar.json'
                     }
                 });
-            //});
+            
         </script>
 
 
 
-<!-- Script que lista asignaturas correlativas, funciona correctamente -->
+
+        <!-- Script que lista las asignaturas correlativas -->
 
         <script type="text/javascript">
             $(document).ready(function(){
@@ -245,7 +427,6 @@ $tieneCorrelativa = BDConexionSistema::getInstancia()->query($consulta);
                 });
             });
         </script>
-
 
     </body>
 </html>
