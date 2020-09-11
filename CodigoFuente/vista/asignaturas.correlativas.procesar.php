@@ -52,14 +52,15 @@ if (isset($_POST['idPlan']) && isset($_POST['idAsignatura'])){
 	$resultado = BDConexionSistema::getInstancia()->query($consulta_final);
 
 
-
+        if ($resultado){
 
 	//En esta query lo que hacemos es setear el campo 'tieneCorrelativa' al valor 1, de la tabla plan_asignaturas de la asignatura y plan en cuestión, para de esta forma, hacer referencia que esa asignatura de un determinado plan tiene correlativas.
 	
 	$query = "UPDATE `plan_asignatura` SET tieneCorrelativa = 1 WHERE `idAsignatura` = '$idAsignatura' AND `idPlan` = '$idPlan'";
 
 	$execute_query = BDConexionSistema::getInstancia()->query($query);
-
+        
+        }
 }
 
 ?>
