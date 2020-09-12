@@ -35,7 +35,24 @@ $profesores = $manejadorProfesor->getProfesoresResponsables();
         <script type="text/javascript" src="../lib/datatable/extensiones/buttons.html5.min.js"></script>
         <script type="text/javascript" src="../lib/datatable/extensiones/buttons.print.min.js"></script>
         <link rel="stylesheet" href="../lib/datatable/extensiones/buttons.dataTables.min.css" />
-        
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<!--        <style type="text/css">
+            #chart_wrap {
+    position: relative;
+    padding-bottom: 100%;
+    height: 0;
+    overflow:hidden;
+}
+
+#piechart {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width:100%;
+    height:100%;
+}
+</style>-->
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Informe Gerencial de Programas</title>
     </head>
     <body>
@@ -84,6 +101,28 @@ $profesores = $manejadorProfesor->getProfesoresResponsables();
 
                             </div>
                             <br>
+                            
+                            
+                            <!-- Modal para mostrar el grafico de torta resumiendo la disponibilidad de los programas -->
+                            <div class="modal fade bd-example-modal-lg" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalCenterTitle"><span id="titleProgCarrera"></span></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="row justify-content-md-center" id="piechart"></div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
 
                             <div id="tablaProgramasAsignaturas">
                                 <div class="alert alert-info" role="alert">
@@ -121,6 +160,26 @@ $profesores = $manejadorProfesor->getProfesoresResponsables();
 
                             </div>
                             <br>
+                            
+                            <!-- Modal para mostrar el grafico de torta resumiendo la disponibilidad de los programas -->
+                            <div class="modal fade bd-example-modal-lg" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalCenterTitle"><span id="titleProgProf"></span></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="row justify-content-md-center" id="piechart2"></div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
 
                             <div id="tablaProgramasAsignaturasProf">
                                 <div class="alert alert-info" role="alert">
@@ -140,6 +199,7 @@ $profesores = $manejadorProfesor->getProfesoresResponsables();
         <?php include_once '../gui/footer.php'; ?>
         
      <script>
+         //PROGRAMAS SEGUN CARRERA
             $(document).ready(function(){
                   $('#carrera').change(function () {
                     var codCarrera = $('#carrera').val();
@@ -152,6 +212,7 @@ $profesores = $manejadorProfesor->getProfesoresResponsables();
                     .done(function(anios){
                       $(".selectpicker").selectpicker(); 
                       $('#anio').html(anios).selectpicker('refresh');
+                      //$('#tablaProgramasAsignaturas').empty();
                     })
                     .fail(function(){
                       alert('Hubo un error al cargar los anios.')
@@ -171,10 +232,11 @@ $profesores = $manejadorProfesor->getProfesoresResponsables();
                             })
                             .done(function(programas){
                               //$(".selectpicker").selectpicker(); 
+                      
                               $('#tablaProgramasAsignaturas').html(programas);
                               var carrera = $('select[name="carrera"] option:selected').text();
                               var nombreArchivo = "Informe Estado de Programas "+carrera+", "+anio;
-                              $('.table').DataTable({
+                              $('#tablaAsignaturas').DataTable({
                                     dom: 'Bfrtip',
                                     language: {
                                         url: '../lib/datatable/es-ar.json'
@@ -194,6 +256,11 @@ $profesores = $manejadorProfesor->getProfesoresResponsables();
                                     ]
                                 });
                               //alert(programas);
+                              // Modificamos el titulo del modal titleProgCarrera
+                              var disponibilidad = 'Disponibilidad de Programas de '+carrera+', '+anio;
+                              $('#titleProgCarrera').text(disponibilidad);
+                              // mostramos modal con el grafico de torta
+                              //$('#myModal').modal('show');
                             })
                             .fail(function(){
                               alert('Hubo un error al cargar los Programas de Asignaturas.')
@@ -206,6 +273,7 @@ $profesores = $manejadorProfesor->getProfesoresResponsables();
     </script>
     
     <script>
+        // PROGRAMAS SEGUN PROFESOR RESPONSABLE
             $(document).ready(function(){
                   $('#profesor').change(function () {
                     var idProfesor = $('#profesor').val();
@@ -238,9 +306,9 @@ $profesores = $manejadorProfesor->getProfesoresResponsables();
                             .done(function(programas){
                               //$(".selectpicker").selectpicker(); 
                               $('#tablaProgramasAsignaturasProf').html(programas);
-                              var carrera = $('select[name="profesor"] option:selected').text();
-                              var nombreArchivo = "Informe Estado de Programas del profesor "+carrera+" - año "+anio;
-                              $('.table').DataTable({
+                              var profesor = $('select[name="profesor"] option:selected').text();
+                              var nombreArchivo = "Informe Estado de Programas del profesor "+profesor+" - año "+anio;
+                              $('#tablaAsignaturasProf').DataTable({
                                     dom: 'Bfrtip',
                                     language: {
                                         url: '../lib/datatable/es-ar.json'
@@ -260,6 +328,10 @@ $profesores = $manejadorProfesor->getProfesoresResponsables();
                                     ]
                                 });
                               //alert(programas);
+                              // Modificamos el titulo del modal titleProgProf
+                              var disponibilidad = 'Disponibilidad de Programas del profesor '+profesor+' - '+anio;
+                              $('#titleProgProf').text(disponibilidad);
+                              
                             })
                             .fail(function(){
                               alert('Hubo un error al cargar los Programas de Asignaturas.')
