@@ -34,36 +34,17 @@ if (isset($_POST['codCarrera'])){
             // Solo se tienen en cuenta los programas cuya vigencia contengan el anio actual
 
             $html = '<hr>
-                            <table id="table" 
-                               data-toggle="table"
-                               data-locale="es-ES"
-                               data-search="true"
-                               data-search-align="left"
-                               data-show-fullscreen="true"
-                               data-show-columns="true"
-                               data-filter-control="true" 
-                               data-show-export="true"
-                               data-export-types="[&#39;excel&#39;]"
-                               data-export-options=&#39;{}&#39;
-                               data-pagination="true"
-                               data-pagination-loop="false"
-                               data-pagination-pre-text="Anterior"
-                               data-pagination-next-text="Siguiente"
-                               data-click-to-select="true"
-                               data-icons-prefix="oi"
-                               data-icons="icons"
-                               data-buttons-class="outline-secondary"
-                               class="table table-hover table-sm">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th data-field="anio" data-filter-control="select" data-filter-control-placeholder="A&ntilde;o" data-sortable="true" data-halign="center" data-align="center" data-title-tooltip="A&ntilde;o de la Carrera">A&ntilde;o</th>
-                                    <th data-field="cuatrimestre" data-filter-control="select" data-filter-control-placeholder="Cuatr." data-sortable="true" data-halign="center" data-align="center" data-title-tooltip="R&eacute;gimen de Cursado">Cuatr.</th>
-                                    <th data-field="codigo" data-filter-control="select" data-filter-control-placeholder="Cod." data-sortable="true" data-halign="center" data-align="center" data-title-tooltip="C&oacute;digo de la Asignatura">C&oacute;digo</th>
-                                    <th data-field="asignatura" data-filter-control="input" data-filter-control-placeholder="Buscar por Asignatura " data-sortable="true" data-halign="center" data-align="left">Asignatura</th>
-                                    <th data-field="docenteResponsable" data-filter-control="input" data-filter-control-placeholder="Buscar por Docente" data-sortable="true" data-halign="center" data-align="left">Docente Responsable</th>
-                                    <th data-field="vigencia" data-halign="center" data-align="center">Vigencia</th>
-                                    <th data-field="estado" data-halign="center">Estado</th>
-                                    <th data-field="acciones" data-halign="center">Acciones</th>
+                            <table class="table table-hover table-sm" id="tablaAsignaturas">
+                            <thead>
+                                <tr class="table-info">
+                                    <th>A&ntilde;o</th>
+                                    <th>Cuatr.</th>
+                                    <th>C&oacute;digo</th>
+                                    <th>Asignatura</th>
+                                    <th>Docente Responsable</th>
+                                    <th>Vigencia</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>';
@@ -181,18 +162,3 @@ if (isset($_POST['codCarrera'])){
       </div>';
 }
 
-?>
-
-<script>
-            $(function() {
-              $('#table').bootstrapTable()
-            });
-    </script>
-    <script>
-        window.icons = {
-          refresh: 'oi-reload',
-          fullscreen: 'oi-fullscreen-enter',
-          export: 'oi-document',
-          columns: 'oi-list'
-        }
-    </script>

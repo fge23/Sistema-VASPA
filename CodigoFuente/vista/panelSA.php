@@ -17,31 +17,20 @@ $carreras = $manejadorCarrera->getColeccion();
       <link rel="stylesheet" href="../lib/bootstrap-4.1.1-dist/css/bootstrap.css" />
       <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.8/css/bootstrap-select.min.css" rel="stylesheet"/>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.8/js/bootstrap-select.min.js"></script>
-      <link rel="stylesheet" href="../lib/bootstrap-table/bootstrap-table.min.css">
-      <link rel="stylesheet" type="text/css" href="../lib/bootstrap-table/extensions/filter-control/bootstrap-table-filter-control.css">
-      <script src="../lib/bootstrap-table/bootstrap-table.min.js"></script>
-      <script src="../lib/bootstrap-table/extensions/filter-control/bootstrap-table-filter-control.js"></script>
-      <script src="../lib/bootstrap-table/extensions/export/bootstrap-table-export.min.js"></script>
-      <script src="../lib/bootstrap-table/extensions/toolbar/bootstrap-table-toolbar.min.js"></script>
-      <script src="../lib/bootstrap-table/locale/bootstrap-table-es-ES.js" ></script>
       <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
-      <script src="../lib/bootstrap-table/tableExport.js"></script>
-      <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
+      <link rel="stylesheet" href="../lib/datatable/dataTables.bootstrap4.min.css" />
+      <script type="text/javascript" src="../lib/datatable/jquery.dataTables.min.js"></script>
+      <script type="text/javascript" src="../lib/datatable/dataTables.bootstrap4.min.js"></script>
+      <script type="text/javascript" src="../lib/datatable/extensiones/dataTables.buttons.min.js"></script>
+      <script type="text/javascript" src="../lib/datatable/extensiones/buttons.flash.min.js"></script>
+      <script type="text/javascript" src="../lib/datatable/extensiones/jszip.min.js"></script>
+      <script type="text/javascript" src="../lib/datatable/extensiones/pdfmake.min.js"></script>
+      <script type="text/javascript" src="../lib/datatable/extensiones/vfs_fonts.js"></script>
+      <script type="text/javascript" src="../lib/datatable/extensiones/buttons.html5.min.js"></script>
+      <script type="text/javascript" src="../lib/datatable/extensiones/buttons.print.min.js"></script>
+      <link rel="stylesheet" href="../lib/datatable/extensiones/buttons.dataTables.min.css" />
       
       <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Bienvenida</title>
-      
-      <script type="text/javaScript">
-            $(document).ready(function(){
-              // En este script modificamos el nombre del archivo a exportar en una hoja de calculo
-              var codCarrera = $('#carrera').val();
-              var codPlan = $('#plan').val(); //Obtiene el value
-              var valor = $("#plan option:selected").html(); //Obtiene el contenido del option seleccionado
-              var nombre = "Vigencias_Programas_"+codCarrera+"_"+valor; //nombre del archivo
-              $('#table').bootstrapTable('refreshOptions', {
-                  exportOptions: {fileName: nombre}
-              });
-            });
-      </script>
       
     </head>
     <body>
@@ -52,7 +41,7 @@ $carreras = $manejadorCarrera->getColeccion();
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="text-center">Panel Secretar&iacute;a Acad&eacute;mica</h3>
+                            <h3 class="text-center">Estados de los Programas de Asignaturas</h3>
                         </div>
                         <div class="card-body">
                             <div id="codigoPlan"></div>
@@ -71,16 +60,14 @@ $carreras = $manejadorCarrera->getColeccion();
                                     </select>
                                     </div>
                                     
-<!--                                    <div class="col-sm-3">
-                                        <label for="plan">Plan de Estudio</label>
-                                        <select id="plan" name="plan" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione un Plan de Estudio" data-none-results-text="No se encontraron resultados" data-size="7">
-
-                                </select>
-                                    </div>-->
-                                
                                 </div>
                             <div id="msgEnviarNotificacion"></div>
-                            <div id="tablaVigenciaProgramas"></div>
+                            <div id="tablaVigenciaProgramas">
+                                <br>
+                                <div class="alert alert-info text-center" role="alert">
+                                    Estimado usuario en esta pantalla podra obtener informaci&oacute;n acerca del estado de los Programas de Asignaturas de una Carrera. Para ello seleccione una Carrera de la lista.
+                                  </div>
+                            </div>
 
                         </div>
                     </div>
@@ -100,11 +87,28 @@ $carreras = $manejadorCarrera->getColeccion();
               $.ajax({
                 type: 'POST',
                 url: '../lib/consultaAjax/vigenciaProgramas/tablaProgramaAsignaturas.php',
-                //url: '../lib/consultaAjax/revisarPrograma/planesDeCarrera.php',
                 data: {'codCarrera': codCarrera}
               })
               .done(function(tablaVigenciaProgramasAsignaturas){
                 $('#tablaVigenciaProgramas').html(tablaVigenciaProgramasAsignaturas);
+                var carrera = $('select[name="carrera"] option:selected').text();
+                var nombreArchivo = "Informe Estado de Programas de las Asignaturas de "+carrera;
+                              $('#tablaAsignaturas').DataTable({
+                                    dom: 'Bfrtip',
+                                    language: {
+                                        url: '../lib/datatable/es-ar.json'
+                                    },
+                                    buttons: [
+                                        {
+                                            extend: 'excelHtml5',
+                                            title: nombreArchivo
+                                        },
+                                        {
+                                            extend: 'pdfHtml5',
+                                            title: nombreArchivo
+                                        }
+                                    ]
+                                });
               })
               .fail(function(){
                 alert('Hubo un error al cargar la Vigencia de los programas de asignaturas');
@@ -113,21 +117,7 @@ $carreras = $manejadorCarrera->getColeccion();
                     
           });
     </script>
-    
-    <script>
-            $(function() {
-              $('#table').bootstrapTable()
-            });
-    </script>
-    <script>
-        window.icons = {
-          refresh: 'oi-reload',
-          fullscreen: 'oi-fullscreen-enter',
-          export: 'oi-document',
-          columns: 'oi-list'
-        }
-    </script>
-    
+   
     <script>
             function enviarNotificacion(idAsignatura){
                 var codCarrera = $("#carrera").val(); //obtenemos el codigo de la carrera seleccionada
@@ -146,6 +136,24 @@ $carreras = $manejadorCarrera->getColeccion();
                               //alert(programas);
                               $.post("../lib/consultaAjax/vigenciaProgramas/tablaProgramaAsignaturas.php", {'codCarrera': codCarrera}, function(tabla){
                                     $('#tablaVigenciaProgramas').html(tabla);
+                                    var carrera = $('select[name="carrera"] option:selected').text();
+                                    var nombreArchivo = "Informe Estado de Programas de las Asignaturas de "+carrera;
+                                      $('#tablaAsignaturas').DataTable({
+                                            dom: 'Bfrtip',
+                                            language: {
+                                                url: '../lib/datatable/es-ar.json'
+                                            },
+                                            buttons: [
+                                                {
+                                                    extend: 'excelHtml5',
+                                                    title: nombreArchivo
+                                                },
+                                                {
+                                                    extend: 'pdfHtml5',
+                                                    title: nombreArchivo
+                                                }
+                                            ]
+                                        });
                               });
                             })
                             .fail(function(){
