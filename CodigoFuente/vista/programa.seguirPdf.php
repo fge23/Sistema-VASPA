@@ -28,18 +28,21 @@ $Carreras = $ManejadorCarrera->getColeccion();
                 <div class="card">
                     <div class="card-header">
                         <h3>Seguimiento de Programas de Asignaturas</h3>
-                        <p>
-                            Estimado usuario, complete los campos a continuaci&oacute;n. 
-                            Luego, presione el bot&oacute;n <b>Confirmar</b>.<br />
-                            Si desea cancelar, presione el bot&oacute;n <b>Cancelar</b>.
-                        </p>
+                        <br />
+                        <div class="alert alert-warning" role="alert">
+                            <p>
+                                Estimado usuario, complete los campos a continuaci&oacute;n. 
+                                Luego, presione el bot&oacute;n <b>Confirmar</b>.<br />
+                                Si desea cancelar, presione el bot&oacute;n <b>Cancelar</b>.
+                            </p>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
                             <label for="selectAnio">A&ntilde;o</label>
                             <br>
                             <select class="selectpicker show-tick" data-live-search="true" data-width="100%" name="anio" id="selectAnio" title="Seleccione un a&ntilde;o" required="" data-size="5">
-                                 <?php for ($i=date('Y'); $i>=2011; $i--) { ?>
+                                 <?php for ($i=date('Y'); $i>=date('Y')-2 ; $i--) { ?>
                                     <option value="<?= $i; ?>"><?= $i; ?></option>
                                 <?php } ?>
                             </select>
@@ -78,7 +81,7 @@ $Carreras = $ManejadorCarrera->getColeccion();
             $(document).ready(function(){
                   $('#selectAnio').change(function () {
                     var anio = $('#selectAnio').val();
-                    //alert(anio);
+                    
                     $.ajax({
                       type: 'POST',
                       url: '../lib/consultaAjax/visualizar.programa.cargar.carreras.php',

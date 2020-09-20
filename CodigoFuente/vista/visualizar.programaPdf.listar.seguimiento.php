@@ -10,10 +10,9 @@ $codCarrera = $_POST['idCarrera'];
 
 $carrera = new Carrera($codCarrera, NULL);
 
-
-$consulta = "SELECT asignatura.nombre, asignatura.id, programa.ubicacion, programa.id AS idPrograma FROM carrera JOIN plan JOIN plan_asignatura JOIN asignatura JOIN programa" .
+$consulta = "SELECT asignatura.nombre, asignatura.id, programa.ubicacion, programa.id AS idPrograma, plan.id AS idRevision  FROM carrera JOIN plan JOIN plan_asignatura JOIN asignatura JOIN programa" .
                        " WHERE carrera.`id` = plan.`idCarrera` AND plan.`id` = plan_asignatura.`idPlan` "
-                       . "AND asignatura.`id` = plan_asignatura.`idAsignatura` AND (carrera.`id` LIKE '$codCarrera') AND (programa.`anio` = $anio)"
+                       . "AND asignatura.`id` = plan_asignatura.`idAsignatura` AND plan.`anio_fin` is NULL AND (carrera.`id` LIKE '$codCarrera') AND (programa.`anio` = $anio)"
                        . " AND (asignatura.`id` = programa.`idAsignatura`) AND (programa.`aprobadoSa` = '1' AND programa.`aprobadoDepto` = '1')";
 
 $asignaturas = BDConexionSistema::getInstancia()->query($consulta);
@@ -37,15 +36,13 @@ $asignaturas = BDConexionSistema::getInstancia()->query($consulta);
         <?php include_once '../gui/navbar.php';   ?>
         <div class="container">
             
-          
             <div class="card">
                 <div class="card-header">
-                 <h3>Seguir Programa - Carrera: <i> <?php echo $carrera->getNombre(); ?></i>, A&ntilde;o: <i><?php echo $anio; ?></i></h3>
+                    <h3>Seguir Programa de: <span class="text-info"><?php echo $carrera->getId();?> - <?php echo $carrera->getNombre();?></span> - A&ntilde;o: <span class="text-info"><?php echo $anio; ?></span></h3>
                     <hr>
                     <label for="buscador">Buscador</label>
                     <input type="text" name="buscador" id="buscador" 
-                           class="form-control" placeholder="Ingrese nombre de la asignatura a buscar..." autofocus="">
-                    
+                           class="form-control" placeholder="Ingrese nombre de la asignatura a buscar..." autofocus=""> 
                 </div>
                 
                 <div class="card-body">
@@ -55,19 +52,23 @@ $asignaturas = BDConexionSistema::getInstancia()->query($consulta);
                             <tr class="table-info">
                                 <th>C&oacute;digo</th>
                                 <th>Asignatura</th>
+                                <th>Revisi&oacute;n del plan</th>
                                 <th>Ubicaci&oacute;n Actual</th>
                                 <th>Actualizar Ubicaci&oacute;n</th>
                                 
                             </tr>
                         </thead>
                         <tbody>
-
+                            
                             <tr>
                             <?php while ($asignatura=$asignaturas->fetch_assoc()){ ?>
                                 
                                 <td><?php echo $asignatura['id']; ?></td>
                                 <td><?php echo $asignatura['nombre']; ?></td>
-
+                                <td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <?php echo $asignatura['idRevision']; ?>
+                                </td>
                                 <?php if( $asignatura['ubicacion'] == 'SA'){ ?>
                                     <td><?php echo 'Secretar&iacute;a Acad&eacute;mica'; ?></td>
                                 <?php }elseif ($asignatura['ubicacion'] == 'DPTO') {?>
@@ -88,7 +89,7 @@ $asignaturas = BDConexionSistema::getInstancia()->query($consulta);
                             </tr>
 
                         <?php } ?>   
-                          
+
                         </tbody>
                     </table>                    
 
