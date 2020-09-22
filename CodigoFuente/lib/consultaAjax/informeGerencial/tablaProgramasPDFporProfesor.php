@@ -95,12 +95,11 @@ function drawChart() {
       ['Language', 'Rating'],
       <?php
       echo "['Programas Disponibles', ".$cantProgDisponible."],";
-      echo "['Programas No disponibles', ".$cantProgNoDisponible."],";
+      echo "['Programas No Disponibles', ".$cantProgNoDisponible."],";
       ?>
     ]);
     
     var options = {
-        //title: 'Disponibilidad de los Programas de <?php //echo $carrera->getNombre(). " - ".$anio; ?>',
         width: '100%',
         height: '100%',
         //colors: ['#28a745', '#dc3545'],

@@ -37,22 +37,6 @@ $profesores = $manejadorProfesor->getProfesoresResponsables();
         <link rel="stylesheet" href="../lib/datatable/extensiones/buttons.dataTables.min.css" />
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-<!--        <style type="text/css">
-            #chart_wrap {
-    position: relative;
-    padding-bottom: 100%;
-    height: 0;
-    overflow:hidden;
-}
-
-#piechart {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width:100%;
-    height:100%;
-}
-</style>-->
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Informe Gerencial de Programas</title>
     </head>
     <body>
@@ -102,7 +86,7 @@ $profesores = $manejadorProfesor->getProfesoresResponsables();
                             </div>
                             <br>
                             
-                            
+<!--                            <div ><div id="piechart" ></div><br></div>-->
                             <!-- Modal para mostrar el grafico de torta resumiendo la disponibilidad de los programas -->
                             <div class="modal fade bd-example-modal-lg" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                               <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -114,7 +98,9 @@ $profesores = $manejadorProfesor->getProfesoresResponsables();
                                     </button>
                                   </div>
                                   <div class="modal-body">
-                                    <div class="row justify-content-md-center" id="piechart"></div>
+                                    <!--<div class="row justify-content-md-center" id="piechart" style="width: 900px; height: 500px;"></div>-->
+                                  <!--<div id="piechart" style="width: 900px; height: 500px;"></div>-->
+                                  <div id="piechart" ></div>
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -184,7 +170,7 @@ $profesores = $manejadorProfesor->getProfesoresResponsables();
                             <div id="tablaProgramasAsignaturasProf">
                                 <div class="alert alert-info" role="alert">
                                     Para obtener el <b>informe Gerencial de Programas por Profesor responsable</b>, seleccione el profesor y a continuaci&oacute;n
-                                    un a&ntilde;o. Se le presentar&aacute; las asignaturas y la <b>disponibilidad del mismo en PDF para la comunidad universitaria</b>.
+                                    un a&ntilde;o. Se le presentar&aacute; las asignaturas y su <b>disponibilidad para la comunidad universitaria</b>.
                                   </div>
                             </div>
                             
@@ -341,6 +327,28 @@ $profesores = $manejadorProfesor->getProfesoresResponsables();
                   });
                   
               });
+    </script>
+    <script>
+        // arregla alineacion del grafico de torta en el modal
+    $('#myModal1').on('show.bs.modal', function(e) {
+        // se llama al metodo que agrega el grafico de torta despues de unos segundos de retraso, en el evento modal show
+        setTimeout(
+        function() 
+        {
+          drawChart();
+        }, 200);
+
+    })
+    
+    $('#myModal2').on('show.bs.modal', function(e) {
+        // se llama al metodo que agrega el grafico de torta despues de unos segundos de retraso, en el evento modal show
+        setTimeout(
+        function() 
+        {
+          drawChart();
+        }, 200);
+
+    })
     </script>
     </body>
 </html>
