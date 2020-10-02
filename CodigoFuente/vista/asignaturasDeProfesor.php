@@ -33,7 +33,7 @@ if (!$resultado) {
 }
 
 if (!$mostrarError){ // No ocurrio un error, y existe el profesor, obtenemos las asignaturas
-    $asignaturas = $profesor->obtenerAsignaturas();
+    $asignaturas = $profesor->obtenerAsignaturasDePlanVigente();
 }
 
 ?>
