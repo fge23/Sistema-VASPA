@@ -49,6 +49,17 @@ $tieneCorrelativa = BDConexionSistema::getInstancia()->query($consulta);
         
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Asignaturas Correlativas</title>
 
+        <script>
+
+            $(function() {
+
+                // desactivamos el boton Guardar y Procesar
+                document.getElementById("submit-btn").disabled = true;
+
+            });
+ 
+        </script>
+
     </head>
     <body>
 
@@ -73,7 +84,7 @@ $tieneCorrelativa = BDConexionSistema::getInstancia()->query($consulta);
 
                         if($correlativa['tieneCorrelativa'] == 0){ ?>
 
-                            <div class="alert alert-warning" role="alert">
+                            <div class="alert alert-info" role="alert">
                                 <p>
                                     Estimado usuario, seleccione una asignatura de la lista, el requisito y tipo de correlatividad y pulse el bot&oacute;n <b>AGREGAR</b> para agregarla a la lista de asignaturas correlativas provisorias.<br /> 
                                     Luego, presione el bot&oacute;n <b>Guardar y Procesar</b> para guardar los cambios de manera permanente.<br />
@@ -83,7 +94,7 @@ $tieneCorrelativa = BDConexionSistema::getInstancia()->query($consulta);
 
                         <?php } else{ ?>
 
-                            <div class="alert alert-info" role="alert">
+                            <div class="alert alert-warning" role="alert">
                                 <p>
                                     Estimado usuario, <b>NO</b> se pueden modificar las asignaturas correlativas vinculadas a esta asignatura de la revisi&oacute;n del plan.<br />
                                 </p>
@@ -108,7 +119,7 @@ $tieneCorrelativa = BDConexionSistema::getInstancia()->query($consulta);
 
                                         <div class="col col-sm-10">
                                             <label for="asignatura">Asignaturas</label>
-                                            <select id="asignatura" name="asignatura" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione una Asignatura" data-none-results-text="No se encontraron resultados" disabled="">
+                                            <select id="asignatura" name="asignatura" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione una Asignatura" data-none-results-text="No se encontraron resultados" disabled="" data-size="7">
                                                 <?php while ($asignatura=$asig->fetch_assoc()){?>
                                                 <option value="<?= $asignatura['id'] ?>"><?= $asignatura['id'].' - '.$asignatura['nombre'] ?>
                                                 </option>
@@ -118,7 +129,7 @@ $tieneCorrelativa = BDConexionSistema::getInstancia()->query($consulta);
 
                                         <div class="col col-sm-10">
                                             <label for="requisito">Requisito</label>
-                                            <select id="requisito" name="requisito" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione un requisito" data-none-results-text="No se encontraron resultados" disabled="">
+                                            <select id="requisito" name="requisito" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione un Requisito" data-none-results-text="No se encontraron resultados" disabled="">
                                                 <option value="Aprobada">Aprobada</option>
                                                 <option value="Regular">Regular</option>
                                             </select>
@@ -126,7 +137,7 @@ $tieneCorrelativa = BDConexionSistema::getInstancia()->query($consulta);
 
                                         <div class="col col-sm-10">
                                             <label for="tipo">Tipo de Correlatividad</label>
-                                            <select id="tipo" name="tipo_correlatividad" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione el tipo de correlatividad" data-none-results-text="No se encontraron resultados" disabled="">
+                                            <select id="tipo" name="tipo_correlatividad" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione el Tipo de Correlatividad" data-none-results-text="No se encontraron resultados" disabled="">
                                                 <option value="Precedente">Precedente</option>
                                                 <option value="Subsiguiente">Subsiguiente</option>
                                             </select>
@@ -136,7 +147,7 @@ $tieneCorrelativa = BDConexionSistema::getInstancia()->query($consulta);
 
                                         <div class="col col-sm-10">
                                             <label for="asignatura">Asignaturas</label>
-                                            <select id="asignatura" name="asignatura" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione una Asignatura" data-none-results-text="No se encontraron resultados">
+                                            <select id="asignatura" name="asignatura" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione una Asignatura" data-none-results-text="No se encontraron resultados" data-size="7">
                                                 <?php while ($asignatura=$asig->fetch_assoc()){?>
                                                 <option value="<?= $asignatura['id'] ?>"><?= $asignatura['id'].' - '.$asignatura['nombre'] ?>
                                                 </option>
@@ -144,9 +155,9 @@ $tieneCorrelativa = BDConexionSistema::getInstancia()->query($consulta);
                                             </select>
                                         </div>
 
-                                        <div class="col col-sm-10">
+                                        <div class="col col-sm-10" style="padding-top: 30px; padding-bottom: 30px;">
                                             <label for="requisito">Requisito</label>
-                                            <select id="requisito" name="requisito" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione un requisito" data-none-results-text="No se encontraron resultados">
+                                            <select id="requisito" name="requisito" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione un Requisito" data-none-results-text="No se encontraron resultados">
                                                 <option value="Aprobada">Aprobada</option>
                                                 <option value="Regular">Regular</option>
                                             </select>
@@ -154,7 +165,7 @@ $tieneCorrelativa = BDConexionSistema::getInstancia()->query($consulta);
 
                                         <div class="col col-sm-10">
                                             <label for="tipo">Tipo de Correlatividad</label>
-                                            <select id="tipo" name="tipo_correlatividad" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione el tipo de correlatividad" data-none-results-text="No se encontraron resultados">
+                                            <select id="tipo" name="tipo_correlatividad" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione el Tipo de Correlatividad" data-none-results-text="No se encontraron resultados">
                                                 <option value="Precedente">Precedente</option>
                                                 <option value="Subsiguiente">Subsiguiente</option>
                                             </select>
@@ -354,10 +365,12 @@ $tieneCorrelativa = BDConexionSistema::getInstancia()->query($consulta);
                 vectorRequisitos.push(requisito);
                 vectorTipos.push(tipo);
 
+                validarElementos();
+
             }
 
 
-
+            
 
             /**
              * Funcion para eliminar los elementos de los array
@@ -377,7 +390,33 @@ $tieneCorrelativa = BDConexionSistema::getInstancia()->query($consulta);
                 vectorRequisitos.splice(indice, 1);
                 vectorTipos.splice(indice, 1);
 
+                validarElementos();
             }
+
+
+
+
+            /**
+             * Funcion para validar la longitud de los array
+             * Si la longitud de cada uno es mayor a 0 habilitamos el botón Guardar y Procesar, sino lo dejamos
+             * deshabilitado.
+             */
+
+            function validarElementos(){
+
+                if(vectorAsignaturas.length > 0 && vectorRequisitos.length > 0 && vectorTipos.length > 0){
+
+                    document.getElementById("submit-btn").disabled = "";
+
+                }else{
+
+                    document.getElementById("submit-btn").disabled = true;
+                }
+            }
+
+
+
+
 
 
             //Enviamos los arrays al clickear el boton "GUARDAR Y PROCESAR"

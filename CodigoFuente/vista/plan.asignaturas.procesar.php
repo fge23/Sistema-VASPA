@@ -7,6 +7,8 @@ include_once '../modeloSistema/BDConexionSistema.Class.php';
 //Recibimos el array con los codigos de las asignaturas
 $vectorElementos = $_SESSION['vectorElementos'];
 
+$codCarrera = $_POST['codCarrera'];
+
 // Validamos que este seteado el campo
 
 if (isset($_POST['codPlan'])){
@@ -62,14 +64,19 @@ if (isset($_POST['codPlan'])){
                     <?php } ?>   
                     <?php if (!$resultado) { ?>
                     <div class="alert alert-danger" role="alert">
-                        Ha ocurrido un error. <?= $error; ?>
+                        La operaci&oacute;n no pudo ser realizada debido a que no se han seleccionado asignaturas.
                     </div>
                     <?php } ?>
                     <hr />
                     <h5 class="card-text">Opciones</h5>
-                    <a href="planes.php">
+                    <a href="plan.asignaturas.php?id=<?= $codPlan?>&idCarrera=<?= $codCarrera?>">
                         <button type="button" class="btn btn-primary">
-                            <span class="oi oi-account-logout"></span> Salir
+                            <span class="oi oi-arrow-thick-left"></span> Volver a Asignaturas Revisi&oacute;n del Plan
+                        </button>
+                    </a>
+                    <a href="planes.php">
+                        <button type="button" class="btn btn-info">
+                            <span class="oi oi-justify-center"></span> Volver a Planes
                         </button>
                     </a>
                 </div>

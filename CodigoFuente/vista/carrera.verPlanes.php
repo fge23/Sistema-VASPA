@@ -66,7 +66,7 @@ $planes = $ManejadorPlan->getPlanesSegunCarrera($codigoCarrera);
                                             <td><?= $plan->getAnio_inicio(); ?></td>
                                             <td><?= $plan->getAnio_fin(); ?></td>
                                             <td>
-                                                <a title="Ver Asignaturas" href="plan.asignaturas.php?id=<?= $plan->getId(); ?>">
+                                                <a title="Ver Asignaturas" href="plan.asignaturas.php?id=<?= $plan->getId(); ?>&idCarrera=<?= $codigoCarrera ?>">
                                                     <button type="button" class="btn btn-outline-info">
                                                         <span class="oi oi-list"></span>
                                                     </button>

@@ -40,6 +40,17 @@
        
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Planes</title>
 
+        <script>
+
+            $(function() {
+
+                // desactivamos el boton Guardar y Procesar
+                document.getElementById("submit-btn").disabled = true;
+
+            });
+ 
+        </script>
+
     </head>
     <body>
 
@@ -64,7 +75,7 @@
 
                         if (is_null($asignaturas_plan)){ ?>
 
-                            <div class="alert alert-warning" role="alert">
+                            <div class="alert alert-info" role="alert">
                                 <p>
                                     Estimado usuario, seleccione una asignatura de la lista y pulse el bot&oacute;n <b>AGREGAR</b> para agregarla a la lista de asignaturas provisorias de la revisi&oacute;n del plan en cuesti&oacute;n.<br /> 
                                     Luego, presione el bot&oacute;n <b>Guardar y Procesar</b> para guardar los cambios de manera permanente.<br />
@@ -74,7 +85,7 @@
 
                         <?php } else{ ?>
 
-                            <div class="alert alert-info" role="alert">
+                            <div class="alert alert-warning" role="alert">
                                 <p>
                                     Estimado usuario, <b>NO</b> se pueden modificar las asignaturas vinculadas a esta revisi&oacute;n del plan ya que al hacerlo seria una nueva revisi&oacute;n.<br />
                                     Para crear una nueva revisi&oacute;n haga click en <a href="plan.revisiones.php?id=<?= $idCarrera ?>">Nueva Revisi&oacute;n del Plan </a>.
@@ -88,6 +99,7 @@
                         <form id="form" method="POST" action="plan.asignaturas.procesar.php">
                 
                            <input type="hidden" id="codPlan" name="codPlan" value="<?=$plan->getId();?>">
+                           <input type="hidden" id="codCarrera" name="codCarrera" value="<?=$idCarrera?>">
 
                            <div class="col-6">
                                 <div class="form-group">   
@@ -97,7 +109,7 @@
 
                                         <div class="col col-sm-10">
                                             <label for="asignatura">Asignaturas</label>
-                                            <select id="asignatura" name="asignatura" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione una Asignatura" data-none-results-text="No se encontraron resultados" disabled="">
+                                            <select id="asignatura" name="asignatura" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione una Asignatura" data-none-results-text="No se encontraron resultados" disabled="" data-size="7">
                                                 <?php while ($asignatura=$asig->fetch_assoc()){?>
                                                 <option value="<?= $asignatura['id'] ?>"><?= $asignatura['id'].' - '.$asignatura['nombre'] ?>
                                                 </option>
@@ -109,7 +121,7 @@
 
                                         <div class="col col-sm-10">
                                             <label for="asignatura">Asignaturas</label>
-                                            <select id="asignatura" name="asignatura" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione una Asignatura" data-none-results-text="No se encontraron resultados">
+                                            <select id="asignatura" name="asignatura" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione una Asignatura" data-none-results-text="No se encontraron resultados" data-size="7">
                                                 <?php while ($asignatura=$asig->fetch_assoc()){?>
                                                 <option value="<?= $asignatura['id'] ?>"><?= $asignatura['id'].' - '.$asignatura['nombre'] ?>
                                                 </option>
@@ -273,7 +285,17 @@
                     vectorElementos.push(arr[i]['id']);
                 }
 
+
+                if(vectorElementos.length > 0){
+
+                    document.getElementById("submit-btn").disabled = "";
+
+                }else{
+
+                    document.getElementById("submit-btn").disabled = true;
+                }
                 
+
                $.ajax({
                     type: "POST",
                     url: "lista.asignaturas.php",
