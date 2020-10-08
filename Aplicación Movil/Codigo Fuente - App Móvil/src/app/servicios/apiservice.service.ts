@@ -7,11 +7,9 @@ import { HttpClient } from '@angular/common/http';
 export class ApiserviceService {
 
   //SE DEBE REEMPLAZAR LA IP POR EL SERVER REAL 
-  //apiURLCarreras = 'http://localhost/vaspa/servicioPlanes.php';
-  apiURLCarreras = 'http://192.168.0.107/vaspa/servicioPlanes.php';
-  //apiURLAsignaturas = 'http://localhost/vaspa/servicioAsignaturasDePlan.php';
-  apiURLAsignaturas = 'http://192.168.0.107/vaspa/servicioAsignaturasDePlan.php';
-  apiURLProgramasDisponibles = 'http://192.168.0.107/vaspa/servicioAniosDisponiblesProgramas.php';
+   apiURLCarreras = 'http://192.168.3.107/vaspa/servicioPlanes.php';
+   apiURLAsignaturas = 'http://192.168.3.107/vaspa/servicioAsignaturasDePlan.php';
+   apiURLProgramasDisponibles = 'http://192.168.3.107/vaspa/servicioAniosDisponiblesProgramas.php';
   constructor(private http:HttpClient) { }
     
     getCarreras(){
