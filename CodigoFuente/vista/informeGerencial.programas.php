@@ -71,11 +71,9 @@ $nombreUsuario = $Usuario->nombre;
                                     <select id="carrera" name="carrera" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione carrera" data-none-results-text="No se encontraron resultados" data-size="5">
                                         <?php
                                         if (!empty($carreras)) {
-
                                                 foreach ($carreras as $carrera) {
                                                     echo '<option value="' . $carrera->getId() . '">'.$carrera->getId().' - '.$carrera->getNombre().'</option>';
                                                 }
-
                                         }
                                         ?>
                                     </select>
@@ -118,7 +116,6 @@ $nombreUsuario = $Usuario->nombre;
                                 <div class="alert alert-info" role="alert">
                                     Para obtener el <b>informe Gerencial de Programas por Carreras</b>, seleccione una carrera y a continuaci&oacute;n
                                     un a&ntilde;o. Se le presentar&aacute; las asignaturas y su <b>disponibilidad para la comunidad universitaria</b>.
-
                                   </div>
                             </div>
                             
@@ -132,11 +129,9 @@ $nombreUsuario = $Usuario->nombre;
                                     <select id="profesor" name="profesor" class="selectpicker" data-width="100%" data-live-search="true" required="" title="Seleccione profesor" data-none-results-text="No se encontraron resultados" data-size="5">
                                         <?php
                                         if (!empty($profesores)) {
-
                                                 foreach ($profesores as $profesor) {
                                                     echo '<option value="' . $profesor->getId() . '">'.$profesor->getNombreCompleto().'</option>';
                                                 }
-
                                         }
                                         ?>
                                     </select>
