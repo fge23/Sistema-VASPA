@@ -156,11 +156,20 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `nombre`, `email`) VALUES
+(34, 'apac', 'apac@uarg.unpa.edu.ar'),
+(41, 'cmansilla', 'cmansilla@uarg.unpa.edu.ar'),
+(38, 'ctalay', 'ctalay@uarg.unpa.edu.ar'),
 (29, 'Director Departamento Cs. Naturales y Exactas', 'dcienciasnaturalesyexactas@gmail.com'),
 (28, 'Directora Departamento Cs. Sociales', 'dcienciasociales@gmail.com'),
 (23, 'Eder dos Santos', 'esantos@uarg.unpa.edu.ar'),
 (32, 'Fabricio Gonzalez', 'fabriciowgonzalez@gmail.com'),
 (24, 'Francisco Estrada', 'franciscoestrada2395@gmail.com'),
+(42, 'hreinaga', 'hreinaga@uarg.unpa.edu.ar'),
+(40, 'hsotoperez', 'hsotoperez@uarg.unpa.edu.ar'),
+(35, 'jnaguil', 'jnaguil@uarg.unpa.edu.ar'),
+(36, 'lburgos', 'lburgos@uarg.unpa.edu.ar'),
+(39, 'ldallacosta', 'ldallacosta@uarg.unpa.edu.ar'),
+(37, 'livanisevich', 'livanisevich@uarg.unpa.edu.ar'),
 (33, 'Nicolás Sartini', 'nsartini66@gmail.com'),
 (30, 'Profesor UARG', 'profesor.uarg@gmail.com'),
 (31, 'Secretaría Académica', 'secretariaacademicauniv@gmail.com');
@@ -188,7 +197,16 @@ INSERT INTO `usuario_rol` (`id_usuario`, `id_rol`) VALUES
 (30, 9),
 (31, 11),
 (32, 8),
-(33, 8);
+(33, 8),
+(34, 9),
+(35, 9),
+(36, 9),
+(37, 9),
+(38, 9),
+(39, 9),
+(40, 9),
+(41, 9),
+(42, 9);
 
 --
 -- Índices para tablas volcadas
