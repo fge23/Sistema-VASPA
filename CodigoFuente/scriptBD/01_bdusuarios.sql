@@ -139,6 +139,7 @@ INSERT INTO `rol_permiso` (`id_rol`, `id_permiso`) VALUES
 (11, 26),
 (11, 27);
 
+
 -- --------------------------------------------------------
 
 --
@@ -156,23 +157,30 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `nombre`, `email`) VALUES
+(44, 'aalvarez', 'aalvarez@uarg.unpa.edu.ar'),
 (34, 'apac', 'apac@uarg.unpa.edu.ar'),
+(50, 'asofia', 'asofia@uarg.unpa.edu.ar'),
+(49, 'clivacic', 'clivacic@uarg.unpa.edu.ar'),
 (41, 'cmansilla', 'cmansilla@uarg.unpa.edu.ar'),
 (38, 'ctalay', 'ctalay@uarg.unpa.edu.ar'),
+(48, 'dlaguia', 'dalaguia@uarg.unpa.edu.ar'),
 (29, 'Director Departamento Cs. Naturales y Exactas', 'dcienciasnaturalesyexactas@gmail.com'),
 (28, 'Directora Departamento Cs. Sociales', 'dcienciasociales@gmail.com'),
 (23, 'Eder dos Santos', 'esantos@uarg.unpa.edu.ar'),
 (32, 'Fabricio Gonzalez', 'fabriciowgonzalez@gmail.com'),
 (24, 'Francisco Estrada', 'franciscoestrada2395@gmail.com'),
 (42, 'hreinaga', 'hreinaga@uarg.unpa.edu.ar'),
-(40, 'hsotoperez', 'hsotoperez@uarg.unpa.edu.ar'),
 (35, 'jnaguil', 'jnaguil@uarg.unpa.edu.ar'),
+(47, 'khallar', 'khallar@uarg.unpa.edu.ar'),
 (36, 'lburgos', 'lburgos@uarg.unpa.edu.ar'),
 (39, 'ldallacosta', 'ldallacosta@uarg.unpa.edu.ar'),
 (37, 'livanisevich', 'livanisevich@uarg.unpa.edu.ar'),
+(43, 'msandoval', 'msandoval@uarg.unpa.edu.ar'),
 (33, 'Nicolás Sartini', 'nsartini66@gmail.com'),
-(30, 'Profesor UARG', 'profesor.uarg@gmail.com'),
-(31, 'Secretaría Académica', 'secretariaacademicauniv@gmail.com');
+(40, 'hsotoperez', 'profesor.uarg@gmail.com'),
+(46, 'scasas', 'scasas@uarg.unpa.edu.ar'),
+(31, 'Secretaría Académica', 'secretariaacademicauniv@gmail.com'),
+(45, 'waltamirano', 'waltamirano@uarg.unpa.edu.ar');
 
 -- --------------------------------------------------------
 
@@ -194,7 +202,6 @@ INSERT INTO `usuario_rol` (`id_usuario`, `id_rol`) VALUES
 (24, 8),
 (28, 10),
 (29, 10),
-(30, 9),
 (31, 11),
 (32, 8),
 (33, 8),
@@ -206,7 +213,15 @@ INSERT INTO `usuario_rol` (`id_usuario`, `id_rol`) VALUES
 (39, 9),
 (40, 9),
 (41, 9),
-(42, 9);
+(42, 9),
+(43, 9),
+(44, 9),
+(45, 9),
+(46, 9),
+(47, 9),
+(48, 9),
+(49, 9),
+(50, 9);
 
 --
 -- Índices para tablas volcadas
