@@ -148,7 +148,7 @@
                 </div>
             <?php } ?>
 
-            <!--                CREAR EL PERMISO CORRESPONDIENTE EN CONTASNTES Y BD-->
+            
             <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_CARRERAS)) { ?>
                 <li class="nav-item">
                     <a class="nav-link" href="../vista/carreras.php">
@@ -158,7 +158,7 @@
                 </li>                
             <?php } ?>
 
-            <!--                CREAR EL PERMISO CORRESPONDIENTE EN CONTASNTES Y BD-->
+            
             <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_PLANES)) { ?>
                 <li class="nav-item">
                     <a class="nav-link" href="../vista/planes.php">
@@ -168,8 +168,13 @@
                 </li>                
             <?php } ?>
 
-            <!--                CREAR EL PERMISO CORRESPONDIENTE EN CONTASNTES Y BD-->
-            <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_PROFESORES)) { ?>
+            
+            <?php 
+            
+            $UsuarioSes = $_SESSION['usuario'];
+            $perfil = $UsuarioSes->roles[0]->nombre;
+            
+            if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_PROFESORES && $perfil == PermisosSistema::ROL_SECRETARIO_ACADEMICO)) { ?>
                 <li class="nav-item">
                     <a class="nav-link" href="../vista/profesores.php">
                         <span class="oi oi-people" />
@@ -178,7 +183,7 @@
                 </li>                
             <?php } ?>
 
-            <!--                CREAR EL PERMISO CORRESPONDIENTE EN CONTASNTES Y BD-->
+            
             <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_ASIGNATURAS)) { ?>
                 <li class="nav-item">
                     <a class="nav-link" href="../vista/asignaturas.php">
