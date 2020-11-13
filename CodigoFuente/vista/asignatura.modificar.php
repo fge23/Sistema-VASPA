@@ -16,8 +16,6 @@ $codAsignatura = $_GET["id"];
 
 $Asignatura = new Asignatura($codAsignatura);
 
-
-//A medias, todavia faltan cosas por hacer pero ya está arrancado
 ?>
 
 <html>
@@ -49,7 +47,7 @@ $Asignatura = new Asignatura($codAsignatura);
                         <h4>Propiedades</h4>
                         <div class="form-group">
                             <label for="inputCodigo">C&oacute;digo de Asignatura</label>
-                            <input type="number" value="<?= $Asignatura->getId(); ?>" name="id" class="form-control" id="inputCodigo" placeholder="Ingrese el C&oacute;digo de la Asignatura" min="0001" max="9999" required="" autofocus>
+                            <input type="number" value="<?= $Asignatura->getId(); ?>" name="id" class="form-control" id="inputCodigo" placeholder="Ingrese el C&oacute;digo de la Asignatura" min="0001" max="9999" required="" readonly="">
                         </div>
 
                         <div class="form-group">
@@ -75,7 +73,7 @@ $Asignatura = new Asignatura($codAsignatura);
                         <div class="form-group">
                             <label for="selectProfesor">Docente Responsable</label>
                             <br>
-                            <select class="selectpicker show-tick" data-live-search="true" data-width="100%" name="idProfesor" id="selectProfesor" title="Seleccione un Docente" required="">
+                            <select class="selectpicker show-tick" data-live-search="true" data-width="100%" name="idProfesor" id="selectProfesor" title="Seleccione un Docente" required="" data-size="7">
                                 <?php foreach ($Profesores as $Profesor) { ?>
                                     <option 
                                     <?php
@@ -96,7 +94,7 @@ $Asignatura = new Asignatura($codAsignatura);
                         
                         <div class="form-group">
                             <label for="txtAreaContenidosMinimos">Contenidos M&iacute;nimos</label>
-                            <textarea class="form-control" rows="5" name="contenidosMinimos" id="txtAreaContenidosMinimos"><?= $Asignatura->getContenidosMinimos(); ?></textarea>
+                            <textarea class="form-control" rows="5" name="contenidosMinimos" id="txtAreaContenidosMinimos" readonly=""><?= $Asignatura->getContenidosMinimos(); ?></textarea>
                         </div>
 
                         <input type="hidden" name="idAnterior" value="<?= $Asignatura->getId(); ?>">

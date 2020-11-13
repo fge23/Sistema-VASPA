@@ -59,7 +59,7 @@ $Profesores = $ManejadorProfesor->getColeccion();
                         <div class="form-group">
                             <label for="selectProfesor">Docente Responsable</label>
                             <br>
-                            <select class="selectpicker show-tick" data-live-search="true" data-width="100%" name="idProfesor" id="selectProfesor" title="Seleccione un Docente" required="">
+                            <select class="selectpicker show-tick" data-live-search="true" data-width="100%" name="idProfesor" id="selectProfesor" title="Seleccione un Docente" required="" data-size="7">
                                 <?php foreach ($Profesores as $Profesor) { ?>
                                     <option value="<?= $Profesor->getId(); ?>"><?= $Profesor->getApellido() . ", " . $Profesor->getNombre(); ?></option>
                                 <?php } ?>
